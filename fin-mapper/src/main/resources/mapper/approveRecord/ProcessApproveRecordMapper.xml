@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.approveRecord.ProcessApproveRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.approveRecord.po.ProcessApproveRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="commit_time" property="commitTime" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="process_id" property="processId" jdbcType="BIGINT" />
+    <result column="rel_id" property="relId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="process_name" property="processName" jdbcType="VARCHAR" />
+    <result column="node_id" property="nodeId" jdbcType="BIGINT" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+    <result column="tache" property="tache" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="scorecardscore" property="scorecardscore" jdbcType="VARCHAR" />
+    <result column="approve_suggestion" property="approveSuggestion" jdbcType="VARCHAR" />
+    <result column="handler_id" property="handlerId" jdbcType="VARCHAR" />
+    <result column="handler_name" property="handlerName" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zw.rule.approveRecord.po.ProcessApproveRecord" extends="BaseResultMap" >
+    <result column="input" property="input" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, commit_time, result, process_id, rel_id, type, order_id, process_name, 
+    node_id, node_name, tache, state, scorecardscore, approve_suggestion, handler_id, 
+    handler_name,credit
+  </sql>
+  <sql id="Blob_Column_List" >
+    input
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from process_approve_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from process_approve_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord" >
+    insert into process_approve_record (id, create_time, commit_time, 
+      result, process_id, rel_id, 
+      type, order_id, process_name, 
+      node_id, node_name, tache, 
+      state, scorecardscore, approve_suggestion, 
+      handler_id, handler_name, input,credit
+      )
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{commitTime,jdbcType=VARCHAR}, 
+      #{result,jdbcType=VARCHAR}, #{processId,jdbcType=BIGINT}, #{relId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{processName,jdbcType=VARCHAR}, 
+      #{nodeId,jdbcType=BIGINT}, #{nodeName,jdbcType=VARCHAR}, #{tache,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{scorecardscore,jdbcType=VARCHAR}, #{approveSuggestion,jdbcType=VARCHAR}, 
+      #{handlerId,jdbcType=VARCHAR}, #{handlerName,jdbcType=VARCHAR}, #{input,jdbcType=LONGVARCHAR},#{credit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="insertSelective" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord">
+    INSERT INTO process_approve_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        id,
+      </if>
+      <if test="input != null">
+        input,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="commitTime != null">
+        commit_time,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="processId != null">
+        process_id,
+      </if>
+      <if test="relId != null">
+        rel_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="processName != null">
+        process_name,
+      </if>
+      <if test="nodeId != null">
+        node_id,
+      </if>
+      <if test="nodeName != null">
+        node_name,
+      </if>
+      <if test="tache != null">
+        tache,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="scorecardscore != null">
+        scorecardscore,
+      </if>
+      <if test="approveSuggestion != null">
+        approve_suggestion,
+      </if>
+      <if test="handlerId != null">
+        handler_id,
+      </if>
+      <if test="handlerName != null">
+        handler_name,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id!=null">
+        #{id},
+      </if>
+      <if test="input!=null">
+        #{input},
+      </if>
+      <if test="createTime!=null">
+        #{createTime},
+      </if>
+      <if test="commitTime!=null">
+        #{commitTime},
+      </if>
+      <if test="result!=null">
+        #{result},
+      </if>
+      <if test="processId!=null">
+        #{processId},
+      </if>
+      <if test="relId!=null">
+        #{relId},
+      </if>
+      <if test="type!=null">
+        #{type},
+      </if>
+      <if test="orderId!=null">
+        #{orderId},
+      </if>
+      <if test="processName!=null">
+        #{processName},
+      </if>
+      <if test="nodeId!=null">
+        #{nodeId},
+      </if>
+      <if test="nodeName!=null">
+        #{nodeName},
+      </if>
+      <if test="tache!=null">
+        #{tache},
+      </if>
+      <if test="state!=null">
+        #{state},
+      </if>
+      <if test="scorecardscore!=null">
+        #{scorecardscore},
+      </if>
+      <if test="approveSuggestion!=null">
+        #{approveSuggestion},
+      </if>
+      <if test="handlerId!=null">
+        #{handlerId},
+      </if>
+      <if test="handlerName!=null">
+        #{handlerName},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord" >
+    update process_approve_record
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="commitTime != null" >
+        commit_time = #{commitTime,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="processId != null" >
+        process_id = #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="relId != null" >
+        rel_id = #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="processName != null" >
+        process_name = #{processName,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeId != null" >
+        node_id = #{nodeId,jdbcType=BIGINT},
+      </if>
+      <if test="nodeName != null" >
+        node_name = #{nodeName,jdbcType=VARCHAR},
+      </if>
+      <if test="tache != null" >
+        tache = #{tache,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="scorecardscore != null" >
+        scorecardscore = #{scorecardscore,jdbcType=VARCHAR},
+      </if>
+      <if test="approveSuggestion != null" >
+        approve_suggestion = #{approveSuggestion,jdbcType=VARCHAR},
+      </if>
+      <if test="handlerId != null" >
+        handler_id = #{handlerId,jdbcType=VARCHAR},
+      </if>
+      <if test="handlerName != null" >
+        handler_name = #{handlerName,jdbcType=VARCHAR},
+      </if>
+      <if test="input != null" >
+        input = #{input,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord" >
+    update process_approve_record
+    set create_time = #{createTime,jdbcType=VARCHAR},
+      commit_time = #{commitTime,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      process_id = #{processId,jdbcType=BIGINT},
+      rel_id = #{relId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      process_name = #{processName,jdbcType=VARCHAR},
+      node_id = #{nodeId,jdbcType=BIGINT},
+      node_name = #{nodeName,jdbcType=VARCHAR},
+      tache = #{tache,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      scorecardscore = #{scorecardscore,jdbcType=VARCHAR},
+      approve_suggestion = #{approveSuggestion,jdbcType=VARCHAR},
+      handler_id = #{handlerId,jdbcType=VARCHAR},
+      handler_name = #{handlerName,jdbcType=VARCHAR},
+      input = #{input,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord" >
+    update process_approve_record
+    set create_time = #{createTime,jdbcType=VARCHAR},
+      commit_time = #{commitTime,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      process_id = #{processId,jdbcType=BIGINT},
+      rel_id = #{relId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      process_name = #{processName,jdbcType=VARCHAR},
+      node_id = #{nodeId,jdbcType=BIGINT},
+      node_name = #{nodeName,jdbcType=VARCHAR},
+      tache = #{tache,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      scorecardscore = #{scorecardscore,jdbcType=VARCHAR},
+      approve_suggestion = #{approveSuggestion,jdbcType=VARCHAR},
+      handler_id = #{handlerId,jdbcType=VARCHAR},
+      handler_name = #{handlerName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findByOrderId" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from process_approve_record
+    where order_id = #{orderId}
+  </select>
+
+  <select id="findByOrderIdPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from process_approve_record
+    <where>
+      <if test="param.order_id != null and param.order_id != ''">
+        and order_id = #{param.order_id}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

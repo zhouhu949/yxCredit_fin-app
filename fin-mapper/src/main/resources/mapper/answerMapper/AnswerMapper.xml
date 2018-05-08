@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.answerMapper.AnswerMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.answer.po.Answer" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="answerTimeSuggestion" property="answerTimeSuggestion" jdbcType="VARCHAR" />
+        <result column="questionId" property="questionId" jdbcType="VARCHAR" />
+        <result column="questionTitle" property="questionTitle" jdbcType="VARCHAR" />
+        <result column="choice_code" property="choiceCode" jdbcType="VARCHAR" />
+        <result column="choiceList" property="choiceList" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+        <result column="examId" property="examId" jdbcType="VARCHAR" />
+        <result column="correctAnswer" property="correctAnswer" jdbcType="VARCHAR" />
+    </resultMap>
+    <insert id="insertAnswerList"   parameterType="java.util.List">
+        insert into mag_order_answer (id,order_id,answerTimeSuggestion,questionId,questionTitle,choice_code,choiceList,state,creat_time,examId)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.id},#{item.orderId},#{item.answerTimeSuggestion},#{item.questionId},#{item.questionTitle},#{item.choiceCode},#{item.choiceList},#{item.state},#{item.creatTime},#{item.examId})
+        </foreach>
+    </insert>
+    <select id="getAnswerList" resultMap="BaseResultMap" parameterType="Map" >
+        SELECT  id,order_id,answerTimeSuggestion,questionId,questionTitle,choice_code,choiceList,state,creat_time,examId,correctAnswer
+        FROM mag_order_answer
+        <where>
+            <if test="orderId != null">
+                order_id=#{orderId}
+            </if>
+
+        </where>
+    </select>
+    <update id="updateAnswer" parameterType="Map">
+        update mag_order_answer
+        <set>
+          <if test="correctAnswer !=null">
+            correctAnswer=#{correctAnswer},
+          </if>
+            <if test="choiceCode !=null">
+                choice_code=#{choiceCode},
+            </if>
+        </set>
+        <where>
+            1=1
+            <if test="id !=null">
+            AND id=#{id}
+            </if>
+        </where>
+    </update>
+</mapper>

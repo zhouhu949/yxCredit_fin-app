@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.problemManage.ProblemMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.problem.po.ProblemManage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="problem_name" property="problem_name" jdbcType="VARCHAR" />
+    <result column="problem_content" property="problem_content" jdbcType="VARCHAR" />
+    <result column="problem_type" property="problem_type" jdbcType="VARCHAR" />
+    <result column="problem_state" property="problem_state" jdbcType="VARCHAR" />
+    <result column="problem_desc" property="problem_desc" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+    <result column="platform_type" property="platform_type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, problem_name, problem_content,problem_desc, problem_type, problem_state, create_time, alter_time,platform_type
+  </sql>
+  <select id="getProblemList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    id, problem_name,problem_desc, problem_content, (select name from  mag_dict_detail where  dict_name ='问题类型'  and code=problem_type) as problem_type, problem_state, create_time, alter_time
+    from problem_manage
+    where 1=1
+    <if test="problem_name != null and problem_name != ''">
+      and problem_name like CONCAT('%',#{problem_name},'%')
+    </if>
+    order by create_time desc
+  </select>
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="addProblem" parameterType="com.zw.rule.problem.po.ProblemManage">
+    INSERT INTO problem_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="problem_desc != null" >
+        problem_desc,
+      </if>
+      <if test="problem_name != null" >
+        problem_name,
+      </if>
+      <if test="problem_content != null" >
+      problem_content,
+    </if>
+      <if test="problem_type != null" >
+        problem_type,
+      </if>
+      <if test="problem_state != null" >
+        problem_state,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="platform_type != null" >
+        platform_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="problem_desc != null" >
+        #{problem_desc},
+      </if>
+      <if test="problem_name != null" >
+        #{problem_name},
+      </if>
+      <if test="problem_content != null" >
+        #{problem_content},
+      </if>
+      <if test="problem_type != null" >
+        #{problem_type},
+      </if>
+      <if test="problem_state != null" >
+        #{problem_state},
+      </if>
+      <if test="create_time != null" >
+        #{create_time},
+      </if>
+      <if test="platform_type != null" >
+        #{platform_type}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateProblem" parameterType="com.zw.rule.problem.po.ProblemManage" >
+    update problem_manage
+    <set >
+      <if test="problem_name != null" >
+        problem_name = #{problem_name,jdbcType=VARCHAR},
+      </if>
+      <if test="problem_desc != null" >
+        problem_desc = #{problem_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="problem_content != null" >
+        problem_content = #{problem_content,jdbcType=VARCHAR},
+      </if>
+      <if test="problem_type != null" >
+        problem_type = #{problem_type,jdbcType=VARCHAR},
+      </if>
+      <if test="problem_state != null" >
+        problem_state = #{problem_state,jdbcType=BIGINT},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alter_time,jdbcType=VARCHAR},
+      </if>
+      <if test="platform_type != null" >
+        platform_type = #{platform_type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteProblem" parameterType="java.lang.String">
+    delete from problem_manage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from problem_manage where id=#{id};
+  </select>
+  <update id="updateState" parameterType="java.util.Map">
+    update problem_manage set  problem_state=#{problem_state}  where id=#{id};
+  </update>
+</mapper>

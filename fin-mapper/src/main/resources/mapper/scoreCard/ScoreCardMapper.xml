@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.scoreCard.ScoreCardMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.score.po.ScoreCard" >
+    <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="VARCHAR" />
+    <result column="marry" property="marry" jdbcType="VARCHAR" />
+    <result column="hjszqy" property="hjszqy" jdbcType="VARCHAR" />
+    <result column="dqjzqk" property="dqjzqk" jdbcType="VARCHAR" />
+    <result column="xdwgznx" property="xdwgznx" jdbcType="VARCHAR" />
+    <result column="dwxz" property="dwxz" jdbcType="VARCHAR" />
+    <result column="sfjngjjjsb" property="sfjngjjjsb" jdbcType="VARCHAR" />
+    <result column="rank" property="rank" jdbcType="VARCHAR" />
+    <result column="gzffxs" property="gzffxs" jdbcType="VARCHAR" />
+    <result column="gmfs" property="gmfs" jdbcType="VARCHAR" />
+    <result column="yaj" property="yaj" jdbcType="VARCHAR" />
+    <result column="pyxl" property="pyxl" jdbcType="VARCHAR" />
+    <result column="sjhmsmsfyz" property="sjhmsmsfyz" jdbcType="VARCHAR" />
+    <result column="azthrj" property="azthrj" jdbcType="VARCHAR" />
+    <result column="shzxwjqdksl" property="shzxwjqdksl" jdbcType="VARCHAR" />
+    <result column="tdwbdkptgs" property="tdwbdkptgs" jdbcType="VARCHAR" />
+    <result column="sqgjj" property="sqgjj" jdbcType="VARCHAR" />
+    <result column="sqtxl" property="sqtxl" jdbcType="VARCHAR" />
+    <result column="sqthjl" property="sqthjl" jdbcType="VARCHAR" />
+    <result column="zmf" property="zmf" jdbcType="VARCHAR" />
+    <result column="dw" property="dw" jdbcType="VARCHAR" />
+    <result column="sjhsysc" property="sjhsysc" jdbcType="VARCHAR" />
+    <result column="djzc" property="djzc" jdbcType="VARCHAR" />
+    <result column="gzdwmcxg" property="gzdwmcxg" jdbcType="VARCHAR" />
+    <result column="gzdwdhxg" property="gzdwdhxg" jdbcType="VARCHAR" />
+    <result column="lxrdhxg" property="lxrdhxg" jdbcType="VARCHAR" />
+    <result column="xbxldwcs" property="xbxldwcs" jdbcType="VARCHAR" />
+    <result column="jjgz" property="jjgz" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id_card, sex, age,marry, hjszqy, dqjzqk,xdwgznx, dwxz, sfjngjjjsb,rank, gzffxs, gmfs,
+    yaj, pyxl, sjhmsmsfyz,azthrj, shzxwjqdksl, tdwbdkptgs,sqgjj, sqtxl, sqthjl,zmf, dw, sjhsysc, djzc,
+    gzdwmcxg, gzdwdhxg, lxrdhxg,xbxldwcs, jjgz,total
+  </sql>
+  <insert id="insert" parameterType="com.zw.rule.score.po.ScoreCard" >
+    insert into score_card (id_card, sex, age,
+    marry, hjszqy, dqjzqk,
+    xdwgznx, dwxz, sfjngjjjsb,
+    rank, gzffxs, gmfs,
+    yaj, pyxl, sjhmsmsfyz,
+    azthrj, shzxwjqdksl, tdwbdkptgs,
+    sqgjj, sqtxl, sqthjl,
+    zmf, dw, sjhsysc, djzc,
+    gzdwmcxg, gzdwdhxg, lxrdhxg,
+    xbxldwcs, jjgz，total)
+    values (#{idCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR},
+    #{marry,jdbcType=VARCHAR}, #{hjszqy,jdbcType=VARCHAR}, #{dqjzqk,jdbcType=VARCHAR},
+    #{xdwgznx,jdbcType=VARCHAR}, #{dwxz,jdbcType=VARCHAR}, #{sfjngjjjsb,jdbcType=VARCHAR},
+    #{rank,jdbcType=VARCHAR}, #{gzffxs,jdbcType=VARCHAR}, #{gmfs,jdbcType=VARCHAR},
+    #{yaj,jdbcType=VARCHAR}, #{pyxl,jdbcType=VARCHAR}, #{sjhmsmsfyz,jdbcType=VARCHAR},
+    #{azthrj,jdbcType=VARCHAR}, #{shzxwjqdksl,jdbcType=VARCHAR}, #{tdwbdkptgs,jdbcType=VARCHAR},
+    #{sqgjj,jdbcType=VARCHAR}, #{sqtxl,jdbcType=VARCHAR}, #{sqthjl,jdbcType=VARCHAR},
+    #{zmf,jdbcType=VARCHAR}, #{dw,jdbcType=VARCHAR}, #{sjhsysc,jdbcType=VARCHAR}, #{djzc,jdbcType=VARCHAR},
+    #{gzdwmcxg,jdbcType=VARCHAR}, #{gzdwdhxg,jdbcType=VARCHAR}, #{lxrdhxg,jdbcType=VARCHAR},
+    #{xbxldwcs,jdbcType=VARCHAR}, #{jjgz,jdbcType=VARCHAR}, #{total,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.score.po.ScoreCard" >
+    insert into score_card
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idCard != null" >
+        id_card,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="marry != null" >
+        marry,
+      </if>
+      <if test="hjszqy != null" >
+        hjszqy,
+      </if>
+      <if test="dqjzqk != null" >
+        dqjzqk,
+      </if>
+      <if test="xdwgznx != null" >
+        xdwgznx,
+      </if>
+      <if test="dwxz != null" >
+        dwxz,
+      </if>
+      <if test="sfjngjjjsb != null" >
+        sfjngjjjsb,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="gzffxs != null" >
+        gzffxs,
+      </if>
+      <if test="gmfs != null" >
+        gmfs,
+      </if>
+      <if test="yaj != null" >
+        yaj,
+      </if>
+      <if test="pyxl != null" >
+        pyxl,
+      </if>
+      <if test="sjhmsmsfyz != null" >
+        sjhmsmsfyz,
+      </if>
+      <if test="azthrj != null" >
+        azthrj,
+      </if>
+      <if test="shzxwjqdksl != null" >
+        shzxwjqdksl,
+      </if>
+      <if test="tdwbdkptgs != null" >
+        tdwbdkptgs,
+      </if>
+      <if test="sqgjj != null" >
+        sqgjj,
+      </if>
+      <if test="sqtxl != null" >
+        sqtxl,
+      </if>
+      <if test="sqthjl != null" >
+        sqthjl,
+      </if>
+      <if test="zmf != null" >
+        zmf,
+      </if>
+      <if test="dw != null" >
+        dw,
+      </if>
+      <if test="sjhsysc != null" >
+        sjhsysc,
+      </if>
+      <if test="djzc != null" >
+        djzc,
+      </if>
+      <if test="gzdwmcxg != null" >
+        gzdwmcxg,
+      </if>
+      <if test="gzdwdhxg != null" >
+        gzdwdhxg,
+      </if>
+      <if test="lxrdhxg != null" >
+        lxrdhxg,
+      </if>
+      <if test="xbxldwcs != null" >
+        xbxldwcs,
+      </if>
+      <if test="jjgz != null" >
+        jjgz,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="marry != null" >
+        #{marry,jdbcType=VARCHAR},
+      </if>
+      <if test="hjszqy != null" >
+        #{hjszqy,jdbcType=VARCHAR},
+      </if>
+      <if test="dqjzqk != null" >
+        #{dqjzqk,jdbcType=VARCHAR},
+      </if>
+      <if test="xdwgznx != null" >
+        #{xdwgznx,jdbcType=VARCHAR},
+      </if>
+      <if test="dwxz != null" >
+        #{dwxz,jdbcType=VARCHAR},
+      </if>
+      <if test="sfjngjjjsb != null" >
+        #{sfjngjjjsb,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="gzffxs != null" >
+        #{gzffxs,jdbcType=VARCHAR},
+      </if>
+      <if test="gmfs != null" >
+        #{gmfs,jdbcType=VARCHAR},
+      </if>
+      <if test="yaj != null" >
+        #{yaj,jdbcType=VARCHAR},
+      </if>
+      <if test="pyxl != null" >
+        #{pyxl,jdbcType=VARCHAR},
+      </if>
+      <if test="sjhmsmsfyz != null" >
+        #{sjhmsmsfyz,jdbcType=VARCHAR},
+      </if>
+      <if test="azthrj != null" >
+        #{azthrj,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxwjqdksl != null" >
+        #{shzxwjqdksl,jdbcType=VARCHAR},
+      </if>
+      <if test="tdwbdkptgs != null" >
+        #{tdwbdkptgs,jdbcType=VARCHAR},
+      </if>
+      <if test="sqgjj != null" >
+        #{sqgjj,jdbcType=VARCHAR},
+      </if>
+      <if test="sqtxl != null" >
+        #{sqtxl,jdbcType=VARCHAR},
+      </if>
+      <if test="sqthjl != null" >
+        #{sqthjl,jdbcType=VARCHAR},
+      </if>
+      <if test="zmf != null" >
+        #{zmf,jdbcType=VARCHAR},
+      </if>
+      <if test="dw != null" >
+        #{dw,jdbcType=VARCHAR},
+      </if>
+      <if test="sjhsysc != null" >
+        #{sjhsysc,jdbcType=VARCHAR},
+      </if>
+      <if test="djzc != null" >
+        #{djzc,jdbcType=VARCHAR},
+      </if>
+      <if test="gzdwmcxg != null" >
+        #{gzdwmcxg,jdbcType=VARCHAR},
+      </if>
+      <if test="gzdwdhxg != null" >
+        #{gzdwdhxg,jdbcType=VARCHAR},
+      </if>
+      <if test="lxrdhxg != null" >
+        #{lxrdhxg,jdbcType=VARCHAR},
+      </if>
+      <if test="xbxldwcs != null" >
+        #{xbxldwcs,jdbcType=VARCHAR},
+      </if>
+      <if test="jjgz != null" >
+        #{jjgz,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getByIdCard" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from score_card
+    where id_card = #{idCard}
+  </select>
+  <select id="getRefuse" resultType="Map" parameterType="java.lang.String">
+    select * from rule_refuse where id_card = #{idCard}
+  </select>
+</mapper>

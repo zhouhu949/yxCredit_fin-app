@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.surety.SuretyCheckMapper" >
+    <!--查询所有被担保的订单-->
+    <select id="selectAllSuretyOrder" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+            a.id,
+            a.order_no AS orderNo,
+            a.CUSTOMER_NAME AS customerName,
+            a.TEL AS  tel,
+            a.AMOUNT AS amount,
+            a.predict_price AS predictPrice ,
+            a.AMOUNT-a.predict_price AS applyFenQiLimit,
+            a.PERIODS AS  periods,
+            a.CREAT_TIME creatTime,
+            a.product_type_name productTypeName,
+            a.state AS state,
+            a.CUSTOMER_ID AS  customerId,
+            b.id AS relId,
+            b.state AS relState
+          from (SELECT
+            *
+            FROM
+            mag_order
+            WHERE
+            id IN (
+            SELECT
+            order_id
+            FROM
+            mag_surety_order
+            WHERE mag_surety_order.state = 1
+            )
+            AND order_type = '2'
+            <if test="customerName != null and customerName != '' ">
+                AND  CUSTOMER_NAME like CONCAT('%',#{customerName},'%')
+            </if>
+            <if test="tel != null and tel != '' ">
+                AND  tel = #{tel}
+            </if>
+            )
+            a LEFT JOIN mag_surety_order b  on a.id=b.order_id
+        WHERE  b.state = '1'
+    </select>
+    <!--操作订单和担保人关联表，更改关联表状态(状态改为2担保成功)-->
+    <update id="updateSuretyOrderState" parameterType="java.util.Map">
+        update mag_surety_order
+        SET
+        state='2'
+        WHERE id= #{relId}
+    </update>
+
+    <!-- 添加 （匹配有值的字段）-->
+    <insert id="insertSelective" parameterType="com.zw.rule.approveRecord.po.ProcessApproveRecord">
+        INSERT INTO process_approve_record
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+                id,
+            </if>
+            <if test="input != null">
+                input,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="commitTime != null">
+                commit_time,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="processId != null">
+                process_id,
+            </if>
+            <if test="relId != null">
+                rel_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="processName != null">
+                process_name,
+            </if>
+            <if test="nodeId != null">
+                node_id,
+            </if>
+            <if test="nodeName != null">
+                node_name,
+            </if>
+            <if test="tache != null">
+                tache,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="scorecardscore != null">
+                scorecardscore,
+            </if>
+            <if test="approveSuggestion != null">
+                approve_suggestion,
+            </if>
+            <if test="handlerId != null">
+                handler_id,
+            </if>
+            <if test="handlerName != null">
+                handler_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="input!=null">
+                #{input},
+            </if>
+            <if test="createTime!=null">
+                #{createTime},
+            </if>
+            <if test="commitTime!=null">
+                #{commitTime},
+            </if>
+            <if test="result!=null">
+                #{result},
+            </if>
+            <if test="processId!=null">
+                #{processId},
+            </if>
+            <if test="relId!=null">
+                #{relId},
+            </if>
+            <if test="type!=null">
+                #{type},
+            </if>
+            <if test="orderId!=null">
+                #{orderId},
+            </if>
+            <if test="processName!=null">
+                #{processName},
+            </if>
+            <if test="nodeId!=null">
+                #{nodeId},
+            </if>
+            <if test="nodeName!=null">
+                #{nodeName},
+            </if>
+            <if test="tache!=null">
+                #{tache},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="scorecardscore!=null">
+                #{scorecardscore},
+            </if>
+            <if test="approveSuggestion!=null">
+                #{approveSuggestion},
+            </if>
+            <if test="handlerId!=null">
+                #{handlerId},
+            </if>
+            <if test="handlerName!=null">
+                #{handlerName},
+            </if>
+        </trim>
+    </insert>
+
+
+
+    <!--查询所有被担保的订单审核后的订单(包括通过和未通过的)--><!--担保人管理-》担保订单按钮-->
+    <select id="selectAllSuretyCheckOrderShow" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        a.id,
+        a.order_no AS orderNo,
+        a.CUSTOMER_NAME AS customerName,
+        a.TEL AS  tel,
+        a.AMOUNT AS amount,
+        a.predict_price AS predictPrice ,
+        a.AMOUNT-a.predict_price AS applyFenQiLimit,
+        a.PERIODS AS  periods,
+        a.CREAT_TIME creatTime,
+        a.product_type_name productTypeName,
+        a.state AS state,
+        a.CUSTOMER_ID AS  customerId,
+        b.id AS relId,
+        b.state AS relState,
+        p.approve_suggestion AS approveSuggestion,
+        p.result AS checkResult,
+        p.handler_name  AS checkManName,
+        p.handler_id AS  checkManId,
+        p.id AS checkId
+        from (SELECT
+        *
+        FROM
+        mag_order
+        WHERE
+        id IN (
+        SELECT
+        order_id
+        FROM
+        mag_surety_order
+        WHERE mag_surety_order.state = 2
+        )
+        AND order_type = '2'
+        <if test="customerName != null and customerName != '' ">
+            AND  CUSTOMER_NAME like CONCAT('%',#{customerName},'%')
+        </if>
+        <if test="tel != null and tel != '' ">
+            AND  tel = #{tel}
+        </if>
+        )
+        a LEFT JOIN mag_surety_order b  on a.id=b.order_id
+        LEFT JOIN process_approve_record p ON a.id = p.order_id
+        WHERE  b.state = '2' AND p.node_id='2'
+    </select>
+    <!--获取担保人信息-->
+    <select id="getSuretyInformation" parameterType="java.lang.String" resultType="com.zw.rule.surety.Surety">
+        SELECT
+            ms.id,
+            ms. NAME,
+            ms.tel,
+            ms.idcard,
+            ms.relation,
+            ms.remark,
+            mso.create_time AS createTime,
+            asd.code,
+            asd.name as relationName
+        FROM
+            mag_surety ms
+        LEFT JOIN mag_surety_order mso ON ms.id = mso.surety_id
+        LEFT JOIN (select id,parent_id,code,name from zw_sys_dict where parent_id in(select id from zw_sys_dict where code='surety'))asd ON ms.relation = asd.code
+        WHERE
+            mso.id=#{relId}
+    </select>
+    <!--根据审批意见表id查询审批意见-->
+    <select id="selectProById" parameterType="java.lang.String" resultType="com.zw.rule.approveRecord.po.ProcessApproveRecord">
+        SELECT
+          id,
+          commit_time as commitTime,
+          result,
+          approve_suggestion as approveSuggestion,
+          handler_id AS  handlerId,
+          handler_name as handlername
+          from
+            process_approve_record
+          WHERE  id=#{id}
+    </select>
+</mapper>

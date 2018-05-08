@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.messageManage.MessageManageMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.message.po.MessageManage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="message_name" property="message_name" jdbcType="VARCHAR" />
+    <result column="message_content" property="message_content" jdbcType="VARCHAR" />
+    <result column="message_type" property="message_type" jdbcType="VARCHAR" />
+    <result column="message_state" property="message_state" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, message_name, message_content, message_type, message_state, create_time, alter_time
+  </sql>
+  <select id="getMessageList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    id, message_name, message_content, (SELECT `name` from zw_sys_dict where parent_id =(select id from zw_sys_dict where name ='消息类型') and code=message_type) as message_type, message_state, create_time, alter_time
+    from message_manage
+    where 1=1
+    <if test="message_name != null and message_name != ''">
+      and message_name like CONCAT('%',#{message_name},'%')
+    </if>
+    order by create_time desc
+  </select>
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="addMessage" parameterType="com.zw.rule.message.po.MessageManage">
+    INSERT INTO message_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="message_name != null" >
+        message_name,
+      </if>
+      <if test="message_content != null" >
+      message_content,
+    </if>
+      <if test="message_type != null" >
+        message_type,
+      </if>
+      <if test="message_state != null" >
+        message_state,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="message_name != null" >
+        #{message_name},
+      </if>
+      <if test="message_content != null" >
+        #{message_content},
+      </if>
+      <if test="message_type != null" >
+        #{message_type},
+      </if>
+      <if test="message_state != null" >
+        #{message_state},
+      </if>
+      <if test="create_time != null" >
+        #{create_time}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateMessage" parameterType="com.zw.rule.message.po.MessageManage" >
+    update message_manage
+    <set >
+      <if test="message_name != null" >
+        message_name = #{message_name,jdbcType=VARCHAR},
+      </if>
+      <if test="message_content != null" >
+        message_content = #{message_content,jdbcType=VARCHAR},
+      </if>
+      <if test="message_type != null" >
+        message_type = #{message_type,jdbcType=VARCHAR},
+      </if>
+      <if test="message_state != null" >
+        message_state = #{message_state,jdbcType=BIGINT},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alter_time,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteMessage" parameterType="java.lang.String">
+    delete from message_manage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from message_manage where id=#{id};
+  </select>
+  <update id="updateState" parameterType="java.util.Map">
+    update message_manage set  message_state=#{message_state}  where id=#{id};
+  </update>
+</mapper>

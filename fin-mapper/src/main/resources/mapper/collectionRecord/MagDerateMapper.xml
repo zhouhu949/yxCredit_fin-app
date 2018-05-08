@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.collectionRecord.MagDerateMapper">
+    <select id="getMagDerateList" resultType="com.zw.rule.collectionRecord.po.MagDerate" parameterType="java.util.Map">
+        SELECT id,repayment_id AS repaymentId,orderId,derate_amount AS derateAmount,derate_link AS derateLink,derate_state AS derateState,derate_personnel AS deratePersonnel,derate_date AS derateDate,derate_opinion AS derateOpinion
+        FROM mag_derate
+        WHERE  approval_state='1' AND state='1'
+
+    </select>
+
+    <select id="getMagDerateDetail" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT mrep.id,mrep.fee,mrep.repayment_amount,mord.manageFee,mord.quickTrialFee,mrep.amount,mrep.penalty,mrep.default_interest,mrep.overdue_days,mrep.order_id,mrep.pay_count,mrep.pay_time,mrep.state,mcus.tel,mcus.person_name,mrep.loan_id,mcus.id AS customerId,mde.derate_amount,mde.state AS  derate_state,mde.id AS derate_id,mde.approval_state,mord.order_type,(select  SUM(amount) from  service_package_repayment  where repayment_id=mrep.id) AS servicePackageAmount,FORMAT((mrep.fee+mrep.amount+(select  IFNULL(SUM(amount),0) from  service_package_repayment  where repayment_id=mrep.id)),2) AS sunAmount,(ifnull(mrep.default_interest, 0)+penalty) AS totalFine,mde.effective_data as effectiveData
+        FROM mag_derate mde
+        INNER JOIN  mag_repayment mrep ON  mde.repayment_id=mrep.id
+        LEFT JOIN  mag_order mord ON mrep.order_id = mord.id
+        LEFT JOIN  mag_customer mcus ON  mord.CUSTOMER_ID=mcus.id
+        WHERE mde.id=#{id}
+    </select>
+
+    <update id="updateDerate"  parameterType="com.zw.rule.collectionRecord.po.MagDerate">
+        UPDATE  mag_derate
+        <set>
+            <if test="userId != null">
+                approval_personnel = #{userId},
+            </if>
+            <if test="approval_date != null">
+                approval_date = #{approval_date},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="approvalState != null">
+                approval_state = #{approvalState},
+            </if>
+        </set>
+        WHERE  id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.task.ProcessTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.task.po.ProcessTask" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="process_id" property="processId" jdbcType="BIGINT" />
+    <result column="rel_id" property="relId" jdbcType="VARCHAR" />
+    <result column="process_node" property="processNode" jdbcType="BIGINT" />
+    <result column="task_state" property="taskState" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, process_id, rel_id, process_node, task_state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from process_task
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from process_task
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.task.po.ProcessTask" >
+    insert into process_task (id, process_id, rel_id,
+      process_node, task_state, create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{processId,jdbcType=BIGINT}, #{relId,jdbcType=VARCHAR},
+      #{processNode,jdbcType=BIGINT}, #{taskState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.task.po.ProcessTask" >
+    insert into process_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="processId != null" >
+        process_id,
+      </if>
+      <if test="relId != null" >
+        rel_id,
+      </if>
+      <if test="processNode != null" >
+        process_node,
+      </if>
+      <if test="taskState != null" >
+        task_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="processId != null" >
+        #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="relId != null" >
+        #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="processNode != null" >
+        #{processNode,jdbcType=BIGINT},
+      </if>
+      <if test="taskState != null" >
+        #{taskState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.task.po.ProcessTask" >
+    update process_task
+    <set >
+      <if test="processId != null" >
+        process_id = #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="relId != null" >
+        relId = #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="processNode != null" >
+        process_node = #{processNode,jdbcType=BIGINT},
+      </if>
+      <if test="taskState != null" >
+        task_state = #{taskState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.task.po.ProcessTask" >
+    update process_task
+    set process_id = #{processId,jdbcType=BIGINT},
+      relId = #{relId,jdbcType=VARCHAR},
+      process_node = #{processNode,jdbcType=BIGINT},
+      task_state = #{taskState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateTask" parameterType="map">
+    UPDATE process_task
+    SET process_node = #{nextProcessNode},node_alter_time = now()
+    where id = #{taskId}
+  </update>
+
+  <insert id="insertTask" parameterType="com.zw.rule.task.po.ProcessTask">
+    insert into process_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="processId != null" >
+        process_id,
+      </if>
+      <if test="relId != null" >
+        rel_id,
+      </if>
+      <if test="processNode != null" >
+        process_node,
+      </if>
+      <if test="taskState != null" >
+        task_state,
+      </if>
+      create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="processId != null" >
+        #{processId,jdbcType=BIGINT},
+      </if>
+      <if test="relId != null" >
+        #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="processNode != null" >
+        #{processNode,jdbcType=BIGINT},
+      </if>
+      <if test="taskState != null" >
+        #{taskState,jdbcType=INTEGER},
+      </if>
+      now()
+    </trim>
+  </insert>
+
+  <select id="searchByRelId" parameterType="string" resultMap="BaseResultMap">
+    select *
+    from process_task
+     where rel_id = #{relId};
+  </select>
+
+  <insert id="insertTaskNode" parameterType="com.zw.rule.task.po.ProcessTaskNode">
+    insert into process_task_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="relType != null" >
+        rel_type,
+      </if>
+      <if test="relId != null" >
+        rel_id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="processNode != null" >
+        process_node,
+      </if>
+      <if test="operateUser != null" >
+        operate_user,
+      </if>
+      <if test="pageUrl !=null">
+        page_url,
+      </if>
+      <if test="handUrl !=null">
+        hand_url,
+      </if>
+      <if test="nodeJson != null" >
+        node_json,
+      </if>
+      <if test="nodeScript != null" >
+        node_script,
+      </if>
+      <if test="excType != null" >
+        exc_type,
+      </if>
+      <if test="nodeState != null" >
+        node_state,
+      </if>
+      create_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="relType != null" >
+        #{relType},
+      </if>
+      <if test="relId != null" >
+        #{relId},
+      </if>
+      <if test="taskId != null" >
+        #{taskId},
+      </if>
+      <if test="processNode != null" >
+        #{processNode},
+      </if>
+      <if test="operateUser != null" >
+        #{operateUser},
+      </if>
+      <if test="pageUrl !=null">
+        #{pageUrl},
+      </if>
+      <if test="handUrl !=null">
+        #{handUrl},
+      </if>
+      <if test="nodeJson != null" >
+        #{nodeJson},
+      </if>
+      <if test="nodeScript != null" >
+        #{nodeScript},
+      </if>
+      <if test="excType != null" >
+        #{excType},
+      </if>
+      <if test="nodeState != null" >
+        #{nodeState},
+      </if>
+      now()
+    </trim>
+  </insert>
+
+  <select id="getNextNode" parameterType="long" resultType="string">
+    SELECT next_nodes
+    FROM zw_process_node
+    where process_id = #{processId}
+    and node_code = 'ND_START'
+  </select>
+  <delete id="delTaskNode" parameterType="string">
+    DELETE from process_task_node
+    WHERE task_id=#{taskId}
+  </delete>
+
+
+  <select id="getProcessByProId" parameterType="map" resultType="com.zw.rule.process.po.Process">
+    select
+    id
+    from zw_process
+    <where>
+      1=1
+      <if test="relType!=null">
+        and rel_type = #{relType}
+      </if>
+      <if test="relId!=null">
+        and rel_id = #{relId}
+      </if>
+    </where>
+  </select>
+
+  <select id="getReturnTask" parameterType="String" resultType="Map">
+    select * from process_task where rel_id=#{relId} and task_state=6
+  </select>
+  <select id="isExistTask" parameterType="String" resultType="Map">
+    select * from process_task where rel_id=#{relId} and task_state!=6
+  </select>
+  <select id="isExist" resultType="Map" parameterType="Map">
+    select * from process_task_node where task_id=#{taskId} and process_node=#{processNode}
+  </select>
+
+  <select id="getReturnTaskNodeId" parameterType="String" resultType="Map">
+    select * from process_task_node where task_id=#{taskId} order by create_time ASC
+  </select>
+  <update id="changeTask" parameterType="String">
+    UPDATE process_task set task_state=1,commit_time = NULL where rel_id=#{relId} and task_state=6
+  </update>
+  <update id="changeTaskNode" parameterType="String">
+    UPDATE process_task_node set node_state=0,operate_user = NULL ,commit_time = NULL ,approve_suggestion = NULL where id=#{taskNodeId}
+  </update>
+</mapper>

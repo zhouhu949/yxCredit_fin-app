@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerRenovationMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerRenovation" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="predict_price" property="predictPrice" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+    <result column="other_company" property="otherCompany" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, predict_price,company, company_id, other_company,
+    CREAT_TIME, ALTER_TIME, order_id
+  </sql>
+
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerRenovation" >
+    insert into mag_customer_renovation (id, customer_id, predict_price, 
+      company, company_id, other_company, 
+      CREAT_TIME, ALTER_TIME, order_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, #{predictPrice,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{otherCompany,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=VARCHAR}, #{alterTime,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerRenovation" >
+    insert into mag_customer_renovation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="predictPrice != null" >
+        predict_price,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="otherCompany != null" >
+        other_company,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="alterTime != null" >
+        ALTER_TIME,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="predictPrice != null" >
+        #{predictPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="otherCompany != null" >
+        #{otherCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null" >
+        #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getCustomerRenovation" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_renovation
+    where customer_id = #{customerId}
+  </select>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerManagerMapper">
+    <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerManager" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="enterpris" property="enterpris" jdbcType="VARCHAR" />
+        <result column="identity" property="identity" jdbcType="VARCHAR" />
+        <result column="stock_percent" property="stockPercent" jdbcType="VARCHAR" />
+        <result column="management_years" property="managementYears" jdbcType="VARCHAR" />
+        <result column="capital" property="capital" jdbcType="VARCHAR" />
+        <result column="current_employees" property="currentEmployees" jdbcType="VARCHAR" />
+        <result column="industry" property="industry" jdbcType="VARCHAR" />
+        <result column="mangement_place" property="mangementPlace" jdbcType="VARCHAR" />
+        <result column="year_rent" property="yearRent" jdbcType="VARCHAR" />
+        <result column="management_address" property="managementAddress" jdbcType="VARCHAR" />
+        <result column="year_income" property="yearIncome" jdbcType="VARCHAR" />
+        <result column="year_profit" property="yearProfit" jdbcType="VARCHAR" />
+        <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+        <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="apex1" property="apex1" jdbcType="VARCHAR" />
+        <result column="apex2" property="apex2" jdbcType="VARCHAR" />
+        <result column="apex3" property="apex3" jdbcType="VARCHAR" />
+        <result column="bak" property="bak" jdbcType="VARCHAR" />
+        <result column="identity_id" property="identityId" jdbcType="VARCHAR" />
+        <result column="industry_id" property="industryId" jdbcType="VARCHAR" />
+        <result column="mangement_place_id" property="mangementPlaceId" jdbcType="VARCHAR" />
+        <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="distric" property="distric" jdbcType="VARCHAR" />
+        <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+        <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ID, CUSTOMER_ID, enterpris, identity, stock_percent, management_years, capital, current_employees,
+        industry, mangement_place, year_rent, management_address, year_income, year_profit,
+        creat_time, alter_time, state, apex1, apex2, apex3, bak, identity_id, industry_id,
+        mangement_place_id, provinces, city, distric, provinces_id, city_id, distric_id
+    </sql>
+    <select id="getCustomerManager" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from mag_customer_profession_manager
+        where CUSTOMER_ID = #{customerId}
+    </select>
+    <select id="getCustomerManagerList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from mag_customer_profession_manager
+        where CUSTOMER_ID = #{customerId}
+    </select>
+</mapper>

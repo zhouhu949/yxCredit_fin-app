@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.CrmPayrecoderMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.repayment.po.CrmPayrecoder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="VARCHAR" />
+    <result column="crm_order_id" property="crmOrderId" jdbcType="VARCHAR" />
+    <result column="should_money" property="ShouldMONEY" jdbcType="DECIMAL" />
+    <result column="should_capital" property="shouldCAPITAL" jdbcType="DECIMAL" />
+    <result column="should_accrual" property="ShouldAccrual" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="remain_fee" property="remainFee" jdbcType="DECIMAL" />
+    <result column="paycontrol_id" property="paycontrolId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="repayment_type" property="repaymentType" jdbcType="INTEGER" />
+    <result column="manage_fee" property="manageFee" jdbcType="DECIMAL" />
+    <result column="overdue_interest" property="overdueInterest" jdbcType="DECIMAL" />
+    <result column="prepayment_violate_money" property="prepaymentViolateMoney" jdbcType="DECIMAL" />
+    <result column="overdue_violate_money" property="overdueViolateMoney" jdbcType="DECIMAL" />
+    <result column="certificate_url" property="certificateUrl" jdbcType="VARCHAR" />
+    <result column="should_interest" property="shouldInterest" jdbcType="DECIMAL" />
+    <result column="cust_info_id" property="custInfoId" jdbcType="VARCHAR" />
+    <result column="batch_transfer_serialno" property="batchTransferSerialno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cust_id, crm_order_id, should_money, should_capital, should_accrual, create_time, 
+    emp_id, remain_fee, paycontrol_id, remark, repayment_type, manage_fee, overdue_interest, 
+    prepayment_violate_money, overdue_violate_money, certificate_url, should_interest, 
+    cust_info_id, batch_transfer_serialno
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crm_payrecoder
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crm_payrecoder
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.repayment.po.CrmPayrecoder" >
+    insert into crm_payrecoder (id, cust_id, crm_order_id, 
+      should_money, should_capital, should_accrual, 
+      create_time, emp_id, remain_fee, 
+      paycontrol_id, remark, repayment_type, 
+      manage_fee, overdue_interest, prepayment_violate_money, 
+      overdue_violate_money, certificate_url, 
+      should_interest, cust_info_id, batch_transfer_serialno
+      )
+    values (#{id,jdbcType=VARCHAR}, #{cust_id,jdbcType=VARCHAR}, #{crm_order_id,jdbcType=VARCHAR}, 
+      #{should_money,jdbcType=DECIMAL}, #{should_capital,jdbcType=DECIMAL}, #{should_accrual,jdbcType=DECIMAL}, 
+      #{create_time,jdbcType=VARCHAR}, #{emp_id,jdbcType=VARCHAR}, #{remain_fee,jdbcType=DECIMAL}, 
+      #{paycontrol_id,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{repayment_type,jdbcType=INTEGER}, 
+      #{manage_fee,jdbcType=DECIMAL}, #{overdue_interest,jdbcType=DECIMAL}, #{prepayment_violate_money,jdbcType=DECIMAL}, 
+      #{overdue_violate_money,jdbcType=DECIMAL}, #{certificate_url,jdbcType=VARCHAR}, 
+      #{should_interest,jdbcType=DECIMAL}, #{cust_info_id,jdbcType=VARCHAR}, #{batch_transfer_serialno,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.repayment.po.CrmPayrecoder" >
+    insert into crm_payrecoder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cust_id != null" >
+        cust_id,
+      </if>
+      <if test="crm_order_id != null" >
+        crm_order_id,
+      </if>
+      <if test="should_money != null" >
+        should_money,
+      </if>
+      <if test="should_capital != null" >
+        should_capital,
+      </if>
+      <if test="should_accrual != null" >
+        should_accrual,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="emp_id != null" >
+        emp_id,
+      </if>
+      <if test="remain_fee != null" >
+        remain_fee,
+      </if>
+      <if test="paycontrol_id != null" >
+        paycontrol_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="repayment_type != null" >
+        repayment_type,
+      </if>
+      <if test="manage_fee != null" >
+        manage_fee,
+      </if>
+      <if test="overdue_interest != null" >
+        overdue_interest,
+      </if>
+      <if test="prepayment_violate_money != null" >
+        prepayment_violate_money,
+      </if>
+      <if test="overdue_violate_money != null" >
+        overdue_violate_money,
+      </if>
+      <if test="certificate_url != null" >
+        certificate_url,
+      </if>
+      <if test="should_interest != null" >
+        should_interest,
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id,
+      </if>
+      <if test="batch_transfer_serialno != null" >
+        batch_transfer_serialno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_id != null" >
+        #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="crm_order_id != null" >
+        #{crm_order_id,jdbcType=VARCHAR},
+      </if>
+      <if test="should_money != null" >
+        #{should_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_capital != null" >
+        #{should_capital,jdbcType=DECIMAL},
+      </if>
+      <if test="should_accrual != null" >
+        #{should_accrual,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_id != null" >
+        #{emp_id,jdbcType=VARCHAR},
+      </if>
+      <if test="remain_fee != null" >
+        #{remain_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="paycontrol_id != null" >
+        #{paycontrol_id,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="repayment_type != null" >
+        #{repayment_type,jdbcType=INTEGER},
+      </if>
+      <if test="manage_fee != null" >
+        #{manage_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_interest != null" >
+        #{overdue_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="prepayment_violate_money != null" >
+        #{prepayment_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_violate_money != null" >
+        #{overdue_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="certificate_url != null" >
+        #{certificate_url,jdbcType=VARCHAR},
+      </if>
+      <if test="should_interest != null" >
+        #{should_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="cust_info_id != null" >
+        #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="batch_transfer_serialno != null" >
+        #{batch_transfer_serialno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.repayment.po.CrmPayrecoder" >
+    update crm_payrecoder
+    <set >
+      <if test="cust_id != null" >
+        cust_id = #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="crm_order_id != null" >
+        crm_order_id = #{crm_order_id,jdbcType=VARCHAR},
+      </if>
+      <if test="should_money != null" >
+        should_money = #{should_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_capital != null" >
+        should_capital = #{should_capital,jdbcType=DECIMAL},
+      </if>
+      <if test="should_accrual != null" >
+        should_accrual = #{should_accrual,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_id != null" >
+        emp_id = #{emp_id,jdbcType=VARCHAR},
+      </if>
+      <if test="remain_fee != null" >
+        remain_fee = #{remain_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="paycontrol_id != null" >
+        paycontrol_id = #{paycontrol_id,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="repayment_type != null" >
+        repayment_type = #{repayment_type,jdbcType=INTEGER},
+      </if>
+      <if test="manage_fee != null" >
+        manage_fee = #{manage_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_interest != null" >
+        overdue_interest = #{overdue_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="prepayment_violate_money != null" >
+        prepayment_violate_money = #{prepayment_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_violate_money != null" >
+        overdue_violate_money = #{overdue_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="certificate_url != null" >
+        certificate_url = #{certificate_url,jdbcType=VARCHAR},
+      </if>
+      <if test="should_interest != null" >
+        should_interest = #{should_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id = #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="batch_transfer_serialno != null" >
+        batch_transfer_serialno = #{batch_transfer_serialno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.repayment.po.CrmPayrecoder" >
+    update crm_payrecoder
+    set cust_id = #{cust_id,jdbcType=VARCHAR},
+      crm_order_id = #{crm_order_id,jdbcType=VARCHAR},
+      should_money = #{should_money,jdbcType=DECIMAL},
+      should_capital = #{should_capital,jdbcType=DECIMAL},
+      should_accrual = #{should_accrual,jdbcType=DECIMAL},
+      create_time = #{create_time,jdbcType=VARCHAR},
+      emp_id = #{emp_id,jdbcType=VARCHAR},
+      remain_fee = #{remain_fee,jdbcType=DECIMAL},
+      paycontrol_id = #{paycontrol_id,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      repayment_type = #{repayment_type,jdbcType=INTEGER},
+      manage_fee = #{manage_fee,jdbcType=DECIMAL},
+      overdue_interest = #{overdue_interest,jdbcType=DECIMAL},
+      prepayment_violate_money = #{prepayment_violate_money,jdbcType=DECIMAL},
+      overdue_violate_money = #{overdue_violate_money,jdbcType=DECIMAL},
+      certificate_url = #{certificate_url,jdbcType=VARCHAR},
+      should_interest = #{should_interest,jdbcType=DECIMAL},
+      cust_info_id = #{cust_info_id,jdbcType=VARCHAR},
+      batch_transfer_serialno = #{batch_transfer_serialno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getCrmRepayRecords" resultType="Map" parameterType="java.util.Map" >
+    select
+    rcd.id as recoderId,rcd.emp_id as empId,ctrl.repayment_duetime as qishu,
+    IFNULL( FORMAT( (ctrl.Should_MONEY+ctrl.should_interest+ctrl.overdue_interest+ctrl.overdue_violate_money) - ( SELECT sum(a.should_money) FROM crm_payrecoder a WHERE a.crm_order_id =#{param.crmOrderId} AND a.create_time  &lt; rcd.create_time AND a.PAYCONTROL_ID = ctrl.id ), 2 ), FORMAT((ctrl.Should_MONEY+ctrl.should_interest+ctrl.overdue_interest+ctrl.overdue_violate_money), 2) ) AS shouldMoney,
+    FORMAT(rcd.should_money,2) as realMoney,
+    FORMAT(rcd.Should_CAPITAL,2) as repayCapital,
+    case when rcd.repayment_type=6 then format(0,2) else IFNULL( FORMAT( ctrl.should_MONEY - rcd.Should_CAPITAL - ( SELECT sum(a.Should_CAPITAL) FROM crm_payrecoder a WHERE a.crm_order_id =#{param.crmOrderId} AND a.create_time &lt; rcd.create_time AND a.PAYCONTROL_ID = ctrl.id ), 2 ), FORMAT( ctrl.should_MONEY - rcd.Should_CAPITAL, 2 ) ) end AS remainCapital,
+    FORMAT(rcd.Should_accrual,2) as repayAccrual,
+    FORMAT(0,2) AS remainAccrual,
+    FORMAT(rcd.should_interest,2) as shouldInterest,
+    case when rcd.repayment_type=6 then format(0,2) else IFNULL( FORMAT( ctrl.overdue_interest + ctrl.should_interest + ctrl.overdue_violate_money - rcd.should_interest - ( SELECT sum(a.should_interest) FROM crm_payrecoder a WHERE a.crm_order_id =#{param.crmOrderId} AND a.create_time &lt; rcd.create_time AND a.PAYCONTROL_ID = ctrl.id ), 2 ), FORMAT( ctrl.overdue_interest + ctrl.should_interest + ctrl.overdue_violate_money - rcd.should_interest, 2 ) ) end AS remainInterest,
+    FORMAT(rcd.manage_fee,2) as manageFee,
+    FORMAT(0,2) AS remainFee,
+    rcd.prepayment_violate_money as prepaymentViolateMoney,
+    ctrl.overdue_day as overdueDay,
+    rcd.repayment_type,
+    ctrl.status,
+    rcd.create_time as repaymentTime,
+    emp.true_name as realName,
+    rcd.certificate_url as certificateUrl,
+    ifnull(rcd.remark,'无') as remark
+    from crm_payrecoder rcd
+    inner join crm_paycontrol ctrl on ctrl.id=rcd.paycontrol_id
+    left join zw_sys_user emp on emp.user_id=rcd.emp_id
+    <where>
+      <if test="param.crmOrderId != null and param.crmOrderId != ''">
+        and crmOrderId = #{param.crmOrderId}<!--订单id-->
+      </if>
+    </where>
+    order by ctrl.repayment_duetime,rcd.create_time
+  </select>
+  <select id="getTransferRecord" resultType="Map" parameterType="java.util.Map" >
+      select
+			pcm.id,bci.person_name,pcm.create_time,pcm.operationType,
+			pcm.type,
+		    pcm.personType,
+			pcm.status,
+			ifnull(emp.true_name,'无') real_name,
+			pcm.money,
+  		    pcm.moneyType,
+			pcm.cardNo
+			FROM
+			ps_check_money pcm
+			left join mag_order co on co.id=pcm.crm_order_id
+			left join mag_customer bci on bci.id=pcm.cust_info_id
+			left join zw_sys_user emp on emp.user_id=pcm.operator
+          <where>
+            <if test="param.crm_order_id != null and param.crm_order_id != ''">
+              and pcm.crm_order_id = #{param.crm_order_id}<!--订单id-->
+              and pcm.persontype='2'
+            </if>
+          </where>
+			order by pcm.create_time
+  </select>
+
+  <select id="getAllCapitalList" resultType="Map" parameterType="java.lang.String" >
+  select
+  IFNULL(sum(should_capital),0) paidCapitalMoney
+  from crm_payrecoder
+  where crm_order_id = #{orderId}
+  </select>
+  <select id="checkUniqueList" resultType="Map">
+    select
+    id
+    from crm_payrecoder
+    where crm_order_id = #{orderId} and repayment_type in (0,1,5) and create_time like CONCAT('%',#{currentTime},'%')
+  </select>
+  <select id="getPaidList" resultType="Map" parameterType="java.lang.String" >
+    select
+          IFNULL(sum(should_accrual),0) paidInterest,
+          IFNULL(sum(should_capital),0) paidCapital,
+          IFNULL(sum(manage_fee),0)  paidManageMoney
+    from crm_payrecoder
+    where paycontrol_id = #{payControlId}
+  </select>
+    <select id="getPayList" resultType="Map" >
+        select
+          id
+        from crm_payrecoder
+        where paycontrol_id = #{payControlId} and crm_order_id = #{orderId}
+    </select>
+  <select id="getShouldMoney" resultType="Map" >
+    select
+      sum(should_money - should_interest) as should_money
+    from crm_payrecoder
+    where crm_order_id = #{orderId}
+  </select>
+</mapper>

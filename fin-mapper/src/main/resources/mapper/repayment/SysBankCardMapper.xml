@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.SysBankCardMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.repayment.po.BankCard" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_number" property="bankNumber" jdbcType="VARCHAR" />
+    <result column="bank_subbranch" property="bankSubbranch" jdbcType="VARCHAR" />
+    <result column="bind_status" property="bindStatus" jdbcType="DECIMAL" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="VARCHAR" />
+    <result column="cust_info_id" property="custInfoId" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="DECIMAL" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="icon_url" property="iconUrl" jdbcType="VARCHAR" />
+    <result column="prov_no" property="provNo" jdbcType="VARCHAR" />
+    <result column="city_no" property="cityNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bank_name, bank_number, bank_subbranch, bind_status, card_number, city_id, create_time, 
+    cust_id, cust_info_id, cust_name, source, update_time, icon_url, prov_no, city_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_bank_card
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_bank_card
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.repayment.po.BankCard" >
+    insert into sys_bank_card (id, bank_name, bank_number, 
+      bank_subbranch, bind_status, card_number, 
+      city_id, create_time, cust_id, 
+      cust_info_id, cust_name, source, 
+      update_time, icon_url, prov_no, 
+      city_no)
+    values (#{id,jdbcType=VARCHAR}, #{bank_name,jdbcType=VARCHAR}, #{bank_number,jdbcType=VARCHAR}, 
+      #{bank_subbranch,jdbcType=VARCHAR}, #{bind_status,jdbcType=DECIMAL}, #{card_number,jdbcType=VARCHAR}, 
+      #{city_id,jdbcType=VARCHAR}, #{create_time,jdbcType=VARCHAR}, #{cust_id,jdbcType=VARCHAR}, 
+      #{cust_info_id,jdbcType=VARCHAR}, #{cust_name,jdbcType=VARCHAR}, #{source,jdbcType=DECIMAL}, 
+      #{update_time,jdbcType=VARCHAR}, #{icon_url,jdbcType=VARCHAR}, #{prov_no,jdbcType=VARCHAR}, 
+      #{city_no,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.repayment.po.BankCard" >
+    insert into sys_bank_card
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bank_name != null" >
+        bank_name,
+      </if>
+      <if test="bank_number != null" >
+        bank_number,
+      </if>
+      <if test="bank_subbranch != null" >
+        bank_subbranch,
+      </if>
+      <if test="bind_status != null" >
+        bind_status,
+      </if>
+      <if test="card_number != null" >
+        card_number,
+      </if>
+      <if test="city_id != null" >
+        city_id,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="cust_id != null" >
+        cust_id,
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id,
+      </if>
+      <if test="cust_name != null" >
+        cust_name,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="update_time != null" >
+        update_time,
+      </if>
+      <if test="icon_url != null" >
+        icon_url,
+      </if>
+      <if test="prov_no != null" >
+        prov_no,
+      </if>
+      <if test="city_no != null" >
+        city_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_name != null" >
+        #{bank_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_number != null" >
+        #{bank_number,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_subbranch != null" >
+        #{bank_subbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bind_status != null" >
+        #{bind_status,jdbcType=DECIMAL},
+      </if>
+      <if test="card_number != null" >
+        #{card_number,jdbcType=VARCHAR},
+      </if>
+      <if test="city_id != null" >
+        #{city_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_id != null" >
+        #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_info_id != null" >
+        #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_name != null" >
+        #{cust_name,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=DECIMAL},
+      </if>
+      <if test="update_time != null" >
+        #{update_time,jdbcType=VARCHAR},
+      </if>
+      <if test="icon_url != null" >
+        #{icon_url,jdbcType=VARCHAR},
+      </if>
+      <if test="prov_no != null" >
+        #{prov_no,jdbcType=VARCHAR},
+      </if>
+      <if test="city_no != null" >
+        #{city_no,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.repayment.po.BankCard" >
+    update sys_bank_card
+    <set >
+      <if test="bank_name != null" >
+        bank_name = #{bank_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_number != null" >
+        bank_number = #{bank_number,jdbcType=VARCHAR},
+      </if>
+      <if test="bank_subbranch != null" >
+        bank_subbranch = #{bank_subbranch,jdbcType=VARCHAR},
+      </if>
+      <if test="bind_status != null" >
+        bind_status = #{bind_status,jdbcType=DECIMAL},
+      </if>
+      <if test="card_number != null" >
+        card_number = #{card_number,jdbcType=VARCHAR},
+      </if>
+      <if test="city_id != null" >
+        city_id = #{city_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_id != null" >
+        cust_id = #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id = #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_name != null" >
+        cust_name = #{cust_name,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=DECIMAL},
+      </if>
+      <if test="update_time != null" >
+        update_time = #{update_time,jdbcType=VARCHAR},
+      </if>
+      <if test="icon_url != null" >
+        icon_url = #{icon_url,jdbcType=VARCHAR},
+      </if>
+      <if test="prov_no != null" >
+        prov_no = #{prov_no,jdbcType=VARCHAR},
+      </if>
+      <if test="city_no != null" >
+        city_no = #{city_no,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.repayment.po.BankCard" >
+    update sys_bank_card
+    set bank_name = #{bank_name,jdbcType=VARCHAR},
+      bank_number = #{bank_number,jdbcType=VARCHAR},
+      bank_subbranch = #{bank_subbranch,jdbcType=VARCHAR},
+      bind_status = #{bind_status,jdbcType=DECIMAL},
+      card_number = #{card_number,jdbcType=VARCHAR},
+      city_id = #{city_id,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=VARCHAR},
+      cust_id = #{cust_id,jdbcType=VARCHAR},
+      cust_info_id = #{cust_info_id,jdbcType=VARCHAR},
+      cust_name = #{cust_name,jdbcType=VARCHAR},
+      source = #{source,jdbcType=DECIMAL},
+      update_time = #{update_time,jdbcType=VARCHAR},
+      icon_url = #{icon_url,jdbcType=VARCHAR},
+      prov_no = #{prov_no,jdbcType=VARCHAR},
+      city_no = #{city_no,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getCustBankCardInfo" resultType="Map" parameterType="java.lang.String">
+    SELECT sbc.cust_name,
+    sbc.card_number,
+    sbc.create_time,
+    sbc.update_time,
+    ifnull(fp.Prov_nm,'无') as Prov_nm,
+    ifnull(case sbc.prov_no when '110' then '' when '120' then '' when '310' then '' when '500' then '' else fc.City_nm end,'') as City_nm,
+    ifnull(case source when 1 then fb.Bkname when 2 then sbc.bank_name end,'无') as bankName,
+    source,
+    bind_status
+    from sys_bank_card sbc
+    LEFT JOIN fy_bank fb on fb.Bkcode=sbc.bank_number
+    LEFT JOIN fy_province fp on fp.Prov_cd=sbc.prov_no
+    LEFT JOIN fy_city fc on fc.City_cd=sbc.city_no
+    <where>
+        and sbc.cust_info_id=#{customerId}<!--客户id-->
+    </where>
+  </select>
+</mapper>

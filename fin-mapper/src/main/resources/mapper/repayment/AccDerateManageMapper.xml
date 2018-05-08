@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.AccDerateManageMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.repayment.po.DerateManage" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUST_INFO_ID" property="custInfoId" jdbcType="VARCHAR" />
+    <result column="CRM_ORDER_ID" property="crmOrderId" jdbcType="VARCHAR" />
+    <result column="RECEIVABLE_APPLY_ID" property="receivableApplyId" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CEO_APPROVE_STATUS" property="ceoApproveStatus" jdbcType="INTEGER" />
+    <result column="CEO_EMPLOYEE_ID" property="ceoEmployeeId" jdbcType="VARCHAR" />
+    <result column="INITIAL_PLATFORM_MANAGE_MONEY" property="initialPlManageMoney" jdbcType="DECIMAL" />
+    <result column="DERATE_PLATFORM_MANAGE_MONEY" property="deratePlManageMoney" jdbcType="DECIMAL" />
+    <result column="FINAL_PLATFORM_MANAGE_MONEY" property="finalPlManageMoney" jdbcType="DECIMAL" />
+    <result column="INITIAL_INTEREST" property="initialInterest" jdbcType="DECIMAL" />
+    <result column="DERATE_INTEREST" property="derateInterest" jdbcType="DECIMAL" />
+    <result column="FINAL_INTEREST" property="finalInterest" jdbcType="DECIMAL" />
+    <result column="INITIAL_CONTRACT_PENALTY" property="initialContractPenalty" jdbcType="DECIMAL" />
+    <result column="DERATE_CONTRACT_PENALTY" property="derateContractPenalty" jdbcType="DECIMAL" />
+    <result column="FINAL_CONTRACT_PENALTY" property="finalContractPenalty" jdbcType="DECIMAL" />
+    <result column="INITIAL_OVERDUE_INTEREST" property="initialOverdueInterest" jdbcType="DECIMAL" />
+    <result column="DERATE_OVERDUE_INTEREST" property="derateOverdueInterest" jdbcType="DECIMAL" />
+    <result column="FINAL_OVERDUE_INTEREST" property="finalOverdueInterest" jdbcType="DECIMAL" />
+    <result column="INITIAL_CAPITAL" property="initialCapital" jdbcType="DECIMAL" />
+    <result column="DERATE_CAPITAL" property="derateCapital" jdbcType="DECIMAL" />
+    <result column="FINAL_CAPITAL" property="finalCapital" jdbcType="DECIMAL" />
+    <result column="INITIAL_ADVANCE_PENALTY" property="initialAdvancePenalty" jdbcType="DECIMAL" />
+    <result column="DERATE_ADVANCE_PENALTY" property="derateAdvancePenalty" jdbcType="DECIMAL" />
+    <result column="FINAL_ADVANCE_PENALTY" property="finalAdvancePenalty" jdbcType="DECIMAL" />
+    <result column="APPLY_CONTENT" property="applyContent" jdbcType="VARCHAR" />
+    <result column="APPLY_TYPE" property="applyType" jdbcType="INTEGER" />
+    <result column="BASE_MONEY" property="baseMoney" jdbcType="DECIMAL" />
+    <result column="THE_SCENE_MONEY" property="theSceneMoney" jdbcType="DECIMAL" />
+    <result column="BANKCARD_MONEY" property="bankcardMoney" jdbcType="DECIMAL" />
+    <result column="DERATE_MONEY" property="derateMoney" jdbcType="DECIMAL" />
+    <result column="FINAL_DERATE_MONEY" property="finalDerateMoney" jdbcType="DECIMAL" />
+    <result column="INITIAL_PLATFORM_MANAGE_MONEY_CURRENT" property="initialPlManageMoneyCurrent" jdbcType="DECIMAL" />
+    <result column="DERATE_PLATFORM_MANAGE_MONEY_CURRENT" property="deratePlManageMoneyCurrent" jdbcType="DECIMAL" />
+    <result column="FINAL_PLATFORM_MANAGE_MONEY_CURRENT" property="finalPlManageMoneyCurrent" jdbcType="DECIMAL" />
+    <result column="INITIAL_INTEREST_CURRENT" property="initialInterestCurrent" jdbcType="DECIMAL" />
+    <result column="DERATE_INTEREST_CURRENT" property="derateInterestCurrent" jdbcType="DECIMAL" />
+    <result column="FINAL_INTEREST_CURRENT" property="finalInterestCurrent" jdbcType="DECIMAL" />
+    <result column="INITIAL_CONTRACT_PENALTY_CURRENT" property="initialContractPenaltyCurrent" jdbcType="DECIMAL" />
+    <result column="DERATE_CONTRACT_PENALTY_CURRENT" property="deratePlManageMoneyCurrent" jdbcType="DECIMAL" />
+    <result column="FINAL_CONTRACT_PENALTY_CURRENT" property="finalContractPenaltyCurrent" jdbcType="DECIMAL" />
+    <result column="INITIAL_OVERDUE_INTEREST_CURRENT" property="initialOverdueInterestCurrent" jdbcType="DECIMAL" />
+    <result column="DERATE_OVERDUE_INTEREST_CURRENT" property="derateOverdueInterestCurrent" jdbcType="DECIMAL" />
+    <result column="FINAL_OVERDUE_INTEREST_CURRENT" property="finalOverdueInterestCurrent" jdbcType="DECIMAL" />
+    <result column="FINISH_TIME" property="finishTtime" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="PAYCONTROL_IDS" property="paycontrolIds" jdbcType="VARCHAR" />
+    <result column="REPAYMENT_TIME" property="repaymentTime" jdbcType="VARCHAR" />
+    <result column="INITIAL_RETURN_SERVICE" property="initialReturnService" jdbcType="DECIMAL" />
+    <result column="DERATE_RETURN_SERVICE" property="derateReturnService" jdbcType="DECIMAL" />
+    <result column="FINAL_RETURN_SERVICE" property="finalReturnService" jdbcType="DECIMAL" />
+    <result column="INITIAL_SURPLUS_INTEREST" property="initialSurplusInterest" jdbcType="DECIMAL" />
+    <result column="DERATE_SURPLUS_INTEREST" property="derateSurplusInterest" jdbcType="DECIMAL" />
+    <result column="FINAL_SURPLUS_INTEREST" property="finalSurplusInterest" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUST_INFO_ID, CRM_ORDER_ID, RECEIVABLE_APPLY_ID, STATUS, CEO_APPROVE_STATUS, 
+    CEO_EMPLOYEE_ID, INITIAL_PLATFORM_MANAGE_MONEY, DERATE_PLATFORM_MANAGE_MONEY, FINAL_PLATFORM_MANAGE_MONEY, 
+    INITIAL_INTEREST, DERATE_INTEREST, FINAL_INTEREST, INITIAL_CONTRACT_PENALTY, DERATE_CONTRACT_PENALTY, 
+    FINAL_CONTRACT_PENALTY, INITIAL_OVERDUE_INTEREST, DERATE_OVERDUE_INTEREST, FINAL_OVERDUE_INTEREST, 
+    INITIAL_CAPITAL, DERATE_CAPITAL, FINAL_CAPITAL, INITIAL_ADVANCE_PENALTY, DERATE_ADVANCE_PENALTY, 
+    FINAL_ADVANCE_PENALTY, APPLY_CONTENT, APPLY_TYPE, BASE_MONEY, THE_SCENE_MONEY, BANKCARD_MONEY, 
+    DERATE_MONEY, FINAL_DERATE_MONEY, INITIAL_PLATFORM_MANAGE_MONEY_CURRENT, DERATE_PLATFORM_MANAGE_MONEY_CURRENT, 
+    FINAL_PLATFORM_MANAGE_MONEY_CURRENT, INITIAL_INTEREST_CURRENT, DERATE_INTEREST_CURRENT, 
+    FINAL_INTEREST_CURRENT, INITIAL_CONTRACT_PENALTY_CURRENT, DERATE_CONTRACT_PENALTY_CURRENT, 
+    FINAL_CONTRACT_PENALTY_CURRENT, INITIAL_OVERDUE_INTEREST_CURRENT, DERATE_OVERDUE_INTEREST_CURRENT, 
+    FINAL_OVERDUE_INTEREST_CURRENT, FINISH_TIME, CREATE_TIME, PAYCONTROL_IDS, REPAYMENT_TIME, 
+    INITIAL_RETURN_SERVICE, DERATE_RETURN_SERVICE, FINAL_RETURN_SERVICE, INITIAL_SURPLUS_INTEREST, 
+    DERATE_SURPLUS_INTEREST, FINAL_SURPLUS_INTEREST
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from acc_derate_manage
+    where ID = #{ID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from acc_derate_manage
+    where ID = #{ID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.repayment.po.DerateManage" >
+    insert into acc_derate_manage (ID, CUST_INFO_ID, CRM_ORDER_ID, 
+      RECEIVABLE_APPLY_ID, STATUS, CEO_APPROVE_STATUS, 
+      CEO_EMPLOYEE_ID, INITIAL_PLATFORM_MANAGE_MONEY, 
+      DERATE_PLATFORM_MANAGE_MONEY, FINAL_PLATFORM_MANAGE_MONEY, 
+      INITIAL_INTEREST, DERATE_INTEREST, FINAL_INTEREST, 
+      INITIAL_CONTRACT_PENALTY, DERATE_CONTRACT_PENALTY, 
+      FINAL_CONTRACT_PENALTY, INITIAL_OVERDUE_INTEREST, 
+      DERATE_OVERDUE_INTEREST, FINAL_OVERDUE_INTEREST, 
+      INITIAL_CAPITAL, DERATE_CAPITAL, FINAL_CAPITAL, 
+      INITIAL_ADVANCE_PENALTY, DERATE_ADVANCE_PENALTY, 
+      FINAL_ADVANCE_PENALTY, APPLY_CONTENT, APPLY_TYPE, 
+      BASE_MONEY, THE_SCENE_MONEY, BANKCARD_MONEY, 
+      DERATE_MONEY, FINAL_DERATE_MONEY, INITIAL_PLATFORM_MANAGE_MONEY_CURRENT, 
+      DERATE_PLATFORM_MANAGE_MONEY_CURRENT, FINAL_PLATFORM_MANAGE_MONEY_CURRENT, 
+      INITIAL_INTEREST_CURRENT, DERATE_INTEREST_CURRENT, 
+      FINAL_INTEREST_CURRENT, INITIAL_CONTRACT_PENALTY_CURRENT, 
+      DERATE_CONTRACT_PENALTY_CURRENT, FINAL_CONTRACT_PENALTY_CURRENT, 
+      INITIAL_OVERDUE_INTEREST_CURRENT, DERATE_OVERDUE_INTEREST_CURRENT, 
+      FINAL_OVERDUE_INTEREST_CURRENT, FINISH_TIME, 
+      CREATE_TIME, PAYCONTROL_IDS, REPAYMENT_TIME, 
+      INITIAL_RETURN_SERVICE, DERATE_RETURN_SERVICE, 
+      FINAL_RETURN_SERVICE, INITIAL_SURPLUS_INTEREST, 
+      DERATE_SURPLUS_INTEREST, FINAL_SURPLUS_INTEREST
+      )
+    values (#{ID,jdbcType=VARCHAR}, #{CUST_INFO_ID,jdbcType=VARCHAR}, #{CRM_ORDER_ID,jdbcType=VARCHAR}, 
+      #{RECEIVABLE_APPLY_ID,jdbcType=VARCHAR}, #{STATUS,jdbcType=INTEGER}, #{CEO_APPROVE_STATUS,jdbcType=INTEGER}, 
+      #{CEO_EMPLOYEE_ID,jdbcType=VARCHAR}, #{INITIAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL}, 
+      #{DERATE_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL}, #{FINAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL}, 
+      #{INITIAL_INTEREST,jdbcType=DECIMAL}, #{DERATE_INTEREST,jdbcType=DECIMAL}, #{FINAL_INTEREST,jdbcType=DECIMAL}, 
+      #{INITIAL_CONTRACT_PENALTY,jdbcType=DECIMAL}, #{DERATE_CONTRACT_PENALTY,jdbcType=DECIMAL}, 
+      #{FINAL_CONTRACT_PENALTY,jdbcType=DECIMAL}, #{INITIAL_OVERDUE_INTEREST,jdbcType=DECIMAL}, 
+      #{DERATE_OVERDUE_INTEREST,jdbcType=DECIMAL}, #{FINAL_OVERDUE_INTEREST,jdbcType=DECIMAL}, 
+      #{INITIAL_CAPITAL,jdbcType=DECIMAL}, #{DERATE_CAPITAL,jdbcType=DECIMAL}, #{FINAL_CAPITAL,jdbcType=DECIMAL}, 
+      #{INITIAL_ADVANCE_PENALTY,jdbcType=DECIMAL}, #{DERATE_ADVANCE_PENALTY,jdbcType=DECIMAL}, 
+      #{FINAL_ADVANCE_PENALTY,jdbcType=DECIMAL}, #{APPLY_CONTENT,jdbcType=VARCHAR}, #{APPLY_TYPE,jdbcType=INTEGER}, 
+      #{BASE_MONEY,jdbcType=DECIMAL}, #{THE_SCENE_MONEY,jdbcType=DECIMAL}, #{BANKCARD_MONEY,jdbcType=DECIMAL}, 
+      #{DERATE_MONEY,jdbcType=DECIMAL}, #{FINAL_DERATE_MONEY,jdbcType=DECIMAL}, #{INITIAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL}, 
+      #{DERATE_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL}, #{FINAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL}, 
+      #{INITIAL_INTEREST_CURRENT,jdbcType=DECIMAL}, #{DERATE_INTEREST_CURRENT,jdbcType=DECIMAL}, 
+      #{FINAL_INTEREST_CURRENT,jdbcType=DECIMAL}, #{INITIAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL}, 
+      #{DERATE_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL}, #{FINAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL}, 
+      #{INITIAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL}, #{DERATE_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL}, 
+      #{FINAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL}, #{FINISH_TIME,jdbcType=VARCHAR}, 
+      #{CREATE_TIME,jdbcType=VARCHAR}, #{PAYCONTROL_IDS,jdbcType=VARCHAR}, #{REPAYMENT_TIME,jdbcType=VARCHAR}, 
+      #{INITIAL_RETURN_SERVICE,jdbcType=DECIMAL}, #{DERATE_RETURN_SERVICE,jdbcType=DECIMAL}, 
+      #{FINAL_RETURN_SERVICE,jdbcType=DECIMAL}, #{INITIAL_SURPLUS_INTEREST,jdbcType=DECIMAL}, 
+      #{DERATE_SURPLUS_INTEREST,jdbcType=DECIMAL}, #{FINAL_SURPLUS_INTEREST,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.repayment.po.DerateManage" >
+    insert into acc_derate_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        ID,
+      </if>
+      <if test="CUST_INFO_ID != null" >
+        CUST_INFO_ID,
+      </if>
+      <if test="CRM_ORDER_ID != null" >
+        CRM_ORDER_ID,
+      </if>
+      <if test="RECEIVABLE_APPLY_ID != null" >
+        RECEIVABLE_APPLY_ID,
+      </if>
+      <if test="STATUS != null" >
+        STATUS,
+      </if>
+      <if test="CEO_APPROVE_STATUS != null" >
+        CEO_APPROVE_STATUS,
+      </if>
+      <if test="CEO_EMPLOYEE_ID != null" >
+        CEO_EMPLOYEE_ID,
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY != null" >
+        INITIAL_PLATFORM_MANAGE_MONEY,
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY != null" >
+        DERATE_PLATFORM_MANAGE_MONEY,
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY != null" >
+        FINAL_PLATFORM_MANAGE_MONEY,
+      </if>
+      <if test="INITIAL_INTEREST != null" >
+        INITIAL_INTEREST,
+      </if>
+      <if test="DERATE_INTEREST != null" >
+        DERATE_INTEREST,
+      </if>
+      <if test="FINAL_INTEREST != null" >
+        FINAL_INTEREST,
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY != null" >
+        INITIAL_CONTRACT_PENALTY,
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY != null" >
+        DERATE_CONTRACT_PENALTY,
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY != null" >
+        FINAL_CONTRACT_PENALTY,
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST != null" >
+        INITIAL_OVERDUE_INTEREST,
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST != null" >
+        DERATE_OVERDUE_INTEREST,
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST != null" >
+        FINAL_OVERDUE_INTEREST,
+      </if>
+      <if test="INITIAL_CAPITAL != null" >
+        INITIAL_CAPITAL,
+      </if>
+      <if test="DERATE_CAPITAL != null" >
+        DERATE_CAPITAL,
+      </if>
+      <if test="FINAL_CAPITAL != null" >
+        FINAL_CAPITAL,
+      </if>
+      <if test="INITIAL_ADVANCE_PENALTY != null" >
+        INITIAL_ADVANCE_PENALTY,
+      </if>
+      <if test="DERATE_ADVANCE_PENALTY != null" >
+        DERATE_ADVANCE_PENALTY,
+      </if>
+      <if test="FINAL_ADVANCE_PENALTY != null" >
+        FINAL_ADVANCE_PENALTY,
+      </if>
+      <if test="APPLY_CONTENT != null" >
+        APPLY_CONTENT,
+      </if>
+      <if test="APPLY_TYPE != null" >
+        APPLY_TYPE,
+      </if>
+      <if test="BASE_MONEY != null" >
+        BASE_MONEY,
+      </if>
+      <if test="THE_SCENE_MONEY != null" >
+        THE_SCENE_MONEY,
+      </if>
+      <if test="BANKCARD_MONEY != null" >
+        BANKCARD_MONEY,
+      </if>
+      <if test="DERATE_MONEY != null" >
+        DERATE_MONEY,
+      </if>
+      <if test="FINAL_DERATE_MONEY != null" >
+        FINAL_DERATE_MONEY,
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        INITIAL_PLATFORM_MANAGE_MONEY_CURRENT,
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        DERATE_PLATFORM_MANAGE_MONEY_CURRENT,
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        FINAL_PLATFORM_MANAGE_MONEY_CURRENT,
+      </if>
+      <if test="INITIAL_INTEREST_CURRENT != null" >
+        INITIAL_INTEREST_CURRENT,
+      </if>
+      <if test="DERATE_INTEREST_CURRENT != null" >
+        DERATE_INTEREST_CURRENT,
+      </if>
+      <if test="FINAL_INTEREST_CURRENT != null" >
+        FINAL_INTEREST_CURRENT,
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY_CURRENT != null" >
+        INITIAL_CONTRACT_PENALTY_CURRENT,
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY_CURRENT != null" >
+        DERATE_CONTRACT_PENALTY_CURRENT,
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY_CURRENT != null" >
+        FINAL_CONTRACT_PENALTY_CURRENT,
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST_CURRENT != null" >
+        INITIAL_OVERDUE_INTEREST_CURRENT,
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST_CURRENT != null" >
+        DERATE_OVERDUE_INTEREST_CURRENT,
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST_CURRENT != null" >
+        FINAL_OVERDUE_INTEREST_CURRENT,
+      </if>
+      <if test="FINISH_TIME != null" >
+        FINISH_TIME,
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME,
+      </if>
+      <if test="PAYCONTROL_IDS != null" >
+        PAYCONTROL_IDS,
+      </if>
+      <if test="REPAYMENT_TIME != null" >
+        REPAYMENT_TIME,
+      </if>
+      <if test="INITIAL_RETURN_SERVICE != null" >
+        INITIAL_RETURN_SERVICE,
+      </if>
+      <if test="DERATE_RETURN_SERVICE != null" >
+        DERATE_RETURN_SERVICE,
+      </if>
+      <if test="FINAL_RETURN_SERVICE != null" >
+        FINAL_RETURN_SERVICE,
+      </if>
+      <if test="INITIAL_SURPLUS_INTEREST != null" >
+        INITIAL_SURPLUS_INTEREST,
+      </if>
+      <if test="DERATE_SURPLUS_INTEREST != null" >
+        DERATE_SURPLUS_INTEREST,
+      </if>
+      <if test="FINAL_SURPLUS_INTEREST != null" >
+        FINAL_SURPLUS_INTEREST,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ID != null" >
+        #{ID,jdbcType=VARCHAR},
+      </if>
+      <if test="CUST_INFO_ID != null" >
+        #{CUST_INFO_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="CRM_ORDER_ID != null" >
+        #{CRM_ORDER_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="RECEIVABLE_APPLY_ID != null" >
+        #{RECEIVABLE_APPLY_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="STATUS != null" >
+        #{STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="CEO_APPROVE_STATUS != null" >
+        #{CEO_APPROVE_STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="CEO_EMPLOYEE_ID != null" >
+        #{CEO_EMPLOYEE_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY != null" >
+        #{INITIAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY != null" >
+        #{DERATE_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY != null" >
+        #{FINAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_INTEREST != null" >
+        #{INITIAL_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_INTEREST != null" >
+        #{DERATE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_INTEREST != null" >
+        #{FINAL_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY != null" >
+        #{INITIAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY != null" >
+        #{DERATE_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY != null" >
+        #{FINAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST != null" >
+        #{INITIAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST != null" >
+        #{DERATE_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST != null" >
+        #{FINAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CAPITAL != null" >
+        #{INITIAL_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CAPITAL != null" >
+        #{DERATE_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CAPITAL != null" >
+        #{FINAL_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_ADVANCE_PENALTY != null" >
+        #{INITIAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_ADVANCE_PENALTY != null" >
+        #{DERATE_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_ADVANCE_PENALTY != null" >
+        #{FINAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="APPLY_CONTENT != null" >
+        #{APPLY_CONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="APPLY_TYPE != null" >
+        #{APPLY_TYPE,jdbcType=INTEGER},
+      </if>
+      <if test="BASE_MONEY != null" >
+        #{BASE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="THE_SCENE_MONEY != null" >
+        #{THE_SCENE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="BANKCARD_MONEY != null" >
+        #{BANKCARD_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_MONEY != null" >
+        #{DERATE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_DERATE_MONEY != null" >
+        #{FINAL_DERATE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        #{INITIAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        #{DERATE_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        #{FINAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_INTEREST_CURRENT != null" >
+        #{INITIAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_INTEREST_CURRENT != null" >
+        #{DERATE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_INTEREST_CURRENT != null" >
+        #{FINAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY_CURRENT != null" >
+        #{INITIAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY_CURRENT != null" >
+        #{DERATE_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY_CURRENT != null" >
+        #{FINAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST_CURRENT != null" >
+        #{INITIAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST_CURRENT != null" >
+        #{DERATE_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST_CURRENT != null" >
+        #{FINAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINISH_TIME != null" >
+        #{FINISH_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_TIME != null" >
+        #{CREATE_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="PAYCONTROL_IDS != null" >
+        #{PAYCONTROL_IDS,jdbcType=VARCHAR},
+      </if>
+      <if test="REPAYMENT_TIME != null" >
+        #{REPAYMENT_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="INITIAL_RETURN_SERVICE != null" >
+        #{INITIAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_RETURN_SERVICE != null" >
+        #{DERATE_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_RETURN_SERVICE != null" >
+        #{FINAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_SURPLUS_INTEREST != null" >
+        #{INITIAL_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_SURPLUS_INTEREST != null" >
+        #{DERATE_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_SURPLUS_INTEREST != null" >
+        #{FINAL_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.repayment.po.DerateManage" >
+    update acc_derate_manage
+    <set >
+      <if test="CUST_INFO_ID != null" >
+        CUST_INFO_ID = #{CUST_INFO_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="CRM_ORDER_ID != null" >
+        CRM_ORDER_ID = #{CRM_ORDER_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="RECEIVABLE_APPLY_ID != null" >
+        RECEIVABLE_APPLY_ID = #{RECEIVABLE_APPLY_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="STATUS != null" >
+        STATUS = #{STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="CEO_APPROVE_STATUS != null" >
+        CEO_APPROVE_STATUS = #{CEO_APPROVE_STATUS,jdbcType=INTEGER},
+      </if>
+      <if test="CEO_EMPLOYEE_ID != null" >
+        CEO_EMPLOYEE_ID = #{CEO_EMPLOYEE_ID,jdbcType=VARCHAR},
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY != null" >
+        INITIAL_PLATFORM_MANAGE_MONEY = #{INITIAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY != null" >
+        DERATE_PLATFORM_MANAGE_MONEY = #{DERATE_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY != null" >
+        FINAL_PLATFORM_MANAGE_MONEY = #{FINAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_INTEREST != null" >
+        INITIAL_INTEREST = #{INITIAL_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_INTEREST != null" >
+        DERATE_INTEREST = #{DERATE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_INTEREST != null" >
+        FINAL_INTEREST = #{FINAL_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY != null" >
+        INITIAL_CONTRACT_PENALTY = #{INITIAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY != null" >
+        DERATE_CONTRACT_PENALTY = #{DERATE_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY != null" >
+        FINAL_CONTRACT_PENALTY = #{FINAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST != null" >
+        INITIAL_OVERDUE_INTEREST = #{INITIAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST != null" >
+        DERATE_OVERDUE_INTEREST = #{DERATE_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST != null" >
+        FINAL_OVERDUE_INTEREST = #{FINAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CAPITAL != null" >
+        INITIAL_CAPITAL = #{INITIAL_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CAPITAL != null" >
+        DERATE_CAPITAL = #{DERATE_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CAPITAL != null" >
+        FINAL_CAPITAL = #{FINAL_CAPITAL,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_ADVANCE_PENALTY != null" >
+        INITIAL_ADVANCE_PENALTY = #{INITIAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_ADVANCE_PENALTY != null" >
+        DERATE_ADVANCE_PENALTY = #{DERATE_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_ADVANCE_PENALTY != null" >
+        FINAL_ADVANCE_PENALTY = #{FINAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      </if>
+      <if test="APPLY_CONTENT != null" >
+        APPLY_CONTENT = #{APPLY_CONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="APPLY_TYPE != null" >
+        APPLY_TYPE = #{APPLY_TYPE,jdbcType=INTEGER},
+      </if>
+      <if test="BASE_MONEY != null" >
+        BASE_MONEY = #{BASE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="THE_SCENE_MONEY != null" >
+        THE_SCENE_MONEY = #{THE_SCENE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="BANKCARD_MONEY != null" >
+        BANKCARD_MONEY = #{BANKCARD_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_MONEY != null" >
+        DERATE_MONEY = #{DERATE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_DERATE_MONEY != null" >
+        FINAL_DERATE_MONEY = #{FINAL_DERATE_MONEY,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        INITIAL_PLATFORM_MANAGE_MONEY_CURRENT = #{INITIAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        DERATE_PLATFORM_MANAGE_MONEY_CURRENT = #{DERATE_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_PLATFORM_MANAGE_MONEY_CURRENT != null" >
+        FINAL_PLATFORM_MANAGE_MONEY_CURRENT = #{FINAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_INTEREST_CURRENT != null" >
+        INITIAL_INTEREST_CURRENT = #{INITIAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_INTEREST_CURRENT != null" >
+        DERATE_INTEREST_CURRENT = #{DERATE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_INTEREST_CURRENT != null" >
+        FINAL_INTEREST_CURRENT = #{FINAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_CONTRACT_PENALTY_CURRENT != null" >
+        INITIAL_CONTRACT_PENALTY_CURRENT = #{INITIAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_CONTRACT_PENALTY_CURRENT != null" >
+        DERATE_CONTRACT_PENALTY_CURRENT = #{DERATE_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_CONTRACT_PENALTY_CURRENT != null" >
+        FINAL_CONTRACT_PENALTY_CURRENT = #{FINAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_OVERDUE_INTEREST_CURRENT != null" >
+        INITIAL_OVERDUE_INTEREST_CURRENT = #{INITIAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_OVERDUE_INTEREST_CURRENT != null" >
+        DERATE_OVERDUE_INTEREST_CURRENT = #{DERATE_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_OVERDUE_INTEREST_CURRENT != null" >
+        FINAL_OVERDUE_INTEREST_CURRENT = #{FINAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      </if>
+      <if test="FINISH_TIME != null" >
+        FINISH_TIME = #{FINISH_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="CREATE_TIME != null" >
+        CREATE_TIME = #{CREATE_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="PAYCONTROL_IDS != null" >
+        PAYCONTROL_IDS = #{PAYCONTROL_IDS,jdbcType=VARCHAR},
+      </if>
+      <if test="REPAYMENT_TIME != null" >
+        REPAYMENT_TIME = #{REPAYMENT_TIME,jdbcType=VARCHAR},
+      </if>
+      <if test="INITIAL_RETURN_SERVICE != null" >
+        INITIAL_RETURN_SERVICE = #{INITIAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_RETURN_SERVICE != null" >
+        DERATE_RETURN_SERVICE = #{DERATE_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_RETURN_SERVICE != null" >
+        FINAL_RETURN_SERVICE = #{FINAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      </if>
+      <if test="INITIAL_SURPLUS_INTEREST != null" >
+        INITIAL_SURPLUS_INTEREST = #{INITIAL_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="DERATE_SURPLUS_INTEREST != null" >
+        DERATE_SURPLUS_INTEREST = #{DERATE_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+      <if test="FINAL_SURPLUS_INTEREST != null" >
+        FINAL_SURPLUS_INTEREST = #{FINAL_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.repayment.po.DerateManage" >
+    update acc_derate_manage
+    set CUST_INFO_ID = #{CUST_INFO_ID,jdbcType=VARCHAR},
+      CRM_ORDER_ID = #{CRM_ORDER_ID,jdbcType=VARCHAR},
+      RECEIVABLE_APPLY_ID = #{RECEIVABLE_APPLY_ID,jdbcType=VARCHAR},
+      STATUS = #{STATUS,jdbcType=INTEGER},
+      CEO_APPROVE_STATUS = #{CEO_APPROVE_STATUS,jdbcType=INTEGER},
+      CEO_EMPLOYEE_ID = #{CEO_EMPLOYEE_ID,jdbcType=VARCHAR},
+      INITIAL_PLATFORM_MANAGE_MONEY = #{INITIAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      DERATE_PLATFORM_MANAGE_MONEY = #{DERATE_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      FINAL_PLATFORM_MANAGE_MONEY = #{FINAL_PLATFORM_MANAGE_MONEY,jdbcType=DECIMAL},
+      INITIAL_INTEREST = #{INITIAL_INTEREST,jdbcType=DECIMAL},
+      DERATE_INTEREST = #{DERATE_INTEREST,jdbcType=DECIMAL},
+      FINAL_INTEREST = #{FINAL_INTEREST,jdbcType=DECIMAL},
+      INITIAL_CONTRACT_PENALTY = #{INITIAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      DERATE_CONTRACT_PENALTY = #{DERATE_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      FINAL_CONTRACT_PENALTY = #{FINAL_CONTRACT_PENALTY,jdbcType=DECIMAL},
+      INITIAL_OVERDUE_INTEREST = #{INITIAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      DERATE_OVERDUE_INTEREST = #{DERATE_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      FINAL_OVERDUE_INTEREST = #{FINAL_OVERDUE_INTEREST,jdbcType=DECIMAL},
+      INITIAL_CAPITAL = #{INITIAL_CAPITAL,jdbcType=DECIMAL},
+      DERATE_CAPITAL = #{DERATE_CAPITAL,jdbcType=DECIMAL},
+      FINAL_CAPITAL = #{FINAL_CAPITAL,jdbcType=DECIMAL},
+      INITIAL_ADVANCE_PENALTY = #{INITIAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      DERATE_ADVANCE_PENALTY = #{DERATE_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      FINAL_ADVANCE_PENALTY = #{FINAL_ADVANCE_PENALTY,jdbcType=DECIMAL},
+      APPLY_CONTENT = #{APPLY_CONTENT,jdbcType=VARCHAR},
+      APPLY_TYPE = #{APPLY_TYPE,jdbcType=INTEGER},
+      BASE_MONEY = #{BASE_MONEY,jdbcType=DECIMAL},
+      THE_SCENE_MONEY = #{THE_SCENE_MONEY,jdbcType=DECIMAL},
+      BANKCARD_MONEY = #{BANKCARD_MONEY,jdbcType=DECIMAL},
+      DERATE_MONEY = #{DERATE_MONEY,jdbcType=DECIMAL},
+      FINAL_DERATE_MONEY = #{FINAL_DERATE_MONEY,jdbcType=DECIMAL},
+      INITIAL_PLATFORM_MANAGE_MONEY_CURRENT = #{INITIAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      DERATE_PLATFORM_MANAGE_MONEY_CURRENT = #{DERATE_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      FINAL_PLATFORM_MANAGE_MONEY_CURRENT = #{FINAL_PLATFORM_MANAGE_MONEY_CURRENT,jdbcType=DECIMAL},
+      INITIAL_INTEREST_CURRENT = #{INITIAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      DERATE_INTEREST_CURRENT = #{DERATE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      FINAL_INTEREST_CURRENT = #{FINAL_INTEREST_CURRENT,jdbcType=DECIMAL},
+      INITIAL_CONTRACT_PENALTY_CURRENT = #{INITIAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      DERATE_CONTRACT_PENALTY_CURRENT = #{DERATE_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      FINAL_CONTRACT_PENALTY_CURRENT = #{FINAL_CONTRACT_PENALTY_CURRENT,jdbcType=DECIMAL},
+      INITIAL_OVERDUE_INTEREST_CURRENT = #{INITIAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      DERATE_OVERDUE_INTEREST_CURRENT = #{DERATE_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      FINAL_OVERDUE_INTEREST_CURRENT = #{FINAL_OVERDUE_INTEREST_CURRENT,jdbcType=DECIMAL},
+      FINISH_TIME = #{FINISH_TIME,jdbcType=VARCHAR},
+      CREATE_TIME = #{CREATE_TIME,jdbcType=VARCHAR},
+      PAYCONTROL_IDS = #{PAYCONTROL_IDS,jdbcType=VARCHAR},
+      REPAYMENT_TIME = #{REPAYMENT_TIME,jdbcType=VARCHAR},
+      INITIAL_RETURN_SERVICE = #{INITIAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      DERATE_RETURN_SERVICE = #{DERATE_RETURN_SERVICE,jdbcType=DECIMAL},
+      FINAL_RETURN_SERVICE = #{FINAL_RETURN_SERVICE,jdbcType=DECIMAL},
+      INITIAL_SURPLUS_INTEREST = #{INITIAL_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      DERATE_SURPLUS_INTEREST = #{DERATE_SURPLUS_INTEREST,jdbcType=DECIMAL},
+      FINAL_SURPLUS_INTEREST = #{FINAL_SURPLUS_INTEREST,jdbcType=DECIMAL}
+    where ID = #{ID,jdbcType=VARCHAR}
+  </update>
+  <select id="getPayApplyInfoFromType" resultType="Map">
+    select
+          INITIAL_PLATFORM_MANAGE_MONEY manage,
+          INITIAL_INTEREST interest,
+          INITIAL_CONTRACT_PENALTY overDueViolateMoney,
+          INITIAL_OVERDUE_INTEREST overCost,
+          INITIAL_CAPITAL capital,
+          FINAL_PLATFORM_MANAGE_MONEY remainManage,
+          FINAL_INTEREST remainInterest,
+          FINAL_CONTRACT_PENALTY remainOverDueViolateMoney,
+          FINAL_OVERDUE_INTEREST remainOverCost,
+          INITIAL_OVERDUE_INTEREST+INITIAL_CONTRACT_PENALTY beforeOverMoney,
+          FINAL_OVERDUE_INTEREST+FINAL_CONTRACT_PENALTY remainOverMoney,
+          FINAL_OVERDUE_INTEREST+FINAL_OVERDUE_INTEREST_CURRENT+FINAL_CONTRACT_PENALTY+FINAL_CONTRACT_PENALTY_CURRENT+FINAL_PLATFORM_MANAGE_MONEY+FINAL_PLATFORM_MANAGE_MONEY_CURRENT+FINAL_INTEREST+FINAL_INTEREST_CURRENT+FINAL_CAPITAL+ifnull(FINAL_ADVANCE_PENALTY,0) totalMoney,
+          FINAL_CAPITAL remainCapital,
+          FINAL_CAPITAL capitalMoney,
+          THE_SCENE_MONEY liveMoney,
+          BASE_MONEY baseMoney,
+          FINAL_INTEREST+FINAL_INTEREST_CURRENT remainAllInterest,
+          INITIAL_INTEREST+INITIAL_INTEREST_CURRENT beforeAllInterest,
+          FINAL_CONTRACT_PENALTY+FINAL_CONTRACT_PENALTY_CURRENT remainAllOverDueViolate,
+          INITIAL_CONTRACT_PENALTY+INITIAL_CONTRACT_PENALTY_CURRENT beforeAllOverDueViolate,
+          FINAL_OVERDUE_INTEREST+FINAL_OVERDUE_INTEREST_CURRENT remainAllOverCost,
+          INITIAL_OVERDUE_INTEREST+INITIAL_OVERDUE_INTEREST_CURRENT beforeAllOverCost,
+          FINAL_PLATFORM_MANAGE_MONEY+FINAL_PLATFORM_MANAGE_MONEY_CURRENT remainAllManage,
+          INITIAL_PLATFORM_MANAGE_MONEY+INITIAL_PLATFORM_MANAGE_MONEY_CURRENT beforeAllManage,
+          adm.* ,
+          BANKCARD_MONEY cardMoney
+    from acc_derate_manage adm
+    where CRM_ORDER_ID = #{crmOrderId} and APPLY_TYPE =#{type} and STATUS !=0  and CEO_APPROVE_STATUS =1
+  </select>
+  <select id="getOtherPay" resultType="Map" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from acc_derate_manage
+    where CRM_ORDER_ID = #{crmOrderId} and STATUS !=0
+  </select>
+</mapper>

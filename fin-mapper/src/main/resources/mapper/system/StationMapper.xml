@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.system.StationMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.po.Station" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
+    <result column="station_desc" property="stationDesc" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="createor" property="createor" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updateor" property="updateor" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, station_name, station_desc, status, create_time, createor, update_time, updateor
+  </sql>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zw_sys_station
+    where id = #{id,jdbcType=VARCHAR} and status != -1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zw_sys_station
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="createStation" parameterType="com.zw.rule.po.Station" >
+    insert into zw_sys_station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stationName != null" >
+        station_name,
+      </if>
+      <if test="stationDesc != null" >
+        station_desc,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createor != null" >
+        createor,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateor != null" >
+        updateor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationDesc != null" >
+        #{stationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createor != null" >
+        #{createor,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateor != null" >
+        #{updateor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateStation" parameterType="com.zw.rule.po.Station" >
+    update zw_sys_station
+    <set >
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="stationDesc != null" >
+        station_desc = #{stationDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateor != null" >
+        updateor = #{updateor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id='getAllStation' resultMap='BaseResultMap' parameterType="java.util.Map">
+    select
+    <include refid="Base_Column_List" />
+    from zw_sys_station
+    <where>
+      and status != -1
+      <if test="param.stationName != null and param.stationName != ''">
+        and station_name like '%${param.stationName}%'
+      </if>
+    </where>
+    order by update_time desc limit #{page.firstIndex}, #{page.pageSize}
+  </select>
+  <select id='getAllValidStation' resultMap='BaseResultMap'>
+    select
+    <include refid="Base_Column_List" />
+    from zw_sys_station  where status = 1 order by update_time desc
+  </select>
+  <!-- 验证唯一性 -->
+  <select id='validateStationOnly' resultMap='BaseResultMap' parameterType="com.zw.rule.po.Station">
+    select
+    <include refid="Base_Column_List" />
+    from zw_sys_station where station_name = #{stationName} and status != -1
+  </select>
+  <update id="updateStatus" parameterType="Map">
+    update zw_sys_station set status=#{status}
+    <where>
+      <if test="idList!=null and idList.size()>0">
+        id in
+        <foreach collection="idList" item="ids" index="index" open="(" separator="," close=")">
+          #{ids}
+        </foreach>
+      </if>
+    </where>
+  </update>
+  <select id="countStation" parameterType="com.zw.rule.po.Station" resultType="Integer">
+    select count(*) from zw_sys_station
+    <where>
+      and status != -1
+      <if test="stationName != null and stationName != ''">
+        and station_name like '%${stationName}%'
+      </if>
+    </where>
+  </select>
+  <!-- 流程，流程节点树 -->
+  <select id="getProcess" resultType="Map">
+    SELECT id,name FROM zw_process where status != -1
+  </select>
+  <select id="getProNodeByProId" parameterType="Long" resultType="Map">
+    SELECT node_id,node_name FROM zw_process_node where process_id = #{processId}
+  </select>
+
+  <!-- 根据用户，流程，流程节点找岗位id -->
+  <select id="getStationByUPN" parameterType="Long" resultType="String">
+    SELECT zsu.station_id FROM zw_station_user_link zsu
+    left join zw_station_process_link zsp on zsp.station_id = zsu.station_id
+    where zsu.user_id = #{userId} and zsp.process_id = #{processId} and zsp.node_id = #{processNodeId}
+  </select>
+
+<!--查询所有岗位 无参数-->
+  <select id='getAll' resultMap='BaseResultMap'>
+    select
+    <include refid="Base_Column_List" />
+    from zw_sys_station
+  </select>
+
+</mapper>

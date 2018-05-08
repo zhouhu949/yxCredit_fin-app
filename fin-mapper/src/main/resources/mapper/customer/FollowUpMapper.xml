@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.FollowUpMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.FollowUp" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="follow_date" property="followDate" jdbcType="VARCHAR" />
+    <result column="follow_content" property="followContent" jdbcType="VARCHAR" />
+    <result column="rel_id" property="relId" jdbcType="VARCHAR" />
+    <result column="rel_type" property="relType" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, create_time, follow_date, follow_content, rel_id, rel_type, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mag_follow_up
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_follow_up
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.FollowUp" >
+    insert into mag_follow_up (id, type, create_time, 
+      follow_date, follow_content, rel_id, 
+      rel_type, user_id)
+    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{followDate,jdbcType=VARCHAR}, #{followContent,jdbcType=VARCHAR}, #{relId,jdbcType=VARCHAR}, 
+      #{relType,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.FollowUp" >
+    insert into mag_follow_up
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="followDate != null" >
+        follow_date,
+      </if>
+      <if test="followContent != null" >
+        follow_content,
+      </if>
+      <if test="relId != null" >
+        rel_id,
+      </if>
+      <if test="relType != null" >
+        rel_type,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="followDate != null" >
+        #{followDate,jdbcType=VARCHAR},
+      </if>
+      <if test="followContent != null" >
+        #{followContent,jdbcType=VARCHAR},
+      </if>
+      <if test="relId != null" >
+        #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="relType != null" >
+        #{relType,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.FollowUp" >
+    update mag_follow_up
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="followDate != null" >
+        follow_date = #{followDate,jdbcType=VARCHAR},
+      </if>
+      <if test="followContent != null" >
+        follow_content = #{followContent,jdbcType=VARCHAR},
+      </if>
+      <if test="relId != null" >
+        rel_id = #{relId,jdbcType=VARCHAR},
+      </if>
+      <if test="relType != null" >
+        rel_type = #{relType,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.FollowUp" >
+    update mag_follow_up
+    set type = #{type,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      follow_date = #{followDate,jdbcType=VARCHAR},
+      follow_content = #{followContent,jdbcType=VARCHAR},
+      rel_id = #{relId,jdbcType=VARCHAR},
+      rel_type = #{relType,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getFollowUp" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_follow_up where rel_id = #{relId} and rel_type = #{relType}
+    order by create_time desc
+  </select>
+</mapper>

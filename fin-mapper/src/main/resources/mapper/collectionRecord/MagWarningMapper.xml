@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.collectionRecord.MagWarningMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	loan_id,	dtcredit,	black,	add_credit,	liabilities,	change_address
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.collectionRecord.po.MagWarning" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_warning
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM mag_warning
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.collectionRecord.po.MagWarning">
+		 INSERT INTO mag_warning
+ 		(id,loan_id,dtcredit,black,add_credit,liabilities,change_address) 
+		 VALUES 
+ 		(#{id},#{loanId},#{dtcredit},#{black},#{addCredit},#{liabilities},#{changeAddress}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.collectionRecord.po.MagWarning">
+		 INSERT INTO mag_warning
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="loanId != null">
+				 loan_id,
+			</if>
+			<if test="dtcredit != null">
+				 dtcredit,
+			</if>
+			<if test="black != null">
+				 black,
+			</if>
+			<if test="addCredit != null">
+				 add_credit,
+			</if>
+			<if test="liabilities != null">
+				 liabilities,
+			</if>
+			<if test="changeAddress != null">
+				 change_address,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="loanId!=null">
+				 #{loanId},
+			</if>
+			<if test="dtcredit!=null">
+				 #{dtcredit},
+			</if>
+			<if test="black!=null">
+				 #{black},
+			</if>
+			<if test="addCredit!=null">
+				 #{addCredit},
+			</if>
+			<if test="liabilities!=null">
+				 #{liabilities},
+			</if>
+			<if test="changeAddress!=null">
+				 #{changeAddress},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.collectionRecord.po.MagWarning">
+		 UPDATE mag_warning
+ 		 <set> 
+			<if test="loanId != null">
+				 loan_id = #{loanId},
+			</if>
+			<if test="dtcredit != null">
+				 dtcredit = #{dtcredit},
+			</if>
+			<if test="black != null">
+				 black = #{black},
+			</if>
+			<if test="addCredit != null">
+				 add_credit = #{addCredit},
+			</if>
+			<if test="liabilities != null">
+				 liabilities = #{liabilities},
+			</if>
+			<if test="changeAddress != null">
+				 change_address = #{changeAddress},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.collectionRecord.po.MagWarning">
+		 UPDATE mag_warning
+		 SET 
+			 loan_id = #{loanId},
+			 dtcredit = #{dtcredit},
+			 black = #{black},
+			 add_credit = #{addCredit},
+			 liabilities = #{liabilities},
+			 change_address = #{changeAddress}
+		 WHERE id = #{id}
+	</update>
+
+	<select id="getWarningByLoanId" parameterType="java.lang.String" resultType="com.zw.rule.collectionRecord.po.MagWarning">
+		SELECT  id,	dtcredit,black,add_credit,liabilities,change_address FROM  mag_warning WHERE loan_id = #{loanId}
+	</select>
+
+</mapper>

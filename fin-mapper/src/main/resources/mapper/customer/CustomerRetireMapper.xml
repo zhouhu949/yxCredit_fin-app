@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerRetireMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerRetire" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="former_company" property="formerCompany" jdbcType="VARCHAR" />
+        <result column="former_company_address" property="formerCompanyAddress" jdbcType="VARCHAR" />
+        <result column="pension_month" property="pensionMonth" jdbcType="VARCHAR" />
+        <result column="retire_years" property="retireYears" jdbcType="VARCHAR" />
+        <result column="month_other_income" property="monthOtherIncome" jdbcType="VARCHAR" />
+        <result column="other_source_income" property="otherSourceIncome" jdbcType="VARCHAR" />
+        <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+        <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="apex1" property="apex1" jdbcType="VARCHAR" />
+        <result column="apex2" property="apex2" jdbcType="VARCHAR" />
+        <result column="apex3" property="apex3" jdbcType="VARCHAR" />
+        <result column="bak" property="bak" jdbcType="VARCHAR" />
+        <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+        <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+        <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="distric" property="distric" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getCustomerRetire" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_retire
+        where CUSTOMER_ID = #{customerId}
+    </select>
+    <select id="getCustomerRetireList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_retire
+        where CUSTOMER_ID = #{customerId}
+    </select>
+</mapper>

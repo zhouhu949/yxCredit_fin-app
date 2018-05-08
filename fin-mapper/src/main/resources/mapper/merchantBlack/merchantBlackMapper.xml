@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.merchantBlackMapper.MerchantBlackMapper">
+    <resultMap id="merchantBlack" type="com.zw.rule.merchantBlackEntity.MerchantBlack">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="black_type_id" property="blackTypeId" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectAllMerchantBlack"  resultMap="merchantBlack" parameterType="java.util.Map" >
+        SELECT * from mag_merchant_black
+        <where>
+            <if test="blackTypeId !=null and blackTypeId !=''">
+                black_type_id=#{blackTypeId}
+            </if>
+            <if test="content !=null and content !='' ">
+                AND content like CONCAT('%',#{content},'%')
+            </if>
+            <if test="state !=null and state !=''">
+                and state=#{state}
+            </if>
+        </where>
+    </select>
+    <insert id="insertOneMerchantBlack" parameterType="com.zw.rule.merchantBlackEntity.MerchantBlack">
+        INSERT into mag_merchant_black VALUES (
+        <if test="id != null" >
+            #{id},
+        </if>
+        <if test="blackTypeId !=null and blackTypeId!=''">
+            #{blackTypeId},
+        </if>
+        <if test="content !=null and content!=''">
+            #{content},
+        </if>
+        <if test="state !=null and state!=''">
+            #{state},
+        </if>
+        <if test="createTime!=null and createTime!=''">
+            #{createTime}
+        </if>
+        )
+    </insert>
+    <!--停用或者启用 更改状态-->
+    <update id="changeState" parameterType="java.util.Map">
+        UPDATE mag_merchant_black
+        SET state=#{state}
+        WHERE id=#{id}
+    </update>
+    <!--查询单个商户黑名单设置信息-->
+    <select id="selectOneMerchantBlackById" parameterType="java.lang.String" resultMap="merchantBlack">
+        select * from mag_merchant_black WHERE id=#{id}
+    </select>
+    <!--changeOneMerchantBlackById根据id来更改单个商户黑名单设置信息-->
+    <update id="changeOneMerchantBlackById" parameterType="com.zw.rule.merchantBlackEntity.MerchantBlack">
+        UPDATE mag_merchant_black
+        SET
+        <if test="blackTypeId!=null and blackTypeId!='' ">
+        black_type_id =#{blackTypeId},
+        </if>
+        <if test="content !=null and content !=''">
+        content=#{content},
+        </if>
+        <if test="state !=null and state !='' ">
+        state=#{state}
+        </if>
+        where id=#{id}
+    </update>
+    <!-- 根据id删除数据 -->
+    <delete id="deleteOneMerchantBlackById" parameterType="java.util.Map">
+        <if test="id !=null and id!=''">
+            DELETE from mag_merchant_black
+            where id=#{id}
+        </if>
+    </delete>
+</mapper>

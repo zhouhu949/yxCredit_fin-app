@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.couponManage.RecommendMapper" >
+        <select id="getAllRecommend" resultType="com.zw.rule.coupon.po.Recommend" parameterType="java.util.Map">
+          SELECT
+            *
+          FROM
+          mag_recommend
+            WHERE 1=1
+            <if test=" name != null and name != '' ">
+                AND name=#{name}
+            </if>
+            <if test=" state != null and state != '' ">
+                AND state=#{state}
+            </if>
+        </select>
+    <!--查讯所有代码code-->
+    <select id="getAllCode" resultType="java.lang.String">
+        SELECT code from mag_recommend
+    </select>
+    <insert id="insertRecommend" parameterType="com.zw.rule.coupon.po.Recommend">
+          INSERT INTO mag_recommend(id,name,code,remarks,state)VALUES (#{id},#{name},#{code},#{remarks},#{state})
+    </insert>
+    <!-- 根据id查询一条数据 -->
+    <select id="selectOneById" parameterType="java.util.Map" resultType="com.zw.rule.coupon.po.Recommend">
+        SELECT id,name,code,remarks,state FROM mag_recommend WHERE id=#{id}
+    </select>
+    <update id="updateOneById" parameterType="java.util.Map">
+      UPDATE  mag_recommend
+      SET
+      name=#{name},
+      remarks=#{remarks}
+      <where>
+          id=#{id}
+      </where>
+    </update>
+    <!--根据ID更改状态changeStateById-->
+    <update id="changeStateById" parameterType="java.util.Map">
+        UPDATE mag_recommend
+        SET
+        state=#{state}
+        <where>
+            id=#{id}
+        </where>
+    </update>
+    <!--根据id来删除deleteOneById-->
+    <delete id="deleteOneById" parameterType="java.util.Map">
+       <if test="id !=null and id!='' ">
+           DELETE FROM mag_recommend
+           WHERE id=#{id}
+       </if>
+    </delete>
+
+    <select id="getRecommendListList"  parameterType="java.util.Map"  resultType="java.util.Map">
+        select mrl.id,mrl.recommend_code,mrl.create_time,mrl.is_register,mrl.user_id,mrl.user_name,mc.PERSON_NAME as personName,mr.name as recommendName  FROM mag_recommend_list mrl  LEFT  JOIN  mag_recommend mr ON mrl.recommend_code=mr.code
+        LEFT JOIN mag_customer  mc ON  mrl.user_id= mc.user_id
+      <where>
+          1=1
+          <if test="name != null and name != ''">
+              and mr.name like CONCAT('%',#{name},'%')
+          </if>
+          <if test="is_register != null and is_register != ''">
+              and mrl.is_register=#{is_register}
+          </if>
+      </where>
+    </select>
+</mapper>

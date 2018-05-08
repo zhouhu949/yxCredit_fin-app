@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.customer.MagCustomerAccountMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	merchant_id,	USER_ID,	CUSTOMER_ID,	customer_type,	tel,	channel,	CREAT_TIME,	ALTER_TIME,	state,	APEX1,	APEX2,	APEX3,	BAK,	count_name,	user_name,	card_num,	card_type,	count_type,	gold_account,	bank_card,	draw_password,	login_password,	province_id,	account_province,	city_id,	account_city,	account_bank_id,	account_bank,	account_branch_bank,	channel_name,	begin_time,	end_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.customer.po.MagCustomerAccount" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_customer_account
+		 WHERE ID = #{ID}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM mag_customer_account
+		 WHERE ID = #{ID}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.customer.po.MagCustomerAccount">
+		 INSERT INTO mag_customer_account
+ 		(ID,merchant_id,USER_ID,CUSTOMER_ID,customer_type,tel,channel,CREAT_TIME,ALTER_TIME,state,APEX1,APEX2,APEX3,BAK,count_name,user_name,card_num,card_type,count_type,gold_account,bank_card,draw_password,login_password,province_id,account_province,city_id,account_city,account_bank_id,account_bank,account_branch_bank,channel_name,begin_time,end_time) 
+		 VALUES 
+ 		(#{ID},#{merchantId},#{USERID},#{CUSTOMERID},#{customerType},#{tel},#{channel},#{CREATTIME},#{ALTERTIME},#{state},#{APEX1},#{APEX2},#{APEX3},#{BAK},#{countName},#{userName},#{cardNum},#{cardType},#{countType},#{goldAccount},#{bankCard},#{drawPassword},#{loginPassword},#{provinceId},#{accountProvince},#{cityId},#{accountCity},#{accountBankId},#{accountBank},#{accountBranchBank},#{channelName},#{beginTime},#{endTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.customer.po.MagCustomerAccount">
+		 INSERT INTO mag_customer_account
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="ID != null">
+				 ID,
+			</if>
+			<if test="merchantId != null">
+				 merchant_id,
+			</if>
+			<if test="USERID != null">
+				 USER_ID,
+			</if>
+			<if test="CUSTOMERID != null">
+				 CUSTOMER_ID,
+			</if>
+			<if test="customerType != null">
+				 customer_type,
+			</if>
+			<if test="tel != null">
+				 tel,
+			</if>
+			<if test="channel != null">
+				 channel,
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME,
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="APEX1 != null">
+				 APEX1,
+			</if>
+			<if test="APEX2 != null">
+				 APEX2,
+			</if>
+			<if test="APEX3 != null">
+				 APEX3,
+			</if>
+			<if test="BAK != null">
+				 BAK,
+			</if>
+			<if test="countName != null">
+				 count_name,
+			</if>
+			<if test="userName != null">
+				 user_name,
+			</if>
+			<if test="cardNum != null">
+				 card_num,
+			</if>
+			<if test="cardType != null">
+				 card_type,
+			</if>
+			<if test="countType != null">
+				 count_type,
+			</if>
+			<if test="goldAccount != null">
+				 gold_account,
+			</if>
+			<if test="bankCard != null">
+				 bank_card,
+			</if>
+			<if test="drawPassword != null">
+				 draw_password,
+			</if>
+			<if test="loginPassword != null">
+				 login_password,
+			</if>
+			<if test="provinceId != null">
+				 province_id,
+			</if>
+			<if test="accountProvince != null">
+				 account_province,
+			</if>
+			<if test="cityId != null">
+				 city_id,
+			</if>
+			<if test="accountCity != null">
+				 account_city,
+			</if>
+			<if test="accountBankId != null">
+				 account_bank_id,
+			</if>
+			<if test="accountBank != null">
+				 account_bank,
+			</if>
+			<if test="accountBranchBank != null">
+				 account_branch_bank,
+			</if>
+			<if test="channelName != null">
+				 channel_name,
+			</if>
+			<if test="beginTime != null">
+				 begin_time,
+			</if>
+			<if test="endTime != null">
+				 end_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="ID!=null">
+				 #{ID},
+			</if>
+			<if test="merchantId!=null">
+				 #{merchantId},
+			</if>
+			<if test="USERID!=null">
+				 #{USERID},
+			</if>
+			<if test="CUSTOMERID!=null">
+				 #{CUSTOMERID},
+			</if>
+			<if test="customerType!=null">
+				 #{customerType},
+			</if>
+			<if test="tel!=null">
+				 #{tel},
+			</if>
+			<if test="channel!=null">
+				 #{channel},
+			</if>
+			<if test="CREATTIME!=null">
+				 #{CREATTIME},
+			</if>
+			<if test="ALTERTIME!=null">
+				 #{ALTERTIME},
+			</if>
+			<if test="state!=null">
+				 #{state},
+			</if>
+			<if test="APEX1!=null">
+				 #{APEX1},
+			</if>
+			<if test="APEX2!=null">
+				 #{APEX2},
+			</if>
+			<if test="APEX3!=null">
+				 #{APEX3},
+			</if>
+			<if test="BAK!=null">
+				 #{BAK},
+			</if>
+			<if test="countName!=null">
+				 #{countName},
+			</if>
+			<if test="userName!=null">
+				 #{userName},
+			</if>
+			<if test="cardNum!=null">
+				 #{cardNum},
+			</if>
+			<if test="cardType!=null">
+				 #{cardType},
+			</if>
+			<if test="countType!=null">
+				 #{countType},
+			</if>
+			<if test="goldAccount!=null">
+				 #{goldAccount},
+			</if>
+			<if test="bankCard!=null">
+				 #{bankCard},
+			</if>
+			<if test="drawPassword!=null">
+				 #{drawPassword},
+			</if>
+			<if test="loginPassword!=null">
+				 #{loginPassword},
+			</if>
+			<if test="provinceId!=null">
+				 #{provinceId},
+			</if>
+			<if test="accountProvince!=null">
+				 #{accountProvince},
+			</if>
+			<if test="cityId!=null">
+				 #{cityId},
+			</if>
+			<if test="accountCity!=null">
+				 #{accountCity},
+			</if>
+			<if test="accountBankId!=null">
+				 #{accountBankId},
+			</if>
+			<if test="accountBank!=null">
+				 #{accountBank},
+			</if>
+			<if test="accountBranchBank!=null">
+				 #{accountBranchBank},
+			</if>
+			<if test="channelName!=null">
+				 #{channelName},
+			</if>
+			<if test="beginTime!=null">
+				 #{beginTime},
+			</if>
+			<if test="endTime!=null">
+				 #{endTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.MagCustomerAccount">
+		 UPDATE mag_customer_account
+ 		 <set> 
+			<if test="merchantId != null">
+				 merchant_id = #{merchantId},
+			</if>
+			<if test="USERID != null">
+				 USER_ID = #{USERID},
+			</if>
+			<if test="CUSTOMERID != null">
+				 CUSTOMER_ID = #{CUSTOMERID},
+			</if>
+			<if test="customerType != null">
+				 customer_type = #{customerType},
+			</if>
+			<if test="tel != null">
+				 tel = #{tel},
+			</if>
+			<if test="channel != null">
+				 channel = #{channel},
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME = #{CREATTIME},
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME = #{ALTERTIME},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="APEX1 != null">
+				 APEX1 = #{APEX1},
+			</if>
+			<if test="APEX2 != null">
+				 APEX2 = #{APEX2},
+			</if>
+			<if test="APEX3 != null">
+				 APEX3 = #{APEX3},
+			</if>
+			<if test="BAK != null">
+				 BAK = #{BAK},
+			</if>
+			<if test="countName != null">
+				 count_name = #{countName},
+			</if>
+			<if test="userName != null">
+				 user_name = #{userName},
+			</if>
+			<if test="cardNum != null">
+				 card_num = #{cardNum},
+			</if>
+			<if test="cardType != null">
+				 card_type = #{cardType},
+			</if>
+			<if test="countType != null">
+				 count_type = #{countType},
+			</if>
+			<if test="goldAccount != null">
+				 gold_account = #{goldAccount},
+			</if>
+			<if test="bankCard != null">
+				 bank_card = #{bankCard},
+			</if>
+			<if test="drawPassword != null">
+				 draw_password = #{drawPassword},
+			</if>
+			<if test="loginPassword != null">
+				 login_password = #{loginPassword},
+			</if>
+			<if test="provinceId != null">
+				 province_id = #{provinceId},
+			</if>
+			<if test="accountProvince != null">
+				 account_province = #{accountProvince},
+			</if>
+			<if test="cityId != null">
+				 city_id = #{cityId},
+			</if>
+			<if test="accountCity != null">
+				 account_city = #{accountCity},
+			</if>
+			<if test="accountBankId != null">
+				 account_bank_id = #{accountBankId},
+			</if>
+			<if test="accountBank != null">
+				 account_bank = #{accountBank},
+			</if>
+			<if test="accountBranchBank != null">
+				 account_branch_bank = #{accountBranchBank},
+			</if>
+			<if test="channelName != null">
+				 channel_name = #{channelName},
+			</if>
+			<if test="beginTime != null">
+				 begin_time = #{beginTime},
+			</if>
+			<if test="endTime != null">
+				 end_time = #{endTime},
+			</if>
+
+ 		 </set>
+		 WHERE ID = #{ID}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.MagCustomerAccount">
+		 UPDATE mag_customer_account
+		 SET 
+			 merchant_id = #{merchantId},
+			 USER_ID = #{USERID},
+			 CUSTOMER_ID = #{CUSTOMERID},
+			 customer_type = #{customerType},
+			 tel = #{tel},
+			 channel = #{channel},
+			 CREAT_TIME = #{CREATTIME},
+			 ALTER_TIME = #{ALTERTIME},
+			 state = #{state},
+			 APEX1 = #{APEX1},
+			 APEX2 = #{APEX2},
+			 APEX3 = #{APEX3},
+			 BAK = #{BAK},
+			 count_name = #{countName},
+			 user_name = #{userName},
+			 card_num = #{cardNum},
+			 card_type = #{cardType},
+			 count_type = #{countType},
+			 gold_account = #{goldAccount},
+			 bank_card = #{bankCard},
+			 draw_password = #{drawPassword},
+			 login_password = #{loginPassword},
+			 province_id = #{provinceId},
+			 account_province = #{accountProvince},
+			 city_id = #{cityId},
+			 account_city = #{accountCity},
+			 account_bank_id = #{accountBankId},
+			 account_bank = #{accountBank},
+			 account_branch_bank = #{accountBranchBank},
+			 channel_name = #{channelName},
+			 begin_time = #{beginTime},
+			 end_time = #{endTime}
+		 WHERE ID = #{ID}
+	</update>
+
+<select id="getAccountInfoByOrderId" parameterType="java.lang.String" resultType="com.zw.rule.customer.po.MagCustomerAccount">
+	SELECT mac.id,mac.merchant_id,mac.USER_ID,mac.CUSTOMER_ID,mac.customer_type,
+	mac.tel,mac.channel,mac.CREAT_TIME,mac.	ALTER_TIME,mac.	state,mac.APEX1,mac.APEX2,
+	mac.APEX3,mac.BAK,mac.count_name,mac.user_name,mac.card_num,mac.card_type,mac.count_type,mac.gold_account,mc.CARD_TYPE AS bankCard,
+	mac.draw_password,mac.login_password,mac.province_id,mac.account_province,mac.city_id,mac.account_city,
+	mac.account_bank_id,mac.account_bank,mac.account_branch_bank,mac.channel_name,mac.begin_time,
+	mac.end_time FROM mag_customer mc
+	LEFT JOIN mag_customer_account mac ON mc.ID = mac.CUSTOMER_ID
+	LEFT JOIN mag_order mo ON mc.id = mo.CUSTOMER_ID WHERE mo.id = #{orderId}
+</select>
+	<select id ="getCustBankCardInfo" parameterType="java.lang.String" resultType="Map">
+	SELECT mac.id,mac.merchant_id,mac.USER_ID,mac.CUSTOMER_ID,mac.customer_type,
+	mac.tel,mac.channel,mac.CREAT_TIME,mac.	ALTER_TIME,mac.	state,mac.APEX1,mac.APEX2,
+	mac.APEX3,mac.BAK,mac.count_name,mac.user_name,mac.card_num,mac.card_type,mac.count_type,mac.gold_account,
+	mac.draw_password,mac.login_password,mac.province_id,mac.account_province,mac.city_id,mac.account_city,
+	mac.account_bank_id,mac.account_bank,mac.account_branch_bank,mac.channel_name,mac.begin_time,mac.bank_card,
+	mac.end_time FROM mag_customer_account mac where mac.CUSTOMER_ID = #{customerId}
+	</select>
+</mapper>

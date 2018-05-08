@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+version '1.0'
+
+dependencies {
+    compile project(":common-tools")
+    compile project(":fin-model")
+    compile "org.mybatis:mybatis:${mybatis}"
+    compile "dom4j:dom4j:${dom4j}"
+    compile "org.mybatis:mybatis-spring:${mybatisSpring}"
+    compile "org.springframework:spring-beans:${spring}"
+    compile "org.drools:knowledge-api:${knowledgeApi}"
+    compile "org.slf4j:slf4j-api:${slf4jApi}"
+    compile "commons-httpclient:commons-httpclient:${commonsHttpclient}"
+    compile 'yeepayhtmlcommon:yeepayhtmlcommon:3.0'
+    compile 'yeepaycfcacertkitjs:yeepaycfcacertkitjs:1.0'
+    compile 'yeepaypkibase:yeepaypkibase:1.0'
+    compile 'org.bouncycastle:bcmail-jdk15on:1.58'
+    compile "dom4j:dom4j:${dom4j}"
+    compile 'com.zw:CFCACertKitJS-1.0:1.0'
+    compile 'com.zw:yop-sdk-1.2.1:1.2.1'
+}
+
+jar {
+    baseName = 'fin-util'
+}
+

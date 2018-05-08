@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.product.RedMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.product.Red" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="red_money" property="red_money" jdbcType="VARCHAR" />
+    <result column="red_name" property="red_name" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getRedList"  resultType="map" parameterType="com.zw.rule.product.Red">
+    select id,create_time,status,red_money,red_name,red_type as redType from mag_red
+    <where>
+      status !='2'
+      <if test="id != null" >
+        AND id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <insert id="addRed"   parameterType="com.zw.rule.product.Red" >
+    insert into mag_red (id,create_time,red_money, red_name,status)
+    VALUES (#{id},#{create_time},#{red_money}, #{red_name},#{status})
+  </insert>
+  <update id="updateRed"   parameterType="com.zw.rule.product.Red" >
+    update  mag_red
+    <set >
+      <if test="red_money != null" >
+        red_money = #{red_money},
+      </if>
+      <if test="red_name != null" >
+        red_name = #{red_name},
+      </if>
+      <if test="status != null" >
+        status = #{status}
+      </if>
+    </set>
+    where  id=#{id}
+  </update>
+
+  <select id="getList"  resultType="map" parameterType="java.util.Map">
+    select id,create_time,status,red_money,red_name from mag_red
+    <where>
+      1=1
+      <if test="status != null" >
+        AND status = #{status}
+      </if>
+      <if test="redType != null" >
+        AND red_type = #{redType}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="getRedInfoList"  resultType="com.zw.rule.product.RedInfo" parameterType="java.util.Map">
+    select id,red_id AS redId,customer_name AS customerName,customer_id AS customerId,tel,id_card AS idCard,money,create_time AS createTime,invite_code AS inviteCode,invite_name AS  inviteName,invite_tel AS inviteTel,order_id AS orderId,is_withdraw AS isWithdraw
+    from mag_red_info
+    <where>
+      <if test="beginTime != null and beginTime != ''">
+        and create_time &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and create_time &lt;= #{endTime}
+      </if>
+      <if test="customerName != null and customerName != ''">
+        and invite_name  like '%${customerName}%'
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.customer.AppUserMapper">
+	<resultMap id="BaseResultMap" type="com.zw.rule.customer.po.AppUser" >
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="tel" property="tel" jdbcType="VARCHAR" />
+		<id column="passwd" property="passwd" jdbcType="VARCHAR" />
+		<id column="error_num" property="errorNum" jdbcType="VARCHAR" />
+		<id column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+		<id column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+		<id column="state" property="state" jdbcType="VARCHAR" />
+		<id column="registration_id" property="registrationId" jdbcType="VARCHAR" />
+		<id column="apex1" property="apex1" jdbcType="VARCHAR" />
+		<id column="apex2" property="apex2" jdbcType="VARCHAR" />
+		<id column="apex3" property="apex3" jdbcType="VARCHAR" />
+		<id column="bak" property="bak" jdbcType="VARCHAR" />
+		<id column="head_img" property="headImg" jdbcType="VARCHAR" />
+		<id column="idcard" property="idcard" jdbcType="VARCHAR" />
+		<id column="realname" property="realname" jdbcType="VARCHAR" />
+		<id column="token" property="token" jdbcType="VARCHAR" />
+		<id column="token_time" property="tokenTime" jdbcType="VARCHAR" />
+		<id column="is_black" property="isBlack" jdbcType="VARCHAR" />
+		<id column="only_code" property="onlyCode" jdbcType="VARCHAR" />
+		<id column="order_refused_time" property="orderRefusedTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	tel,	passwd,	error_num,	creat_time,	alter_time,	state,registration_id,apex1,apex2,apex3,bak,head_img,idcard,realname,	token,	token_time,	is_black,	only_code,	order_refused_time
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM app_user
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM app_user
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.customer.po.AppMessage">
+		 INSERT INTO app_user
+ 		(id,tel,passwd,error_num,creat_time,alter_time,state,registration_id,apex1,apex2,apex3,bak,head_img,idcard,realname,token,token_time,is_black,only_code,order_refused_time) 
+		 VALUES 
+ 		(#{id},#{tel},#{passwd},#{errorNum},#{creatTime},#{alterTime},#{state},#{registrationId},#{apex1},#{apex2},#{apex3},#{bak},#{headImg},#{idcard},#{realname},#{token},#{tokenTime},#{isBlack},#{onlyCode},#{orderRefusedTime}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.customer.po.AppMessage">
+		 INSERT INTO app_user
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="tel != null">
+				 tel,
+			</if>
+			<if test="passwd != null">
+				 passwd,
+			</if>
+			<if test="errorNum != null">
+				 error_num,
+			</if>
+			<if test="creatTime != null">
+				 creat_time,
+			</if>
+			<if test="alterTime != null">
+				 alter_time,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="registrationId != null">
+				 registration_id,
+			</if>
+			<if test="apex1 != null">
+				 apex1,
+			</if>
+			<if test="apex2 != null">
+				 apex2,
+			</if>
+			<if test="apex3 != null">
+				 apex3,
+			</if>
+			<if test="bak != null">
+				 bak,
+			</if>
+			<if test="headImg != null">
+				 head_img,
+			</if>
+			<if test="idcard != null">
+				 idcard,
+			</if>
+			<if test="realname != null">
+				 realname,
+			</if>
+			<if test="token != null">
+				 token,
+			</if>
+			<if test="tokenTime != null">
+				 token_time,
+			</if>
+			<if test="isBlack != null">
+				 is_black,
+			</if>
+			<if test="onlyCode != null">
+				 only_code,
+			</if>
+			<if test="orderRefusedTime != null">
+				 order_refused_time,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="tel!=null">
+				 #{tel},
+			</if>
+			<if test="passwd!=null">
+				 #{passwd},
+			</if>
+			<if test="errorNum!=null">
+				 #{errorNum},
+			</if>
+			<if test="creatTime!=null">
+				 #{creatTime},
+			</if>
+			<if test="alterTime!=null">
+				 #{alterTime},
+			</if>
+			<if test="state!=null">
+				 #{state},
+			</if>
+			<if test="registrationId!=null">
+				 #{registrationId},
+			</if>
+			<if test="apex1!=null">
+				 #{apex1},
+			</if>
+			<if test="apex2!=null">
+				 #{apex2},
+			</if>
+			<if test="apex3!=null">
+				 #{apex3},
+			</if>
+			<if test="bak!=null">
+				 #{bak},
+			</if>
+			<if test="headImg!=null">
+				 #{headImg},
+			</if>
+			<if test="idcard!=null">
+				 #{idcard},
+			</if>
+			<if test="realname!=null">
+				 #{realname},
+			</if>
+			<if test="token!=null">
+				 #{token},
+			</if>
+			<if test="tokenTime!=null">
+				 #{tokenTime},
+			</if>
+			<if test="isBlack!=null">
+				 #{isBlack},
+			</if>
+			<if test="onlyCode!=null">
+				 #{onlyCode},
+			</if>
+			<if test="orderRefusedTime!=null">
+				 #{orderRefusedTime},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.AppMessage">
+		 UPDATE app_user
+ 		 <set> 
+			<if test="tel != null">
+				 tel = #{tel},
+			</if>
+			<if test="passwd != null">
+				 passwd = #{passwd},
+			</if>
+			<if test="errorNum != null">
+				 error_num = #{errorNum},
+			</if>
+			<if test="creatTime != null">
+				 creat_time = #{creatTime},
+			</if>
+			<if test="alterTime != null">
+				 alter_time = #{alterTime},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="registrationId != null">
+				 registration_id = #{registrationId},
+			</if>
+			<if test="apex1 != null">
+				 apex1 = #{apex1},
+			</if>
+			<if test="apex2 != null">
+				 apex2 = #{apex2},
+			</if>
+			<if test="apex3 != null">
+				 apex3 = #{apex3},
+			</if>
+			<if test="bak != null">
+				 bak = #{bak},
+			</if>
+			<if test="headImg != null">
+				 head_img = #{headImg},
+			</if>
+			<if test="idcard != null">
+				 idcard = #{idcard},
+			</if>
+			<if test="realname != null">
+				 realname = #{realname},
+			</if>
+			<if test="token != null">
+				 token = #{token},
+			</if>
+			<if test="tokenTime != null">
+				 token_time = #{tokenTime},
+			</if>
+			<if test="isBlack != null">
+				 is_black = #{isBlack},
+			</if>
+			<if test="onlyCode != null">
+				 only_code = #{onlyCode},
+			</if>
+			<if test="orderRefusedTime != null">
+				 order_refused_time = #{orderRefusedTime},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.AppMessage">
+		 UPDATE app_user
+		 SET 
+			 tel = #{tel},
+			 passwd = #{passwd},
+			 error_num = #{errorNum},
+			 creat_time = #{creatTime},
+			 alter_time = #{alterTime},
+			 state = #{state},
+			 registration_id = #{registrationId},
+			 apex1 = #{apex1},
+			 apex2 = #{apex2},
+			 apex3 = #{apex3},
+			 bak = #{bak},
+			 head_img = #{headImg},
+			 idcard = #{idcard},
+			 realname = #{realname},
+			 token = #{token},
+			 token_time = #{tokenTime},
+			 is_black = #{isBlack},
+			 only_code = #{onlyCode},
+			 order_refused_time = #{orderRefusedTime}
+		 WHERE id = #{id}
+	</update>
+
+</mapper>

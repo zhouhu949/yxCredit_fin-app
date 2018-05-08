@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerRespMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerResp" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="material_price_resp" property="materialPriceResp" jdbcType="VARCHAR" />
+    <result column="material_count_resp" property="materialCountResp" jdbcType="VARCHAR" />
+    <result column="decoration_count_resp" property="decorationCountResp" jdbcType="VARCHAR" />
+    <result column="material_name" property="materialName" jdbcType="VARCHAR" />
+    <result column="decoration_img" property="decorationImg" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, customer_id, material_price_resp, material_count_resp, decoration_count_resp, 
+    material_name, decoration_img, remark, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mag_customer_resp
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_resp
+    where material_name = #{name,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_resp
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerResp" >
+    insert into mag_customer_resp (id, order_id, customer_id, 
+      material_price_resp, material_count_resp, decoration_count_resp, 
+      material_name, decoration_img, remark, 
+      creat_time)
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, 
+      #{materialPriceResp,jdbcType=VARCHAR}, #{materialCountResp,jdbcType=VARCHAR}, #{decorationCountResp,jdbcType=VARCHAR}, 
+      #{materialName,jdbcType=VARCHAR}, #{decorationImg,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerResp" >
+    insert into mag_customer_resp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="materialPriceResp != null" >
+        material_price_resp,
+      </if>
+      <if test="materialCountResp != null" >
+        material_count_resp,
+      </if>
+      <if test="decorationCountResp != null" >
+        decoration_count_resp,
+      </if>
+      <if test="materialName != null" >
+        material_name,
+      </if>
+      <if test="decorationImg != null" >
+        decoration_img,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPriceResp != null" >
+        #{materialPriceResp,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCountResp != null" >
+        #{materialCountResp,jdbcType=VARCHAR},
+      </if>
+      <if test="decorationCountResp != null" >
+        #{decorationCountResp,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="decorationImg != null" >
+        #{decorationImg,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerResp" >
+    update mag_customer_resp
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialPriceResp != null" >
+        material_price_resp = #{materialPriceResp,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCountResp != null" >
+        material_count_resp = #{materialCountResp,jdbcType=VARCHAR},
+      </if>
+      <if test="decorationCountResp != null" >
+        decoration_count_resp = #{decorationCountResp,jdbcType=VARCHAR},
+      </if>
+      <if test="materialName != null" >
+        material_name = #{materialName,jdbcType=VARCHAR},
+      </if>
+      <if test="decorationImg != null" >
+        decoration_img = #{decorationImg,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerResp" >
+    update mag_customer_resp
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      material_price_resp = #{materialPriceResp,jdbcType=VARCHAR},
+      material_count_resp = #{materialCountResp,jdbcType=VARCHAR},
+      decoration_count_resp = #{decorationCountResp,jdbcType=VARCHAR},
+      material_name = #{materialName,jdbcType=VARCHAR},
+      decoration_img = #{decorationImg,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <insert id = "batchInsert" parameterType="java.util.List">
+    insert into mag_customer_resp (id,order_id, customer_id, material_price_resp,material_count_resp,decoration_count_resp,
+    material_name,decoration_img,remark,creat_time)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id}, #{item.orderId}, #{item.customerId},#{item.materialPriceResp}, #{item.materialCountResp},
+      #{item.decorationCountResp},#{item.materialName}, #{item.decorationImg},#{item.remark},#{item.creatTime})
+    </foreach>
+  </insert>
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_resp
+    where order_id = #{orderId}
+  </select>
+
+  <delete id="deleteByOrderId" parameterType="java.lang.String">
+    DELETE FROM mag_customer_resp WHERE order_id = #{orderId}
+  </delete>
+</mapper>

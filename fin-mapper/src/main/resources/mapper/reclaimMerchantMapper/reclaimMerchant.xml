@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.ReclaimMerchant.ReclaimMerchantMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.reclaimMerchant.ReclaimMerchant" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="dep_id" property="depId" jdbcType="VARCHAR" />
+        <result column="mer_name" property="merName" jdbcType="VARCHAR" />
+        <result column="mer_logo" property="merLogo" jdbcType="VARCHAR" />
+        <result column="mer_info" property="merInfo" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime"  jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, dep_id, mer_name, mer_logo, mer_info, status,update_user,update_time
+    </sql>
+
+    <select id="getMerchantList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+        select
+        id, dep_id, mer_name, mer_logo, mer_info, status,update_user,update_time
+        from reclaim_merchant
+        where 1=1
+        <if test=" merName != null and merName != '' ">
+            and mer_name like CONCAT('%',#{merName},'%')
+        </if>
+        <!--<if test=" depId != null and depId != '' ">-->
+            <!--and dep_id = #{depId}-->
+        <!--</if>-->
+    </select>
+
+    <select id="getMerchantListByDepId"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+        select
+        id, dep_id, mer_name, mer_logo, mer_info, status,update_user,update_time
+        from reclaim_merchant
+        where 1=1
+        <if test=" depId != null and depId != '' ">
+            and dep_id = #{depId}
+        </if>
+        <!--<if test=" depId != null and depId != '' ">-->
+        <!--and dep_id = #{depId}-->
+        <!--</if>-->
+    </select>
+
+
+    <insert id="addMerchant" parameterType="com.zw.rule.reclaimMerchant.ReclaimMerchant">
+        INSERT INTO reclaim_merchant
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="depId != null" >
+                dep_id,
+            </if>
+            <if test="merName != null" >
+                mer_name,
+            </if>
+            <if test="merLogo != null" >
+                mer_logo,
+            </if>
+            <if test="merInfo != null" >
+                mer_info,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="updateUser != null" >
+                update_user,
+            </if>
+            <if test="updateTime != null" >
+                update_time
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="depId != null" >
+                #{depId},
+            </if>
+            <if test="merName != null" >
+                #{merName},
+            </if>
+            <if test="merLogo != null" >
+                #{merLogo},
+            </if>
+            <if test="merInfo != null" >
+                #{merInfo},
+            </if>
+            <if test="status != null" >
+                #{status},
+            </if>
+            <if test="updateUser != null" >
+                #{updateUser},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime}
+            </if>
+        </trim>
+    </insert>
+    <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from reclaim_merchant where id=#{id};
+    </select>
+    <update id="updateMerchant" parameterType="com.zw.rule.reclaimMerchant.ReclaimMerchant" >
+        update reclaim_merchant
+        <set >
+            <if test="depId != null" >
+                dep_id = #{depId,jdbcType=VARCHAR},
+            </if>
+            <if test="merName != null" >
+                mer_name = #{merName,jdbcType=VARCHAR},
+            </if>
+            <if test="merLogo != null" >
+                mer_logo = #{merLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="merInfo != null" >
+                mer_info = #{merInfo,jdbcType=BIGINT},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null" >
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateStatus" parameterType="com.zw.rule.reclaimMerchant.ReclaimMerchant">
+        update reclaim_merchant set  status=#{status}  , update_time= #{updateTime}, update_user=  #{updateUser}     where id=#{id};
+    </update>
+
+    <delete id="deleteMerchant" parameterType="java.lang.String">
+        delete from reclaim_merchant
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <!--&lt;!&ndash;查讯所有代码code&ndash;&gt;-->
+    <!--<select id="getAllCode" resultType="java.lang.String">-->
+        <!--SELECT code from mag_recommend-->
+    <!--</select>-->
+    <!--<insert id="insertRecommend" parameterType="com.zw.rule.coupon.po.Recommend">-->
+        <!--INSERT INTO reclaim_merchant(id,dep_id,mer_name, mer_logo, mer_info, status,update_user,update_time)-->
+        <!--VALUES (#{id},#{dep_id},#{mer_name},#{mer_logo},#{mer_info},#{status},#{update_user},#{update_time})-->
+    <!--</insert>-->
+    <!--&lt;!&ndash; 根据id查询一条数据 &ndash;&gt;-->
+    <!--<select id="selectOneById" parameterType="java.util.Map" resultType="com.zw.rule.coupon.po.Recommend">-->
+        <!--SELECT id,name,code,remarks,state FROM mag_recommend WHERE id=#{id}-->
+    <!--</select>-->
+    <!--<update id="updateOneById" parameterType="java.util.Map">-->
+        <!--UPDATE  mag_recommend-->
+        <!--SET-->
+        <!--name=#{name},-->
+        <!--remarks=#{remarks}-->
+        <!--<where>-->
+            <!--id=#{id}-->
+        <!--</where>-->
+    <!--</update>-->
+    <!--&lt;!&ndash;根据ID更改状态changeStateById&ndash;&gt;-->
+    <!--<update id="changeStateById" parameterType="java.util.Map">-->
+        <!--UPDATE mag_recommend-->
+        <!--SET-->
+        <!--state=#{state}-->
+        <!--<where>-->
+            <!--id=#{id}-->
+        <!--</where>-->
+    <!--</update>-->
+    <!--&lt;!&ndash;根据id来删除deleteOneById&ndash;&gt;-->
+    <!--<delete id="deleteOneById" parameterType="java.util.Map">-->
+        <!--<if test="id !=null and id!='' ">-->
+            <!--DELETE FROM mag_recommend-->
+            <!--WHERE id=#{id}-->
+        <!--</if>-->
+    <!--</delete>-->
+
+    <!--<select id="getRecommendListList"  parameterType="java.util.Map"  resultType="java.util.Map">-->
+        <!--select mrl.id,mrl.recommend_code,mrl.create_time,mrl.is_register,mrl.user_id,mrl.user_name,mr.name FROM mag_recommend_list mrl  LEFT  JOIN  mag_recommend mr ON mrl.recommend_code=mr.code-->
+        <!--<where>-->
+            <!--1=1-->
+            <!--<if test="name != null and name != ''">-->
+                <!--and mr.name like CONCAT('%',#{name},'%')-->
+            <!--</if>-->
+            <!--<if test="is_register != null and is_register != ''">-->
+                <!--and mrl.is_register=#{is_register}-->
+            <!--</if>-->
+        <!--</where>-->
+    <!--</select>-->
+</mapper>

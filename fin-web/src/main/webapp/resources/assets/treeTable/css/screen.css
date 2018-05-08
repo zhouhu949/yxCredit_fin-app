@@ -1,0 +1,60 @@
+table.treetable tr.expanded span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.collapsed span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.expanded.selected span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.expanded span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.collapsed span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.expanded.selected span.indenter a {
+    display: inline-block ! important;
+    width: 14px ! important;
+    height: 16px ! important;
+    background-image: url("../img/icon-down.png");
+}
+td {
+    border: 1px solid#ccc;
+}
+
+table.treetable tr.collapsed span.indenter a.right{
+    background-image: url("../img/icon-right.png");
+}
+table.treetable tr.collapsed span.indenter a.down{
+    background-image: url("../img/icon-down.png");
+}
+table.treetable tr.expanded span.indenter a.right{
+    background-image: url("../img/icon-right.png");
+}
+table.treetable tr.expanded span.indenter a.down{
+    background-image: url("../img/icon-down.png");
+}
+#magData thead tr{
+    height: 36px;
+}
+#magData thead tr th{
+    color: #307ecc;
+    font-size: 13px;
+    font-weight: 700;
+}

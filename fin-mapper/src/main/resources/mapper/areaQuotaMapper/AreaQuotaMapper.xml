@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.areaQuota.AreaQuotaMapper">
+    <resultMap id="areaQuota" type="com.zw.rule.areaQuota.AreaQuota">
+        <id column="id" property="id"/>
+        <result column="province_id" property="provinceId"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="city_id" property="cityId"/>
+        <result column="city_name" property="cityName"/>
+        <result column="grade" property="state"/>
+        <result column="number_day" property="numberDay"/>
+        <result column="number_week" property="numberWeek"/>
+        <result column="number_month" property="numberMonth"/>
+        <result column="quota_day" property="quotaDay"/>
+        <result column="quota_week" property="quotaWeek"/>
+        <result column="quota_month" property="quotaMonth"/>
+        <result column="single_quota" property="singleQuota"/>
+    </resultMap>
+    <!--查询所有的区域配置信息-->
+    <select id="selectAllQuota" resultMap="areaQuota" parameterType="java.util.Map">
+      SELECT
+        id,
+        province_id,
+        province_name,
+        city_id,
+        city_name,
+        state,
+        number_day,
+        number_week,
+        number_month,
+        quota_day,
+        quota_week,
+        quota_month,
+        single_quota
+        FROM mag_area_quota
+        WHERE
+        1=1
+        <if test="province !=null and province !='' ">
+            AND province_id=#{province}
+        </if>
+        <if test="cityId !=null and cityId !='' ">
+            AND city_id=#{city}
+        </if>
+        <if test="state !=null and state !='' ">
+            AND state=#{state}
+        </if>
+    </select>
+    <!--添加区域限额的sql-->
+    <insert id="insertAreaQuota" parameterType="com.zw.rule.areaQuota.AreaQuota">
+        INSERT into mag_area_quota(id,city_id,city_name,number_day,number_month,number_week,province_id,province_name,quota_day,quota_month,quota_week,single_quota,state) VALUES (
+        <if test="id!=null and id!='' ">
+            #{id},
+        </if>
+        <if test="cityId!=null and cityId!=''">
+            #{cityId},
+        </if>
+        <if test="cityName!=null and cityName!=''">
+            #{cityName},
+        </if>
+        <if test="numberDay!=null and numberDay!=''">
+            #{numberDay},
+        </if>
+        <if test="numberMonth!=null and numberMonth!=''">
+            #{numberMonth},
+        </if>
+        <if test="numberWeek!=null and numberWeek!=''">
+            #{numberWeek},
+        </if>
+        <if test="provinceId!=null and provinceId!=''">
+            #{provinceId},
+        </if>
+        <if test="provinceName!=null and provinceName!=''">
+            #{provinceName},
+        </if>
+        <if test="quotaDay!=null and quotaDay!=''">
+            #{quotaDay},
+        </if>
+        <if test="quotaMonth!=null and quotaMonth!=''">
+            #{quotaMonth},
+        </if>
+        <if test="quotaWeek!=null and quotaWeek!=''">
+            #{quotaWeek},
+        </if>
+        <if test="singleQuota!=null and singleQuota!=''">
+            #{singleQuota},
+        </if>
+        <if test="state!=null and state!=''">
+            #{state}
+        </if>
+        )
+    </insert>
+    <select id="selectOneAreaQuotaById" resultMap="areaQuota" parameterType="java.lang.String">
+         SELECT
+            id,
+            province_id,
+            province_name,
+            city_id,
+            city_name,
+            state,
+            number_day,
+            number_week,
+            number_month,
+            quota_day,
+            quota_week,
+            quota_month,
+            single_quota
+            FROM mag_area_quota
+        WHERE id=#{xxx}
+    </select>
+    <!--根据id更改区域限额-->
+    <update id="changeAreaQuotaById" parameterType="com.zw.rule.areaQuota.AreaQuota">
+        UPDATE mag_area_quota
+        <set>
+            province_id=#{provinceId},
+            province_name=#{provinceName},
+            city_id=#{cityId},
+            city_name=#{cityName},
+            state=#{state},
+            number_day=#{numberDay},
+            number_week=#{numberWeek},
+            number_month=#{numberMonth},
+            quota_day=#{quotaDay},
+            quota_week=#{quotaWeek},
+            quota_month=#{quotaMonth},
+            single_quota=#{singleQuota}
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+    <!--更改区域限额状态-->
+    <update id="changeState" parameterType="java.util.Map">
+        UPDATE mag_area_quota
+        set
+        state=#{state}
+        WHERE id=#{id}
+    </update>
+</mapper>

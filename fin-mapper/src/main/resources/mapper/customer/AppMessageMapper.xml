@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.customer.AppMessageMapper">
+	<resultMap id="BaseResultMap" type="com.zw.rule.customer.po.AppMessage" >
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+		<result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="jpush_state" property="jpushState" jdbcType="VARCHAR" />
+		<result column="apex1" property="apex1" jdbcType="VARCHAR" />
+		<result column="apex2" property="apex2" jdbcType="VARCHAR" />
+		<result column="apex3" property="apex3" jdbcType="VARCHAR" />
+		<result column="bak" property="bak" jdbcType="VARCHAR" />
+		<result column="push_state" property="pushState" jdbcType="VARCHAR" />
+		<result column="update_state" property="updateState" jdbcType="VARCHAR" />
+		<result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+		<result column="order_state" property="orderState" jdbcType="VARCHAR" />
+		<result column="order_type" property="orderType" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	user_id,	title,	content,	creat_time,	alter_time,	state,	jpush_state,	apex1,	apex2,	apex3,	bak,	push_state,	update_state,	msg_type,	order_state, order_type,	order_id
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.customer.po.AppMessage" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM app_message
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM app_message
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.customer.po.AppMessage">
+		 INSERT INTO app_message
+ 		(id,user_id,title,content,creat_time,alter_time,state,jpush_state,apex1,apex2,apex3,bak,push_state,update_state,msg_type,order_state,order_id) 
+		 VALUES 
+ 		(#{id},#{userId},#{title},#{content},#{creatTime},#{alterTime},#{state},#{jpushState},#{apex1},#{apex2},#{apex3},#{bak},#{pushState},#{updateState},#{msgType},#{orderState},#{orderId}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.customer.po.AppMessage">
+		 INSERT INTO app_message
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="userId != null">
+				 user_id,
+			</if>
+			<if test="title != null">
+				 title,
+			</if>
+			<if test="content != null">
+				 content,
+			</if>
+			<if test="creatTime != null">
+				 creat_time,
+			</if>
+			<if test="alterTime != null">
+				 alter_time,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="jpushState != null">
+				 jpush_state,
+			</if>
+			<if test="apex1 != null">
+				 apex1,
+			</if>
+			<if test="apex2 != null">
+				 apex2,
+			</if>
+			<if test="apex3 != null">
+				 apex3,
+			</if>
+			<if test="bak != null">
+				 bak,
+			</if>
+			<if test="pushState != null">
+				 push_state,
+			</if>
+			<if test="updateState != null">
+				 update_state,
+			</if>
+			<if test="msgType != null">
+				 msg_type,
+			</if>
+			<if test="orderState != null">
+				 order_state,
+			</if>
+			 <if test="orderType != null">
+				 order_type,
+			 </if>
+			<if test="orderId != null">
+				 order_id,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="userId!=null">
+				 #{userId},
+			</if>
+			<if test="title!=null">
+				 #{title},
+			</if>
+			<if test="content!=null">
+				 #{content},
+			</if>
+			<if test="creatTime!=null">
+				 #{creatTime},
+			</if>
+			<if test="alterTime!=null">
+				 #{alterTime},
+			</if>
+			<if test="state!=null">
+				 #{state},
+			</if>
+			<if test="jpushState!=null">
+				 #{jpushState},
+			</if>
+			<if test="apex1!=null">
+				 #{apex1},
+			</if>
+			<if test="apex2!=null">
+				 #{apex2},
+			</if>
+			<if test="apex3!=null">
+				 #{apex3},
+			</if>
+			<if test="bak!=null">
+				 #{bak},
+			</if>
+			<if test="pushState!=null">
+				 #{pushState},
+			</if>
+			<if test="updateState!=null">
+				 #{updateState},
+			</if>
+			<if test="msgType!=null">
+				 #{msgType},
+			</if>
+			<if test="orderState!=null">
+				 #{orderState},
+			</if>
+			 <if test="orderType!=null">
+				 #{orderType},
+			 </if>
+			<if test="orderId!=null">
+				 #{orderId},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.AppMessage">
+		 UPDATE app_message
+ 		 <set> 
+			<if test="userId != null">
+				 user_id = #{userId},
+			</if>
+			<if test="title != null">
+				 title = #{title},
+			</if>
+			<if test="content != null">
+				 content = #{content},
+			</if>
+			<if test="creatTime != null">
+				 creat_time = #{creatTime},
+			</if>
+			<if test="alterTime != null">
+				 alter_time = #{alterTime},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="jpushState != null">
+				 jpush_state = #{jpushState},
+			</if>
+			<if test="apex1 != null">
+				 apex1 = #{apex1},
+			</if>
+			<if test="apex2 != null">
+				 apex2 = #{apex2},
+			</if>
+			<if test="apex3 != null">
+				 apex3 = #{apex3},
+			</if>
+			<if test="bak != null">
+				 bak = #{bak},
+			</if>
+			<if test="pushState != null">
+				 push_state = #{pushState},
+			</if>
+			<if test="updateState != null">
+				 update_state = #{updateState},
+			</if>
+			<if test="msgType != null">
+				 msg_type = #{msgType},
+			</if>
+			<if test="orderState != null">
+				 order_state = #{orderState},
+			</if>
+			<if test="orderId != null">
+				 order_id = #{orderId},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.AppMessage">
+		 UPDATE app_message
+		 SET 
+			 user_id = #{userId},
+			 title = #{title},
+			 content = #{content},
+			 creat_time = #{creatTime},
+			 alter_time = #{alterTime},
+			 state = #{state},
+			 jpush_state = #{jpushState},
+			 apex1 = #{apex1},
+			 apex2 = #{apex2},
+			 apex3 = #{apex3},
+			 bak = #{bak},
+			 push_state = #{pushState},
+			 update_state = #{updateState},
+			 msg_type = #{msgType},
+			 order_state = #{orderState},
+			 order_id = #{orderId}
+		 WHERE id = #{id}
+	</update>
+
+	<update id="updateState" parameterType="Map">
+		UPDATE app_message
+		SET
+		update_state = #{updateState}
+		WHERE order_id = #{orderId}
+	</update>
+
+	<select id="getUnMessage" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+		count(id) as num
+		from
+		app_message
+		where user_id =#{userId} and state = '0'
+	</select>
+</mapper>

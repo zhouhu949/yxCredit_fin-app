@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.contract.ContractMapper">
+
+    <resultMap id="magOrderContract" type="com.zw.rule.contract.po.Contract">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <id column="name" property="name" jdbcType="VARCHAR" />
+        <id column="state" property="state" jdbcType="VARCHAR" />
+        <id column="template_type" property="template_type" jdbcType="VARCHAR" />
+        <id column="content" property="content" jdbcType="VARCHAR" />
+        <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <id column="CREAT_TIME" property="createTime" jdbcType="VARCHAR" />
+        <id column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="magContract" type="com.zw.rule.contract.po.MagOrderContract">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <id column="contract_name" property="contract_name" jdbcType="VARCHAR" />
+        <id column="CREAT_TIME" property="createTime" jdbcType="VARCHAR" />
+        <id column="contract_src" property="contract_src" jdbcType="VARCHAR" />
+        <id column="contract_no" property="contract_no" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="magOrder" type="com.zw.rule.customer.po.Order">
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <id column="customer_name" property="customerName" jdbcType="VARCHAR" />
+        <id column="card" property="card" jdbcType="VARCHAR" />
+        <id column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <id column="contract_id" property="contract_id" jdbcType="VARCHAR" />
+        <id column="product_name_name" property="productNameName" jdbcType="VARCHAR" />
+        <id column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+        <id column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        id,	name AS name, content as content,order_id as orderId , template_type as template_type ,state AS state,create_time AS createTime ,alter_time AS alterTime,platform_type AS platformType
+    </sql>
+
+    <sql id="Contract_Column_List">
+        id,	contract_src as contract_src ,contract_name AS contract_name, contract_src as contract_src,creat_time AS createTime,contract_no as contract_no
+    </sql>
+
+    <select id="searchContract" resultMap="magOrderContract" parameterType="java.util.Map">
+        SELECT id,	name AS name, content as content,order_id as orderId ,
+        (SELECT `name` from zw_sys_dict where parent_id =(select id from zw_sys_dict where name ='模板类型') and code=template_type) as template_type ,
+        state AS state,create_time AS createTime ,alter_time AS alterTime
+        FROM mag_template
+        where 1=1
+        <if test="name != null and name != ''">
+            and name like '%${name}%'
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and create_time &gt;= #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt;= #{endTime}
+        </if>
+        order by create_time desc
+    </select>
+
+    <insert id="addContract" parameterType="com.zw.rule.contract.po.Contract">
+        INSERT INTO mag_template
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="template_type != null" >
+                template_type,
+            </if>
+            <if test="state != null" >
+                state,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="platformType != null" >
+                platform_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="name != null" >
+                #{name},
+            </if>
+            <if test="template_type != null" >
+                #{template_type},
+            </if>
+            <if test="state != null" >
+                #{state},
+            </if>
+            <if test="createTime != null" >
+                #{createTime},
+            </if>
+            <if test="platformType != null" >
+                #{platformType},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteContract"  parameterType="java.lang.String">
+        delete from mag_template where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="signContract"  parameterType="java.lang.String">
+        update   mag_order SET state='7' WHERE  id = #{id}
+    </update>
+
+    <update id="updateState"  parameterType="java.util.Map">
+        update mag_template SET state=#{state} WHERE  id = #{id}
+    </update>
+
+    <update id="updateContract"  parameterType="com.zw.rule.contract.po.Contract">
+        update mag_template SET name=#{name} ,template_type = #{template_type}, content = #{content},content_no_bq = #{content_no_bq},platform_type = #{platformType} WHERE  id = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.String" resultMap="magOrderContract">
+        select <include refid="Base_Column_List" />
+        from mag_template where id = #{id};
+    </select>
+
+    <select id="getContractByOrderId" parameterType="java.util.Map" resultMap="magContract">
+        select <include refid="Contract_Column_List" />
+        from mag_order_contract where order_id = #{id}
+    </select>
+    
+    <select id="getOrderList" parameterType="java.util.Map" resultMap="magOrder">
+        select id as id,customer_name as customerName,card,order_no as orderNo,
+        product_name_name as productNameName,contract_no as contract_no,creat_time as creatTime
+        from mag_order
+        where 1=1
+        <if test="card != null and card != ''">
+            and card like '%${card}%'
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and customer_name like '%${customerName}%'
+        </if>
+        and contract_no is not null
+        order by creat_time desc
+    </select>
+
+
+
+    <insert id="createContract" parameterType="com.zw.rule.contract.po.MagOrderContract">
+        INSERT  INTO   mag_order_contract
+        (ID,MERCHANT_ID,MERCHANT_NAME,customer_name,CUSTOMER_ID,CREAT_TIME,ALTER_TIME,STATE,
+        order_no,order_id,contract_amount,manager,contract_no,month,applay_time,
+        interest,begin_date,end_date,day,bank,bank_subbranch,bank_city,account,account_name,loan_amount,
+        emp_id,channel,amount,user_id,COMPANY,BRANCH,operator,merchandise_type,
+        merchandise_brand,merchandise_model,first_pay_money,contract_rate,month_service,interest_rate,befor_service_rate,
+        emp_number,product_type,product_type_name,product_name,product_name_name,product_detail,product_detail_name,
+        product_code,consult_rate,yearRate,custID,purposeName,payCapialCN)
+        VALUES (#{id},#{merchant_id},#{merchant_name},#{customer_name},#{customerId},DATE_FORMAT(now(),'%Y%m%d%H%i%s'),DATE_FORMAT(now(),'%Y%m%d%H%i%s'),#{state},
+        #{order_no},#{orderId},#{contract_amount},#{manager},#{contract_no},#{month},#{applay_time},
+        #{interest},#{begin_date},#{end_date},#{day},#{bank},#{bank_subbranch},#{bank_city},#{account},#{account_name},#{loan_amount},
+        #{emp_id},#{channel},#{amount},#{user_id},#{company},#{BRANCH},#{operator},#{merchandise_type},
+        #{merchandise_brand},#{merchandise_model},#{first_pay_money},#{contract_rate},#{month_service},#{interest_rate},#{befor_service_rate},
+        #{emp_number},#{product_type},#{product_type_name},#{product_name},#{product_name_name},#{product_detail},#{product_detail_name},
+        #{product_code},#{consult_rate},#{yearRate},#{custID},#{purposeName},#{payCapialCN})
+    </insert>
+
+    <select id ="getMagCustomerAccountByCustomerId" parameterType="java.lang.String" resultType="Map">
+        SELECT mac.id,mac.merchant_id,mac.USER_ID,mac.CUSTOMER_ID,mac.customer_type,
+        mac.tel,mac.channel,mac.CREAT_TIME,mac.	ALTER_TIME,mac.	state,mac.APEX1,mac.APEX2,
+        mac.APEX3,mac.BAK,mac.count_name,mac.user_name,mac.card_num,mac.card_type,mac.count_type,mac.gold_account,
+        mac.draw_password,mac.login_password,mac.province_id,mac.account_province,mac.city_id,mac.account_city,
+        mac.account_bank_id,mac.account_bank,mac.account_branch_bank,mac.channel_name,mac.begin_time,mac.bank_card,
+        mac.end_time FROM mag_customer_account mac where mac.CUSTOMER_ID = #{customerId}
+    </select>
+
+    <select id ="getInfoByproductId" parameterType="Map" resultType="Map">
+        SELECT mac.staging_services_rate,mac.interest_rate,mac.contract_rate FROM pro_working_product_detail mac where mac.crm_product_id = #{productId} and mac.periods = #{periods}
+    </select>
+
+    <select id ="getContactTemplate" parameterType="java.util.Map" resultType="Map">
+        SELECT
+        mt.id, mt.name,mt.content,mt.content_no_bq, mt.template_type,mt.state,mt.create_time, mt.order_id,mc.ID,mc.customer_id, mc.order_id, mc.contract_amount,mc.CREAT_TIME as start_time,
+        mc.contract_name,mc.manager, mc.protocol_name, mc.contract_no, mc.interest, mc.begin_date, mc.end_date, mc.day, mc.bank,mc.bank_subbranch, mc.product_name,
+        mc.account, mc.account_name, mc.loan_amount,mc.amount,mc.applay_time, mc.contract_rate, mc.befor_service_rate, mc.product_type,mc.product_type_name,
+        mc.product_name_name,mc.product_detail,mc.product_detail_name,mc.product_code, p.id,p.product_id,p.product_amount, p.product_periods, p.product_com_fee,p.li_xi,
+        p.zhifu_fee, p.fengxian_fee,p.yuqi_fee,p.zhina_fee, p.shenhe_fee,p.state,p.zhanghu_fee,cu.tel,cu.id,cu.card,cu.card_register_address,cu.PERSON_NAME FROM mag_template mt
+        INNER JOIN mag_order_contract mc ON mt.order_id = mc.order_id
+        INNER JOIN mag_product_fee p ON p.product_id = mc.product_name
+        INNER JOIN mag_customer cu ON cu.id = mc.CUSTOMER_ID
+        WHERE  mt.template_type = #{template_type} and p.product_id= #{product_id} and cu.tel=#{tel}
+    </select>
+
+    <select id="getProductFree" parameterType="String" resultType="java.util.Map">
+        select product_amount, product_periods, product_com_fee,(SELECT pwpd.contract_rate from pro_working_product_detail pwpd WHERE pwpd.id= o.product_detail) as li_xi,zhifu_fee, fengxian_fee,yuqi_fee,zhina_fee, shenhe_fee,zhanghu_fee from
+        mag_product_fee p LEFT JOIN mag_order o on p.product_id=o.product_detail  where p.state='0' and  o.id=#{order_id}
+    </select>
+
+
+    <select id="getContectTemplate" parameterType="String" resultType="java.util.Map">
+        select content,content_no_bq,name from mag_template where template_type=#{template_type} and state=1
+    </select>
+
+    <select id="getOrderInfo" parameterType="String" resultType="java.util.Map">
+        select tel,order_no,periods,customer_name,card,loan_amount,creat_time,contract_amount,repay_date from mag_order where id=#{order_id}
+    </select>
+
+    <select id="getBankInfo" parameterType="String" resultType="java.util.Map">
+        select card_no,card_name,bank_no,bank_attribution,bank_tel,create_time from mag_bank_info where id=#{bank_id}
+    </select>
+
+    <select id="getRegistAddress" parameterType="String" resultType="java.util.Map">
+        select c.card_register_address from mag_customer c,mag_order o  where c.card=o.card and o.id=#{order_id}
+    </select>
+
+    <select id="getUserInfo" parameterType="String" resultType="java.util.Map">
+        select a.creat_time,a.tel,c.person_name,c.card from app_user a,mag_customer c where a.id=c.user_id and a.id=#{user_id}
+    </select>
+
+
+
+
+</mapper>

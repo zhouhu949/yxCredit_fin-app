@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.OfficeClerkManager.OfficeClerkManageMapper">
+	<resultMap id="officeClerkManager" type="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+		<id column="id" property="id"/>
+		<result column="employee_num" property="employeeNum"/>
+		<result column="idcard_address" property="idcardAddress"/>
+		<result column="date_bath" property="dateBath"/>
+		<result column="error_num" property="errorNum"/>
+		<result column="now_address" property="nowAddress"/>
+		<result column="creat_time" property="creatTime"/>
+		<result column="alter_time" property="alterTime"/>
+		<result column="activation_state" property="activationState"/>
+		<result column="sex_name" property="sexName"/>
+	</resultMap>
+	<!--查看所有办单员信息-->
+	<select id="selectAllManagers"  resultMap="officeClerkManager" parameterType="java.util.Map" >
+		SELECT
+			ms.id,
+			ms.employee_num,
+			ms.idcard,
+			ms.idcard_address,
+			ms.realname,
+			ms.date_bath,
+			ms.sex,
+			ms.tel,
+			ms.passwd,
+			ms.company,
+			ms.branch AS branchId,
+			ms.post AS postId,
+			zsd.dept_name AS branch,
+			zss.station_name AS post,
+			ms.error_num,
+			ms.now_address,
+			ms.creat_time,
+			ms.alter_time,
+			ms.state,
+			ms.apex1,
+			ms.apex2,
+			ms.apex3,
+			ms.activation_state,
+			ms.sex_name
+		FROM
+			mag_salesman ms
+		LEFT JOIN zw_sys_department zsd ON ms.branch = zsd.id
+		LEFT JOIN zw_sys_station zss ON ms.post = zss.id
+		<where>
+			1=1
+			<if test="realname != null and realname != ''">
+				and ms.realname like CONCAT('%',#{realname},'%')
+			</if>
+			<if test="tel != null and tel != '' ">
+				and ms.tel=#{tel}
+			</if>
+		</where>
+		ORDER  BY ms.creat_time DESC
+	</select>
+	<!--查看单个办单员-->
+	<select id="selectOneManagerById" resultMap="officeClerkManager" parameterType="java.lang.String">
+					SELECT
+					a.id,
+					a.employee_num,
+					a.idcard,
+					a.idcard_address,
+					a.realname,
+					a.date_bath,
+					a.sex,
+					a.tel,
+					a.passwd,
+					a.company,
+					a.branch AS branchId,
+					(
+						SELECT
+							dept_name
+						FROM
+							zw_sys_department
+						WHERE
+							zw_sys_department.id = a.branch
+					) AS branch,
+					a.post AS postId,
+					(
+						SELECT
+							station_name
+						FROM
+							zw_sys_station
+						WHERE
+							a.post = zw_sys_station.id
+					) AS post,
+					a.error_num,
+					a.now_address,
+					a.creat_time,
+					a.alter_time,
+					a.state,
+					a.apex1,
+					a.apex2,
+					a.apex3,
+					a.activation_state,
+					a.sex_name
+				FROM
+					(
+						SELECT
+							*
+						FROM
+							mag_salesman
+						WHERE
+							id = #{xx}
+					) a
+	</select>
+	<!--添加办单员-->
+	<insert id="addOfficeClerkManager" parameterType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+	INSERT into mag_salesman VALUES (
+		<if test="id != null" >
+			#{id},
+		</if>
+		#{employeeNum},
+		#{idcard},
+		#{idcardAddress},
+		#{realname},
+		#{dateBath},
+		#{sex},
+		#{tel},
+		#{passwd},
+		#{company},
+		#{branch},
+		#{post},
+		#{errorNum},
+		#{nowAddress},
+		#{creatTime},
+		#{alterTime},
+		#{state},
+		#{apex1},
+		#{apex2},
+		#{apex3},
+		#{activationState},
+		#{sexName}
+	)
+	</insert>
+	<!--编辑办单员-->
+	<update id="updateOfficeClerkManagerById" parameterType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+		UPDATE mag_salesman
+		<set>
+			<if test="realname != null" >
+				realname = #{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="sexName != null" >
+				sex_name = #{sexName,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null" >
+				tel = #{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="dateBath != null" >
+				date_Bath = #{dateBath,jdbcType=VARCHAR},
+			</if>
+			<if test="idcard != null" >
+				idcard = #{idcard,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardAddress != null" >
+				idcard_address = #{idcardAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="nowAddress != null" >
+				now_address = #{nowAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="company != null  and company != '' ">
+				company =#{company},
+			</if>
+			<if test="branch != null" >
+				branch = #{branch,jdbcType=VARCHAR},
+			</if>
+			<if test="post != null" >
+				post = #{post,jdbcType=VARCHAR},
+			</if>
+			<if test="employeeNum != null" >
+				employee_num = #{employeeNum,jdbcType=VARCHAR},
+			</if>
+			<if test="sex !=null">
+				sex=#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="alterTime !=null">
+				alter_time=#{alterTime,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+    <!-- 更改办单员状态（激活，未激活） -->
+    <update id="updateOfficeClerkManagerState"  parameterType="java.util.Map" >
+      UPDATE mag_salesman SET activation_state=#{activationState} where id=#{id}
+    </update>
+    <!-- 重置密码 -->
+    <update id="resertPasswdById" parameterType="java.util.Map">
+        update mag_salesman set passwd =#{passwd} WHERE ID=#{id}
+    </update>
+	<!-- 查询所有办单员的手机号 -->
+	<select id="getAllTels" resultType="java.lang.String">
+		SELECT tel from mag_salesman
+	</select>
+	<!--根据办单员id查询他分管商户的集合-->
+	<select id="getAllMerchantsBySalesmanId" parameterType="java.lang.String" resultType="com.zw.rule.merchant.MerchantBasicInformation">
+		SELECT
+			mm.id,
+			mm.mer_name AS merName,
+			mm.license_number AS licenseNumber,
+			mm.main_business AS mainBusiness,
+			mm.type,
+			mm.license_date AS licenseDate,
+			mm.registered_capital AS registeredCapital,
+			mm.employees_number AS employeesNumber,
+			mm.provinces_id AS provincesId,
+			mm.city_id AS cityId,
+			mm.distric_id AS districId,
+			mm.provinces,
+			mm.city,
+			mm.distric,
+			mm.mer_tel AS merTel,
+			mm.mer_detail_address AS merDetailAddress,
+			mm.apply_name AS applyName,
+			mm.apply_tel AS applyTel,
+			mm.apply_card AS applyCard,
+			mm.mer_des AS merDes,
+			mm.state,
+			mm.creat_time AS creatTime,
+			mm.mer_private_account_id AS merPrivateAccountId,
+			mmsr.id AS relId,
+			mmsr.employee_id,
+			mmsr.state as relState
+		FROM
+			mag_merchant mm
+		LEFT JOIN mag_merchant_saleman_rel mmsr ON mm.id = mmsr.merchant_id
+		WHERE
+			mmsr.employee_id = #{salesmanId}
+		ORDER BY mm.creat_time
+	</select>
+
+    <!-- 查询所有可以被办单员关联到门下的商户(去除现在正在关联的商户和冻结中的商户。salesmanId ) -->
+    <select id="selectAllCanBeManagerMerchants" parameterType="java.lang.String" resultType="com.zw.rule.merchant.MerchantBasicInformation">
+                        SELECT
+                            	id,
+								mer_name as merName,
+								license_number as licenseNumber,
+								main_business AS mainBusiness,
+								type,
+								license_date AS licenseDate,
+								registered_capital AS registeredCapital,
+								employees_number AS employeesNumber,
+								provinces_id AS provincesId,
+								city_id AS  cityId,
+								distric_id AS districId,
+								provinces,
+								city,
+								distric,
+								mer_tel AS merTel,
+								mer_detail_address  AS merDetailAddress,
+								apply_name AS applyName,
+								apply_tel AS applyTel,
+								apply_card AS applyCard,
+								mer_des AS merDes,
+								state,
+								creat_time AS creatTime,
+								mer_private_account_id AS merPrivateAccountId
+                        FROM
+                            mag_merchant
+                            WHERE id NOT IN
+                            (SELECT merchant_id FROM  mag_merchant_saleman_rel WHERE employee_id=#{salesmanId}) AND mag_merchant.state='1'
+						ORDER BY creat_time DESC
+    </select>
+    <!--添加商户给办单员(其实就是添加一条数据到关联表)-->
+    <insert id="insertMerchantToSalesman" parameterType="com.zw.rule.officeClerkEntity.MerchantSalemanRel">
+        INSERT into mag_merchant_saleman_rel
+        VALUES(
+        #{id},
+        #{employeeId},
+        #{merchantId},
+        #{state}
+        )
+    </insert>
+    <!-- 解除商户跟办单员的绑定其实就是将这条数据的关联状态改成1 -->
+    <update id="deleteMerchantFromSalesman" parameterType="java.util.Map">
+         UPDATE mag_merchant_saleman_rel
+         SET state='1'
+         WHERE employee_id=#{salesmanId} AND  merchant_id=#{merchantId}
+    </update>
+    <!-- 办单员再次绑定该商户(绑定之前曾经绑定过但是又解除绑定的商户),就是将状态从 1 改成 0 -->
+    <update id="insertSameMerchantToSalesmanAgain" parameterType="java.util.Map">
+        UPDATE mag_merchant_saleman_rel
+         SET state='0'
+         WHERE employee_id=#{salesmanId} AND  merchant_id=#{merchantId}
+    </update>
+	<select id="getCountFromSalesman" resultType="int">
+		SELECT COUNT(mag_salesman.id) as num from mag_salesman
+	</select>
+    <!--根据办单员id来查询办单员关联的订单-->
+    <select id="getOrdersBySalesmanId" parameterType="java.util.Map" resultType="com.zw.rule.customer.po.Order">
+            SELECT
+            id,
+            CUSTOMER_NAME AS  customerName,
+			CUSTOMER_ID as customerId,
+            order_no AS orderNo,
+            tel AS tel,
+            card AS card,
+            CREAT_TIME AS creatTime,
+            product_type_name AS productTypeName,
+            source AS source,
+            state AS state
+        FROM
+            mag_order
+        WHERE
+            emp_id = #{empId}
+            AND state !='0'
+            AND order_type='2'
+			<if test="customerName != null and customerName != ''">
+				and CUSTOMER_NAME like CONCAT ('%',#{customerName},'%')
+			</if>
+		<if test="tel != null and tel != ''">
+			and tel = #{tel}
+		</if>
+		  ORDER BY CREAT_TIME DESC
+    </select>
+    <!--给办单员添加关联的图片(身份证等图片，其实就是在关联表内插一条数据) mag_salesman_image_rel-->
+    <insert id="insertImagetoSalesman" parameterType="com.zw.rule.officeClerkEntity.MerchantSalemanRel">
+        INSERT INTO mag_salesman_image_rel
+        (id,salesman_id,img_url,img_type,state)
+        VALUES (
+       		#{id},
+            #{salesmanId},
+            #{imgUrl},
+            #{imgType},
+            #{state}
+        )
+    </insert>
+    <!--查询办单员照片-->
+    <select id="getImagesListBySalesId" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.SalesmanImgRel">
+          SELECT
+            id AS id,
+            salesman_id AS salesmanId,
+            img_url AS imgUrl,
+            img_type AS imgType,
+            state AS state
+            FROM
+          mag_salesman_image_rel
+          WHERE
+            salesman_id = #{xxx}
+    </select>
+	<!--更改办单员图片信息-->
+	<update id="updateSalesmanImages" parameterType="java.util.Map">
+			UPDATE mag_salesman_image_rel
+			set
+			img_url=#{imgUrl}
+			WHERE
+			salesman_id=#{salesmanId}
+			AND
+			img_type=#{type}
+	</update>
+
+	<!--实体查询，作唯一判断来用-->
+	<!--根据身份证号查询该身份证在表内的条数 正产情况下0-->
+	<select id="selectIdcardCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			mag_salesman
+		WHERE
+			idcard = #{idcard}
+	</select>
+	<!--根据身份证号来查询办单员实体-->
+	<select id="getSalesmanByIdcard" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+		SELECT
+			id,
+			tel,
+			employee_num AS employeeNum,
+			idcard,
+			realname
+		FROM
+			mag_salesman
+		WHERE
+			idcard = #{idcard}
+	</select>
+	<!--根据板单元的手机号来查询办单员实体-->
+	<select id="getSalesmanByTel" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+		SELECT
+			id,
+			tel,
+			employee_num AS employeeNum,
+			idcard,
+			realname
+		FROM
+			mag_salesman
+		WHERE
+			tel = #{tel}
+	</select>
+	<!--根据办单员账号查询办单员实体-->
+	<select id="getSalesmanByEmployeeNum" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+		SELECT
+		id,
+		tel,
+		employee_num AS employeeNum,
+		idcard,
+		realname
+		FROM
+		mag_salesman
+		WHERE
+		employee_num = #{employeeNum}
+	</select>
+	<!--交叉查询-->
+	<select id="getSalesmanByTelWhereEmployeeNum" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+				SELECT
+					id,
+					tel,
+					employee_num AS employeeNum,
+					idcard,
+					realname
+				FROM
+					mag_salesman
+				WHERE
+					employee_num = #{tel}
+	</select>
+	<select id="getSalesmanByEmployeeNumWhereTel" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+				SELECT
+					id,
+					tel,
+					employee_num AS employeeNum,
+					idcard,
+					realname
+				FROM
+					mag_salesman
+				WHERE
+					tel = #{employeeNum}
+	</select>
+
+	<!--根据办单员部门id查询他的实体-->
+	<select id="selectBranckById" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.Branch">
+		select
+			id,
+			type,
+			pid,
+			pname,
+			dept_name AS deptName
+		from zw_sys_department where id=#{id}
+	</select>
+</mapper>

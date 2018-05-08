@@ -1,0 +1,57 @@
+button{
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	padding: 0;
+	border:0.5px solid gainsboro;
+	background: white;
+	width: 58px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: #398DEE;
+	border-radius: 4px;
+	cursor: pointer;
+	}
+button:hover{
+	background: #398DEE;
+	color: white;
+}
+.word-buttons button:hover{
+				background:#398def;
+				color:white;			
+			} 
+.areaButton button:hover{
+				background:#398def;
+				color:white;			
+			} 
+.l_input {
+    width: 175px;
+    height: 30px;
+    border: 1px solid gainsboro;
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-top: 17.5px;
+    position: relative;
+    float: right;
+}
+#search {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 0;
+    width: 150px;
+    height: 30px;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    background: none;
+    color:#777777;
+}
+.l_input img {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+}

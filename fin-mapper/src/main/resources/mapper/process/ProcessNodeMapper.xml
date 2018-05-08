@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.process.ProcessNodeMapper">
+    <resultMap id="processNode" type="com.zw.rule.process.po.ProcessNode">
+        <id column="node_id" jdbcType="INTEGER" property="nodeId" />
+        <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
+        <result column="node_code" jdbcType="VARCHAR" property="nodeCode" />
+        <result column="node_order" jdbcType="INTEGER" property="nodeOrder" />
+        <result column="node_type" jdbcType="INTEGER" property="nodeType" />
+        <result column="node_x" jdbcType="DECIMAL" property="nodeX" />
+        <result column="node_y" jdbcType="DECIMAL" property="nodeY" />
+        <result column="node_json" jdbcType="LONGVARCHAR" property="nodeJson" />
+        <result column="node_script" jdbcType="LONGVARCHAR" property="nodeScript" />
+        <result column="next_nodes" jdbcType="LONGVARCHAR" property="nextNodes" />
+        <result column="params" jdbcType="LONGVARCHAR" property="params" />
+        <result column="exc_type" jdbcType="INTEGER" property="excType" />
+        <result column="class_name" jdbcType="LONGVARCHAR" property="className" />
+        <result column="page_url" jdbcType="LONGVARCHAR" property="pageUrl" />
+        <result column="hand_url" jdbcType="LONGVARCHAR" property="handUrl" />
+        <result column="node_url" jdbcType="LONGVARCHAR" property="nodeUrl" />
+        <result column="engine_id" jdbcType="LONGVARCHAR" property="engineId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        node_id,process_id, node_name, node_code, node_order, node_type, node_x, node_y,node_json,node_script,next_nodes,params,exc_type,class_name,page_url,hand_url,node_url,engine_id
+    </sql>
+
+    <select id="getProcessNodeListByProcessVersionId" parameterType="long" resultMap="processNode">
+        select <include refid="Base_Column_List"/> from zw_process_node where ver_id =#{verId}
+        ORDER BY node_order ASC
+    </select>
+    <select id="getNodeListByNodeIds" parameterType = "java.util.List" resultMap="processNode">
+        SELECT
+        *
+        FROM
+        zw_process_node
+        where node_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+    <insert id="insertSelective" parameterType="com.zw.rule.process.po.ProcessNode" useGeneratedKeys="true" keyProperty="nodeId">
+        insert into zw_process_node ( process_id,node_name,
+        node_code, node_order, node_type,
+        node_x, node_y, node_json,
+        node_script, next_nodes, params
+        )
+        values ( #{processId},#{nodeName,jdbcType=VARCHAR},
+        #{nodeCode,jdbcType=VARCHAR}, #{nodeOrder,jdbcType=INTEGER}, #{nodeType,jdbcType=INTEGER},
+        #{nodeX,jdbcType=DECIMAL}, #{nodeY,jdbcType=DECIMAL}, #{nodeJson,jdbcType=LONGVARCHAR},
+        #{nodeScript,jdbcType=LONGVARCHAR}, #{nextNodes,jdbcType=LONGVARCHAR}, #{params,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+
+    <!-- 更新节点名称 -->
+    <update id="renameNode" parameterType="java.util.Map">
+        update zw_process_node
+        set node_name = #{nodeName,jdbcType=VARCHAR}
+        where node_id = #{nodeId,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除节点 -->
+    <delete id="delNode" parameterType="long">
+        DELETE FROM zw_process_node
+        where node_id = #{nodeId,jdbcType=INTEGER}
+    </delete>
+
+
+    <!-- 更新节点 -->
+    <update id="updateNode" parameterType="com.zw.rule.process.po.ProcessNode" >
+        update zw_process_node SET
+        <if test="nodeName != null">
+            node_name = #{nodeName}
+        </if>
+        <if test="processId != null">
+            ,process_id = #{processId}
+        </if>
+        <if test="nodeCode != null">
+            ,node_code = #{nodeCode}
+        </if>
+        <if test="nodeOrder != null">
+            ,node_order = #{nodeOrder}
+        </if>
+        <if test="nodeJson != null">
+            ,node_json = #{nodeJson}
+        </if>
+        <if test="nodeX != 0.0">
+            ,node_x = #{nodeX}
+        </if>
+        <if test="nodeY != 0.0">
+            ,node_y = #{nodeY}
+        </if>
+        <if test="nodeScript != null">
+            ,node_script = #{nodeScript}
+        </if>
+        <if test="nextNodes != null">
+            ,next_nodes = #{nextNodes}
+        </if>
+        <if test="excType != null">
+            ,exc_type = #{excType}
+        </if>
+        <if test="className != null">
+            ,class_name = #{className}
+        </if>
+        <if test="engineId != null">
+            ,engine_id = #{engineId}
+        </if>
+        <if test="nodeUrl != null">
+            ,node_url = #{nodeUrl}
+        </if>
+        <if test="pageUrl != null">
+            ,page_url = #{pageUrl}
+        </if>
+        <if test="handUrl != null">
+            ,hand_url = #{handUrl}
+        </if>
+        <if test="params != null">
+            ,params = #{params}
+        </if>
+        where node_id = #{nodeId}
+    </update>
+    <insert id="addNode" parameterType="com.zw.rule.process.po.ProcessNode">
+        insert into zw_process_node (process_id,parent_id, node_name,
+        node_code, node_order,node_type,
+        node_x, node_y, node_json,
+        node_script, next_nodes, params
+        )
+        values (#{processId},#{parentId}, #{nodeName},
+        #{nodeCode}, #{nodeOrder}, #{nodeType},
+        #{nodeX}, #{nodeY}, #{nodeJson},
+        #{nodeScript}, #{nextNodes}, #{params}
+        )
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="long" resultMap="processNode">
+        select
+        <include refid="Base_Column_List" />
+        from zw_process_node
+        where node_id = #{nodeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTaskNodeId" parameterType="string" resultType="java.lang.String">
+        select
+        id
+        from process_task_node
+        where rel_id = #{orderId} and node_state in ('0','1')
+    </select>
+
+    <delete id="deleteByExample" parameterType="com.zw.rule.process.po.ProcessNode">
+        delete from zw_process_node
+        where node_id = #{nodeId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.process.po.ProcessNode">
+        update zw_process_node
+        <set>
+            <if test="processId != null">
+                process_id = #{processId,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="nodeName != null">
+                node_name = #{nodeName,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeCode != null">
+                node_code = #{nodeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="nodeOrder != null">
+                node_order = #{nodeOrder,jdbcType=INTEGER},
+            </if>
+            <if test="nodeType != null">
+                node_type = #{nodeType,jdbcType=INTEGER},
+            </if>
+            <if test="nodeX != null">
+                node_x = #{nodeX,jdbcType=DECIMAL},
+            </if>
+            <if test="nodeY != null">
+                node_y = #{nodeY,jdbcType=DECIMAL},
+            </if>
+            <if test="nodeJson != null">
+                node_json = #{nodeJson,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="nodeScript != null">
+                node_script = #{nodeScript,jdbcType=LONGVARCHAR},
+            </if>
+            <choose>
+                <when test="lastNextnode !=null and lastNextnode == 1">
+                    next_nodes =NULL,
+                </when>
+                <otherwise>
+                    <if test="nextNodes != null">
+                        next_nodes = #{nextNodes,jdbcType=LONGVARCHAR},
+                    </if>
+                </otherwise>
+            </choose>
+
+            <if test="params != null">
+                params = #{params,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where node_id = #{nodeId,jdbcType=INTEGER}
+    </update>
+
+
+    <delete id="deleteNodes" parameterType = "java.util.List">
+        delete from zw_process_node where node_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateNodeForNextOrderAndParams"  parameterType="java.util.List">
+        <foreach collection="list" index="index" item="item"  separator=";" >
+            update zw_process_node set
+            <if test="item.nextNodes != null">
+                next_nodes = #{item.nextNodes},
+            </if>
+            <if test="item.params != null">
+                params = #{item.params},
+            </if>
+            <if test="item.nodeJson != null">
+                node_json = #{item.nodeJson},
+            </if>
+            node_id = #{item.nodeId}
+            where node_id = #{item.nodeId}
+        </foreach>
+    </update>
+
+    <select id="getJsonData" parameterType="long" resultType="java.lang.String">
+        SELECT message
+        FROM
+        ZW_PROCESS
+        where id = #{processId}
+    </select>
+
+    <select id="selectListByPrimaryKey" parameterType="long" resultType="com.zw.rule.process.po.ProcessNode">
+        select
+        <include refid="Base_Column_List" />
+        from zw_process_node
+        where process_id = #{processId,jdbcType=INTEGER} and params is not null
+    </select>
+    <select id="selectListByPrimaryKeys" parameterType="long" resultType="com.zw.rule.process.po.ProcessNode">
+        select
+        <include refid="Base_Column_List" />
+        from zw_process_node
+        where process_id = #{nodeId,jdbcType=INTEGER} and node_code is not null
+    </select>
+
+    <select id="selectByProcessNode" parameterType="com.zw.rule.process.po.ProcessNode" resultType="com.zw.rule.process.po.ProcessNode">
+        select
+        <include refid="Base_Column_List" />
+        from zw_process_node
+        <where>
+            1=1
+            <if test="nodeId != null">
+                and node_id = #{nodeId}
+            </if>
+            <if test="nodeType != null">
+                and node_type = #{nodeType}
+            </if>
+            <if test="processId != null">
+                and process_id = #{processId}
+            </if>
+        </where>
+
+
+    </select>
+
+    <insert id="insertNodeAndReturnId" parameterType="com.zw.rule.process.po.ProcessNode" useGeneratedKeys="true" keyProperty="nodeId">
+        insert into zw_process_node (process_id,parent_id, node_name,
+        node_code, node_order, node_type,
+        node_x, node_y, node_json,
+        node_script, next_nodes,page_url,hand_url,class_name,params,exc_type
+        )
+        values (#{processId,jdbcType=INTEGER},#{parentId,jdbcType=INTEGER}, #{nodeName,jdbcType=VARCHAR},
+        #{nodeCode,jdbcType=VARCHAR}, #{nodeOrder,jdbcType=INTEGER}, #{nodeType,jdbcType=INTEGER},
+        #{nodeX,jdbcType=DECIMAL}, #{nodeY,jdbcType=DECIMAL}, #{nodeJson,jdbcType=LONGVARCHAR},
+        #{nodeScript,jdbcType=LONGVARCHAR}, #{nextNodes,jdbcType=LONGVARCHAR}, #{pageUrl},#{handUrl},#{className},#{params,jdbcType=LONGVARCHAR}, #{excType,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertNode" parameterType="com.zw.rule.process.po.ProcessNode"  >
+        INSERT INTO
+        zw_process_node
+        <trim prefix="(" suffix=")">
+            <if test="nodeName != null">
+                node_name,
+            </if>
+            <if test="nodeType != null">
+                node_type,
+            </if>
+            <if test="excType != null">
+                exc_type,
+            </if>
+            <if test="nodeUrl != null">
+                node_url,
+            </if>
+            <if test="className != null">
+                class_name,
+            </if>
+            <if test="pageUrl != null">
+                page_url,
+            </if>
+
+            <if test="handUrl != null">
+                hand_url,
+            </if>
+
+            <if test="engineId != null">
+                engine_id,
+            </if>
+            <if test="nodeCode != null">
+                node_code,
+            </if>
+            <if test="nodeOrder != null">
+                node_order,
+            </if>
+            <if test="nodeJson != null">
+                node_json,
+            </if>
+            <if test="nodeX != null">
+                node_x,
+            </if>
+            <if test="nodeY != null">
+                node_y,
+            </if>
+            <if test="nodeScript != null">
+                node_script,
+            </if>
+            <if test="nextNodes != null">
+                next_nodes,
+            </if>
+            <if test="params != null">
+                params,
+            </if>
+            <if test="processId != null">
+                process_id
+            </if>
+
+        </trim>
+        values
+        <trim prefix="(" suffix=")">
+            <if test="nodeName != null">
+                #{nodeName},
+            </if>
+            <if test="nodeType != null">
+                #{nodeType},
+            </if>
+            <if test="excType != null">
+                #{excType},
+            </if>
+            <if test="nodeUrl != null">
+                #{nodeUrl},
+            </if>
+            <if test="className != null">
+                #{className},
+            </if>
+            <if test="pageUrl != null">
+                #{pageUrl},
+            </if>
+            <if test="handUrl != null">
+                #{handUrl},
+            </if>
+            <if test="engineId != null">
+                #{engineId},
+            </if>
+
+            <if test="nodeCode != null">
+                #{nodeCode},
+            </if>
+            <if test="nodeOrder != null">
+                #{nodeOrder},
+            </if>
+            <if test="nodeJson != null">
+                #{nodeJson},
+            </if>
+            <if test="nodeX != null">
+                #{nodeX},
+            </if>
+            <if test="nodeY != null">
+                #{nodeY},
+            </if>
+            <if test="nodeScript != null">
+                #{nodeScript},
+            </if>
+            <if test="nextNodes != null">
+                #{nextNodes},
+            </if>
+            <if test="params != null">
+                #{params},
+            </if>
+            <if test="processId != null">
+                #{processId}
+            </if>
+        </trim>
+    </insert>
+    <select id="getNodeId" parameterType="com.zw.rule.process.po.ProcessNode" resultType="java.lang.String">
+        select
+        max(node_id)
+        from zw_process_node
+        where process_id = #{processId} AND node_name = #{nodeName}
+    </select>
+
+    <select id="getMaxNodeType" parameterType="long" resultType="java.lang.Integer">
+        select
+        max(node_type)+1
+        from zw_process_node
+        where process_id = #{processId}
+    </select>
+
+    <select id="getMaxNodeOrder" parameterType="long" resultType="java.lang.Integer">
+        select
+        max(node_order)+1
+        from zw_process_node
+        where process_id = #{processId}
+    </select>
+
+    <select id="getProcessByList" parameterType="java.lang.String" resultType="com.zw.rule.product.ProCrmProduct">
+        SELECT id , pro_name AS pro_name from pro_crm_product
+        <where>
+            status = '1'
+            <if test="searchKey != null and searchKey!=''">
+                and pro_name LIKE CONCAT('%',#{searchKey},'%' )
+            </if>
+        </where>
+    </select>
+
+    <select id="getProcessNode" parameterType="java.util.Map" resultMap="processNode">
+        SELECT node_id,exc_type,node_json,node_script,class_name,page_url,hand_url
+        FROM zw_process_node
+        where process_id = #{processId}
+        and node_code = #{nextNodeCode}
+    </select>
+
+    <select id="getNextNode" parameterType="java.util.Map" resultMap="processNode">
+        SELECT next_nodes
+        FROM zw_process_node
+        where process_id = #{processId}
+        and next_nodes like CONCAT('%',#{nodeCode},'%' )
+    </select>
+</mapper>

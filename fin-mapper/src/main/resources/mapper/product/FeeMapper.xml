@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.product.FeeMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.product.Fee" >
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="product_amount" property="productAmount" jdbcType="VARCHAR" />
+    <result column="product_periods" property="productPeriods" jdbcType="VARCHAR" />
+    <result column="product_com_fee" property="productComFee" jdbcType="VARCHAR" />
+    <result column="product_per_fee" property="productPerFee" jdbcType="VARCHAR" />
+    <result column="product_mag_fee" property="productMagFee" jdbcType="VARCHAR" />
+    <result column="product_credit_fee" property="productCreditFee" jdbcType="VARCHAR" />
+    <result column="product_interest" property="productInterest" jdbcType="VARCHAR" />
+    <result column="product_payment" property="productPayment" jdbcType="VARCHAR" />
+    <result column="yuqi_fee" property="yuqi_fee" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getFeeByProductName" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select *
+    from mag_product_fee
+    <where>
+      1=1
+      <if test="productName != null" >
+        AND  product_id = #{productName}
+      </if>
+      <if test="amount != null" >
+        AND  product_amount = #{amount}
+      </if>
+      <if test="periods != null" >
+        AND  product_periods = #{periods}
+      </if>
+    </where>
+  </select>
+</mapper>

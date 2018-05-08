@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.ruleResult.RuleResultMapper" >
+    <sql id="Base_Column_List" >
+        id, order_id AS orderId, user_id AS userId, pid, engineId, state, create_time AS createTime, rule_json AS ruleJson,rule_name AS ruleName,risk_score AS riskScore,tongdun_rule AS tongdunRule,zenxintong_rule AS  zenxintongRule
+    </sql>
+    <select id="getRuleResultCurrent" resultType="com.zw.rule.ruleResult.po.RuleResult" parameterType="java.util.Map">
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1 AND  engineId='281L'
+            <if test="orderId != null and orderId != ''">
+                AND  user_id=#{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='282L'
+            <if test="orderId != null and orderId != ''">
+                AND  user_id=#{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='285L'
+            <if test="orderId != null and orderId != ''">
+                AND  user_id=#{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+
+    </select>
+        <!--根据orderId获取风控信息-->
+    <select id="getRuleResultCurrentSP" resultType="com.zw.rule.ruleResult.po.RuleResult" parameterType="java.util.Map">
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1 AND  engineId='286L'
+            and risk_score not in ('') and risk_score is not null
+            <if test="orderId != null and orderId != ''">
+                AND  order_id = #{orderId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='287L'
+            <if test="userId != null and userId != ''">
+                AND  user_id=#{userId}
+            </if>
+
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='288L'
+            <if test="userId != null and userId != ''">
+                AND  user_id=#{userId}
+            </if>
+
+        </where>
+        order by create_time desc limit 1)
+
+    </select>
+
+    <select id="getRuleResultCurrentSP1" resultType="com.zw.rule.ruleResult.po.RuleResult" parameterType="java.util.Map">
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1 AND  engineId='286L' and risk_score not in ('') and risk_score is not null
+            <if test="userId != null and userId != ''">
+                AND  user_id = #{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='287L'
+            <if test="userId != null and userId != ''">
+                AND  user_id=#{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+        union all
+        (SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        rule_result
+        <where>
+            1=1
+            AND  engineId='288L'
+            <if test="userId != null and userId != ''">
+                AND  user_id=#{userId}
+            </if>
+        </where>
+        order by create_time desc limit 1)
+
+    </select>
+
+    <insert id="addRuleResult" parameterType="com.zw.rule.ruleResult.po.RuleResult" >
+        insert into rule_result (id,rule_name,order_id, user_id,pid, engineId, state,create_time, rule_json)
+        values (#{id,jdbcType=VARCHAR}, #{ruleName},#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{pid,jdbcType=VARCHAR}, #{engineId,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},#{ruleJson,jdbcType=VARCHAR})
+    </insert>
+</mapper>

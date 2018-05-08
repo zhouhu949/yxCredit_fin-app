@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.activity.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.activity.Activity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_title" property="activity_title" jdbcType="VARCHAR" />
+    <result column="activity_content" property="activity_content" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activity_type" jdbcType="VARCHAR" />
+    <result column="activity_img_url" property="activity_img_url" jdbcType="VARCHAR" />
+    <result column="activity_img_addr" property="activity_img_addr" jdbcType="VARCHAR" />
+    <result column="activity_url" property="activity_url" jdbcType="VARCHAR" />
+    <result column="activity_state" property="activity_state" jdbcType="VARCHAR" />
+    <result column="activity_time" property="activity_time" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+    <result column="release_time" property="release_time" jdbcType="VARCHAR" />
+    <result column="platform_type" property="platform_type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, activity_title, activity_content,activity_img_addr, activity_type, activity_url, activity_img_url, activity_state,
+    activity_time, create_time, alter_time, release_time,platform_type
+  </sql>
+  <select id="getList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_manage
+    where 1=1
+    <if test="activity_state != null and activity_state != ''">
+      and activity_state = #{activity_state}
+    </if>
+    <if test="activity_title != null and activity_title != ''">
+      and activity_title like '%${activity_title}%'
+    </if>
+    <if test="beginTime != null and beginTime != ''">
+      and create_time &gt;= #{beginTime}
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and create_time &lt;= #{endTime}
+    </if>
+    <if test="activityType != null and activityType != ''">
+      and activity_type = #{activityType}
+    </if>
+    order by create_time desc
+  </select>
+
+
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="insertActivity" parameterType="com.zw.rule.activity.Activity">
+    INSERT INTO activity_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activity_title != null" >
+        activity_title,
+      </if>
+      <if test="activity_content != null" >
+        activity_content,
+      </if>
+      <if test="activity_url != null" >
+        activity_url,
+      </if>
+      <if test="activity_img_url != null" >
+        activity_img_url,
+      </if>
+      <if test="activity_img_addr != null" >
+        activity_img_addr,
+      </if>
+      <if test="activity_state != null" >
+        activity_state,
+      </if>
+      <if test="activity_time != null" >
+        activity_time,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="platform_type != null" >
+        platform_type
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="activity_title != null" >
+        #{activity_title},
+      </if>
+      <if test="activity_content != null" >
+        #{activity_content},
+      </if>
+      <if test="activity_url != null" >
+        #{activity_url},
+      </if>
+      <if test="activity_img_url != null" >
+        #{activity_img_url},
+      </if>
+      <if test="activity_img_addr != null" >
+        #{activity_img_addr},
+      </if>
+      <if test="activity_state != null" >
+        #{activity_state},
+      </if>
+      <if test="activity_time != null" >
+        #{activity_time},
+      </if>
+      <if test="create_time != null" >
+        #{create_time},
+      </if>
+      <if test="platform_type != null" >
+        #{platform_type}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateActivity" parameterType="com.zw.rule.activity.Activity" >
+    update activity_manage
+    <set >
+      <if test="activity_title != null" >
+        activity_title = #{activity_title,jdbcType=VARCHAR},
+      </if>
+      <if test="activity_content != null" >
+        activity_content = #{activity_content,jdbcType=VARCHAR},
+      </if>
+      <if test="activity_url != null" >
+        activity_url = #{activity_url,jdbcType=VARCHAR},
+      </if>
+      <if test="activity_img_url != null" >
+        activity_img_url = #{activity_img_url,jdbcType=BIGINT},
+      </if>
+      <if test="activity_img_addr != null" >
+        activity_img_addr = #{activity_img_addr,jdbcType=BIGINT},
+      </if>
+      <if test="activity_state != null" >
+        activity_state = #{activity_state,jdbcType=VARCHAR},
+      </if>
+      <if test="activity_time != null" >
+        activity_time = #{activity_time,jdbcType=VARCHAR},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alter_time,jdbcType=VARCHAR},
+      </if>
+      <if test="alter_time != null" >
+        platform_type = #{platform_type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="delActivity" parameterType="java.lang.String">
+    delete from activity_manage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <select id="lookActivity" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from activity_manage where id=#{id};
+    
+  </select>
+
+  <update id="updateState" parameterType="java.util.Map">
+    update activity_manage set  activity_state=#{state}  where id=#{id};
+
+  </update>
+  
+  
+</mapper>

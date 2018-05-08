@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.process.NodeMapper">
+
+    <resultMap type="com.zw.rule.process.po.Node" id="nodeMap">
+        <result column="data_id" property="dataId"/>
+        <result column="text" property="text"/>
+        <result column="type" property="type"/>
+        <result column="url" property="url"/>
+    </resultMap>
+
+    <select id="getNodeByList"   parameterType="com.zw.rule.process.po.Node" resultMap="nodeMap" >
+        SELECT
+        *
+        FROM
+        zw_node
+        order by update_time desc
+    </select>
+
+
+</mapper>

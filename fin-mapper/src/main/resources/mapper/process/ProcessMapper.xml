@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.process.ProcessMapper">
+
+	<resultMap type="com.zw.rule.process.po.Process" id="processMap">
+		<id column="id" property="id"/>
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="remark" property="desc"/>
+		<result column="status" property="status"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="creator" property="creator"/>
+		<result column="org_id" property="orgId"/>
+		<result column="user_id" property="userId"/>
+		<result column="message" property="message"/>
+		<result column="rel_id" property="relId"/>
+		<result column="rel_type" property="relType"/>
+		<result column="pro_name" property="proName"/>
+	</resultMap>
+
+	<select id="getProcessByList"   parameterType="com.zw.rule.process.po.Process" resultMap="processMap" >
+		SELECT
+		*
+		FROM
+		zw_process
+		where
+		status>-1  and
+		org_id =#{orgId}
+
+		<if test="searchString != null and searchString !=''">
+			and (name like CONCAT('%',TRIM('${searchString}'),'%' ))
+		</if>
+		order by update_time desc
+	</select>
+	<select id="getProcessById" resultMap="processMap" parameterType="com.zw.rule.process.po.Process" >
+		SELECT
+		a.*
+		FROM
+		zw_process a
+		where
+		a.status>-1  and
+		a.org_id =#{orgId}
+		and a.id = #{id}
+
+	</select>
+	<update id="updateProcess" parameterType="com.zw.rule.process.po.Process"  >
+		UPDATE  zw_process
+		<set>
+			<if test="code != null">
+				code = #{code},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="desc != null">
+				remark = #{desc},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="creator != null">
+				creator = #{creator},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="message != null">
+				message = #{message},
+			</if>
+			<if test="relId != null">
+				rel_id = #{relId},
+			</if>
+			update_time = now()
+		</set>
+		WHERE
+		org_id= #{orgId}
+		and id = #{id}
+	</update>
+	<insert id="insertProcess" parameterType="com.zw.rule.process.po.Process"  >
+		INSERT INTO
+		zw_process
+		<trim prefix="(" suffix=")">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="desc != null">
+				remark,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="message != null">
+				message,
+			</if>
+			create_time,update_time
+		</trim>
+		values
+		<trim prefix="(" suffix=")">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="desc != null">
+				#{desc},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="orgId != null">
+				#{orgId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="message != null">
+				#{message},
+			</if>
+			now(),now()
+		</trim>
+	</insert>
+	<insert id="insertProcessAndReturnId" parameterType="com.zw.rule.process.po.Process"  useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+		zw_process
+		<trim prefix="(" suffix=")">
+			<if test="code != null">
+				code,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="desc != null">
+				remark,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="message != null">
+				message,
+			</if>
+			<if test="relId != null">
+				rel_id,
+			</if>
+			create_time,update_time
+		</trim>
+		values
+		<trim prefix="(" suffix=")">
+			<if test="code != null">
+				#{code},
+			</if>
+			<if test="name != null">
+				#{name},
+			</if>
+			<if test="desc != null">
+				#{desc},
+			</if>
+			<if test="creator != null">
+				#{creator},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="orgId != null">
+				#{orgId},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="message != null">
+				#{message},
+			</if>
+			<if test="relId != null">
+				#{relId},
+			</if>
+			now(),now()
+		</trim>
+	</insert>
+
+	<update id="updateProcessRel" parameterType="Map"  >
+		UPDATE  zw_process
+		<set>
+			<if test="relType != null">
+				rel_type = #{relType},
+			</if>
+			<if test="relId != null">
+				rel_id = #{relId},
+			</if>
+			update_time = now()
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+	<update id="updateStateForSysCodeTable" parameterType="java.lang.String"  >
+		UPDATE  sys_code
+		SET state = 1
+		WHERE
+		code = #{code}
+	</update>
+</mapper>

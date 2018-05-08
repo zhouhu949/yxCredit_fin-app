@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.goldLogistics.GoldLogisticsMapper" >
+
+    <select id="getlogisticsByOrderId" resultType="java.util.Map" parameterType="java.util.Map" >
+        select mo.customer_name,mo.tel,mcp.receive_address,linfo.company_id,linfo.company_name,linfo.deliver_time,linfo.bill_no,mo.id as order_id,linfo.id,mog.purchase_price
+        from mag_order mo
+        left join mag_customer_person mcp on mo.customer_id = mcp.customer_id
+        left join logistics_info linfo  on mo.id= linfo.order_id
+        left join mag_order_gold mog  on mo.id= mog.order_id
+        <where>
+            1=1
+            <if test="orderId != null and orderId != ''">
+                and mo.id=#{orderId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addLogistics" parameterType="java.util.Map" >
+        insert into logistics_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
+            <if test="companyId != null" >
+                company_id,
+            </if>
+            <if test="companyName != null" >
+                company_name,
+            </if>
+            <if test="deliverTime != null" >
+                deliver_time,
+            </if>
+            <if test="billNo != null" >
+                bill_no,
+            </if>
+            <if test="updateUser != null" >
+                update_user,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="orderId != null" >
+                #{orderId},
+            </if>
+            <if test="companyId != null" >
+                #{companyId},
+            </if>
+            <if test="companyName != null" >
+                #{companyName},
+            </if>
+            <if test="deliverTime != null" >
+                #{deliverTime},
+            </if>
+            <if test="billNo != null" >
+                #{billNo},
+            </if>
+            <if test="updateUser != null" >
+                #{updateUser},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateLogistics" parameterType="java.util.Map" >
+        UPDATE  logistics_info
+        <set>
+            <if test="companyId != null" >
+                company_id=#{companyId},
+            </if>
+            <if test="companyName != null" >
+                company_name=#{companyName},
+            </if>
+            <if test="billNo != null" >
+                bill_no=#{billNo},
+            </if>
+        </set>
+        <where>
+            <if test="id!=null">
+                id= #{id}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateOrderGold" parameterType="java.util.Map" >
+        UPDATE  mag_order_gold
+        <set>
+            <if test="purchasePrice!=null">
+                purchase_price= #{purchasePrice},
+            </if>
+        </set>
+        <where>
+            <if test="orderId!=null">
+                order_id= #{orderId}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateOrder" parameterType="java.util.Map" >
+        UPDATE  mag_order
+        <set>
+            <if test="deliveryState!=null">
+                delivery_state= #{deliveryState},
+            </if>
+        </set>
+        <where>
+            <if test="orderId!=null">
+                id= #{orderId}
+            </if>
+        </where>
+    </update>
+
+</mapper>

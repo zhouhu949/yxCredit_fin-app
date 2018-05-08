@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.customer.MagCustomerContactMapper">
+	<resultMap id="BaseResultMap" type="com.zw.rule.customer.po.MagCustomerContact" >
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<id column="customer_id" property="customerId" jdbcType="VARCHAR" />
+		<id column="tel" property="tel" jdbcType="VARCHAR" />
+		<id column="sparetel" property="sparetel" jdbcType="VARCHAR" />
+		<id column="email" property="email" jdbcType="VARCHAR" />
+		<id column="qq" property="qq" jdbcType="VARCHAR" />
+		<id column="wechat" property="wechat" jdbcType="VARCHAR" />
+		<id column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+		<id column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+		<id column="state" property="state" jdbcType="VARCHAR" />
+		<id column="APEX2" property="apex2" jdbcType="VARCHAR" />
+		<id column="APEX3" property="apex3" jdbcType="VARCHAR" />
+		<id column="BAK" property="bak" jdbcType="VARCHAR" />
+		<id column="serverpwd" property="serverpwd" jdbcType="VARCHAR" />
+		<id column="electric_password" property="electricPassword" jdbcType="VARCHAR" />
+		<id column="shop" property="shop" jdbcType="VARCHAR" />
+		<id column="shop_name" property="shopName" jdbcType="VARCHAR" />
+		<id column="shop_user" property="shopUser" jdbcType="VARCHAR" />
+		<id column="shop_psw" property="shopPsw" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	customer_id,	tel,	sparetel,	email,	qq,	wechat,	CREAT_TIME,	ALTER_TIME,	state,	APEX1,	APEX2,	APEX3,	BAK,	serverpwd,	shop,	shop_name,	shop_user,	shop_psw
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.customer.po.MagCustomerContact" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_customer_contact
+		 WHERE ID = #{ID}
+	</select>
+	<!-- 查询（根据customerId查询） -->
+	<select id="selectByCustomerId" resultType="com.zw.rule.customer.po.MagCustomerContact" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_customer_contact
+		 WHERE customer_id = #{customerId}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM mag_customer_contact
+		 WHERE ID = #{ID}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.customer.po.MagCustomerContact">
+		 INSERT INTO mag_customer_contact
+ 		(ID,customer_id,tel,sparetel,email,qq,wechat,CREAT_TIME,ALTER_TIME,state,APEX1,APEX2,APEX3,BAK,serverpwd,shop,shop_name,shop_user,shop_psw) 
+		 VALUES 
+ 		(#{ID},#{customerId},#{tel},#{sparetel},#{email},#{qq},#{wechat},#{CREATTIME},#{ALTERTIME},#{state},#{APEX1},#{APEX2},#{APEX3},#{BAK},#{serverpwd},#{shop},#{shopName},#{shopUser},#{shopPsw}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.customer.po.MagCustomerContact">
+		 INSERT INTO mag_customer_contact
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="ID != null">
+				 ID,
+			</if>
+			<if test="customerId != null">
+				 customer_id,
+			</if>
+			<if test="tel != null">
+				 tel,
+			</if>
+			<if test="sparetel != null">
+				 sparetel,
+			</if>
+			<if test="email != null">
+				 email,
+			</if>
+			<if test="qq != null">
+				 qq,
+			</if>
+			<if test="wechat != null">
+				 wechat,
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME,
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="APEX1 != null">
+				 APEX1,
+			</if>
+			<if test="APEX2 != null">
+				 APEX2,
+			</if>
+			<if test="APEX3 != null">
+				 APEX3,
+			</if>
+			<if test="BAK != null">
+				 BAK,
+			</if>
+			<if test="serverpwd != null">
+				 serverpwd,
+			</if>
+			<if test="shop != null">
+				 shop,
+			</if>
+			<if test="shopName != null">
+				 shop_name,
+			</if>
+			<if test="shopUser != null">
+				 shop_user,
+			</if>
+			<if test="shopPsw != null">
+				 shop_psw,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="ID!=null">
+				 #{ID},
+			</if>
+			<if test="customerId!=null">
+				 #{customerId},
+			</if>
+			<if test="tel!=null">
+				 #{tel},
+			</if>
+			<if test="sparetel!=null">
+				 #{sparetel},
+			</if>
+			<if test="email!=null">
+				 #{email},
+			</if>
+			<if test="qq!=null">
+				 #{qq},
+			</if>
+			<if test="wechat!=null">
+				 #{wechat},
+			</if>
+			<if test="CREATTIME!=null">
+				 #{CREATTIME},
+			</if>
+			<if test="ALTERTIME!=null">
+				 #{ALTERTIME},
+			</if>
+			<if test="state!=null">
+				 #{state},
+			</if>
+			<if test="APEX1!=null">
+				 #{APEX1},
+			</if>
+			<if test="APEX2!=null">
+				 #{APEX2},
+			</if>
+			<if test="APEX3!=null">
+				 #{APEX3},
+			</if>
+			<if test="BAK!=null">
+				 #{BAK},
+			</if>
+			<if test="serverpwd!=null">
+				 #{serverpwd},
+			</if>
+			<if test="shop!=null">
+				 #{shop},
+			</if>
+			<if test="shopName!=null">
+				 #{shopName},
+			</if>
+			<if test="shopUser!=null">
+				 #{shopUser},
+			</if>
+			<if test="shopPsw!=null">
+				 #{shopPsw},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.MagCustomerContact">
+		 UPDATE mag_customer_contact
+ 		 <set> 
+			<if test="customerId != null">
+				 customer_id = #{customerId},
+			</if>
+			<if test="tel != null">
+				 tel = #{tel},
+			</if>
+			<if test="sparetel != null">
+				 sparetel = #{sparetel},
+			</if>
+			<if test="email != null">
+				 email = #{email},
+			</if>
+			<if test="qq != null">
+				 qq = #{qq},
+			</if>
+			<if test="wechat != null">
+				 wechat = #{wechat},
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME = #{CREATTIME},
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME = #{ALTERTIME},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="APEX1 != null">
+				 APEX1 = #{APEX1},
+			</if>
+			<if test="APEX2 != null">
+				 APEX2 = #{APEX2},
+			</if>
+			<if test="APEX3 != null">
+				 APEX3 = #{APEX3},
+			</if>
+			<if test="BAK != null">
+				 BAK = #{BAK},
+			</if>
+			<if test="serverpwd != null">
+				 serverpwd = #{serverpwd},
+			</if>
+			<if test="shop != null">
+				 shop = #{shop},
+			</if>
+			<if test="shopName != null">
+				 shop_name = #{shopName},
+			</if>
+			<if test="shopUser != null">
+				 shop_user = #{shopUser},
+			</if>
+			<if test="shopPsw != null">
+				 shop_psw = #{shopPsw},
+			</if>
+
+ 		 </set>
+		 WHERE ID = #{ID}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.MagCustomerContact">
+		 UPDATE mag_customer_contact
+		 SET 
+			 customer_id = #{customerId},
+			 tel = #{tel},
+			 sparetel = #{sparetel},
+			 email = #{email},
+			 qq = #{qq},
+			 wechat = #{wechat},
+			 CREAT_TIME = #{CREATTIME},
+			 ALTER_TIME = #{ALTERTIME},
+			 state = #{state},
+			 APEX1 = #{APEX1},
+			 APEX2 = #{APEX2},
+			 APEX3 = #{APEX3},
+			 BAK = #{BAK},
+			 serverpwd = #{serverpwd},
+			 shop = #{shop},
+			 shop_name = #{shopName},
+			 shop_user = #{shopUser},
+			 shop_psw = #{shopPsw}
+		 WHERE ID = #{ID}
+	</update>
+
+</mapper>

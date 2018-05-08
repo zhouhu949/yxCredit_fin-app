@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.transaction.TransactionDetailsMapper" >
+    <insert id="insert" parameterType="com.zw.rule.transaction.po.TransactionDetails">
+        insert into mag_transaction_details
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="batchNo != null" >
+                batch_no,
+            </if>
+            <if test="amount != null" >
+                amount,
+            </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
+            <if test="baofuCode != null" >
+                baofu_code,
+            </if>
+            <if test="baofuMag != null" >
+                baofu_mag,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="state != null" >
+                state,
+            </if>
+            <if test="creatTime != null" >
+                creat_time,
+            </if>
+            <if test="bankName != null" >
+                bank_name,
+            </if>
+            <if test="bankCard != null" >
+                bank_card,
+            </if>
+            <if test="repaymentId != null" >
+                repayment_id,
+            </if>
+            <if test="fangkuanType != null" >
+                fangkuanType,
+            </if>
+            <if test="describe != null" >
+                des
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="batchNo != null" >
+                #{batchNo,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null" >
+                #{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="baofuCode != null" >
+                #{baofuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="baofuMag != null" >
+                #{baofuMag,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null" >
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null" >
+                #{creatTime,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCard != null" >
+                #{bankCard,jdbcType=VARCHAR},
+            </if>
+            <if test="repaymentId != null" >
+                #{repaymentId,jdbcType=VARCHAR},
+            </if>
+            <if test="fangkuanType != null" >
+                #{fangkuanType,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null" >
+                #{describe,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateTransactionDetail" parameterType="com.zw.rule.transaction.po.TransactionDetails">
+        UPDATE
+        mag_transaction_details
+        <set>
+            <if test="baofuAsynchronousMag != null">
+                baofu_asynchronous_mag = #{baofuAsynchronousMag},
+            </if>
+            <if test="baofuAsynchronousCode != null">
+                baofu_asynchronous_code =#{baofuAsynchronousCode},
+            </if>
+            <if test="successTime != null">
+                success_time =#{successTime},
+            </if>
+            <if test="state != null">
+                state =#{state},
+            </if>
+        </set>
+        <where>
+            1 =1
+            <if test="batchNo != null">
+                AND batch_no = #{batchNo}
+            </if>
+        </where>
+    </update>
+    <select id="getTransactionDetail"  resultType="com.zw.rule.transaction.po.TransactionDetails" parameterType="java.util.Map">
+        SELECT  id, batch_no AS batchNo,amount, repayment_id AS repaymentId,order_id AS orderId,baofu_mag AS baofuMag,baofu_code AS baofuCode,baofu_asynchronous_mag AS  baofuAsynchronousMag,baofu_asynchronous_code AS baofuAsynchronousCode,type,state AS state,creat_time AS creatTime,success_time AS successTime
+        FROM mag_transaction_details
+        <where>
+            1=1
+            <if test="transNo!=null">
+                AND  batch_no =#{transNo}
+            </if>
+        </where>
+    </select>
+
+    <select id="getTransactionLatest"  resultType="com.zw.rule.transaction.po.TransactionDetails" parameterType="java.util.Map">
+        SELECT * FROM  (SELECT  id, batch_no AS batchNo,amount, repayment_id AS repaymentId,order_id AS orderId,baofu_mag AS baofuMag,baofu_code AS baofuCode,state AS state,creat_time AS creatTime,success_time AS successTime,1 AS type
+        FROM   mag_transaction_details
+        <where>
+            1=1  and type='2'
+            <if test="orderId!=null">
+                AND   order_id=#{orderId}
+            </if>
+            <if test="repaymentId!=null">
+                AND   repayment_id=#{repaymentId}
+            </if>
+        </where>
+        union all
+        SELECT  id, batch_no AS batchNo,amount, repayment_id AS repaymentId,order_id AS orderId,baofu_mag AS baofuMag,baofu_code AS baofuCode,state AS state,creat_time AS creatTime,success_time AS successTime,2 AS type
+        FROM   mag_transaction_exception
+        <where>
+            1=1 AND  state='0'
+            <if test="orderId!=null">
+                AND   order_id=#{orderId}
+            </if>
+        </where>
+        ) t1 order by  creatTime desc  LIMIT 0,1
+
+    </select>
+
+    <select id="getTransactionList" resultType="com.zw.rule.transaction.po.TransactionDetails" parameterType="java.util.Map">
+         SELECT  id, batch_no AS batchNo,amount, repayment_id AS repaymentId,order_id AS orderId,baofu_mag AS baofuMag,baofu_code AS baofuCode,state AS state,creat_time AS creatTime,success_time AS successTime,type,bank_name AS bankName,bank_card AS bankCard,fangkuanType as fangkuanType
+        FROM   mag_transaction_details
+        <where>
+            1=1
+            <if test="orderId!=null">
+                AND   order_id=#{orderId}
+            </if>
+            <if test="type!=null">
+                AND   type=#{type}
+            </if>
+            <if test="state!=null">
+                AND   state=#{state}
+            </if>
+            <if test="repaymentId!=null">
+                AND   repayment_id=#{repaymentId}
+            </if>
+            <if test="notRepayment!=null">
+                AND  (repayment_id='' or repayment_id is null)
+            </if>
+        </where>
+        order by  creatTime desc
+    </select>
+
+
+</mapper>

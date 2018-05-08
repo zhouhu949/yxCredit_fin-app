@@ -1,0 +1,357 @@
+.red {
+  color: crimson;
+}
+.grey {
+  color: darkgrey;
+}
+.red {
+  color: crimson;
+}
+.grey {
+  color: darkgrey;
+}
+.paperWrap {
+  background: #f7f5f1;
+  padding: 50px 0;
+}
+.paperBlock {
+  width: 900px;
+  margin: auto;
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  padding: 20px;
+}
+.paperBlock .tb_head td {
+  text-align: center;
+}
+.paperBlock .block_hd {
+  overflow: hidden;
+  line-height: 22px;
+  margin-bottom: 6px;
+}
+.paperBlock .block_hd .ico {
+  font-size: 18px;
+  margin-right: 6px;
+  color: #00b4af;
+  position: relative;
+}
+.paperBlock .block_hd .bl_tit {
+  font-size: 15px;
+  font-weight: bold;
+}
+.paperBlock .info-inpW1 {
+  width: 160px;
+}
+.paperBlock .info-inpW11 {
+  width: 80px;
+}
+.paperBlock .info-inpW12 {
+  width: 40px;
+}
+.paperBlock .info-inpW2 {
+  width: 351px;
+}
+.paperBlock .info-inpW3,
+.paperBlock .info-selW3 .dropdown {
+  width: 240px;
+}
+.paperBlock .info-inpW4 {
+  width: 540px;
+}
+.paperBlock .info-inpW5 {
+  width: 174px;
+}
+.paperBlock .info-selW1 .dropdown {
+  width: 160px;
+}
+.paperBlock .info-selW2 .dropdown {
+  width: 100px;
+}
+.paperBlock table th,
+.paperBlock table td {
+  border: 1px solid #d1d1d1;
+  padding: 5px;
+}
+.paperBlock .colTit {
+  vertical-align: top;
+  width: 103px;
+}
+.paperBlock .dropdown .selected,
+.paperBlock .dropdown li {
+  padding: 1px 12px;
+}
+.paperBlock .dropdown .carat {
+  margin-top: -2px;
+  border-top: 5px solid #6D6D6D;
+}
+.paperBlock .dropdown.open .carat {
+  margin-top: -8px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid #6D6D6D;
+}
+.paperBlock .editBtns {
+  width: 130px;
+  overflow: hidden;
+  float: right;
+}
+.paperBlock .rowspanPhoto {
+  position: relative;
+}
+.paperBlock .rowspanPhoto img {
+  position: absolute;
+  max-height: 154px;
+}
+.paperBlock .group_line .gr_item {
+  float: left;
+}
+.paperBlock .gr_unit {
+  line-height: 20px;
+  padding-right: 5px;
+}
+.paperBlock .tb_info {
+  width: 100%;
+}
+.paperBlock .btnblock {
+  overflow: hidden;
+  padding: 15px 0 10px;
+}
+.paperBlock .btnblock2 {
+  overflow: hidden;
+  padding: 10px;
+}
+.paperBlock .Tarea_w1 {
+  width: 626px;
+}
+.paperBlock .tbTit {
+  background: #ebebeb;
+  font-weight: bold;
+}
+.paperBlock .tb_head.t-bold {
+  font-weight: bold;
+}
+.paperBlock .tb_head th,
+.paperBlock .tb_head td {
+  background: #f2f2f2;
+}
+.paperBlock .block_info {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #bdbdbd;
+}
+.paperBlock .dateWidMin {
+  width: 110px;
+}
+.paperBlock .ico {
+  cursor: pointer;
+  font-size: 16px;
+  color: #05c1bc;
+}
+.paperBlock .ico:hover {
+  color: #000;
+}
+.paperBlock .ico.icon-edit {
+  position: relative;
+  top: 1px;
+}
+.paperBlockfree {
+  width: 100%;
+  margin: auto;
+  background: #fff;
+  padding: 5px;
+}
+.paperBlockfree .block_hd {
+  overflow: hidden;
+  line-height: 22px;
+  margin-bottom: 6px;
+}
+.paperBlockfree .block_hd .ico {
+  font-size: 18px;
+  margin-right: 6px;
+  color: #00b4af;
+  position: relative;
+}
+.paperBlockfree .block_hd .bl_tit {
+  font-size: 15px;
+  font-weight: bold;
+}
+.paperBlockfree .block_hd2 {
+  overflow: hidden;
+  line-height: 22px;
+  padding-bottom: 8px;
+  margin-bottom: 5px;
+  border-bottom: #ccc solid 1px;
+}
+.paperBlockfree .block_hd2 .ico {
+  font-size: 18px;
+  margin-right: 6px;
+  color: #00b4af;
+  position: relative;
+}
+.paperBlockfree .block_hd2 .bl_tit {
+  font-size: 15px;
+  font-weight: bold;
+}
+.paperBlockfree .info-inpW1 {
+  width: 160px;
+}
+.paperBlockfree .info-inpW11 {
+  width: 80px;
+}
+.paperBlockfree .info-inpW30 {
+  width: 30px;
+  margin: 0 2px;
+}
+.paperBlockfree .info-inpW45 {
+  width: 55px;
+  margin: 0 2px;
+}
+.paperBlockfree .info-inpW2 {
+  width: 351px;
+}
+.paperBlockfree .info-inpW3,
+.paperBlockfree .info-selW3 .dropdown {
+  width: 240px;
+}
+.paperBlockfree .info-inpW4 {
+  width: 540px;
+}
+.paperBlockfree .info-inpW5 {
+  width: 174px;
+}
+.paperBlockfree .info-selW1 .dropdown {
+  width: 160px;
+}
+.paperBlockfree .info-selW2 .dropdown {
+  width: 100px;
+}
+.paperBlockfree table th,
+.paperBlockfree table td {
+  border: 1px solid #d1d1d1;
+  padding: 5px;
+}
+.paperBlockfree table.nobor {
+  width: 100%;
+}
+.paperBlockfree table.nobor th,
+.paperBlockfree table.nobor td {
+  border: none;
+  padding: 5px;
+}
+.paperBlockfree .colTit {
+  vertical-align: top;
+  width: 103px;
+}
+.paperBlockfree .dropdown .selected,
+.paperBlockfree .dropdown li {
+  padding: 1px 12px;
+}
+.paperBlockfree .dropdown .carat {
+  margin-top: -2px;
+  border-top: 5px solid #6D6D6D;
+}
+.paperBlockfree .dropdown.open .carat {
+  margin-top: -8px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid #6D6D6D;
+}
+.paperBlockfree .editBtns {
+  width: 130px;
+  overflow: hidden;
+  float: right;
+}
+.paperBlockfree .rowspanPhoto {
+  position: relative;
+}
+.paperBlockfree .rowspanPhoto img {
+  position: absolute;
+  max-height: 154px;
+}
+.paperBlockfree .group_line .gr_item {
+  float: left;
+}
+.paperBlockfree .gr_unit {
+  line-height: 20px;
+  padding-right: 5px;
+}
+.paperBlockfree .tb_info {
+  width: 100%;
+}
+.paperBlockfree .btnblock {
+  overflow: hidden;
+  padding: 15px 0 10px;
+}
+.paperBlockfree .btnblock2 {
+  overflow: hidden;
+  padding: 10px;
+}
+.paperBlockfree .Tarea_w1 {
+  width: 626px;
+}
+.paperBlockfree .tbTit {
+  background: #ebebeb;
+  font-weight: bold;
+}
+.paperBlockfree .tb_head.t-bold {
+  font-weight: bold;
+}
+.paperBlockfree .tb_head th,
+.paperBlockfree .tb_head td {
+  background: #f2f2f2;
+}
+.paperBlockfree .block_info {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #bdbdbd;
+}
+.paperBlockfree .dateWidMin {
+  width: 110px;
+}
+.paperBlockfree .ico {
+  cursor: pointer;
+  font-size: 16px;
+  color: #05c1bc;
+}
+.paperBlockfree .ico:hover {
+  color: #000;
+}
+.paperBlockfree .ico.icon-edit {
+  position: relative;
+  top: 1px;
+}
+.paperBlockfree .tbTitW1 {
+  width: 80px;
+}
+.paperBlockfree .tbTitW2 {
+  width: 110px;
+}
+.paperBlockfree .tbTitW3 {
+  width: 125px;
+}
+.paperBlockfree .tbTitW4 {
+  width: 210px;
+}
+.paperBlockfree .tbWid_L6 {
+  width: 90px;
+}
+.paperBlockfree .tbWid_L9 {
+  width: 120px;
+}
+.paperBlockfree .colCt_w {
+  width: 260px;
+}
+.paperBlockfree .inpText {
+  position: relative;
+  top: 1px;
+}
+.btn_qbox {
+  width: 31px;
+  height: 31px;
+  padding: 2px;
+  border-radius: 3px;
+  color: #fff;
+  line-height: 14px;
+  text-align: center;
+  background: #05c1bc;
+  cursor: pointer;
+}

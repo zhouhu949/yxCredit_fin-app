@@ -1,0 +1,1511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.Order" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="PERIODS" property="periods" jdbcType="VARCHAR" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="VARCHAR" />
+    <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+    <result column="merchandise_id" property="merchandiseId" jdbcType="VARCHAR" />
+    <result column="merchandise_type" property="merchandiseType" jdbcType="VARCHAR" />
+    <result column="merchandise_name" property="merchandiseName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+    <result column="CARD" property="card" jdbcType="VARCHAR" />
+    <result column="CREDIT" property="credit" jdbcType="VARCHAR" />
+    <result column="PRECREDIT" property="precredit" jdbcType="VARCHAR" />
+    <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+    <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+    <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="MANAGER" property="manager" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="commodity_state" property="commodityState" jdbcType="VARCHAR" />
+    <result column="APEX1" property="apex1" jdbcType="VARCHAR" />
+    <result column="APEX2" property="apex2" jdbcType="VARCHAR" />
+    <result column="APEX3" property="apex3" jdbcType="VARCHAR" />
+    <result column="BAK" property="bak" jdbcType="VARCHAR" />
+    <result column="repay_type" property="repayType" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="VARCHAR" />
+    <result column="merchandise_brand" property="merchandiseBrand" jdbcType="VARCHAR" />
+    <result column="merchandise_model" property="merchandiseModel" jdbcType="VARCHAR" />
+    <result column="merchandise_code" property="merchandiseCode" jdbcType="VARCHAR" />
+    <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+    <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="distric" property="distric" jdbcType="VARCHAR" />
+    <result column="product_type" property="productType" jdbcType="VARCHAR" />
+    <result column="product_type_name" property="productTypeName" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_name_name" property="productNameName" jdbcType="VARCHAR" />
+    <result column="product_detail" property="productDetail" jdbcType="VARCHAR" />
+    <result column="product_detail_name" property="productDetailName" jdbcType="VARCHAR" />
+    <result column="product_detail_code" property="productDetailCode" jdbcType="VARCHAR" />
+    <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
+    <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="merchandise_brand_id" property="merchandiseBrandId" jdbcType="VARCHAR" />
+    <result column="merchandise_type_id" property="merchandiseTypeId" jdbcType="VARCHAR" />
+    <result column="emp_number" property="empNumber" jdbcType="VARCHAR" />
+    <result column="repay_money" property="repayMoney" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="applay_money" property="applayMoney" jdbcType="VARCHAR" />
+    <result column="predict_price" property="predictPrice" jdbcType="VARCHAR" />
+    <result column="receive_id" property="receiveId" jdbcType="VARCHAR" />
+    <result column="score_card" property="scoreCard" jdbcType="VARCHAR" />
+    <result column="order_submission_time" property="orderSubmissionTime" jdbcType="VARCHAR" />
+    <result column="manageFee" property="manageFee" jdbcType="VARCHAR" />
+    <result column="quickTrialFee" property="quickTrialFee" jdbcType="VARCHAR" />
+    <result column="fee_state" property="feeState" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="VARCHAR" />
+    <result column="repay_date" property="repayDate" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="delivery_state" property="deliveryState" jdbcType="VARCHAR" />
+    <result column="rebates_state" property="rebatesState" jdbcType="VARCHAR" />
+    <result column="answer_state" property="answerState" jdbcType="VARCHAR" />
+    <result column="answer_score" property="answerScore" jdbcType="VARCHAR" />
+    <result column="loan_state" property="loanState" jdbcType="VARCHAR" />
+    <result column="merchandise_code" property="merchandiseCode" jdbcType="VARCHAR" />
+    <result column="diy_type" property="diyType" jdbcType="VARCHAR" />
+    <result column="diy_days" property="diyDays" jdbcType="VARCHAR" />
+    <result column="offline_order" property="offlineOrder" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, order_no, USER_ID, PERIODS, MERCHANT_ID, MERCHANT_NAME, merchandise_id, merchandise_type,
+    merchandise_name, CUSTOMER_ID, CUSTOMER_NAME, sex_name, TEL, CARD_TYPE,
+    CARD, CREDIT, PRECREDIT, AMOUNT, COMPANY, BRANCH, emp_id, MANAGER, CREAT_TIME,
+    ALTER_TIME, state, commodity_state, APEX3, BAK, repay_type, rate,
+    merchandise_brand, merchandise_model, merchandise_code,
+    provinces_id, city_id, distric_id, provinces, city, distric,
+    product_type, product_type_name, product_name,
+    product_name_name, product_detail, product_detail_name, product_detail_code,
+    contract_amount, loan_amount, sex, merchandise_brand_id, merchandise_type_id, emp_number,repay_money, order_type,
+    applay_money, predict_price, receive_id,score_card,order_submission_time,fee_state,quickTrialFee,manageFee,fee,
+    repay_date,source,weight,price,answer_state,loan_state, order_type,answer_score,merchandise_code,
+    diy_type,diy_days,offline_order
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from mag_order
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mag_order
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.Order">
+        update mag_order
+        <set>
+            <if test="orderNo != null">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                USER_ID = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="periods != null">
+                PERIODS = #{periods,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantId != null">
+                MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchantName != null">
+                MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseId != null">
+                merchandise_id = #{merchandiseId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseType != null">
+                merchandise_type = #{merchandiseType,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseName != null">
+                merchandise_name = #{merchandiseName,jdbcType=VARCHAR},
+            </if>
+            <if test="customerId != null">
+                CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="customerName != null">
+                CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+            </if>
+            <if test="sexName != null">
+                sex_name = #{sexName,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                TEL = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="cardType != null">
+                CARD_TYPE = #{cardType,jdbcType=VARCHAR},
+            </if>
+            <if test="card != null">
+                CARD = #{card,jdbcType=VARCHAR},
+            </if>
+            <if test="credit != null">
+                CREDIT = #{credit,jdbcType=VARCHAR},
+            </if>
+            <if test="precredit != null">
+                PRECREDIT = #{precredit,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                COMPANY = #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="branch != null">
+                BRANCH = #{branch,jdbcType=VARCHAR},
+            </if>
+            <if test="empId != null">
+                emp_id = #{empId,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                MANAGER = #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="creatTime != null">
+                CREAT_TIME = #{creatTime,jdbcType=VARCHAR},
+            </if>
+            <if test="alterTime != null">
+                ALTER_TIME = #{alterTime,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="apex1 != null">
+                APEX1 = #{apex1,jdbcType=VARCHAR},
+            </if>
+            <if test="apex2 != null">
+                APEX2 = #{apex2,jdbcType=VARCHAR},
+            </if>
+            <if test="apex3 != null">
+                APEX3 = #{apex3,jdbcType=VARCHAR},
+            </if>
+            <if test="bak != null">
+                BAK = #{bak,jdbcType=VARCHAR},
+            </if>
+            <if test="repayType != null">
+                repay_type = #{repayType,jdbcType=VARCHAR},
+            </if>
+            <if test="rate != null">
+                rate = #{rate,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseBrand != null">
+                merchandise_brand = #{merchandiseBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseModel != null">
+                merchandise_model = #{merchandiseModel,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseCode != null">
+                merchandise_code = #{merchandiseCode,jdbcType=VARCHAR},
+            </if>
+            <if test="provincesId != null">
+                provinces_id = #{provincesId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="districId != null">
+                distric_id = #{districId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinces != null">
+                provinces = #{provinces,jdbcType=VARCHAR},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="distric != null">
+                distric = #{distric,jdbcType=VARCHAR},
+            </if>
+            <if test="productType != null">
+                product_type = #{productType,jdbcType=VARCHAR},
+            </if>
+            <if test="productTypeName != null">
+                product_type_name = #{productTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName,jdbcType=VARCHAR},
+            </if>
+            <if test="productNameName != null">
+                product_name_name = #{productNameName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDetail != null">
+                product_detail = #{productDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="productDetailName != null">
+                product_detail_name = #{productDetailName,jdbcType=VARCHAR},
+            </if>
+            <if test="productDetailCode != null">
+                product_detail_code = #{productDetailCode,jdbcType=VARCHAR},
+            </if>
+            <if test="contractAmount != null">
+                contract_amount = #{contractAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="loanAmount != null">
+                loan_amount = #{loanAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseBrandId != null">
+                merchandise_brand_id = #{merchandiseBrandId,jdbcType=VARCHAR},
+            </if>
+            <if test="merchandiseTypeId != null">
+                merchandise_type_id = #{merchandiseTypeId,jdbcType=VARCHAR},
+            </if>
+            <if test="empNumber != null">
+                emp_number = #{empNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="repayMoney != null">
+                repay_money = #{repayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="orderType != null">
+                order_type = #{orderType,jdbcType=VARCHAR},
+            </if>
+            <if test="applayMoney != null">
+                applay_money = #{applayMoney,jdbcType=VARCHAR},
+            </if>
+            <if test="predictPrice != null">
+                predict_price = #{predictPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveId != null">
+                receive_id = #{receiveId,jdbcType=VARCHAR},
+            </if>
+            <if test="scoreCard != null">
+                score_card = #{scoreCard,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.Order">
+    update mag_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      PERIODS = #{periods,jdbcType=VARCHAR},
+      MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      merchandise_id = #{merchandiseId,jdbcType=VARCHAR},
+      merchandise_type = #{merchandiseType,jdbcType=VARCHAR},
+      merchandise_name = #{merchandiseName,jdbcType=VARCHAR},
+      CUSTOMER_ID = #{customerId,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      sex_name = #{sexName,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      CARD_TYPE = #{cardType,jdbcType=VARCHAR},
+      CARD = #{card,jdbcType=VARCHAR},
+      CREDIT = #{credit,jdbcType=VARCHAR},
+      PRECREDIT = #{precredit,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      BRANCH = #{branch,jdbcType=VARCHAR},
+      emp_id = #{empId,jdbcType=VARCHAR},
+      MANAGER = #{manager,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=VARCHAR},
+      ALTER_TIME = #{alterTime,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      APEX1 = #{apex1,jdbcType=VARCHAR},
+      APEX2 = #{apex2,jdbcType=VARCHAR},
+      APEX3 = #{apex3,jdbcType=VARCHAR},
+      BAK = #{bak,jdbcType=VARCHAR},
+      repay_type = #{repayType,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=VARCHAR},
+      merchandise_brand = #{merchandiseBrand,jdbcType=VARCHAR},
+      merchandise_model = #{merchandiseModel,jdbcType=VARCHAR},
+      merchandise_code = #{merchandiseCode,jdbcType=VARCHAR},
+      provinces_id = #{provincesId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      distric_id = #{districId,jdbcType=VARCHAR},
+      provinces = #{provinces,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      distric = #{distric,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=VARCHAR},
+      product_type_name = #{productTypeName,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_name_name = #{productNameName,jdbcType=VARCHAR},
+      product_detail = #{productDetail,jdbcType=VARCHAR},
+      product_detail_name = #{productDetailName,jdbcType=VARCHAR},
+      product_detail_code = #{productDetailCode,jdbcType=VARCHAR},
+      contract_amount = #{contractAmount,jdbcType=VARCHAR},
+      loan_amount = #{loanAmount,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      merchandise_brand_id = #{merchandiseBrandId,jdbcType=VARCHAR},
+      merchandise_type_id = #{merchandiseTypeId,jdbcType=VARCHAR},
+      emp_number = #{empNumber,jdbcType=VARCHAR},
+      repay_money = #{repayMoney,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=VARCHAR},
+      applay_money = #{applayMoney,jdbcType=VARCHAR},
+      predict_price = #{predictPrice,jdbcType=VARCHAR},
+      receive_id = #{receiveId,jdbcType=VARCHAR},
+      score_card = #{scoreCard,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="getOrders" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from mag_order
+        <where>
+            <if test="param.state != null and param.state != ''">
+                and state !='1'
+            </if>
+            <if test="param.customerName != null and param.customerName != ''">
+                and CUSTOMER_NAME like '%${param.customerName}%'
+            </if>
+            <if test="param.card != null and param.card != ''">
+                and CARD like '%${param.card}%'
+            </if>
+            <if test="param.tel != null and param.tel != ''">
+                and TEL like '%${param.tel}%'
+            </if>
+            <if test="param.orderNo != null and param.orderNo != ''">
+                and order_no like '%${param.orderNo}%'
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                and CREAT_TIME &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                and CREAT_TIME &lt;= #{param.endTime}
+            </if>
+            <if test="param.customerId != null and param.customerId != ''">
+                and CUSTOMER_ID = #{param.customerId}
+            </if>
+        </where>
+        order by CREAT_TIME desc
+    </select>
+    <select id="countOrders" resultType="Integer" parameterType="java.util.Map">
+        select count(*) from mag_order
+        <where>
+            <if test="state != null and state != ''">
+                and state = #{state}
+                <if test="receiveId != null and receiveId != ''">
+                    and receive_id = #{receiveId}<!--领取人即当前登录用户-->
+                </if>
+                <if test="receiveId == null or receiveId == ''">
+                    and (receive_id is null or receive_id='')<!--资源池尚未领取没有审核人-->
+                </if>
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and CREAT_TIME &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+    <update id="firstOrEndAudit" parameterType="com.zw.rule.customer.po.Order">
+        update mag_order
+        <set>
+            <if test="state!=null and state!=''">
+                state = #{state},
+            </if>
+            <if test="state==5"><!--人工初审通过删除领取人-->
+                receive_id = '',
+            </if>
+            <if test="state==6"><!--人工终审通过删除领取人-->
+                receive_id = '',
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updateReceiveId" parameterType="com.zw.rule.customer.po.Order">
+    update mag_order
+    set receive_id = #{receiveId},
+    ALTER_TIME = #{alterTime}
+    where id = #{id}
+  </update>
+
+    <select id="getList" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from mag_order
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
+            <if test="state != null and state != ''">
+                AND state = #{state}
+            </if>
+        </where>
+    </select>
+    <select id="getAlreadyOrders" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model
+        ,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,
+        mo.provinces ,mo.city,r.state AS state
+        from mag_order mo
+        left join process_approve_record r on r.order_id = mo.id
+        <where>
+            <!--and (o.receive_id is null or o.receive_id='')-->
+            <!--and r.handler_id = #{param.userId}-->
+            <if test="param.state != null and param.state != ''">
+                and r.state = #{param.state}<!--状态-->
+            </if>
+            <if test="param.customerName != null and param.customerName != ''">
+                and mo.CUSTOMER_NAME like '%${param.customerName}%'
+            </if>
+            <if test="param.card != null and param.card != ''">
+                and mo.CARD like '%${param.card}%'
+            </if>
+            <if test="param.tel != null and param.tel != ''">
+                and mo.TEL like '%${param.tel}%'
+            </if>
+            <if test="param.orderNo != null and param.orderNo != ''">
+                and mo.order_no like '%${param.orderNo}%'
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                and mo.CREAT_TIME &lt;= #{param.endTime}
+            </if>
+        </where>
+        GROUP BY mo.ID
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getContractOrders" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.provinces ,mo.city,r.state AS
+        state,mo.price,mo.weight
+        from mag_order mo
+        left join process_approve_record r on r.order_id = mo.id
+        <where>
+            <!--and (o.receive_id is null or o.receive_id='')-->
+            and r.handler_id = #{param.userId}
+            and mo.state = #{param.state}
+            <if test="param.state != null and param.state != ''">
+                and r.state = #{param.state}<!--状态-->
+            </if>
+            <if test="param.customerName != null and param.customerName != ''">
+                and mo.CUSTOMER_NAME like '%${param.customerName}%'
+            </if>
+            <if test="param.card != null and param.card != ''">
+                and mo.CARD like '%${param.card}%'
+            </if>
+            <if test="param.tel != null and param.tel != ''">
+                and mo.TEL like '%${param.tel}%'
+            </if>
+            <if test="param.orderNo != null and param.orderNo != ''">
+                and mo.order_no like '%${param.orderNo}%'
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                and mo.CREAT_TIME &lt;= #{param.endTime}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getStandardOrders" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mcl.provinces AS provinces,mcl.city AS
+        city,mo.order_submission_time
+        from mag_order mo
+        LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        <where>
+            <!--and (o.receive_id is null or o.receive_id='')-->
+            and mo.state = #{param.state}
+            <if test="param.customerName != null and param.customerName != ''">
+                and mo.CUSTOMER_NAME like '%${param.customerName}%'
+            </if>
+            <if test="param.card != null and param.card != ''">
+                and mo.CARD like '%${param.card}%'
+            </if>
+            <if test="param.tel != null and param.tel != ''">
+                and mo.TEL like '%${param.tel}%'
+            </if>
+            <if test="param.orderNo != null and param.orderNo != ''">
+                and mo.order_no like '%${param.orderNo}%'
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                and mo.order_submission_time &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                and mo.order_submission_time &lt;= #{param.endTime}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="countAlreadyOrders" resultType="Integer" parameterType="java.util.Map">
+        select count(*) from mag_order o
+        left join process_approve_record r on r.order_id = o.id and r.state = o.state
+        <where>
+            and o.state = #{state}
+            and (o.receive_id is null or o.receive_id='')
+            and r.handler_id = #{userId}
+            <if test="customerName != null and customerName != ''">
+                and o.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and o.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and o.CREAT_TIME &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateFinalReceiveId">
+    update mag_order
+    set receive_id = #{userId},
+    ALTER_TIME = #{date}
+    where id = #{orderId}
+  </update>
+
+    <select id="getOrderDel" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from mag_order where id = #{id}
+    </select>
+
+    <select id="getTaskId" resultType="java.util.Map" parameterType="String">
+    select
+    id
+    from process_task_node where rel_id = #{orderId} and node_state = 0
+  </select>
+
+    <select id="getLoanCustomerList" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.state,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,IFNULL(mca.bank_card,'') AS
+        bankCard,IFNULL(mca.account_bank,'') AS accountBank
+        FROM mag_order mo LEFT JOIN mag_customer_account mca ON mca.CUSTOMER_ID = mo.CUSTOMER_ID
+        <where>
+            <if test="custName != null and custName != ''">
+                and mo.CUSTOMER_NAME like '%${custName}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no =#{orderNo}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            and mo.state = #{state}
+        </where>
+    </select>
+
+    <update id="updateState" parameterType="com.zw.rule.customer.po.Order">
+        update mag_order
+        <set>
+            <if test="state!=null and state!=''">
+                state = #{state},
+            </if>
+            <if test="feeState!=null and feeState!=''">
+                fee_state = #{feeState},
+            </if>
+            <if test="requestno!=null and requestno!=''">
+                requestno = #{requestno},
+            </if>
+            <if test="rebatesState!=null and rebatesState!=''">
+                rebates_state = #{rebatesState},
+            </if>
+            <if test="loanState!=null and loanState!=''">
+                loan_state = #{loanState},
+            </if>
+            <if test="alterTime!=null and alterTime!=''">
+                alter_time = #{alterTime},
+            </if>
+        </set>
+        <where>
+            1=1
+            <if test="id!=null and id!=''">
+                AND id = #{id}
+            </if>
+            <if test="valRequestno!=null and valRequestno!=''">
+                AND requestno = #{valRequestno}
+            </if>
+        </where>
+    </update>
+
+    <select id="getUserInfoByorderId" resultType="java.util.Map" parameterType="java.lang.String">
+    SELECT IFNULL(au.registration_id,'') AS registrationId, au.id, au.tel FROM mag_order mo
+    LEFT JOIN app_user au ON au.id = mo.user_id WHERE mo.id = #{orderId}
+  </select>
+
+    <select id="getOrderList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME, mo.state
+        ,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.answer_state AS answerState,mo.answer_score AS answerScore
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        <where>
+            1=1 AND mo.state IN ( 2,4)
+            <!--<if test="state != null and state != '' and type != 1">-->
+            <!--and mo.state > #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <!--<if test="state != null and state != '' and type != 2">-->
+            <!--and mo.state = #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getOrderListSP" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME, mo.state
+        ,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.answer_state AS answerState,mo.answer_score AS answerScore
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        LEFT JOIN mag_salesman ms on mo.emp_id=ms.id
+        <where>
+            1=1
+
+            <if test=" headquarters!= null and headquarters != ''">
+                and ms.branch in (SELECT id FROM zw_sys_department where FIND_IN_SET(id,
+                getChildDepartment(${headquarters})))
+            </if>
+
+            <if test=" branch!= null and branch != ''">
+                and ms.branch =#{branch}
+            </if>
+
+            <!--<if test=" headquarters!= null and headquarters != ''">-->
+            <!--and grr.merchant_id IN (select id from reclaim_merchant-->
+            <!--where   dep_id in (SELECT id  FROM zw_sys_department where FIND_IN_SET(id, getChildDepartment(${headquarters}))))-->
+            <!--</if>-->
+
+            <!--<if test=" branch!= null and branch != ''">-->
+            <!--and   grr.merchant_id in (select id from reclaim_merchant where dep_id=#{branch})-->
+            <!--</if>-->
+            <if test='isLock =="1"'>
+                AND mo.state IN ( 2,4)
+            </if>
+            <if test='isLock =="2"'>
+                and mo.id in (select order_id from process_approve_record where handler_id=#{handlerId})
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+    <select id="getSubmitList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,mo.MERCHANT_NAME as merchantName,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,
+        (case when mo.state='5' and mo.commodity_state &gt; '15' and mo.commodity_state &lt; '16.7' then '-1'
+         when mo.state='5' and mo.commodity_state = '16.7' then '-2'
+         when  mo.state='5' and mo.commodity_state &gt; '16.7' and mo.commodity_state &lt; '18' then '-3'
+         when mo.state='5' and mo.commodity_state = '18' then '-4'
+         when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and (mr.repayCount = 0 or mr.repayCount is null) then '-5'
+         when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and mr.repayCount > 0 then '-6'
+         when mo.state='0' and mo.commodity_state = '21' then '-7'
+         else mo.state end) as state,
+        mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.weight,mo.price,mo.delivery_state
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        LEFT JOIN mag_salesman ms on mo.emp_id=ms.id
+        left join (select count(1) as repayCount, order_id from mag_repayment where state=2 or state=3 or state=4 group by order_id) mr
+        on mo.id=mr.order_id
+        <where>
+            1=1
+            <if test=" isAll== null or isAll == ''">
+                AND (mo.state!='0' or mo.commodity_state='21')
+            </if>
+            <if test=" headquarters!= null and headquarters != ''">
+                and ms.branch in (SELECT id FROM zw_sys_department where FIND_IN_SET(id,
+                getChildDepartment(${headquarters})))
+            </if>
+
+            <if test=" branch!= null and branch != ''">
+                and ms.branch =#{branch}
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <choose>
+                <when test="condition=='-1'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt; '15'
+                    and mo.commodity_state &lt; '16.7'
+                </when>
+                <when test="condition=='-2'">
+                    and mo.state='5'
+                    and mo.commodity_state = '16.7'
+                </when>
+                <when test="condition=='-3'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt; '16.7'
+                    and mo.commodity_state &lt; '18'
+                </when>
+                <when test="condition=='-4'">
+                    and mo.state='5'
+                    and mo.commodity_state = '18'
+                </when>
+                <when test="condition=='-5'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt;= '19'
+                    and mo.commodity_state &lt; '21'
+                    and (mr.repayCount = 0 or mr.repayCount is null)
+                </when>
+                <when test="condition=='-6'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt;= '19'
+                    and mo.commodity_state &lt; '21'
+                    and mr.repayCount > 0
+                </when>
+                <when test="condition=='-7'">
+                    and mo.state='0'
+                    and mo.commodity_state = '21'
+                </when>
+                <when test="condition=='0'">
+                    and mo.state='0'
+                    and mo.commodity_state !=  '21'
+                </when>
+                <when test="condition=='5'">
+                    and mo.state='5'
+                    and mo.commodity_state &lt;= '15'
+                </when>
+                <when test="condition != null and condition != ''">
+                    and mo.state=#{condition}
+                </when>
+            </choose>
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getGoldSubmitList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME, mo.state
+        ,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.weight,mo.price,mo.delivery_state
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        <where>
+            1=1 AND mo.state!='0'
+            <!--<if test="state != null and state != '' and type != 1">-->
+            <!--and mo.state > #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <!--<if test="state != null and state != '' and type != 2">-->
+            <!--and mo.state = #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getGoldLogisticsList" resultType="java.util.Map" parameterType="java.util.Map">
+        select
+        mo.id,mo.order_no,mo.user_id,mo.periods,mo.merchant_id,mo.merchant_name,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.customer_id,mo.customer_name,mo.sex_name,mo.tel,mo.card_type,
+        mo.card,mo.credit,mo.precredit,mo.amount,mo.company,mo.branch,mo.emp_id,mo.manager,mo.creat_time,
+        mo.alter_time, mo.state
+        ,mo.apex3,mo.bak,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcp.receive_address,mo.weight,mo.price,mo.delivery_state
+        from mag_order mo
+        left join mag_customer_person mcp on mo.customer_id = mcp.customer_id
+        <where>
+            1=1 AND mo.state!='0'
+            <!--<if test="state != null and state != '' and type != 1">-->
+            <!--and mo.state > #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <!--<if test="state != null and state != '' and type != 2">-->
+            <!--and mo.state = #{state}-->
+            <!--<if test="receiveId != null and receiveId != ''">-->
+            <!--and mo.receive_id = #{receiveId}&lt;!&ndash;领取人即当前登录用户&ndash;&gt;-->
+            <!--</if>-->
+            <!--</if>-->
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+            <if test="deliveryState != null and deliveryState != ''">
+                <if test='deliveryState !="1" and deliveryState !="2" and deliveryState !="3"'>
+                    and mo.delivery_state != #{deliveryState} and mo.delivery_state != '3'
+                </if>
+                <if test='deliveryState !="0"'>
+                    and mo.delivery_state = #{deliveryState}
+                </if>
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+    <select id="getRepayCustomerList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.state,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card
+        FROM mag_order mo LEFT JOIN mag_customer cus ON cus.id = mo.CUSTOMER_ID
+        <where>
+            mo.state = #{param.state} and mo.CUSTOMER_ID =#{param.customerId}
+        </where>
+    </select>
+
+    <select id="getFinancialOrderList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,mo.state,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card
+        FROM mag_order mo LEFT JOIN mag_customer cus ON cus.id = mo.CUSTOMER_ID
+        <where>
+            mo.CUSTOMER_ID =#{param.customerId}
+            AND mo.state=#{param.state}
+        </where>
+    </select>
+    <select id="getCustOrderList" resultType="Map" parameterType="java.util.Map">
+        select
+        mo.ID as id, mo.order_no as orderNo, mo.USER_ID as userId, mo.PERIODS as periods,
+        mo.CUSTOMER_ID as customerId, mo.CUSTOMER_NAME as customerName, mo.sex_name as sexName, mo.TEL as tel,
+        mo.CARD_TYPE as cardType,
+        mo.CARD as card, mo.CREDIT as credit, mo.PRECREDIT as precredit, mo.AMOUNT as amount, mo.COMPANY as company,
+        mo.BRANCH as branch, mo.emp_id as empId,
+        mo.MANAGER as manager, mo.CREAT_TIME as creatTime,mo.ALTER_TIME as alterTime,mo.state,mo.BAK as bak,
+        mo.repay_type as repayType,
+        mo.rate,mo.merchandise_brand as merchandiseBrand, mo.merchandise_model as merchandiseModel,
+        mo.merchandise_code as merchandiseCode,
+        mo.provinces_id as provincesId, mo.city_id as cityId, mo.distric_id as districId, mo.provinces, mo.city,
+        mo.distric,
+        mo.product_type as productType, mo.product_type_name as productTypeName, mo.product_name as productName,
+        mo.product_name_name as productNameName, mo.product_detail as productDetail, mo.product_detail_name as
+        productDetailName,
+        mo.product_detail_code as productDetailCode, mo.loan_amount as loanAmount, mo.sex,mo.receive_id as receiveId ,
+        mo.order_submission_time as orderSubmissionTime,mo.withdraw_state as
+        withDrawState,moc.interest,moc.contract_amount as contractAmount
+        from mag_order mo left join mag_order_contract moc on mo.ID = moc.order_id
+        where mo.CUSTOMER_ID =#{customerId}
+
+        <if test="state!=null and state!=''">
+            and mo.state = #{state}
+        </if>
+        <if test="isoverdue!=null and state!=''">
+            and mo.id IN (SELECT order_id from mag_repayment where state in(1,3))
+        </if>
+        order by mo.CREAT_TIME desc
+    </select>
+
+    <update id="updateOrderStatus" parameterType="java.util.Map">
+        UPDATE mag_order
+        <set>
+            <if test="amount!=null and amount!=''">
+                AMOUNT = #{amount},
+            </if>
+            <if test="credit!=null and credit!=''">
+                CREDIT = #{credit},
+            </if>
+            <if test="credit!=null and credit!=''">
+                PRECREDIT = #{precredit},
+            </if>
+            <if test="predictPrice!=null and predictPrice!=''">
+                predict_price=#{predictPrice},
+            </if>
+            <if test="applayMoney!=null and applayMoney!=''">
+                applay_money=#{applayMoney},
+            </if>
+            <if test="state!=null and state!=''">
+                state=#{state},
+            </if>
+            <if test="answerState!=null and answerState!=''">
+                answer_state=#{answerState},
+            </if>
+            <if test="answerScore!=null and answerScore!=''">
+                answer_score=#{answerScore},
+            </if>
+            <if test="commodityState!=null and commodityState!=''">
+                commodity_state=#{commodityState},
+            </if>
+            <if test="alterTime!=null and alterTime!=''">
+                alter_time=#{alterTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="getWithdrawalsList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME,
+        (case when mo.state='5' and mo.commodity_state &gt; '15' and mo.commodity_state &lt; '16.7' then '-1'
+        when mo.state='5' and mo.commodity_state = '16.7' then '-2'
+        when  mo.state='5' and mo.commodity_state &gt; '16.7' and mo.commodity_state &lt; '18' then '-3'
+        when mo.state='5' and mo.commodity_state = '18' then '-4'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and mr.repayCount = 0 then '-5'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and mr.repayCount > 0 then '-6'
+        when mo.state='0' and mo.commodity_state = '21' then '-7'
+        else mo.state end) as state,
+        mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,
+        mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.commodity_state AS commodityState,mo.loan_state AS loanState,merchant_name
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        LEFT JOIN mag_salesman ms on mo.emp_id=ms.id
+        left join (select count(1) as repayCount, order_id from mag_repayment where state=2 or state=3 or state=4 group by order_id) mr
+        on mo.id=mr.order_id
+        <where>
+            1=1
+
+            <if test=" headquarters!= null and headquarters != ''">
+                and ms.branch in (SELECT id FROM zw_sys_department where FIND_IN_SET(id,
+                getChildDepartment(${headquarters})))
+            </if>
+
+            <if test=" branch!= null and branch != ''">
+                and ms.branch =#{branch}
+            </if>
+            <if test=" isLock!= null and isLock != ''">
+                and mo.loan_state =#{isLock}
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderNo != ''">
+                and mo.order_type=#{orderType}
+            </if>
+            <if test="commodityState != null and orderNo != ''">
+                and mo.commodity_state=#{commodityState}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+
+    <select id="getGoldPayment" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME, mo.state
+        ,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,
+        mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mo.fee_state AS feeState
+        FROM mag_order mo
+        <where>
+            and mo.state IN ('7','8','9')
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderNo != ''">
+                and mo.order_type=#{orderType}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+    <select id="getWithdrawalsListGold" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map">
+        SELECT
+        mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
+        mo.merchandise_name,mo.CUSTOMER_ID,mo.CUSTOMER_NAME,mo.sex_name,mo.TEL,mo.CARD_TYPE,
+        mo.CARD,mo.CREDIT,mo.PRECREDIT,mo.AMOUNT,mo.COMPANY,mo.BRANCH,mo.emp_id,mo.MANAGER,mo.CREAT_TIME,
+        mo.ALTER_TIME, mo.state
+        ,mo.APEX3,mo.BAK,mo.repay_type,mo.rate,
+        mo.merchandise_brand,mo.merchandise_model,mo.merchandise_code,
+        mo.provinces_id,mo.city_id,mo.distric_id,mo.distric,
+        mo.product_type,mo.product_type_name,mo.product_name,
+        mo.product_name_name,mo.product_detail,mo.product_detail_name,mo.product_detail_code,
+        mo.contract_amount,mo.loan_amount,mo.sex,
+        mo.merchandise_brand_id,mo.merchandise_type_id,mo.emp_number,
+        mo.repay_money,mo.order_type,
+        mo.applay_money,mo.predict_price,mo.receive_id,mo.score_card,mo.order_submission_time,mcl.provinces AS
+        provinces,mcl.city AS city,mo.fee_state AS feeState,mo.rebates_state AS rebatesState,rm.mer_name AS
+        merName,grr.reclaim_amount AS reclaimAmount
+        FROM mag_order mo LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        LEFT JOIN gold_reclaim_record grr ON mo.id = grr.order_id
+        LEFT JOIN reclaim_merchant rm ON grr.merchant_id=rm.id
+        <where>
+            mo.ID in (select order_id from mag_withdrawal
+            <if test=" withdrawalState!= null and withdrawalState != ''">
+                where state=#{withdrawalState}
+            </if>
+            )
+            <if test=" admin!= null and admin != ''">
+                and mo.ID in (select order_id from mag_withdrawal
+                <if test=" withdrawalState!= null and withdrawalState != ''">
+                    where state=#{withdrawalState}
+                </if>
+                )
+            </if>
+
+            <if test=" headquarters!= null and headquarters != ''">
+                and grr.merchant_id IN (select id from reclaim_merchant
+                where dep_id in (SELECT id FROM zw_sys_department where FIND_IN_SET(id,
+                getChildDepartment(${headquarters}))))
+            </if>
+
+            <if test=" branch!= null and branch != ''">
+                and grr.merchant_id in (select id from reclaim_merchant where dep_id=#{branch})
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <if test="orderType != null and orderNo != ''">
+                and mo.order_type=#{orderType}
+            </if>
+            <if test="condition != null and condition != ''">
+                and mo.state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+        </where>
+        order by mo.CREAT_TIME desc
+    </select>
+
+    <select id="getOrderWithdrawals" resultType="com.zw.rule.customer.po.Withdrawals" parameterType="java.util.Map">
+        select mw.id, mw.withdrawal_amount AS withdrawalAmount,mw.state,mw.type,mw.order_id AS orderId,mw.CREATE_TIME AS
+        createTime,mw.ALTER_TIME AS alterTime,mw.batch_no AS batchNo,mw.redAmount,mw.principalAmount,mw.bank_card AS
+        bankCard ,account_bank AS accountBank,rm.mer_name AS merName
+
+        from mag_withdrawal mw
+        LEFT JOIN gold_reclaim_record grr ON grr.order_id=mw.order_id
+        LEFT JOIN reclaim_merchant rm ON grr.merchant_id=rm.id
+        <where>
+            1=1
+            <if test="state != null and state != ''">
+                and mw.state=#{state}
+            </if>
+            <if test="state1 != null and state1 != ''">
+                and (mw.state='0' OR mw.state='3')
+            </if>
+            <if test="orderId != null and orderId != ''">
+                and mw.order_id=#{orderId}
+            </if>
+            <if test="id != null and id != ''">
+                and mw.id=#{id}
+            </if>
+            <if test="batch_no != null and batch_no != ''">
+                and mw.batch_no=#{batch_no}
+            </if>
+        </where>
+        order by mw.state asc,mw.CREATE_TIME desc
+    </select>
+
+
+    <update id="updateWithdrawals" parameterType="java.util.Map">
+        update mag_withdrawal
+        <set>
+            <if test="state!=null and state!=''">
+                state = #{state},
+            </if>
+            <if test="valBatchNo!=null and valBatchNo!=''">
+                batch_no = #{valBatchNo},
+            </if>
+            <if test="alterTime!=null and alterTime!=''">
+                alter_time = #{alterTime},
+            </if>
+            <if test="bank_card!=null and bank_card!=''">
+                bank_card = #{bank_card},
+            </if>
+            <if test="account_bank!=null and account_bank!=''">
+                account_bank = #{account_bank},
+            </if>
+        </set>
+        <where>
+            1=1
+            <if test="order_id != null and order_id != ''">
+                and order_id=#{order_id}
+            </if>
+            <if test="batchNo != null and batchNo != ''">
+                and batch_No=#{batchNo}
+            </if>
+            <if test="id != null and id != ''">
+                and id=#{id}
+            </if>
+        </where>
+    </update>
+
+    <select id="getAccount" resultType="java.util.Map" parameterType="java.util.Map">
+    select user_id,count_name,card_num,bank_card,account_bank,account_branch_bank,account_bank_id,tel,account_province,account_city from mag_customer_account
+    where   USER_ID in (SELECT USER_ID  FROM mag_order where id=#{orderId} )
+  </select>
+    <!--获取审批意见process_approve_record-->
+    <select id="selectProByOrderIdAndNode" parameterType="java.util.Map"
+            resultType="com.zw.rule.approveRecord.po.ProcessApproveRecord">
+      SELECT
+          id,
+          create_time as createTime,
+          commit_time as commitTime,
+          result,
+          approve_suggestion as approveSuggestion,
+          handler_id as handlerId,
+          handler_name as handlerName
+      FROM
+          process_approve_record
+      WHERE
+          order_id = #{orderId}
+      AND node_id = #{nodeId}
+  </select>
+
+  <select id="getOverTimeOrders" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_order o
+    <where>
+      <if test="state != null and state != ''">
+        and state = #{state}
+      </if>
+      <if test="commodityState != null and commodityState != ''">
+        and commodity_state = #{commodityState}
+      </if>
+      <if test="customerName != null and customerName != ''">
+        and CUSTOMER_NAME like '%${customerName}%'
+      </if>
+      <if test="tel != null and tel != ''">
+        and TEL like '%${tel}%'
+      </if>
+      <if test="orderNo != null and orderNo != ''">
+        and order_no like '%${orderNo}%'
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        and CREAT_TIME &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and CREAT_TIME &lt;= #{endTime}
+      </if>
+      <if test="orderType != null and orderType != ''">
+        and order_type = #{orderType}
+      </if>
+      <if test="editEndTime != null and editEndTime != ''">
+        and ALTER_TIME &lt;= #{editEndTime}
+      </if>
+      <if test="hasBeforePack != null and hasBeforePack != ''">
+        and (select count(1) as num from mag_servicepag_order s where o.id = s.order_id and s.state=1) != 0
+      </if>
+    </where>
+    order by CREAT_TIME desc
+  </select>
+</mapper>

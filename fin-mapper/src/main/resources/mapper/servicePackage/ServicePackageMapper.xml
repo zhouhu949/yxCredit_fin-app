@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.servicePackage.ServicePackageMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.servicePackage.po.ServicePackage"  >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="package_type_name" property="package_type_name" jdbcType="VARCHAR" />
+        <result column="repayment_type" property="repayment_type" jdbcType="VARCHAR" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+        <result column="creat_time" property="creat_time" jdbcType="VARCHAR" />
+        <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, package_type_name,repayment_type, info, creat_time,alter_time
+    </sql>
+    <!--getList-->
+    <select id="getList" resultMap="BaseResultMap" parameterType="map" >
+        select
+        id, package_type_name,repayment_type, info, creat_time,alter_time
+        from mag_service_package_type
+
+        <where>
+        <if test="id != null and id != ''">
+            and id =  #{id}
+        </if>
+        <if test="package_type_name != null and package_type_name != ''">
+            and package_type_name =  #{package_type_name}
+        </if>
+        <if test="repayment_type != null and repayment_type != ''">
+            and repayment_type =  #{repayment_type}
+        </if>
+        <if test="info != null and info != ''">
+            and info =  #{info}
+        </if>
+        <if test="creat_time != null and creat_time != ''">
+            and creat_time =  #{creat_time}
+        </if>
+        <if test="alter_time != null and alter_time != ''">
+            and alter_time =  #{alter_time}
+        </if>
+        </where>
+    </select>
+
+
+    <select id="getMagList" resultMap="BaseResultMap">
+        select
+        id, package_type_name,repayment_type, info, creat_time,alter_time
+        from mag_service_package_type
+    </select>
+    <update id="updateServicePackage" parameterType="com.zw.rule.servicePackage.po.ServicePackage"  >
+        update mag_service_package_type
+        <set >
+            <if test="package_type_name != null" >
+                package_type_name = #{package_type_name,jdbcType=VARCHAR},
+            </if>
+            <if test="repayment_type != null" >
+                repayment_type = #{repayment_type,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null" >
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="creat_time != null" >
+                creat_time = #{creat_time,jdbcType=VARCHAR},
+            </if>
+            <if test="alter_time != null" >
+                alter_time = #{alter_time,jdbcType=VARCHAR},
+           </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!--insert-->
+    <insert id="insertServicePackage" parameterType="com.zw.rule.servicePackage.po.ServicePackage">
+        INSERT INTO mag_service_package_type
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="package_type_name != null" >
+                package_type_name,
+            </if>
+            <if test="repayment_type != null" >
+                repayment_type,
+            </if>
+            <if test="creat_time != null" >
+                creat_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="package_type_name != null" >
+                #{package_type_name},
+            </if>
+            <if test="repayment_type != null" >
+                #{repayment_type},
+            </if>
+            <if test="creat_time != null" >
+                #{creat_time},
+            </if>
+        </trim>
+    </insert>
+</mapper>

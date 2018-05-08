@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.MagRepaymentExtensionMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.repayment.po.MagRepaymentExtension" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="repayment_id" property="repaymentId" jdbcType="VARCHAR" />
+    <result column="pay_count" property="payCount" jdbcType="VARCHAR" />
+    <result column="extension_amount" property="extensionAmount" jdbcType="VARCHAR" />
+    <result column="extension_day" property="extensionDay" jdbcType="INTEGER" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+      id, order_id, repayment_id, pay_count, extension_amount, extension_day, operator, operate_time
+  </sql>
+  <insert id="insert" parameterType="com.zw.rule.repayment.po.MagRepayment" >
+      insert
+        into mag_repayment_extension
+              (id,
+               order_id,
+               repayment_id,
+               pay_count,
+               extension_amount,
+               extension_day,
+               operator,
+               operate_time
+              )
+      values (#{id,jdbcType=VARCHAR},
+               #{orderId,jdbcType=VARCHAR},
+               #{repaymentId,jdbcType=VARCHAR},
+               #{payCount,jdbcType=VARCHAR},
+               #{extensionAmount,jdbcType=VARCHAR},
+               #{extensionDay,jdbcType=INTEGER},
+               #{operator,jdbcType=VARCHAR},
+               #{operateTime,jdbcType=VARCHAR}
+              )
+  </insert>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select <include refid="Base_Column_List" />
+        from mag_repayment_extension
+       where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getExtensionList" resultMap="BaseResultMap" parameterType="java.util.Map">
+      select <include refid="Base_Column_List" />
+        from mag_repayment_extension
+      <where> 1 = 1
+        <if test=" id !=null and id != ''">
+          AND id=#{id}
+        </if>
+        <if test=" orderId !=null and orderId != ''">
+          AND order_id=#{orderId}
+        </if>
+        <if test=" repayment_id !=null and repayment_id != ''">
+         AND  repayment_id=#{repaymentId}
+        </if>
+        <if test=" operator !=null and operator != ''">
+          AND  operator=#{operator}
+        </if>
+      </where>
+        order by operate_time
+  </select>
+
+    <select id="getOrderExtensions" resultType="java.util.Map" parameterType="java.util.Map">
+        select e.order_id, e.repayment_id, e.pay_count, e.extension_amount, e.extension_day,
+               e.operate_time, r.pay_time,o.order_no, o.customer_name, o.tel,u.account
+          from mag_repayment_extension e
+         inner join mag_repayment r
+            on e.repayment_id = r.id
+         inner join mag_order o
+            on e.order_id = o.id
+         inner join zw_sys_user u
+            on e.operator = u.user_id
+        <where> 1 = 1
+            <if test=" order_no !=null and order_no != ''">
+                AND o.order_no like '%${order_no}%'
+            </if>
+            <if test=" customer_name !=null and customer_name != ''">
+                AND o.customer_name like '%${customer_name}%'
+            </if>
+            <if test=" tel !=null and tel != ''">
+                AND  o.tel like '%${tel}%'
+            </if>
+        </where>
+        order by operate_time
+    </select>
+
+  <delete id="deleteById" parameterType="java.lang.String" >
+      delete
+        from mag_repayment
+       where id = #{id,jdbcType=VARCHAR}
+  </delete>
+</mapper>

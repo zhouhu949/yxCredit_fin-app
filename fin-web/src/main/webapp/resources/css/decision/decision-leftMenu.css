@@ -1,0 +1,508 @@
+.parameter-button {
+				border: 1px solid #e2e2e2;
+				width: 80px;
+				height: 30px;
+				font-size: 14px;
+				color: #777777;
+				margin: 10px 0px 10px 0px;
+				text-align: center;
+				line-height: 30px;
+				border-radius: 4px;
+				background-color: #FFFFFF;
+				cursor: pointer;
+			}
+			
+			.parameter-button:hover {
+				color: white;
+				background-color: #398dee;
+			}
+.l_before{
+    height:30px;
+}
+
+.left-decisionMenus {
+	width: 192px;
+	height: 618px;
+	border: 1px solid #E0E1E5;
+	float: left;
+	background:#F5F5F5;
+}
+
+.l-leftTopMenu {
+	width: 190px;
+    height: 65px;
+	background: #F5F5F5;
+	float: left;
+	border-bottom: 1px solid #E0E1E5;
+}
+
+.l_title {
+	font-size: 14px;
+	color: #444444;
+	display: block;
+}
+
+.l_descript {
+	font-size: 12px;
+	color: #999999;
+	margin-top: 5px;
+	display:inline-block;
+}
+
+.l_decision_options {
+	height: 555px;
+}
+
+.l_decision_options ul {
+	height: 555px;
+	/*margin-top: 65px;*/
+}
+
+.l_decision_options ul li img {
+	display: block;
+	width: 28px;
+	padding-top: 6px;
+	float: left;
+	margin-right: 25px;
+}
+
+.l_decision_options ul span {
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	float: left;
+}
+
+.l_decision_options ul li {
+	cursor: pointer;
+	overflow: hidden;
+	list-style: none;
+	height: 40px;
+	line-height: 40px;
+	color: #888888;
+	font-size: 12px;
+	padding-left: 15px;
+}
+
+.l_decision_options ul .selected {
+	background: white;
+}
+/*鍐崇瓥娴佹湁閮ㄥ垎鎿嶄綔鍖哄煙 */
+.l_rights {
+	width: 1035px;
+	height: 620px;
+	float: left;
+	border-right: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.rightTopMenu {
+	height: 66px;
+	overflow: hidden;
+	border-bottom: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.left_txts {
+	width: 130px;
+	text-align: right;
+	color: #777777;
+	font-size: 14px;
+	float: left;
+	line-height: 66px;
+}
+
+.l_right_buttons {
+	width:380px;
+	float: right;
+	overflow: hidden;
+}
+
+.l_left_buttons {
+	padding-top: 20px;
+	width: 380px;
+	float: left;
+	margin-left: 20px;
+	font-size: 14px;
+    color: #777777;
+}
+
+.rightOperateArea {
+	height: 450px;
+	/* background: url(../images/resource/decision/decisionBcg.jpg); */
+	border-bottom: 1px solid #E0E1E5;
+	width: 1033px;
+	position: relative;
+}
+.c-hide-prompt{
+	position: absolute;
+	right:0px;
+	width:390px;
+	border: 1px solid #E6E6E6;
+	background-color: #FFFFFF;
+	display:none;
+}
+.c-prompt-content-add{
+	width:390px;
+}
+.c-prompt-content{
+	padding:0px 0 0 15px;
+	width:390px;
+	line-height:30px;
+	font-size:14px;
+	border-bottom: 1px solid #E6E6E6;
+}
+.c-prompt-content:hover{
+	background-color: #F5F5F5;
+}
+.c-prompt-button{
+	width:390px;
+	height:10px;
+	border-radius: 0px;
+	border:none;
+	background-color:#398DEF;
+}
+.l_version {
+	height: 101px;
+	border-bottom: 1px solid #E0E1E5;
+}
+
+.l_stop_version {
+	width: 515px;
+	height: 101px;
+	float: right;
+	color: #999999;
+	font-size: 14px;
+}
+
+.l_run_version {
+	height: 101px;
+	width: 515px;
+	float: left;
+	border-right: 1px solid #E0E1E5;
+	font-size: 14px;
+}
+
+.l_left_versionTxt .run_point {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	border-radius: 6.5px;
+	background: #398DEE;
+	box-shadow: 1px 1px 1px #398DEE;
+}
+
+ .stop_point {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	border-radius: 6.5px;
+	background: #999999;
+	box-shadow: 1px 1px 1px #999999;
+}
+.l_left_versionTxt {
+	cursor:pointer;
+	padding: 7px 0 8px 20px;
+}
+.stopVersion{
+	color:#999999;
+}
+.l_input {
+	margin-right: 15px;
+}
+#canvas {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.l_through_line {
+	position: absolute;
+	left: 40px;
+	top: 15px;
+	height: 30px;
+	width: 160px;
+}
+
+.l_through_line span {
+	color: #398DEF;
+	font-size: 14px;
+	display: inline-block;
+	width: 70px;
+	height: 30px;
+	line-height: 30px;
+	background: #FFFFFF;
+	text-align: center;
+	border: 0.5px solid #E0E1E5;
+	cursor: pointer;
+}
+
+.l_through_line span:active {
+	background: #398DEF;
+	color: white;
+}
+
+.l_pictures_operate {
+	width: 30px;
+	height: 140px;
+}
+
+.l_pictures_operate {
+	position: absolute;
+	right: 20px;
+	bottom: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.l_pictures_operate div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	background: white;
+	border: 0.5px solid #E0E1E5;
+	cursor: pointer;
+}
+
+.l_pictures_operate div:active {
+	background: #E0E1E5;
+	color: white;
+}
+/*鍙抽敭鑿滃崟閮ㄥ垎*/
+.bigCircle {
+	width: 150px;
+	height: 150px;
+	border-radius: 75px;
+	border: 1px solid #E0E1E5;
+	position: relative;
+	overflow: hidden;
+}
+
+.bigCircle div img {
+	margin-top: 25px;
+}
+
+.bigCircle .copy {
+	text-align: center;
+	line-height: 75px;
+	float: left;
+	width: 74px;
+	height: 75px;
+	border-right: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.bigCircle .operate {
+	text-align: center;
+	line-height: 75px;
+	float: left;
+	width: 74px;
+	height: 74px;
+	border-bottom: 1px solid #E0E1E5;
+	border-right: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.bigCircle .look {
+	text-align: center;
+	line-height: 74px;
+	float: left;
+	width: 73px;
+	height: 74px;
+	border-bottom: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.bigCircle .delete {
+	text-align: center;
+	line-height: 75px;
+	float: left;
+	width: 73px;
+	height: 75px;
+	background: #FFFFFF;
+}
+
+.hovers, .blue {
+	cursor: pointer;
+}
+
+.alpha {
+	width: 65px;
+	height: 65px;
+	border-radius: 32.5px;
+	position: absolute;
+	left: 42px;
+	top: 42px;
+	border: 1px solid #E0E1E5;
+	background: #FFFFFF;
+}
+
+.blue {
+	width: 45px;
+	height: 45px;
+	border-radius: 22.5px;
+	position: absolute;
+	top: 52.5px;
+	left: 52.5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #398DEE;
+}
+.div-textarea {
+	vertical-align: text-top;
+	resize: none;
+	border: 1px solid #888;
+}
+/**/
+.l_head_operate {
+	width: 640px;
+	height:50px;
+	margin: 0 auto;
+	padding-top: 10px;
+}
+
+.headMenus {
+	width: 640px;
+	height: 35px;
+	margin: 0 auto;
+	border-bottom: 1px solid #E0E1E5;
+	border-top: 1px solid #E0E1E5;
+	overflow: hidden;
+}
+
+.headMenus div {
+	float: left;
+	color: #777777;
+	font-size: 12px;
+	height: 35px;
+	text-align: center;
+	line-height: 35px;
+}
+
+.createMenus {
+	width: 640px;
+	height: 30px;
+	margin: 0 auto;
+	border-bottom: 0.5px solid #DEDEDE;
+	overflow: hidden;
+}
+
+.l_selects {
+	width: 60px;
+}
+.l_selects input[type=radio]{
+	width:15px;
+	height:15px;
+}
+.l_ids {
+	width: 50px;
+}
+
+.l_names {
+	width: 120px;
+}
+
+.l_descripts {
+	width: 195px;
+}
+
+.l_createTimes {
+	width: 175px;
+}
+
+.createMenus div {
+	float: left;
+	color: #777777;
+	font-size: 13px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}
+
+			
+		/* 鏁版嵁濉啓 */
+			.write-data-message {
+				width: 100%;
+				background: #fff;
+				position: absolute;
+				z-index: 9000;
+				padding-bottom: 10px;
+				border: 1px solid #E2E2E2;
+				display: none;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.15);
+			}
+			
+			.write-data-head {
+				padding:15px 0 0 15px;
+				width: 650px;
+				height: 40px;
+				background-color: #398dee;
+				line-height: 40px;
+				color: #eee;
+				cursor: move;
+			}
+			
+			.write-data-content {
+				margin: 15px 0 0 15px;
+				max-height: 295px;
+				overflow-y: auto;
+				overflow-x: hidden;
+			}
+			
+			.write-data-every {
+				width: 305px;
+				height: 40px;
+				line-height: 40px;
+				float: left;
+				font-size: 14px;
+				color: #777777;
+				letter-spacing: 1px;
+				overflow: hidden;
+				margin: 0 0 5px 0;
+			}
+			
+			.write-data-every span {
+				float: left;
+				display: inline-block;
+				width: 110px;
+				height: 30px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				padding: 0 5px 0 0;
+				margin-top: 10px;
+			}
+			
+			.write-data-every input {
+				float: left;
+				width: 168px;
+				height: 30px;
+				border: 1px solid #E6E6E6;
+				border-radius: 4px;
+				padding-left:5px;
+			}
+			
+			.c-drop-down {
+				float: left;
+				width: 170px;
+				height: 33px;
+				line-height: 33px;
+				appearance: none;
+				-moz-appearance: none;
+				-webkit-appearance: none;
+				border: 0.5px solid #e6e6e6;
+				background: url(../../images/prop/low-arrow.png) no-repeat;
+				background-position: 150px 0px;
+				border-radius: 4px;
+				padding-left: 5px;
+				color: #777777;
+				padding-right: 15px;
+			}
+

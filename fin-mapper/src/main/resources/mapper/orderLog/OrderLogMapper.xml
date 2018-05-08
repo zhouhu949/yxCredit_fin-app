@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.orderLog.OrderLogMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.orderLog.po.MagOrderLogs" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="operator_type" property="operatorType" jdbcType="VARCHAR" />
+    <result column="creat_time_log" property="creatTimeLog" jdbcType="VARCHAR" />
+    <result column="change_value" property="changeValue" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="tache" property="tache" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getOrderLogList" resultType="com.zw.rule.orderLog.po.MagOrderLogs" parameterType="java.util.Map" >
+    SELECT id,order_id, operator_id, operator_name, operator_type, creat_time_log, change_value, state,CREAT_TIME,ALTER_TIME,tache,CUSTOMER_NAME
+    FROM mag_order_logs
+    <where>
+      order_id=#{orderId}
+      <if test="beganTime != null and beganTime != ''">
+        and creat_time_log &gt;= #{beganTime}
+      </if>
+      <if test="endthTime != null and endthTime != ''">
+        and creat_time_log &lt;= #{endthTime}
+      </if>
+    </where>
+    order by creat_time_log desc
+  </select>
+
+  <insert id="addOrderLogs" parameterType="com.zw.rule.orderLog.po.MagOrderLogs" >
+    INSERT  INTO mag_order_logs (id,order_id, operator_id, operator_name, operator_type, creat_time_log, change_value, state,CREAT_TIME,ALTER_TIME,tache)
+    VALUES (#{id},#{orderId},#{operatorId},#{operatorName},#{operatorType},#{creatTimeLog},#{changeValue},#{state},#{creatTime},#{alterTime},#{tache})
+  </insert>
+</mapper>

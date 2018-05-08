@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerExamineMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerExamine" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan" property="loan" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="house" property="house" jdbcType="VARCHAR" />
+    <result column="liabilities" property="liabilities" jdbcType="VARCHAR" />
+    <result column="flow" property="flow" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan, job, house, liabilities, flow, creat_time, order_id, customer_id,remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mag_customer_examine
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_examine
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerExamine" >
+    insert into mag_customer_examine (id, loan, job, 
+      house, liabilities, flow, 
+      creat_time, order_id, customer_id,remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{loan,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, 
+      #{house,jdbcType=VARCHAR}, #{liabilities,jdbcType=VARCHAR}, #{flow,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerExamine" >
+    insert into mag_customer_examine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loan != null" >
+        loan,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="house != null" >
+        house,
+      </if>
+      <if test="liabilities != null" >
+        liabilities,
+      </if>
+      <if test="flow != null" >
+        flow,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loan != null" >
+        #{loan,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="house != null" >
+        #{house,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilities != null" >
+        #{liabilities,jdbcType=VARCHAR},
+      </if>
+      <if test="flow != null" >
+        #{flow,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerExamine" >
+    update mag_customer_examine
+    <set >
+      <if test="loan != null" >
+        loan = #{loan,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="house != null" >
+        house = #{house,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilities != null" >
+        liabilities = #{liabilities,jdbcType=VARCHAR},
+      </if>
+      <if test="flow != null" >
+        flow = #{flow,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerExamine" >
+    update mag_customer_examine
+    set loan = #{loan,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      house = #{house,jdbcType=VARCHAR},
+      liabilities = #{liabilities,jdbcType=VARCHAR},
+      flow = #{flow,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_examine
+    where order_id = #{orderId}
+  </select>
+
+
+  <update id="updateByOrderId" parameterType="com.zw.rule.customer.po.CustomerExamine" >
+    update mag_customer_examine
+    <set >
+      <if test="loan != null" >
+        loan = #{loan,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="house != null" >
+        house = #{house,jdbcType=VARCHAR},
+      </if>
+      <if test="liabilities != null" >
+        liabilities = #{liabilities,jdbcType=VARCHAR},
+      </if>
+      <if test="flow != null" >
+        flow = #{flow,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerEarnerMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerEarner" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="profession" property="profession" jdbcType="VARCHAR" />
+    <result column="company_property" property="companyProperty" jdbcType="VARCHAR" />
+    <result column="company_size" property="companySize" jdbcType="VARCHAR" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="profession_grade" property="professionGrade" jdbcType="VARCHAR" />
+    <result column="company_fixedphone" property="companyFixedphone" jdbcType="VARCHAR" />
+    <result column="work_years" property="workYears" jdbcType="VARCHAR" />
+    <result column="basic_monthly_pay" property="basicMonthlyPay" jdbcType="VARCHAR" />
+    <result column="pay_day" property="payDay" jdbcType="VARCHAR" />
+    <result column="annual_income" property="annualIncome" jdbcType="VARCHAR" />
+    <result column="month_other_income" property="monthOtherIncome" jdbcType="VARCHAR" />
+    <result column="other_source_income" property="otherSourceIncome" jdbcType="VARCHAR" />
+    <result column="social_security_account" property="socialSecurityAccount" jdbcType="VARCHAR" />
+    <result column="social_security_password" property="socialSecurityPassword" jdbcType="VARCHAR" />
+    <result column="housing_fund_account" property="housingFundAccount" jdbcType="VARCHAR" />
+    <result column="housing_fund_password" property="housingFundPassword" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="apex1" property="apex1" jdbcType="VARCHAR" />
+    <result column="apex2" property="apex2" jdbcType="VARCHAR" />
+    <result column="apex3" property="apex3" jdbcType="VARCHAR" />
+    <result column="bak" property="bak" jdbcType="VARCHAR" />
+    <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+    <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="distric" property="distric" jdbcType="VARCHAR" />
+    <result column="company_property_id" property="companyPropertyId" jdbcType="VARCHAR" />
+    <result column="company_size_id" property="companySizeId" jdbcType="VARCHAR" />
+    <result column="profession_grade_id" property="professionGradeId" jdbcType="VARCHAR" />
+    <result column="pay_type_id" property="payTypeId" jdbcType="VARCHAR" />
+    <result column="entering_the_company" property="enteringTheCompany" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUSTOMER_ID, company, branch, profession, company_property, company_size, company_address,
+    profession_grade, company_fixedphone, work_years, basic_monthly_pay, pay_day, annual_income,
+    month_other_income, other_source_income, social_security_account, social_security_password,
+    housing_fund_account, housing_fund_password, pay_type, creat_time, alter_time, state,
+    apex1, apex2, apex3, bak, provinces_id, city_id, distric_id, provinces, city, distric,
+    company_property_id, company_size_id, profession_grade_id, pay_type_id, entering_the_company
+  </sql>
+  <select id="getCustomerEarner" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_profession_earner
+    where CUSTOMER_ID = #{customerId}
+  </select>
+  <select id="getCustomerEarnerList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_profession_earner
+    where CUSTOMER_ID = #{customerId}
+  </select>
+</mapper>

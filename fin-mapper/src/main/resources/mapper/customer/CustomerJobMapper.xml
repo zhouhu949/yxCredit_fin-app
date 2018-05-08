@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerJobMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerJob" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_property" property="companyProperty" jdbcType="VARCHAR" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="company_phone" property="companyPhone" jdbcType="VARCHAR" />
+    <result column="hiredate" property="hiredate" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="pos_level" property="posLevel" jdbcType="VARCHAR" />
+    <result column="fund_socialsec" property="fundSocialsec" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="district_id" property="districtId" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="company_property_id" property="companyPropertyId" jdbcType="VARCHAR" />
+    <result column="pos_level_id" property="posLevelId" jdbcType="VARCHAR" />
+    <result column="fund_socialsec_id" property="fundSocialsecId" jdbcType="VARCHAR" />
+    <result column="pay_type_id" property="payTypeId" jdbcType="VARCHAR" />
+    <result column="month_income" property="monthIncome" jdbcType="VARCHAR" />
+    <result column="month_payday" property="monthPayday" jdbcType="VARCHAR" />
+    <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, customer_id, company_name, company_property, company_address, company_phone,
+    hiredate, department, pos_level, fund_socialsec, pay_type, creat_time, alter_time,
+    province_id, city_id, district_id,province_name, city_name, district_name, address, company_property_id, pos_level_id, fund_socialsec_id,
+    pay_type_id, month_income, month_payday,company_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_job
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_job
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerJob" >
+    insert into mag_customer_job (id, customer_id, company_name,
+    company_property, company_address, company_phone,
+    hiredate, department, pos_level,
+    fund_socialsec, pay_type, creat_time,
+    alter_time, province_id, city_id,
+    district_id, address, company_property_id,
+    pos_level_id, fund_socialsec_id, pay_type_id,
+    month_income, month_payday)
+    values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
+    #{companyProperty,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{companyPhone,jdbcType=VARCHAR},
+    #{hiredate,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{posLevel,jdbcType=VARCHAR},
+    #{fundSocialsec,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{creatTime,jdbcType=VARCHAR},
+    #{alterTime,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR},
+    #{districtId,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{companyPropertyId,jdbcType=VARCHAR},
+    #{posLevelId,jdbcType=VARCHAR}, #{fundSocialsecId,jdbcType=VARCHAR}, #{payTypeId,jdbcType=VARCHAR},
+    #{monthIncome,jdbcType=VARCHAR}, #{monthPayday,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerJob" >
+    insert into mag_customer_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyProperty != null" >
+        company_property,
+      </if>
+      <if test="companyAddress != null" >
+        company_address,
+      </if>
+      <if test="companyPhone != null" >
+        company_phone,
+      </if>
+      <if test="hiredate != null" >
+        hiredate,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="posLevel != null" >
+        pos_level,
+      </if>
+      <if test="fundSocialsec != null" >
+        fund_socialsec,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="alterTime != null" >
+        alter_time,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="companyPropertyId != null" >
+        company_property_id,
+      </if>
+      <if test="posLevelId != null" >
+        pos_level_id,
+      </if>
+      <if test="fundSocialsecId != null" >
+        fund_socialsec_id,
+      </if>
+      <if test="payTypeId != null" >
+        pay_type_id,
+      </if>
+      <if test="monthIncome != null" >
+        month_income,
+      </if>
+      <if test="monthPayday != null" >
+        month_payday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProperty != null" >
+        #{companyProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="hiredate != null" >
+        #{hiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="posLevel != null" >
+        #{posLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSocialsec != null" >
+        #{fundSocialsec,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null" >
+        #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        #{districtId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPropertyId != null" >
+        #{companyPropertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="posLevelId != null" >
+        #{posLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSocialsecId != null" >
+        #{fundSocialsecId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeId != null" >
+        #{payTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="monthIncome != null" >
+        #{monthIncome,jdbcType=VARCHAR},
+      </if>
+      <if test="monthPayday != null" >
+        #{monthPayday,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerJob" >
+    update mag_customer_job
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyProperty != null" >
+        company_property = #{companyProperty,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        company_phone = #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="hiredate != null" >
+        hiredate = #{hiredate,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="posLevel != null" >
+        pos_level = #{posLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSocialsec != null" >
+        fund_socialsec = #{fundSocialsec,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null" >
+        alter_time = #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtId != null" >
+        district_id = #{districtId,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPropertyId != null" >
+        company_property_id = #{companyPropertyId,jdbcType=VARCHAR},
+      </if>
+      <if test="posLevelId != null" >
+        pos_level_id = #{posLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundSocialsecId != null" >
+        fund_socialsec_id = #{fundSocialsecId,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeId != null" >
+        pay_type_id = #{payTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="monthIncome != null" >
+        month_income = #{monthIncome,jdbcType=VARCHAR},
+      </if>
+      <if test="monthPayday != null" >
+        month_payday = #{monthPayday,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerJob" >
+    update mag_customer_job
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      company_property = #{companyProperty,jdbcType=VARCHAR},
+      company_address = #{companyAddress,jdbcType=VARCHAR},
+      company_phone = #{companyPhone,jdbcType=VARCHAR},
+      hiredate = #{hiredate,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      pos_level = #{posLevel,jdbcType=VARCHAR},
+      fund_socialsec = #{fundSocialsec,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=VARCHAR},
+      alter_time = #{alterTime,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      district_id = #{districtId,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      company_property_id = #{companyPropertyId,jdbcType=VARCHAR},
+      pos_level_id = #{posLevelId,jdbcType=VARCHAR},
+      fund_socialsec_id = #{fundSocialsecId,jdbcType=VARCHAR},
+      pay_type_id = #{payTypeId,jdbcType=VARCHAR},
+      month_income = #{monthIncome,jdbcType=VARCHAR},
+      month_payday = #{monthPayday,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getCustomerJob" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_job
+    where customer_id = #{customerId}
+  </select>
+</mapper>

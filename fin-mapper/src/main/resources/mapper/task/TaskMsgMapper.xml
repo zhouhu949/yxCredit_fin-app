@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.task.TaskMsgMapper" >
+    <!-- 处理中明细 -->
+    <sql id="Base_Column_List" >
+        ptn.id AS taskNodeId,
+        ptn.task_id AS taskId,
+        pt.rel_id AS orderId,
+        pt.process_id AS processId,
+        zp.name AS processName,
+        ptn.process_node AS processNodeId,
+        zpn.node_name AS processNodeName,
+        pt.task_state AS taskState,
+        ptn.node_state AS taskNodeState,
+        pt.create_time AS createTimeTask,
+        ptn.create_time AS createTimeTaskNode,
+        ptn.commit_time AS commitTimeTaskNode,
+        ptn.page_url AS pageUrl,
+        mo.customer_id AS customerId,
+        ptn.rel_type AS relType,
+        ptn.rel_id AS relId,
+        mo.customer_name AS customerName,
+        mo.state AS state,
+        mo.product_name_name AS productName,
+        ptn.hand_url AS handUrl
+    </sql>
+    <!-- dai处理的任务明细 -->
+    <sql id="Base_Column_List_Not" >
+        pt.id AS taskId,
+        pt.rel_id AS orderId,
+        pt.process_id AS processId,
+        zp.name AS processName,
+        pt.process_node AS processNodeId,
+        zpn.node_name AS processNodeName,
+        pt.task_state AS taskState,
+        pt.create_time AS createTimeTask,
+        mo.customer_name AS customerName,
+        mo.product_name_name AS productName,
+        zpn.page_url AS pageUrl
+    </sql>
+    <!--任务监控列表-->
+    <sql id="Base_Column_List_Monitor" >
+        pt.id AS taskId,
+        pt.rel_id AS orderId,
+        pt.node_alter_time AS nodeAlterTime,
+        pt.process_id AS processId,
+        zp.name AS processName,
+        pt.process_node AS processNodeId,
+        zpn.node_name AS processNodeName,
+        ptn.node_state AS taskNodeState,
+        pt.task_state AS taskState,
+        pt.create_time AS createTimeTask,
+        ptn.create_time AS createTimeTaskNode,
+        mo.customer_name AS customerName,
+        mo.product_name_name AS productName,
+        ptn.commit_time AS commitTimeTaskNode
+    </sql>
+
+    <select id="getCommitTask" resultType="Map" parameterType="Map" >
+        select DISTINCT <include refid="Base_Column_List" />
+        from process_task_node ptn
+        left join process_task pt on pt.id = ptn.task_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join mag_order mo on mo.id = pt.rel_id
+        left join zw_process_node zpn on zpn.node_id = ptn.process_node
+        where ptn.node_state in
+        <foreach collection="param.nodeStateList" item="nodeState" index="index" open="(" separator="," close=")">
+            #{nodeState}
+        </foreach>
+        and mo.ID is not NULL and ptn.operate_user = #{param.currentUserId}
+        order by ptn.commit_time desc limit #{page.firstIndex}, #{page.pageSize}
+    </select>
+
+    <select id="getCommitDetailTask" resultType="Map" parameterType="Map" >
+        select ptn.rel_id as orderId, mo.customer_name as customerName, mo.product_name_name as productName,
+               zpn.node_name as processNodeName , ptn.node_state as taskNodeState,ptn.create_time as createTimeTaskNode,
+                ptn.commit_time as commitTimeTaskNode,mo.customer_id as customerId
+        from process_task_node ptn
+        left join mag_order mo on mo.id = ptn.rel_id
+        left join zw_process_node zpn on zpn.node_id = ptn.process_node
+        where ptn.task_id = #{param.taskId} and ptn.node_state in
+        <foreach collection="param.nodeStateList" item="nodeState" index="index" open="(" separator="," close=")">
+            #{nodeState}
+        </foreach>
+        and mo.ID is not NULL and ptn.operate_user = #{param.currentUserId}
+        order by ptn.commit_time desc limit #{page.firstIndex}, #{page.pageSize}
+    </select>
+
+    <select id="getNotCommitTask" resultType="Map" parameterType="Map" >
+        select DISTINCT <include refid="Base_Column_List" />
+        <!--from process_task pt
+        left join zw_station_process_link zsp on zsp.process_id = pt.process_id
+        left join zw_station_user_link zsu on zsu.station_id = zsp.station_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join mag_order mo on mo.id = pt.rel_id
+        left join zw_process_node zpn on zpn.node_id = pt.process_node
+        where task_state = 1 and  mo.receive_id is NULL  and mo.ID is not NULL
+        order by pt.create_time desc limit #{page.firstIndex}, #{page.pageSize} -->
+
+        from process_task_node ptn
+        left join process_task pt on pt.id = ptn.task_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join mag_order mo on mo.id = pt.rel_id
+        left join zw_process_node zpn on zpn.node_id = ptn.process_node
+        where ptn.node_state =0 and ptn.operate_user is NULL
+        and mo.ID is not NULL
+        order by ptn.commit_time desc limit #{page.firstIndex}, #{page.pageSize}
+    </select>
+
+    <select id="getMonitor" resultType="Map" parameterType="Map" >
+        select DISTINCT <include refid="Base_Column_List_Monitor" />
+        from process_task pt
+        left join zw_station_process_link zsp on zsp.process_id = pt.process_id
+        left join zw_station_user_link zsu on zsu.station_id = zsp.station_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join process_task_node ptn on ptn.task_id = pt.id and ptn.process_node = pt.process_node
+        left join zw_process_node zpn on zpn.node_id = pt.process_node
+        left join mag_order mo on mo.id = pt.rel_id
+        WHERE pt.task_state != 0 and mo.ID is not NULL
+        <if test="param.customerName!=null">
+            and mo.customer_name = #{param.customerName}
+        </if>
+        <if test="param.orderId!=null">
+            and mo.id = #{param.orderId}
+        </if>
+        <if test="param.selectType!=null">
+            and pt.task_state = #{param.selectType}
+        </if>
+        <if test="param.beginTime!=null">
+            and pt.create_time > #{param.beginTime}
+        </if>
+        <if test="param.endTime!=null">
+            and <![CDATA[pt.create_time < #{param.endTime}]]>
+        </if>
+        order by pt.create_time desc limit #{page.firstIndex}, #{page.pageSize}
+    </select>
+
+    <select id="countCommitTask" resultType="Integer" parameterType="Map" >
+        select count(DISTINCT ptn.id)
+        from process_task_node ptn
+        left join process_task pt on pt.id = ptn.task_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join zw_process_node zpn on zpn.node_id = ptn.process_node
+        left join mag_order mo on mo.id = ptn.rel_id
+        where ptn.node_state in
+        <foreach collection="nodeStateList" item="nodeState" index="index" open="(" separator="," close=")">
+            #{nodeState}
+        </foreach>
+        and mo.ID is not NULL and ptn.operate_user = #{currentUserId}
+    </select>
+
+    <select id="countCommitDetailTask" resultType="Integer" parameterType="Map" >
+        select count(DISTINCT ptn.id)
+        from process_task_node ptn
+        where ptn.task_id = #{taskId} and ptn.operate_user = #{currentUserId} and ptn.node_state in
+        <foreach collection="nodeStateList" item="nodeState" index="index" open="(" separator="," close=")">
+            #{nodeState}
+        </foreach>
+    </select>
+
+    <select id="countNotCommitTask" resultType="Integer" parameterType="Map" >
+        select COUNT(*)
+        from process_task_node ptn
+        left join process_task pt on pt.id = ptn.task_id
+        left join zw_process zp on zp.id = pt.process_id
+        left join mag_order mo on mo.id = pt.rel_id
+        left join zw_process_node zpn on zpn.node_id = ptn.process_node
+        where ptn.node_state =0 and ptn.operate_user is NULL
+        and mo.ID is not NULL
+    </select>
+
+    <select id="countMonitor" resultType="Integer" parameterType="Map" >
+        select count(DISTINCT pt.id)
+        from process_task pt
+        left join mag_order mo on mo.id = pt.rel_id
+        where pt.task_state != 0 and mo.id is not NULL
+    </select>
+
+    <update id="updateTaskState" parameterType="com.zw.rule.task.po.ProcessTask">
+        update process_task set task_state=#{taskState} where id = #{id}
+    </update>
+
+    <update id="updateNodeState" parameterType="com.zw.rule.task.po.ProcessTaskNode">
+        update process_task_node
+        set node_state=1,operate_user = #{operateUser}
+       where id = #{id}
+    </update>
+
+    <update id="updateNodeStates" parameterType="com.zw.rule.task.po.ProcessTaskNode">
+        update process_task_node
+        set node_state=#{nodeState}
+        where id = #{id}
+    </update>
+
+    <insert id="createTaskNode" parameterType="com.zw.rule.task.po.ProcessTaskNode" >
+        insert into process_task_node (id, task_id, process_node, node_state, create_time,commit_time)
+        values (#{id}, #{taskId}, #{processNode}, #{nodeState}, #{createTime},#{commitTime})
+    </insert>
+
+    <select id="getUserByStation" resultType="Map" parameterType="Map" >
+        select DISTINCT u.user_id as userId,o.name as orgName,u.account,u.true_name as userName
+        from zw_sys_user u
+        left join zw_sys_organization o on o.org_id = u.org_id
+        left join zw_station_user_link zsu on zsu.user_id = u.user_id
+        where u.status = 1 and u.user_id != #{param.currentUserId} and zsu.station_id in
+        <foreach collection="param.stationIds" item="stationId" index="index" open="(" separator="," close=")">
+            #{stationId}
+        </foreach>
+        order by u.update_time desc limit #{page.firstIndex}, #{page.pageSize}
+    </select>
+    <select id="countUserByStation" resultType="Integer" parameterType="Map" >
+        select count(DISTINCT u.user_id)
+        from zw_sys_user u
+        left join zw_sys_organization o on o.org_id = u.org_id
+        left join zw_station_user_link zsu on zsu.user_id = u.user_id
+        where u.status = 1 and u.user_id != #{currentUserId} and zsu.station_id in
+        <foreach collection="stationIds" item="stationId" index="index" open="(" separator="," close=")">
+            #{stationId}
+        </foreach>
+    </select>
+    <update id="updateTaskNodeByUser" parameterType="Map">
+        update process_task_node set operate_user=#{userId} where id = #{taskNodeId}
+    </update>
+    <select id="getOrderId" resultType="Map" parameterType="com.zw.rule.task.po.ProcessTaskNode">
+        select rel_id,rel_type from process_task_node where  id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.surety.SuretyMapper" >
+    <select id="getAllSuretyList" resultType="com.zw.rule.surety.Surety" parameterType="java.util.Map">
+
+        SELECT  ms.id,ms.name,ms.tel,ms.idcard,ms.remark,zsd.name AS relation from mag_surety  ms
+        LEFT JOIN (select name,code from zw_sys_dict where parent_id in (select id from zw_sys_dict where name='担保人关系')) zsd
+        ON
+        zsd.code=ms.relation
+        where 1=1
+        <if test=" name != null and name != '' ">
+        AND ms.name like CONCAT('%',#{name},'%')
+        </if>
+        <if test="tel != null and tel != ''">
+        AND ms.tel=#{tel}
+        </if>
+        <if test="idcard != null and idcard != ''">
+        AND ms.idcard=#{idcard}
+        </if>
+    </select>
+    <!--添加担保人模块sql-->
+    <insert id="insertOneSurety" parameterType="com.zw.rule.surety.Surety">
+        INSERT INTO mag_surety(id,name,tel,idcard,relation,remark)
+        VALUES (
+        #{id},
+        #{name},
+        #{tel},
+        #{idcard},
+        #{relation},
+        #{remark}
+        )
+    </insert>
+    <!-- 根据担保人id来查询担保人担保的订单 order_type=2 订单类型为商品贷-->
+    <select id="selectSuretyOrders" parameterType="java.util.Map" resultType="com.zw.rule.customer.po.Order">
+        SELECT
+        mag_order.id AS id,
+        mag_order.order_no AS orderNo,
+        mag_order.CUSTOMER_NAME AS customerName,
+        mag_order.TEL AS tel,
+        mag_order.CARD AS card,
+        mag_order.CREAT_TIME AS creatTime,
+        mag_order.product_name_name AS productNameName,
+        mag_order.state AS state
+        from mag_order
+        WHERE
+        id in (SELECT order_id from mag_surety_order WHERE surety_id=#{suretyId} and state != '0')
+        and mag_order.order_type = '2'
+        <if test="orderNo !=null and orderNo !='' ">
+            and mag_order.order_no=#{orderNo}
+        </if>
+        <if test="customerName !=null and customerName !='' ">
+            and mag_order.CUSTOMER_NAME like CONCAT('%',#{customerName},'%')
+        </if>
+        <if test="tel != null and tel !='' ">
+            and mag_order.TEL=#{tel}
+        </if>
+        <if test="card !=null and card != '' ">
+            and mag_order.CARD=#{card}
+        </if>
+        ORDER BY mag_order.CREAT_TIME DESC
+    </select>
+    <!--查询可以被担保的订单 状态为3的且未被担保过的 order_type=2 订单类型为商品贷-->
+    <select id="selectCanBeSuretyOrders" parameterType="java.util.Map" resultType="com.zw.rule.customer.po.Order">
+          SELECT
+			 mag_order.id,
+             mag_order.order_no,
+             mag_order.CUSTOMER_NAME ,
+             mag_order.TEL ,
+             mag_order.CARD ,
+             mag_order.CREAT_TIME ,
+             mag_order.product_name_name ,
+             mag_order.state
+          from mag_order
+            where
+            (mag_order.state='3')
+            and mag_order.order_type='2'
+            AND (mag_order.id NOT IN (SELECT mag_surety_order.order_id from mag_surety_order))
+            <if test="name !=null and name !='' ">
+            AND mag_order.CUSTOMER_NAME like CONCAT('%',#{name},'%')
+            </if>
+            <if test="tel !=null and tel != '' ">
+            AND  mag_order.TEL = #{tel}
+            </if>
+        ORDER BY mag_order.CREAT_TIME DESC
+    </select>
+    <!--担保人担保一条订单-->
+    <insert id="suretyGotoAssureOrder" parameterType="com.zw.rule.surety.SuretyRelOrder">
+        INSERT INTO
+        mag_surety_order(id,surety_id,order_id,state,create_time,order_limit)
+        VALUES (
+        #{id},
+        #{suretyId},
+        #{orderId},
+        #{state},
+        #{createTime},
+        (SELECT loan_amount from mag_order where ID=#{orderId})
+        )
+    </insert>
+</mapper>

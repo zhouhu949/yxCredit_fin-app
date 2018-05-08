@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerFreelanceMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerFreelance" >
+        <id column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="source_income" property="sourceIncome" jdbcType="VARCHAR" />
+        <result column="average_income_month" property="averageIncomeMonth" jdbcType="VARCHAR" />
+        <result column="current_work_years" property="currentWorkYears" jdbcType="VARCHAR" />
+        <result column="certificate_name" property="certificateName" jdbcType="VARCHAR" />
+        <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+        <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="apex1" property="apex1" jdbcType="VARCHAR" />
+        <result column="apex2" property="apex2" jdbcType="VARCHAR" />
+        <result column="apex3" property="apex3" jdbcType="VARCHAR" />
+        <result column="bak" property="bak" jdbcType="VARCHAR" />
+        <result column="certificate_id" property="certificateId" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getCustomerFreelance" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_freelance
+        where CUSTOMER_ID = #{customerId}
+    </select>
+    <select id="getCustomerFreelanceList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_freelance
+        where CUSTOMER_ID = #{customerId}
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerStuMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerStu" >
+        <result column="ID" property="id" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+        <result column="major" property="major" jdbcType="VARCHAR" />
+        <result column="study_time" property="studyTime" jdbcType="VARCHAR" />
+        <result column="school_length" property="schoolLength" jdbcType="VARCHAR" />
+        <result column="school_address" property="schoolAddress" jdbcType="VARCHAR" />
+        <result column="department_phone" property="departmentPhone" jdbcType="VARCHAR" />
+        <result column="living_expenses_month" property="livingExpensesMonth" jdbcType="VARCHAR" />
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR" />
+        <result column="student_password" property="studentPassword" jdbcType="VARCHAR" />
+        <result column="month_other_income" property="monthOtherIncome" jdbcType="VARCHAR" />
+        <result column="other_source_income" property="otherSourceIncome" jdbcType="VARCHAR" />
+        <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+        <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+        <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+        <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="distric" property="distric" jdbcType="VARCHAR" />
+        <result column="departments" property="departments" jdbcType="VARCHAR" />
+        <result column="the_class" property="theClass" jdbcType="VARCHAR" />
+        <result column="chsi_account_type" property="chsiAccountType" jdbcType="VARCHAR" />
+        <result column="chsi_account_type_id" property="chsiAccountTypeId" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getCustomerStu" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_student
+        where CUSTOMER_ID = #{customerId}
+    </select>
+    <select id="getCustomerStuList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        *
+        from mag_customer_profession_student
+        where CUSTOMER_ID = #{customerId}
+    </select>
+</mapper>

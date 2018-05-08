@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.excel.ExcelMapper" >
+
+  <update id="updateOrderInfo" parameterType="com.zw.rule.excel.po.ExcelBean1">
+    UPDATE mag_order SET
+    <if test="orderTime != null" >
+      CREAT_TIME = #{orderTime},ALTER_TIME = #{orderTime},
+    </if>
+    <if test="zdstate != '通过'" >
+      state = '3',TACHE = '0'
+    </if>
+     WHERE CARD = #{idCard}
+  </update>
+
+  <insert id="insertRuleRefuse" parameterType="com.zw.rule.excel.po.ExcelBean2">
+    INSERT INTO rule_refuse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="firstRule != null and firstRule != ''">
+        first_rule,
+      </if>
+      <if test="secondRule != null and secondRule != ''">
+        second_rule,
+      </if>
+      <if test="thirdRule != null and thirdRule != ''">
+        third_rule,
+      </if>
+      <if test="fourthRule != null and fourthRule != ''">
+        fourth_rule,
+      </if>
+      <if test="fifthRule != null and fifthRule != ''">
+        fifth_rule,
+      </if>
+      <if test="sixthRule != null and sixthRule != ''">
+        sixth_rule,
+      </if>
+      <if test="seventhRule != null and seventhRule != ''">
+        seventh_rule,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idCard!=null">
+        #{idCard},
+      </if>
+      <if test="firstRule!=null and firstRule != ''">
+        #{firstRule},
+      </if>
+      <if test="secondRule!=null and secondRule != ''">
+        #{secondRule},
+      </if>
+      <if test="thirdRule!=null and thirdRule != ''">
+        #{thirdRule},
+      </if>
+      <if test="fourthRule!=null and fourthRule != ''">
+        #{fourthRule},
+      </if>
+      <if test="fifthRule!=null and fifthRule != ''">
+        #{fifthRule},
+      </if>
+      <if test="sixthRule!=null and sixthRule != ''">
+        #{sixthRule},
+      </if>
+      <if test="seventhRule != null and seventhRule != ''">
+        #{seventhRule},
+      </if>
+    </trim>
+  </insert>
+
+
+  <insert id="insertRuleRisk" parameterType="com.zw.rule.excel.po.RuleRisk">
+    INSERT INTO rule_risk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cradNo != null">
+        crad_no,
+      </if>
+      <if test="htrl != null">
+        htrl,
+      </if>
+      <if test="siys != null">
+        siys,
+      </if>
+      <if test="phoneReal != null">
+        phone_real,
+      </if>
+      <if test="phoneTime != null">
+        phone_time,
+      </if>
+      <if test="phoneGps != null">
+        phone_gps,
+      </if>
+      <if test="accumulation != null">
+        accumulation,
+      </if>
+      <if test="social != null">
+        social,
+      </if>
+      <if test="alipayRealName != null">
+        alipay_realName,
+      </if>
+      <if test="sesameSeeds != null">
+        sesame_seeds,
+      </if>
+      <if test="pyIfo != null">
+        py_ifo,
+      </if>
+      <if test="pyEdu != null">
+        py_edu,
+      </if>
+      <if test="pyDistress != null">
+        py_distress,
+      </if>
+      <if test="pyTax != null">
+        py_tax,
+      </if>
+      <if test="pyJudCase != null">
+        py_judCase,
+      </if>
+      <if test="pyJudDishonesty != null">
+        py_judDishonesty,
+      </if>
+      <if test="pyJudEnfor != null">
+        py_judEnfor,
+      </if>
+      <if test="pyNetLoanOver != null">
+        py_netLoanOver,
+      </if>
+      <if test="tdBHit != null">
+        td_bHit,
+      </if>
+      <if test="tdLoanProxy != null">
+        td_loanProxy,
+      </if>
+      <if test="tdLoanTool != null">
+        td_loanTool,
+      </if>
+      <if test="tdExtPlatform != null">
+        td_extPlatform,
+      </if>
+      <if test="tdIdCriminal != null">
+        tdId_criminal,
+      </if>
+      <if test="tdIdRisk != null">
+        tdId_risk,
+      </if>
+      <if test="tdIdTaxes != null">
+        tdId_taxes,
+      </if>
+      <if test="tdIdCredit != null">
+        tdId_credit,
+      </if>
+      <if test="tdPhoneRisk != null">
+        tdPhone_risk,
+      </if>
+      <if test="tdPhoneArrears != null">
+        tdPhone_arrears,
+      </if>
+      <if test="tdPhoneCommunication != null">
+        tdPhone_communication,
+      </if>
+      <if test="tdPhoneCredit != null">
+        tdPhone_credit,
+      </if>
+      <if test="tdPhoneFalseNum != null">
+        tdPhone_falseNum,
+      </if>
+      <if test="tdPhoneFraudNum != null">
+        tdPhone_fraudNum,
+      </if>
+      <if test="tdContPhoneRisk != null">
+        tdContPhone_risk,
+      </if>
+      <if test="tdContPhoneCommunication != null">
+        tdContPhone_communication,
+      </if>
+      <if test="tdContPhoneCredit != null">
+        tdContPhone_credit,
+      </if>
+      <if test="tdContPhoneFalseNum != null">
+        tdContPhone_falseNum,
+      </if>
+      <if test="tdContPhoneFraudNum != null">
+        tdContPhone_fraudNum,
+      </if>
+      <if test="tdDgFalseNum != null">
+        tdDg_falseNum,
+      </if>
+      <if test="tdDgFraudNum != null">
+        tdDg_fraudNum,
+      </if>
+      <if test="tdDgAgencyNum != null">
+        tdDg_agencyNum,
+      </if>
+      <if test="shzxLoan != null">
+        shzx_loan,
+      </if>
+      <if test="shzxOutLoan != null">
+        shzx_outLoan,
+      </if>
+      <if test="shzxOverdue != null">
+        shzx_overdue,
+      </if>
+      <if test="shzxLineCredit != null">
+        shzx_lineCredit,
+      </if>
+      <if test="shzxMonth != null">
+        shzx_month,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id!=null">
+        #{id},
+      </if>
+      <if test="cradNo!=null">
+        #{cradNo},
+      </if>
+      <if test="htrl!=null">
+        #{htrl},
+      </if>
+      <if test="siys!=null">
+        #{siys},
+      </if>
+      <if test="phoneReal!=null">
+        #{phoneReal},
+      </if>
+      <if test="phoneTime!=null">
+        #{phoneTime},
+      </if>
+      <if test="phoneGps!=null">
+        #{phoneGps},
+      </if>
+      <if test="accumulation!=null">
+        #{accumulation},
+      </if>
+      <if test="social!=null">
+        #{social},
+      </if>
+      <if test="alipayRealName!=null">
+        #{alipayRealName},
+      </if>
+      <if test="sesameSeeds!=null">
+        #{sesameSeeds},
+      </if>
+      <if test="pyIfo!=null">
+        #{pyIfo},
+      </if>
+      <if test="pyEdu!=null">
+        #{pyEdu},
+      </if>
+      <if test="pyDistress!=null">
+        #{pyDistress},
+      </if>
+      <if test="pyTax!=null">
+        #{pyTax},
+      </if>
+      <if test="pyJudCase!=null">
+        #{pyJudCase},
+      </if>
+      <if test="pyJudDishonesty!=null">
+        #{pyJudDishonesty},
+      </if>
+      <if test="pyJudEnfor!=null">
+        #{pyJudEnfor},
+      </if>
+      <if test="pyNetLoanOver!=null">
+        #{pyNetLoanOver},
+      </if>
+      <if test="tdBHit!=null">
+        #{tdBHit},
+      </if>
+      <if test="tdLoanProxy!=null">
+        #{tdLoanProxy},
+      </if>
+      <if test="tdLoanTool!=null">
+        #{tdLoanTool},
+      </if>
+      <if test="tdExtPlatform!=null">
+        #{tdExtPlatform},
+      </if>
+      <if test="tdIdCriminal!=null">
+        #{tdIdCriminal},
+      </if>
+      <if test="tdIdRisk!=null">
+        #{tdIdRisk},
+      </if>
+      <if test="tdIdTaxes!=null">
+        #{tdIdTaxes},
+      </if>
+      <if test="tdIdCredit!=null">
+        #{tdIdCredit},
+      </if>
+      <if test="tdPhoneRisk!=null">
+        #{tdPhoneRisk},
+      </if>
+      <if test="tdPhoneArrears!=null">
+        #{tdPhoneArrears},
+      </if>
+      <if test="tdPhoneCommunication!=null">
+        #{tdPhoneCommunication},
+      </if>
+      <if test="tdPhoneCredit!=null">
+        #{tdPhoneCredit},
+      </if>
+      <if test="tdPhoneFalseNum!=null">
+        #{tdPhoneFalseNum},
+      </if>
+      <if test="tdPhoneFraudNum!=null">
+        #{tdPhoneFraudNum},
+      </if>
+      <if test="tdContPhoneRisk!=null">
+        #{tdContPhoneRisk},
+      </if>
+      <if test="tdContPhoneCommunication!=null">
+        #{tdContPhoneCommunication},
+      </if>
+      <if test="tdContPhoneCredit!=null">
+        #{tdContPhoneCredit},
+      </if>
+      <if test="tdContPhoneFalseNum!=null">
+        #{tdContPhoneFalseNum},
+      </if>
+      <if test="tdContPhoneFraudNum!=null">
+        #{tdContPhoneFraudNum},
+      </if>
+      <if test="tdDgFalseNum!=null">
+        #{tdDgFalseNum},
+      </if>
+      <if test="tdDgFraudNum!=null">
+        #{tdDgFraudNum},
+      </if>
+      <if test="tdDgAgencyNum!=null">
+        #{tdDgAgencyNum},
+      </if>
+      <if test="shzxLoan!=null">
+        #{shzxLoan},
+      </if>
+      <if test="shzxOutLoan!=null">
+        #{shzxOutLoan},
+      </if>
+      <if test="shzxOverdue!=null">
+        #{shzxOverdue},
+      </if>
+      <if test="shzxLineCredit!=null">
+        #{shzxLineCredit},
+      </if>
+      <if test="shzxMonth!=null">
+        #{shzxMonth},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertScoreCard" parameterType="com.zw.rule.excel.po.ExcelBean3">
+    INSERT INTO score_card
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="marry != null">
+        marry,
+      </if>
+      <if test="hjszqy != null">
+        hjszqy,
+      </if>
+      <if test="dqjzqk != null">
+        dqjzqk,
+      </if>
+      <if test="xdwgznx != null">
+        xdwgznx,
+      </if>
+      <if test="dwxz != null">
+        dwxz,
+      </if>
+      <if test="sfjngjjjsb != null">
+        sfjngjjjsb,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="gzffxs != null">
+        gzffxs,
+      </if>
+      <if test="gmfs != null">
+        gmfs,
+      </if>
+      <if test="yaj != null">
+        yaj,
+      </if>
+      <if test="pyxl != null">
+        pyxl,
+      </if>
+      <if test="sjhmsmsfyz != null">
+        sjhmsmsfyz,
+      </if>
+      <if test="azthrj != null">
+        azthrj,
+      </if>
+      <if test="shzxwjqdksl != null">
+        shzxwjqdksl,
+      </if>
+      <if test="tdwbdkptgs != null">
+        tdwbdkptgs,
+      </if>
+      <if test="sqgjj != null">
+        sqgjj,
+      </if>
+      <if test="sqtxl != null">
+        sqtxl,
+      </if>
+      <if test="sqthjl != null">
+        sqthjl,
+      </if>
+      <if test="zmf != null">
+        zmf,
+      </if>
+      <if test="dw != null">
+        dw,
+      </if>
+      <if test="sjhsysc != null">
+        sjhsysc,
+      </if>
+      <if test="djzc != null">
+        djzc,
+      </if>
+      <if test="gzdwmcxg != null">
+        gzdwmcxg,
+      </if>
+      <if test="gzdwdhxg != null">
+        gzdwdhxg,
+      </if>
+      <if test="lxrdhxg != null">
+        lxrdhxg,
+      </if>
+      <if test="xbxldwcs != null">
+        xbxldwcs,
+      </if>
+      <if test="jjgz != null">
+        jjgz,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idCard!=null">
+        #{idCard},
+      </if>
+      <if test="sex!=null">
+        #{sex},
+      </if>
+      <if test="age!=null">
+        #{age},
+      </if>
+      <if test="marry!=null">
+        #{marry},
+      </if>
+      <if test="hjszqy!=null">
+        #{hjszqy},
+      </if>
+      <if test="dqjzqk!=null">
+        #{dqjzqk},
+      </if>
+      <if test="xdwgznx!=null">
+        #{xdwgznx},
+      </if>
+      <if test="dwxz!=null">
+        #{dwxz},
+      </if>
+      <if test="sfjngjjjsb!=null">
+        #{sfjngjjjsb},
+      </if>
+      <if test="rank!=null">
+        #{rank},
+      </if>
+      <if test="gzffxs!=null">
+        #{gzffxs},
+      </if>
+      <if test="gmfs!=null">
+        #{gmfs},
+      </if>
+      <if test="yaj!=null">
+        #{yaj},
+      </if>
+      <if test="pyxl!=null">
+        #{pyxl},
+      </if>
+      <if test="sjhmsmsfyz!=null">
+        #{sjhmsmsfyz},
+      </if>
+      <if test="azthrj!=null">
+        #{azthrj},
+      </if>
+      <if test="shzxwjqdksl!=null">
+        #{shzxwjqdksl},
+      </if>
+      <if test="tdwbdkptgs!=null">
+        #{tdwbdkptgs},
+      </if>
+      <if test="sqgjj!=null">
+        #{sqgjj},
+      </if>
+      <if test="sqtxl!=null">
+        #{sqtxl},
+      </if>
+      <if test="sqthjl!=null">
+        #{sqthjl},
+      </if>
+      <if test="zmf!=null">
+        #{zmf},
+      </if>
+      <if test="dw!=null">
+        #{dw},
+      </if>
+      <if test="sjhsysc!=null">
+        #{sjhsysc},
+      </if>
+      <if test="djzc!=null">
+        #{djzc},
+      </if>
+      <if test="gzdwmcxg!=null">
+        #{gzdwmcxg},
+      </if>
+      <if test="gzdwdhxg!=null">
+        #{gzdwdhxg},
+      </if>
+      <if test="lxrdhxg!=null">
+        #{lxrdhxg},
+      </if>
+      <if test="xbxldwcs!=null">
+        #{xbxldwcs},
+      </if>
+      <if test="jjgz!=null">
+        #{jjgz},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getLoanIdByIdCard" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT ml.id AS loanId,mo.ID AS orderId,mo.PERIODS AS periods,mo.rate AS rate,mo.loan_amount AS amount FROM mag_loan ml,mag_order mo WHERE mo.ID = ml.order_id AND mo.CARD = #{idCard}
+  </select>
+
+  <delete id="deleteLoanDetail" parameterType="java.lang.String">
+    DELETE FROM mag_loan_detail WHERE loan_id = #{loanId}
+  </delete>
+
+  <update id="updateLoanInfo" parameterType="com.zw.rule.loan.po.Loan">
+    UPDATE mag_loan SET progress = #{progress} WHERE  id = #{id}
+  </update>
+
+  <insert id="insertLoanDetail" parameterType="java.util.List">
+    INSERT INTO mag_loan_detail(id,	loan_id,	loan_amount,	loan_time,	sort)
+    VALUES
+    <foreach collection="list" item="loanDetail" index= "index" separator =",">
+      (#{loanDetail.id},#{loanDetail.loanId},#{loanDetail.loanAmount},#{loanDetail.loanTime},#{loanDetail.sort})
+    </foreach>
+  </insert>
+
+  <select id="getRuleRefuseCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) FROM rule_refuse where id_card = #{idCard}
+  </select>
+
+  <select id="getScoreCardCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) FROM score_card where id_card = #{idCard}
+  </select>
+
+  <select id="getRuleRiskCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    SELECT count(*) FROM rule_risk where crad_no = #{cradNo}
+  </select>
+
+  <select id="deleteRepaymentByLoanId" parameterType="java.lang.String">
+    DELETE  FROM  mag_repayment WHERE loan_id = #{loanId}
+  </select>
+
+</mapper>

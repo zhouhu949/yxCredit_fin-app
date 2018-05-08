@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.merchant.EnterMerchantManageMapper">
+    <!--渠道商户管理++ 入驻商户管理 mapper文件-->
+    <!--查询所有入驻的商户(审核通过的商户)-->
+    <select id="selectAllEnterMerchants" resultType="com.zw.rule.merchant.Merchant" parameterType="java.util.Map">
+        SELECT
+        mm.id AS id,
+        mm.mer_name AS merName,
+        main_business as mainBusiness,
+        mm.provinces,
+        mm.city,
+        mm.distric,
+        mm.mer_detail_address AS address,
+        mm.creat_time AS creatTime,
+        mm.state,
+        mm.apply_name AS applyName,
+        mm.mer_grade  AS merGradeId,
+        CONCAT(mm.provinces,mm.city,mm.distric) AS provinceCityiDstric,
+        mm.check_state AS checkState,
+        mm.fanQIZha_state AS fanQIZhaState,
+        mm.fanQiZhaMan_Id AS fanQiZhaManId,
+        mm.mer_grade,
+        mmg.grade,
+        zsd.name AS gradeName
+        FROM
+        mag_merchant mm
+        LEFT JOIN mag_merchant_grade mmg ON mm.mer_grade = mmg.id
+        LEFT JOIN (SELECT * from zw_sys_dict where parent_id = (SELECT id from zw_sys_dict WHERE CODE = 'merchantGrade')) zsd on mmg.grade = zsd.code
+        WHERE mm.check_state = '2'
+        <if test="merchantName != null and merchantName != '' ">
+            AND  mm.mer_name like CONCAT('%',#{merchantName},'%')
+        </if>
+        <if test="applyName != null and applyName != '' ">
+            AND  mm.apply_name like CONCAT('%',#{applyName},'%')
+        </if>
+        <if test=" provinces_id !=null and provinces_id != '' ">
+            AND  mm.provinces_id = #{provinces_id}
+        </if>
+        <if test=" city_id !=null and city_id != '' ">
+            AND  mm.city_id = #{city_id}
+        </if>
+        <if test=" distric_id !=null and distric_id != '' ">
+            AND  mm.distric_id = #{distric_id}
+        </if>
+        ORDER by mm.creat_time desc
+    </select>
+
+    <!--查询商户下的订单列表-->
+    <select id="selectMerchantOrders" parameterType="java.util.Map" resultType="com.zw.rule.customer.po.Order">
+       SELECT
+            id,
+            order_no AS orderNo,
+            CUSTOMER_NAME AS customerName,
+            TEL AS tel,
+            CARD,
+            CREAT_TIME,
+            AMOUNT AS amount,
+            predict_price AS predictPrice,
+            AMOUNT - predict_price AS applyFenQiLimit,
+            PERIODS AS periods,
+            CREAT_TIME creatTime,
+            product_type_name productTypeName,
+            state AS state,
+            CUSTOMER_ID AS customerId
+        FROM
+            mag_order
+        WHERE MERCHANT_ID = #{merchantId}
+        and order_type = '2'
+        <if test="customName != null and customName != '' ">
+         AND  CUSTOMER_NAME like CONCAT('%',#{customName},'%')
+        </if>
+        <if test="customTel != null and customTel != '' ">
+            AND  TEL like CONCAT('%',#{customTel},'%')
+        </if>
+    </select>
+
+    <!--查询该商户下面的商品列表-->
+    <select id="selectMerchantMerchantdise" parameterType="java.util.Map" resultType="com.zw.rule.merchant.Merchantdise">
+        SELECT
+            a.id AS merchantAndMerchantdiseRel,
+            a.merchant_id AS merchantId,
+            a.merchandise_id merchantdiseId,
+            b.id AS merchandiseVersionId,
+            b.img_url AS merchandiseImgUrl,
+            b.merchandise_name AS merchandiseVersionName,
+            b.merchandise_type AS merchandiseVersionType,
+            c.id AS merchandiseModelId,
+            c.merchandise_name AS merchandiseModelName,
+            c.merchandise_type AS merchandiseModelType,
+            d.id AS merchandiseBrandId,
+            d.merchandise_name AS merchandiseBrandName,
+            d.merchandise_type AS merchandiseBrandType,
+            e.id AS merchandiseId,
+            e.merchandise_name AS merchandiseName,
+            e.merchandise_type AS merchandiseType,
+            CONCAT(e.merchandise_name ,d.merchandise_name ,c.merchandise_name, b.merchandise_name) AS name
+        FROM
+            mag_merchant_rel a
+        LEFT JOIN mag_merchantdise b ON b.id = a.merchandise_id
+        LEFT JOIN mag_merchantdise c ON c.id = b.parent_id
+        LEFT JOIN mag_merchantdise d ON d.id = c.parent_id
+        LEFT JOIN mag_merchantdise e ON e.id = d.parent_id
+        WHERE
+            merchant_id = #{merchantId}
+        AND b.state = '1'
+        AND c.state = '1'
+        AND d.state = '1'
+        AND e.state = '1'
+        AND a.state = '0'
+        ORDER BY
+            c.id
+    </select>
+    <!--删除商户下的图片(更改关联状态)-->
+    <update id="deleteMerchantMerchantdise" parameterType="java.util.Map">
+        update mag_merchant_rel set state=#{state} WHERE id=#{merchantAndMerchantdiseRel}
+    </update>
+    <!--获取商品图片-->
+    <select id="selectMerchantdiseImgs" parameterType="java.util.Map" resultType="java.lang.String">
+      select img_url from mag_customer_image where type='0' AND merchantdise_id=#{merchantdise_id}
+    </select>
+</mapper>

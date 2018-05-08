@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.merchant.MerchantAntiFraudMapper">
+    <!--渠道商户管理 商户反欺诈 mapper文件-->
+    <!--查询所有审核商户-->
+    <select id="selectAllAntifraudMerchants" resultType="com.zw.rule.merchant.Merchant" parameterType="java.util.Map">
+        SELECT
+        mm.id AS id,
+        mm.mer_name AS merName,
+        main_business as mainBusiness,
+        mm.provinces,
+        mm.city,
+        mm.distric,
+        mm.mer_detail_address AS address,
+        mm.creat_time AS creatTime,
+        mm.state,
+        mm.apply_name AS applyName,
+        mm.mer_grade  AS merGradeId,
+        CONCAT(mm.provinces,mm.city,mm.distric) AS provinceCityiDstric,
+        mm.check_state AS checkState,
+        mm.fanQIZha_state AS fanQIZhaState,
+        mm.fanQiZhaMan_Id AS  fanQiZhaManId,
+        zsu.true_name AS  fanQiZhaManName
+        FROM
+        mag_merchant mm LEFT JOIN zw_sys_user zsu ON  mm.fanQiZhaMan_Id=zsu.user_id
+        where mm.fanQIZha_state !='0'
+        <if test="merchantName != null and merchantName != '' ">
+            AND  mm.mer_name like CONCAT('%',#{merchantName},'%')
+        </if>
+        <if test="applyName != null and applyName != '' ">
+            AND  mm.apply_name like CONCAT('%',#{applyName},'%')
+        </if>
+        ORDER by mm.creat_time DESC
+    </select>
+    <!--更改商户反欺诈状态-->
+    <update id="updateMerchantFanQiZhaState" parameterType="java.util.Map">
+        UPDATE  mag_merchant
+        set fanQIZha_state = #{fanQIZhaState}
+        WHERE id=#{merchantId}
+    </update>
+
+
+
+
+
+
+
+
+
+
+    <!--审核一个商户的方法，就是更改商户的状态，意见表意见-->
+    <!--<update id="changeMerchantCheckState" parameterType="java.util.Map">-->
+        <!--UPDATE mag_merchant-->
+        <!--SET check_state = #{checkResult}-->
+        <!--WHERE-->
+        <!--id = #{merchantId}-->
+    <!--</update>-->
+
+    <!--&lt;!&ndash;更改反欺诈状态 更改反欺诈状态  反欺诈状态 0-未发起(默认) 1-反欺诈进行中(反欺诈进行中不能审核操作) 2-反欺诈结束&ndash;&gt;-->
+    <!--<update id="updateFanQiZhaState" parameterType="java.util.Map">-->
+        <!--update mag_merchant-->
+        <!--SET-->
+        <!--fanQIZha_state = #{autiFraudState},-->
+        <!--fanQiZhaMan_Id = #{autiFraudId}-->
+        <!--WHERE id=#{merchantId}-->
+    <!--</update>-->
+</mapper>

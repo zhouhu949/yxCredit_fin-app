@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.product.BgEfProductDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.product.BgEfProductDetail" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="invest_rate" property="investRate" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="ef_product_id" property="efProductId" jdbcType="VARCHAR" />
+    <result column="invest_manage_rate" property="investManageRate" jdbcType="DECIMAL" />
+    <result column="activities_rate" property="activitiesRate" jdbcType="DECIMAL" />
+    <result column="preparation" property="preparation" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="periods" property="periods" jdbcType="INTEGER" />
+    <result column="transfer_param_id" property="transferParamId" jdbcType="VARCHAR" />
+    <result column="pre_manage_rate" property="preManageRate" jdbcType="DECIMAL" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="spe_rate" property="speRate" jdbcType="INTEGER" />
+    <result column="step_amount" property="stepAmount" jdbcType="DECIMAL" />
+    <result column="rate_type" property="rateType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, invest_rate, create_time, emp_id, status, ef_product_id, invest_manage_rate, 
+    activities_rate, preparation, description, periods, transfer_param_id, pre_manage_rate, 
+    type, spe_rate, step_amount, rate_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from bg_ef_product_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from bg_ef_product_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.product.BgEfProductDetail" >
+    insert into bg_ef_product_detail (id, invest_rate, create_time, 
+      emp_id, status, ef_product_id, 
+      invest_manage_rate, activities_rate, preparation, 
+      description, periods, transfer_param_id, 
+      pre_manage_rate, type, spe_rate, 
+      step_amount, rate_type)
+    values (#{id,jdbcType=VARCHAR}, #{invest_rate,jdbcType=DECIMAL}, #{create_time,jdbcType=VARCHAR}, 
+      #{emp_id,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{ef_product_id,jdbcType=VARCHAR}, 
+      #{invest_manage_rate,jdbcType=DECIMAL}, #{activities_rate,jdbcType=DECIMAL}, #{preparation,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{periods,jdbcType=INTEGER}, #{transfer_param_id,jdbcType=VARCHAR}, 
+      #{pre_manage_rate,jdbcType=DECIMAL}, #{type,jdbcType=INTEGER}, #{spe_rate,jdbcType=INTEGER}, 
+      #{step_amount,jdbcType=DECIMAL}, #{rate_type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.product.BgEfProductDetail" >
+    insert into bg_ef_product_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="invest_rate != null" >
+        invest_rate,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="emp_id != null" >
+        emp_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="ef_product_id != null" >
+        ef_product_id,
+      </if>
+      <if test="invest_manage_rate != null" >
+        invest_manage_rate,
+      </if>
+      <if test="activities_rate != null" >
+        activities_rate,
+      </if>
+      <if test="preparation != null" >
+        preparation,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="periods != null" >
+        periods,
+      </if>
+      <if test="transfer_param_id != null" >
+        transfer_param_id,
+      </if>
+      <if test="pre_manage_rate != null" >
+        pre_manage_rate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="spe_rate != null" >
+        spe_rate,
+      </if>
+      <if test="step_amount != null" >
+        step_amount,
+      </if>
+      <if test="rate_type != null" >
+        rate_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="invest_rate != null" >
+        #{invest_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_id != null" >
+        #{emp_id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ef_product_id != null" >
+        #{ef_product_id,jdbcType=VARCHAR},
+      </if>
+      <if test="invest_manage_rate != null" >
+        #{invest_manage_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="activities_rate != null" >
+        #{activities_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="preparation != null" >
+        #{preparation,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="periods != null" >
+        #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="transfer_param_id != null" >
+        #{transfer_param_id,jdbcType=VARCHAR},
+      </if>
+      <if test="pre_manage_rate != null" >
+        #{pre_manage_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="spe_rate != null" >
+        #{spe_rate,jdbcType=INTEGER},
+      </if>
+      <if test="step_amount != null" >
+        #{step_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate_type != null" >
+        #{rate_type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.product.BgEfProductDetail" >
+    update bg_ef_product_detail
+    <set >
+      <if test="invest_rate != null" >
+        invest_rate = #{invest_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_id != null" >
+        emp_id = #{emp_id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="ef_product_id != null" >
+        ef_product_id = #{ef_product_id,jdbcType=VARCHAR},
+      </if>
+      <if test="invest_manage_rate != null" >
+        invest_manage_rate = #{invest_manage_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="activities_rate != null" >
+        activities_rate = #{activities_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="preparation != null" >
+        preparation = #{preparation,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods,jdbcType=INTEGER},
+      </if>
+      <if test="transfer_param_id != null" >
+        transfer_param_id = #{transfer_param_id,jdbcType=VARCHAR},
+      </if>
+      <if test="pre_manage_rate != null" >
+        pre_manage_rate = #{pre_manage_rate,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="spe_rate != null" >
+        spe_rate = #{spe_rate,jdbcType=INTEGER},
+      </if>
+      <if test="step_amount != null" >
+        step_amount = #{step_amount,jdbcType=DECIMAL},
+      </if>
+      <if test="rate_type != null" >
+        rate_type = #{rate_type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.product.BgEfProductDetail" >
+    update bg_ef_product_detail
+    set invest_rate = #{invest_rate,jdbcType=DECIMAL},
+      create_time = #{create_time,jdbcType=VARCHAR},
+      emp_id = #{emp_id,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      ef_product_id = #{ef_product_id,jdbcType=VARCHAR},
+      invest_manage_rate = #{invest_manage_rate,jdbcType=DECIMAL},
+      activities_rate = #{activities_rate,jdbcType=DECIMAL},
+      preparation = #{preparation,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      periods = #{periods,jdbcType=INTEGER},
+      transfer_param_id = #{transfer_param_id,jdbcType=VARCHAR},
+      pre_manage_rate = #{pre_manage_rate,jdbcType=DECIMAL},
+      type = #{type,jdbcType=INTEGER},
+      spe_rate = #{spe_rate,jdbcType=INTEGER},
+      step_amount = #{step_amount,jdbcType=DECIMAL},
+      rate_type = #{rate_type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getBgData" resultType="Map" >
+    select
+      co.contract_amount*bedp.pre_manage_rate/100 touAdvanceMoney
+    from mag_order co,bg_ef_product_detail bedp
+    where co.product_detail = bedp.id and co.id=#{CrmOrderId}
+  </select>
+</mapper>

@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.system.SysDepartmentMapper">
+
+    <resultMap type="com.zw.rule.po.SysDepartment" id="departmentMap">
+        <id column="id" property="id"/>
+        <result column="ctime" property="ctime"/>
+        <result column="description" property="description"/>
+        <result column="dept_name" property="name"/>
+        <result column="dept_number" property="number"/>
+        <result column="phone" property="phone"/>
+        <result column="pid" property="pid"/>
+        <result column="dept_status" property="status"/>
+        <result column="type" property="type"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="sequence" property="sequence"/>
+        <result column="company_address" property="address"/>
+        <result column="company_type" property="companyType"/>
+        <result column="company_principal" property="principal"/>
+        <result column="company_abbreviation" property="abbreviation"/>
+        <result column="city_id" property="cityId"/>
+        <result column="province_id" property="provinceId"/>
+        <result column="district_id" property="districtId"/>
+        <result column="poc_channel" property="pocChannel"/>
+        <result column="boc_channel" property="bocChannel"/>
+        <result column="domain" property="domain"/>
+        <result column="grade" property="grade"/>
+        <result column="pname" property="pname"/>
+        <result column="level" property="level"/>
+    </resultMap>
+
+    <select id="findDeptByMap"   parameterType="map" resultMap="departmentMap" >
+        SELECT
+        *
+        FROM
+        zw_sys_department
+        <where>
+            <if test="status != null" >
+                and dept_status = #{status}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%${name}%'
+            </if>
+            <if test="type != null" >
+                and  type = #{type}
+            </if>
+            <if test="pid != null" >
+                and pid = #{pid}
+            </if>
+            <if test="id != null" >
+                and id = #{id}
+            </if>
+            <if test="deptIds!=null and deptIds.size()>0">
+                and  id in
+                <foreach collection="deptIds" item="ids" index="index" open="(" separator="," close=")">
+                    #{ids}
+                </foreach>
+            </if>
+            <if test="number != null" >
+                and number = #{number}
+            </if>
+        </where>
+        order by level
+    </select>
+
+    <select id="getTypList" parameterType="Map" resultMap="departmentMap">
+     SELECT
+     *
+     FROM
+        zw_sys_department
+         where type =1
+    </select>
+
+    <select id="findDeptByPid"   parameterType="Map" resultMap="departmentMap" >
+        SELECT
+        *
+        FROM
+        zw_sys_department
+        <where>
+            <if test="pid != null" >
+                and pid = #{pid}
+            </if>
+        </where>
+    </select>
+
+    <insert id="saveDepartment" parameterType="com.zw.rule.po.SysDepartment">
+        insert into zw_sys_department
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="type != null" >
+                type,
+            </if>
+            <if test="name != null" >
+                dept_name,
+            </if>
+            <if test="pid != null" >
+                pid,
+            </if>
+            <if test="description != null" >
+                description,
+            </if>
+            <if test="abbreviation != null" >
+                company_abbreviation,
+            </if>
+            <if test="phone != null" >
+                phone,
+            </if>
+            <if test="domain != null" >
+                domain,
+            </if>
+            <if test="principal != null" >
+                company_principal,
+            </if>
+            <if test="companyType != null" >
+                company_type,
+            </if>
+            <if test="provinceId != null" >
+                province_id,
+            </if>
+            <if test="cityId != null" >
+                city_id,
+            </if>
+            <if test="districtId != null" >
+                district_id,
+            </if>
+            <if test="address != null" >
+                company_address,
+            </if>
+            <if test="sequence != null" >
+                sequence,
+            </if>
+            <if test="status != null" >
+                dept_status,
+            </if>
+            <if test="grade != null" >
+                grade,
+            </if>
+            <if test="pname != null" >
+                pname,
+            </if>
+            <if test="level != null" >
+                level,
+            </if>
+                ctime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="type != null" >
+                #{type,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="pid != null" >
+                #{pid},
+            </if>
+            <if test="description != null" >
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null" >
+                #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="domain != null" >
+                #{domain,jdbcType=VARCHAR},
+            </if>
+            <if test="principal != null" >
+                #{principal,jdbcType=VARCHAR},
+            </if>
+            <if test="companyType != null" >
+                #{companyType,jdbcType=DECIMAL},
+            </if>
+            <if test="provinceId != null" >
+                #{provinceId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null" >
+                #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="districtId != null" >
+                #{districtId,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="sequence != null" >
+                #{sequence,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="grade != null" >
+                #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="pname != null" >
+                #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null" >
+                #{level,jdbcType=VARCHAR},
+            </if>
+                now()
+        </trim>
+    </insert>
+
+    <update id="updtaeDepartment" parameterType="com.zw.rule.po.SysDepartment"  >
+        UPDATE  zw_sys_department
+        <set>
+            <if test="type != null" >
+                type=#{type},
+            </if>
+            <if test="name != null" >
+                dept_name=#{name},
+            </if>
+            <if test="pid != null" >
+                pid=#{pid},
+            </if>
+            <if test="description != null" >
+                description=#{description},
+            </if>
+            <if test="abbreviation != null" >
+                company_abbreviation=#{abbreviation},
+            </if>
+            <if test="phone != null" >
+                phone=#{phone},
+            </if>
+            <if test="domain != null" >
+                domain=#{domain},
+            </if>
+            <if test="principal != null" >
+                company_principal=#{principal},
+            </if>
+            <if test="companyType != null" >
+                company_type=#{companyType},
+            </if>
+            <if test="address != null" >
+                company_address=#{address},
+            </if>
+            <if test="sequence != null" >
+                sequence=#{sequence},
+            </if>
+            <if test="provinceId != null" >
+                province_id=#{provinceId},
+            </if>
+            <if test="cityId != null" >
+                city_id=#{cityId},
+            </if>
+            <if test="districtId != null" >
+                district_id=#{districtId},
+            </if>
+            <if test="grade != null" >
+                grade=#{grade},
+            </if>
+            <if test="pname != null" >
+                pname=#{pname},
+            </if>
+            <if test="level != null" >
+                level=#{level},
+            </if>
+            update_time = now()
+        </set>
+        WHERE
+           id = #{id}
+    </update>
+
+    <select id="findDeptByPids"   parameterType="Long" resultMap="departmentMap" >
+        SELECT *  FROM zw_sys_department t WHERE t.pid = #{pid}
+        UNION
+        SELECT *  FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid =  #{pid})
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT
+        id FROM zw_sys_department t WHERE t.pid =  #{pid}))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT
+        id FROM zw_sys_department t WHERE(t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid =  #{pid}))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid = #{pid}))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN
+        (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid = #{pid})))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN
+        (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid = #{pid}))))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN
+        (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid =#{pid})))))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN
+        (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid = #{pid}))))))))
+        UNION
+        SELECT * FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN(
+        SELECT id FROM zw_sys_department t WHERE t.pid IN
+        (SELECT id FROM zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid IN ( SELECT id FROM
+        zw_sys_department t WHERE t.pid IN (SELECT id FROM zw_sys_department t WHERE t.pid in(SELECT id FROM zw_sys_department t
+        WHERE t.pid = #{pid}))))))))
+    </select>
+
+    <update id="updtaeDepartmentLevel" parameterType="com.zw.rule.po.SysDepartment"  >
+        UPDATE  zw_sys_department
+        <set>
+            <if test="level != null" >
+                level=#{level},
+            </if>
+            update_time = now()
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id='findById' resultMap='departmentMap'>
+        select
+       *
+        from zw_sys_department
+        where id = #{orgId} and dept_status != 0
+    </select>
+
+
+   <!-- <insert id="addCompanyInfo" parameterType="java.util.Map">
+        insert into zw_sys_companyInfo(id,email,company_name,username,tel,card,num,img0,img1,img2,img3,create_time,status)
+        VALUES(#{id},#{email},#{companyName},#{username},#{tel},#{card},#{num},#{photoUrl1},#{photoUrl2},#{photoUrl3},#{photoUrl4},#{create_time},#{status});
+    </insert>-->
+
+    <insert id="addCompanyInfo" parameterType="java.util.Map">
+        insert into zw_sys_companyInfo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="companyName != null" >
+                company_name,
+            </if>
+            <if test="username != null" >
+                username,
+            </if>
+            <if test="tel != null" >
+                tel,
+            </if>
+            <if test="card != null" >
+                card,
+            </if>
+            <if test="num != null" >
+                num,
+            </if>
+            <if test="photoUrl1 != null" >
+                img0,
+            </if>
+            <if test="photoUrl2 != null" >
+                img1,
+            </if>
+            <if test="photoUrl3 != null" >
+                img2,
+            </if>
+            <if test="photoUrl4 != null" >
+                img3,
+            </if>
+            <if test="create_time != null" >
+            create_time,
+            </if>
+            <if test="status != null" >
+            status,
+        </if>
+            <if test="code != null" >
+                code,
+            </if>
+            <if test="gongsiImgType != null" >
+                imgtype,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="companyName != null" >
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="card != null" >
+                #{card,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null" >
+                #{num,jdbcType=VARCHAR},
+            </if>
+            <if test="photoUrl1 != null" >
+                #{photoUrl1,jdbcType=VARCHAR},
+            </if>
+            <if test="photoUrl2 != null" >
+                #{photoUrl2,jdbcType=VARCHAR},
+            </if>
+            <if test="photoUrl3 != null" >
+                #{photoUrl3,jdbcType=DECIMAL},
+            </if>
+            <if test="photoUrl4 != null" >
+                #{photoUrl4,jdbcType=VARCHAR},
+            </if>
+            <if test="create_time != null" >
+                #{create_time,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null" >
+                #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="gongsiImgType != null" >
+                #{gongsiImgType,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+
+<select id="findCompany" parameterType="java.lang.String" resultType="java.util.Map">
+    SELECT * from zw_sys_companyInfo where company_name=#{company_name}
+    </select>
+
+
+    <update id="updateCompanyInfo" parameterType="java.util.Map" >
+    update zw_sys_companyInfo set status =#{status}, update_time=#{update_time} where id=#{id};
+    </update>
+
+    <!--查询所有公司-->
+    <select id="selectAllGongsi" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT id,company_abbreviation as companyName from zw_sys_department where type='1';
+    </select>
+    <!--更新公司是否注册状态-->
+    <!--<update id="updateCompanyIsNotRegisterState" parameterType="java.util.Map" >-->
+        <!--update zw_sys_department set isNotRegister = '1' where id=#{companyId}-->
+    <!--</update>-->
+</mapper>

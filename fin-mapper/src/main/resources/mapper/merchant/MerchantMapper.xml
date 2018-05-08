@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.merchant.MerchantGradeMapper">
+    <!--商户等级配置的映射文件-->
+    <resultMap id="merchantGrade" type="com.zw.rule.merchantManagement.MerchantGrade">
+        <id column="id" property="id"/>
+        <result column="grade" property="grade"/>
+        <result column="number_day" property="numberDay"/>
+        <result column="number_week" property="numberWeek"/>
+        <result column="number_month" property="numberMonth"/>
+        <result column="quota_day" property="quotaDay"/>
+        <result column="quota_week" property="quotaWeek"/>
+        <result column="quota_month" property="quotaMonth"/>
+        <result column="single_quota" property="singleQuota"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <select id="selectAllGrades"  resultMap="merchantGrade" parameterType="java.util.Map" >
+        SELECT
+            mmg.id,
+            zsd.name AS grade,
+            mmg.number_day,
+            mmg.number_week,
+            mmg. number_month,
+            mmg. quota_day,
+            mmg.quota_week,
+            mmg. quota_month,
+            mmg. single_quota,
+            mmg.state
+        from
+            mag_merchant_grade mmg
+        LEFT JOIN
+        (select name,code from zw_sys_dict where parent_id in (select id from zw_sys_dict where code='merchantGrade')) zsd
+        ON zsd.code=mmg.grade
+        WHERE 1=1
+            <if test="grade !=null and grade !=''">
+                AND mmg.grade=#{grade}
+            </if>
+            <if test="state !=null and state !=''">
+                and mmg.state=#{state}
+            </if>
+    </select>
+    <insert id="insertMerchantGrade" parameterType="com.zw.rule.merchantManagement.MerchantGrade">
+        INSERT into mag_merchant_grade VALUES (
+        <if test="id != null" >
+            #{id},
+        </if>
+        #{grade},
+        #{numberDay},
+        #{numberWeek},
+        #{numberMonth},
+        #{quotaDay},
+        #{quotaWeek},
+        #{quotaMonth},
+        #{singleQuota},
+        #{state}
+        )
+    </insert>
+    <!-- 更改商户配置状态 -->
+    <update id="changeGradeState" parameterType="java.util.Map">
+        update mag_merchant_grade
+        SET
+        <if test="id != null" >
+            state=#{state}
+        </if>
+        <if test="id != null" >
+            WHERE id=#{id}
+        </if>
+    </update>
+    <!--selectOneGradeById单个查询设置信息-->
+    <select id="selectOneGradeById" parameterType="java.util.Map" resultMap="merchantGrade">
+        SELECT
+        id,
+        grade,
+        number_day,
+        number_week,
+        number_month,
+        quota_day,
+        quota_week,
+        quota_month,
+        single_quota,
+        state
+        FROM mag_merchant_grade
+        where id=#{id}
+    </select>
+    <!--更改商户配置级别信息-->
+    <update id="updateMerchantGradeById" parameterType="com.zw.rule.merchantManagement.MerchantGrade" >
+        UPDATE mag_merchant_grade
+        <set>
+            grade=#{grade},
+            number_day= #{numberDay},
+            number_week=  #{numberWeek},
+            number_month= #{numberMonth},
+            quota_day=#{quotaDay},
+            quota_week= #{quotaWeek},
+            quota_month=#{quotaMonth},
+            single_quota=#{singleQuota},
+            state=#{state}
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+</mapper>

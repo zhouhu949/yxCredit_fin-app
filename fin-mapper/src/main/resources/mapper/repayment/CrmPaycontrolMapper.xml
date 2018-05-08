@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.CrmPaycontrolMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.repayment.po.CrmPaycontrol" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="crm_order_id" property="crmOrderId" jdbcType="VARCHAR" />
+    <result column="cust_info_id" property="custInfoId" jdbcType="VARCHAR" />
+    <result column="cust_id" property="custId" jdbcType="VARCHAR" />
+    <result column="should_money" property="shouldMoney" jdbcType="DECIMAL" />
+    <result column="should_capiital" property="shouldCapiital" jdbcType="DECIMAL" />
+    <result column="should_accral" property="shouldAccral" jdbcType="DECIMAL" />
+    <result column="should_platform_manage_money" property="shouldPlatformManageMoney" jdbcType="DECIMAL" />
+    <result column="should_interest" property="shouldInterest" jdbcType="DECIMAL" />
+    <result column="should_violate_fee" property="shouldViolateFee" jdbcType="DECIMAL" />
+    <result column="repayment_time" property="repaymentTime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="overdue_day" property="overdueDay" jdbcType="INTEGER" />
+    <result column="overdue_interest" property="overdueInterest" jdbcType="DECIMAL" />
+    <result column="overdue_violate_money" property="overdueViolateMoney" jdbcType="DECIMAL" />
+    <result column="repayment_duetime" property="repaymentDuetime" jdbcType="INTEGER" />
+    <result column="remain_interest" property="remainInterest" jdbcType="DECIMAL" />
+    <result column="remain_capital" property="remainCapital" jdbcType="DECIMAL" />
+    <result column="remain_accrual" property="remainAccrual" jdbcType="DECIMAL" />
+    <result column="remain_manage_fee" property="remainManageFee" jdbcType="DECIMAL" />
+    <result column="replace_status" property="replaceStatus" jdbcType="INTEGER" />
+    <result column="exempt_status" property="exemptStatus" jdbcType="INTEGER" />
+    <result column="abnormal_status" property="abnormalStatus" jdbcType="INTEGER" />
+    <result column="should_gps_traffic_fee" property="shouldGpsTrafficFee" jdbcType="DECIMAL" />
+    <result column="should_parking_fee" property="shouldParkingFee" jdbcType="DECIMAL" />
+    <result column="remain_gps_traffic_fee" property="remainGpsTrafficFee" jdbcType="DECIMAL" />
+    <result column="remain_parking_fee" property="remainParkingFee" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, crm_order_id, cust_info_id, cust_id, should_money, should_capiital, should_accral, 
+    should_platform_manage_money, should_interest, should_violate_fee, repayment_time, 
+    status, overdue_day, overdue_interest, overdue_violate_money, repayment_duetime, 
+    remain_interest, remain_capital, remain_accrual, remain_manage_fee, replace_status, 
+    exempt_status, abnormal_status, should_gps_traffic_fee, should_parking_fee, remain_gps_traffic_fee, 
+    remain_parking_fee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crm_paycontrol
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crm_paycontrol
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.repayment.po.CrmPaycontrol" >
+    insert into crm_paycontrol (id, crm_order_id, cust_info_id, 
+      cust_id, should_money, should_capiital, 
+      should_accral, should_platform_manage_money, 
+      should_interest, should_violate_fee, repayment_time, 
+      status, overdue_day, overdue_interest, 
+      overdue_violate_money, repayment_duetime, 
+      remain_interest, remain_capital, remain_accrual, 
+      remain_manage_fee, replace_status, exempt_status, 
+      abnormal_status, should_gps_traffic_fee, 
+      should_parking_fee, remain_gps_traffic_fee, 
+      remain_parking_fee)
+    values (#{id,jdbcType=VARCHAR}, #{crm_order_id,jdbcType=VARCHAR}, #{cust_info_id,jdbcType=VARCHAR}, 
+      #{cust_id,jdbcType=VARCHAR}, #{should_money,jdbcType=DECIMAL}, #{should_capiital,jdbcType=DECIMAL}, 
+      #{should_accral,jdbcType=DECIMAL}, #{should_platform_manage_money,jdbcType=DECIMAL}, 
+      #{should_interest,jdbcType=DECIMAL}, #{should_violate_fee,jdbcType=DECIMAL}, #{repayment_time,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{overdue_day,jdbcType=INTEGER}, #{overdue_interest,jdbcType=DECIMAL}, 
+      #{overdue_violate_money,jdbcType=DECIMAL}, #{repayment_duetime,jdbcType=INTEGER}, 
+      #{remain_interest,jdbcType=DECIMAL}, #{remain_capital,jdbcType=DECIMAL}, #{remain_accrual,jdbcType=DECIMAL}, 
+      #{remain_manage_fee,jdbcType=DECIMAL}, #{replace_status,jdbcType=INTEGER}, #{exempt_status,jdbcType=INTEGER}, 
+      #{abnormal_status,jdbcType=INTEGER}, #{should_gps_traffic_fee,jdbcType=DECIMAL}, 
+      #{should_parking_fee,jdbcType=DECIMAL}, #{remain_gps_traffic_fee,jdbcType=DECIMAL}, 
+      #{remain_parking_fee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.repayment.po.CrmPaycontrol" >
+    insert into crm_paycontrol
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="crm_order_id != null" >
+        crm_order_id,
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id,
+      </if>
+      <if test="cust_id != null" >
+        cust_id,
+      </if>
+      <if test="should_money != null" >
+        should_money,
+      </if>
+      <if test="should_capiital != null" >
+        should_capiital,
+      </if>
+      <if test="should_accral != null" >
+        should_accral,
+      </if>
+      <if test="should_platform_manage_money != null" >
+        should_platform_manage_money,
+      </if>
+      <if test="should_interest != null" >
+        should_interest,
+      </if>
+      <if test="should_violate_fee != null" >
+        should_violate_fee,
+      </if>
+      <if test="repayment_time != null" >
+        repayment_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="overdue_day != null" >
+        overdue_day,
+      </if>
+      <if test="overdue_interest != null" >
+        overdue_interest,
+      </if>
+      <if test="overdue_violate_money != null" >
+        overdue_violate_money,
+      </if>
+      <if test="repayment_duetime != null" >
+        repayment_duetime,
+      </if>
+      <if test="remain_interest != null" >
+        remain_interest,
+      </if>
+      <if test="remain_capital != null" >
+        remain_capital,
+      </if>
+      <if test="remain_accrual != null" >
+        remain_accrual,
+      </if>
+      <if test="remain_manage_fee != null" >
+        remain_manage_fee,
+      </if>
+      <if test="replace_status != null" >
+        replace_status,
+      </if>
+      <if test="exempt_status != null" >
+        exempt_status,
+      </if>
+      <if test="abnormal_status != null" >
+        abnormal_status,
+      </if>
+      <if test="should_gps_traffic_fee != null" >
+        should_gps_traffic_fee,
+      </if>
+      <if test="should_parking_fee != null" >
+        should_parking_fee,
+      </if>
+      <if test="remain_gps_traffic_fee != null" >
+        remain_gps_traffic_fee,
+      </if>
+      <if test="remain_parking_fee != null" >
+        remain_parking_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="crm_order_id != null" >
+        #{crm_order_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_info_id != null" >
+        #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_id != null" >
+        #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="should_money != null" >
+        #{should_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_capiital != null" >
+        #{should_capiital,jdbcType=DECIMAL},
+      </if>
+      <if test="should_accral != null" >
+        #{should_accral,jdbcType=DECIMAL},
+      </if>
+      <if test="should_platform_manage_money != null" >
+        #{should_platform_manage_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_interest != null" >
+        #{should_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="should_violate_fee != null" >
+        #{should_violate_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="repayment_time != null" >
+        #{repayment_time,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="overdue_day != null" >
+        #{overdue_day,jdbcType=INTEGER},
+      </if>
+      <if test="overdue_interest != null" >
+        #{overdue_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_violate_money != null" >
+        #{overdue_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="repayment_duetime != null" >
+        #{repayment_duetime,jdbcType=INTEGER},
+      </if>
+      <if test="remain_interest != null" >
+        #{remain_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_capital != null" >
+        #{remain_capital,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_accrual != null" >
+        #{remain_accrual,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_manage_fee != null" >
+        #{remain_manage_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="replace_status != null" >
+        #{replace_status,jdbcType=INTEGER},
+      </if>
+      <if test="exempt_status != null" >
+        #{exempt_status,jdbcType=INTEGER},
+      </if>
+      <if test="abnormal_status != null" >
+        #{abnormal_status,jdbcType=INTEGER},
+      </if>
+      <if test="should_gps_traffic_fee != null" >
+        #{should_gps_traffic_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="should_parking_fee != null" >
+        #{should_parking_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_gps_traffic_fee != null" >
+        #{remain_gps_traffic_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_parking_fee != null" >
+        #{remain_parking_fee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.repayment.po.CrmPaycontrol" >
+    update crm_paycontrol
+    <set >
+      <if test="crm_order_id != null" >
+        crm_order_id = #{crm_order_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_info_id != null" >
+        cust_info_id = #{cust_info_id,jdbcType=VARCHAR},
+      </if>
+      <if test="cust_id != null" >
+        cust_id = #{cust_id,jdbcType=VARCHAR},
+      </if>
+      <if test="should_money != null" >
+        should_money = #{should_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_capiital != null" >
+        should_capiital = #{should_capiital,jdbcType=DECIMAL},
+      </if>
+      <if test="should_accral != null" >
+        should_accral = #{should_accral,jdbcType=DECIMAL},
+      </if>
+      <if test="should_platform_manage_money != null" >
+        should_platform_manage_money = #{should_platform_manage_money,jdbcType=DECIMAL},
+      </if>
+      <if test="should_interest != null" >
+        should_interest = #{should_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="should_violate_fee != null" >
+        should_violate_fee = #{should_violate_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="repayment_time != null" >
+        repayment_time = #{repayment_time,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="overdue_day != null" >
+        overdue_day = #{overdue_day,jdbcType=INTEGER},
+      </if>
+      <if test="overdue_interest != null" >
+        overdue_interest = #{overdue_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="overdue_violate_money != null" >
+        overdue_violate_money = #{overdue_violate_money,jdbcType=DECIMAL},
+      </if>
+      <if test="repayment_duetime != null" >
+        repayment_duetime = #{repayment_duetime,jdbcType=INTEGER},
+      </if>
+      <if test="remain_interest != null" >
+        remain_interest = #{remain_interest,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_capital != null" >
+        remain_capital = #{remain_capital,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_accrual != null" >
+        remain_accrual = #{remain_accrual,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_manage_fee != null" >
+        remain_manage_fee = #{remain_manage_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="replace_status != null" >
+        replace_status = #{replace_status,jdbcType=INTEGER},
+      </if>
+      <if test="exempt_status != null" >
+        exempt_status = #{exempt_status,jdbcType=INTEGER},
+      </if>
+      <if test="abnormal_status != null" >
+        abnormal_status = #{abnormal_status,jdbcType=INTEGER},
+      </if>
+      <if test="should_gps_traffic_fee != null" >
+        should_gps_traffic_fee = #{should_gps_traffic_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="should_parking_fee != null" >
+        should_parking_fee = #{should_parking_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_gps_traffic_fee != null" >
+        remain_gps_traffic_fee = #{remain_gps_traffic_fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remain_parking_fee != null" >
+        remain_parking_fee = #{remain_parking_fee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.repayment.po.CrmPaycontrol" >
+    update crm_paycontrol
+    set crm_order_id = #{crmOrderId,jdbcType=VARCHAR},
+      cust_info_id = #{custInfoId,jdbcType=VARCHAR},
+      cust_id = #{custId,jdbcType=VARCHAR},
+      should_money = #{shouldMoney,jdbcType=DECIMAL},
+      should_capiital = #{shouldCapiital,jdbcType=DECIMAL},
+      should_accral = #{shouldAccral,jdbcType=DECIMAL},
+      should_platform_manage_money = #{shouldPlatformManageMoney,jdbcType=DECIMAL},
+      should_interest = #{shouldInterest,jdbcType=DECIMAL},
+      should_violate_fee = #{shouldViolateFee,jdbcType=DECIMAL},
+      repayment_time = #{repaymentTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      overdue_day = #{overdueDay,jdbcType=INTEGER},
+      overdue_interest = #{overdueInterest,jdbcType=DECIMAL},
+      overdue_violate_money = #{overdueViolateMoney,jdbcType=DECIMAL},
+      repayment_duetime = #{repaymentDuetime,jdbcType=INTEGER},
+      remain_interest = #{remainInterest,jdbcType=DECIMAL},
+      remain_capital = #{remainCapital,jdbcType=DECIMAL},
+      remain_accrual = #{remainAccrual,jdbcType=DECIMAL},
+      remain_manage_fee = #{remainManageFee,jdbcType=DECIMAL},
+      replace_status = #{replaceStatus,jdbcType=INTEGER},
+      exempt_status = #{exemptStatus,jdbcType=INTEGER},
+      abnormal_status = #{abnormalStatus,jdbcType=INTEGER},
+      should_gps_traffic_fee = #{shouldGpsTrafficFee,jdbcType=DECIMAL},
+      should_parking_fee = #{shouldParkingFee,jdbcType=DECIMAL},
+      remain_gps_traffic_fee = #{remainGpsTrafficFee,jdbcType=DECIMAL},
+      remain_parking_fee = #{remainParkingFee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getCrmPaycontrolList" resultType="Map" parameterType="java.util.Map" >
+    select
+    pay.repayment_duetime, pay.repayment_time, pay.should_money, pay.should_capiital, pay.should_accral, pay.should_platform_manage_money,
+    pay.should_interest, pay.should_violate_fee, pay.overdue_day, pay.overdue_interest, pay.overdue_violate_money, pay.remain_interest, pay.remain_capital,
+    pay.remain_accrual, pay.remain_manage_fee,pay.status,
+    pay.cust_id,(SELECT person_name FROM mag_customer cust WHERE cust.id = pay.cust_id) as cust_name
+    from crm_paycontrol pay
+    <where>
+      <if test="param.crmOrderId != null and param.crmOrderId != ''">
+        and crm_order_id = #{param.crmOrderId}<!--订单id-->
+      </if>
+    </where>
+    order by repayment_duetime asc
+  </select>
+  <select id="getDetailByStatus" resultType="Map">
+    select
+      id
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status=#{status}
+  </select>
+  <select id="getCurrentList" resultType="Map" parameterType="java.lang.String" >
+    select
+          id id,
+          should_capiital capital,
+          should_accral  interest,
+          repayment_time  payTime,
+          should_platform_manage_money manageMoney,
+          remain_accrual remainInterest,
+          remain_capital remainCapital,
+          remain_manage_fee remainManageMoney,
+          remain_manage_fee+remain_accrual+remain_capital totalMoney
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status =0 ORDER BY repayment_time asc limit 1
+  </select>
+    <select id="getPayList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from crm_paycontrol
+        where crm_order_id = #{crmOrderId} and status=0 order by repayment_duetime asc
+    </select>
+  <select id="getPayMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+      sum(remain_accrual+remain_capital+remain_manage_fee) money
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status = 0 ORDER BY repayment_time limit 1
+  </select>
+  <select id="getOverMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+      IFNULL(sum(remain_manage_fee+remain_accrual+remain_capital+overdue_violate_money+remain_interest),0) money
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status=2
+  </select>
+  <select id="getOverRepayMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+      IFNULL(sum(should_capiital),0) capitalMoney,IFNULL(sum(remain_manage_fee+remain_accrual+remain_capital+overdue_violate_money+remain_interest),0) totalMoney
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and  status=2 and exempt_status=1
+  </select>
+  <select id="getShouldMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+     count(1) countDuetime ,sum(should_money) shouldMoney
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId}
+  </select>
+  <select id="countShouldDuetime" resultType="Map" parameterType="java.lang.String" >
+    select
+      count(1) countShouldDuetime
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status=1
+  </select>
+  <select id="shouldCapitalManageMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+      should_capiital+should_platform_manage_money shouldCapitalManageMoney
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId}  ORDER BY repayment_duetime LIMIT 1
+  </select>
+  <select id="getPerPayPeriods" resultType="Map" parameterType="java.lang.String" >
+    select
+      count(1) as perPayeriods
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status=0
+  </select>
+  <select id="getAllPeriods" resultType="Map" parameterType="java.lang.String" >
+    select
+     count(1) as AllPeriods,sum(a.should_money) remainMoney
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} and status in (0,2)
+  </select>
+  <select id="getOneShouldMoney" resultType="Map" parameterType="java.lang.String" >
+    select
+      should_money
+    from crm_paycontrol
+    where crm_order_id = #{crmOrderId} limit 1 order by repayment_duetime
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from crm_paycontrol
+    where crm_order_id = #{crm_order_id}
+  </select>
+  <select id="getCurrentStatus" resultType="Map">
+    select
+      status
+    from crm_paycontrol
+    where crm_order_id = #{orderId} and repayment_time lik CONCAT('%',#{currentTime},'%')
+  </select>
+  <select id="getCurrentDueTime" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from crm_paycontrol
+    where crm_order_id = #{orderId} and repayment_time &lt;= #{currentTime} ORDER BY repayment_duetime desc limit 1
+  </select>
+</mapper>

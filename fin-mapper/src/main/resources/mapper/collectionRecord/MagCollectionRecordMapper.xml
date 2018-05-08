@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.collectionRecord.MagCollectionRecordMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	tel,	relationship,	remark,	loan_id AS loanId,	create_time AS createTime,	call_time AS callTime,	create_user_id AS createUserId,	create_user_name AS createUserName
+	</sql>
+
+	<!-- 通用查询结果列-->
+	<sql id="collection_Base_Column_List">
+			id,customerId,loan_id AS loanId,entrance_examination_date AS entranceExaminationDate,electric_examination_personnel AS electricExaminationPersonnel,electronic_examination_state AS electronicExaminationState,electric_examination_complete AS electricExaminationComplete
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.collectionRecord.po.MagCollectionRecord" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_collection_record
+		 WHERE id = #{id}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM mag_collection_record
+		 WHERE id = #{id}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.collectionRecord.po.MagCollectionRecord">
+		 INSERT INTO mag_collection_record
+ 		(id,tel,relationship,remark,loan_id,create_time,call_time,create_user_id,create_user_name) 
+		 VALUES 
+ 		(#{id},#{tel},#{relationship},#{remark},#{loanId},#{createTime},#{callTime},#{createUserId},#{createUserName}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.collectionRecord.po.MagCollectionRecord">
+		 INSERT INTO mag_collection_record
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null">
+				 id,
+			</if>
+			<if test="tel != null">
+				 tel,
+			</if>
+			<if test="relationship != null">
+				 relationship,
+			</if>
+			<if test="remark != null">
+				 remark,
+			</if>
+			<if test="loanId != null">
+				 loan_id,
+			</if>
+			<if test="createTime != null">
+				 create_time,
+			</if>
+			<if test="callTime != null">
+				 call_time,
+			</if>
+			<if test="createUserId != null">
+				 create_user_id,
+			</if>
+			<if test="createUserName != null">
+				 create_user_name,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id!=null">
+				 #{id},
+			</if>
+			<if test="tel!=null">
+				 #{tel},
+			</if>
+			<if test="relationship!=null">
+				 #{relationship},
+			</if>
+			<if test="remark!=null">
+				 #{remark},
+			</if>
+			<if test="loanId!=null">
+				 #{loanId},
+			</if>
+			<if test="createTime!=null">
+				 #{createTime},
+			</if>
+			<if test="callTime!=null">
+				 #{callTime},
+			</if>
+			<if test="createUserId!=null">
+				 #{createUserId},
+			</if>
+			<if test="createUserName!=null">
+				 #{createUserName},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.collectionRecord.po.MagCollectionRecord">
+		 UPDATE mag_collection_record
+ 		 <set> 
+			<if test="tel != null">
+				 tel = #{tel},
+			</if>
+			<if test="relationship != null">
+				 relationship = #{relationship},
+			</if>
+			<if test="remark != null">
+				 remark = #{remark},
+			</if>
+			<if test="loanId != null">
+				 loan_id = #{loanId},
+			</if>
+			<if test="createTime != null">
+				 create_time = #{createTime},
+			</if>
+			<if test="callTime != null">
+				 call_time = #{callTime},
+			</if>
+			<if test="createUserId != null">
+				 create_user_id = #{createUserId},
+			</if>
+			<if test="createUserName != null">
+				 create_user_name = #{createUserName},
+			</if>
+
+ 		 </set>
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.collectionRecord.po.MagCollectionRecord">
+		 UPDATE mag_collection_record
+		 SET 
+			 tel = #{tel},
+			 relationship = #{relationship},
+			 remark = #{remark},
+			 loan_id = #{loanId},
+			 create_time = #{createTime},
+			 call_time = #{callTime},
+			 create_user_id = #{createUserId},
+			 create_user_name = #{createUserName}
+		 WHERE id = #{id}
+	</update>
+
+	<!-- 查询（根据LoanId查询） -->
+	<select id="getCollectionRecordByLoanId" resultType="com.zw.rule.collectionRecord.po.MagCollectionRecord" parameterType="java.util.Map">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM mag_collection_record
+		WHERE loan_id = #{loanId}
+	</select>
+
+	<!-- 添加 -->
+	<insert id="insertCollection" parameterType="com.zw.rule.collection.po.Collection">
+		INSERT INTO mag_collection
+		(id,customerId,entrance_examination_date,electric_examination_personnel,electronic_examination_state,state)
+		VALUES
+		(#{id},#{customerId},#{entranceExaminationDate},#{electricExaminationPersonnel},#{electronicExaminationState},'0')
+	</insert>
+
+	<!-- 外访分配 -->
+	<update id="updateCollectionExternal" parameterType="com.zw.rule.collection.po.Collection">
+		UPDATE  mag_collection
+		SET
+		 electronic_examination_state = #{electronicExaminationState},
+		 electric_examination_complete=#{electricExaminationComplete},
+		 external_auditor_date=#{externalAuditorDate},
+		 external_auditor_personnel=#{externalAuditorPersonnel},
+		 external_auditor_state=#{externalAuditorState}
+		WHERE  customerId=#{customerId}
+	</update>
+
+	<!-- 委外分配 -->
+	<update id="updateEntrusted" parameterType="com.zw.rule.collection.po.Collection">
+		UPDATE  mag_collection
+		<set>
+			<if test="entrustState != null" >
+				entrust_state = #{entrustState},
+			</if>
+			<if test="entrustComplete != null" >
+				entrust_complete=#{entrustComplete},
+			</if>
+			<if test="entrustDate != null" >
+				entrust_date=#{entrustDate},
+			</if>
+			<if test="state != null" >
+				state=#{state},
+			</if>
+			<if test="externalAuditorState != null" >
+				external_auditor_state=#{externalAuditorState},
+			</if>
+			<if test="externalAuditorComplete != null" >
+				external_auditor_complete=#{externalAuditorComplete},
+			</if>
+		</set>
+		WHERE  customerId=#{customerId}
+	</update>
+	<select id="getTelephoneList" resultType="java.util.Map" parameterType="java.util.Map">
+ 		SELECT
+ 		    mcn.id,mcn.customerId,mcn.loan_id,mcn.entrance_examination_date,mcn.electric_examination_personnel,mcn.electronic_examination_state,mcn.electric_examination_complete,mcn.external_auditor_date,mcn.external_auditor_personnel,mcn.external_auditor_state,mcn.entrust_date,mcn.entrust_state,
+		mcn.entrust_sign,mcn.entrust_complete,
+		mcus.tel,mcus.person_name
+    	FROM mag_collection mcn
+    	LEFT JOIN  mag_customer mcus ON  mcn.customerId=mcus.id
+		WHERE 1=1
+		<if test="state != null" >
+			AND   mcn.state=#{state}
+		</if>
+		<if test="userId_electric != null" >
+			AND   mcn.electric_examination_personnel=#{userId_electric}
+		</if>
+		<if test="userId_external != null" >
+			AND   mcn.external_auditor_personnel=#{userId_external}
+		</if>
+
+		<if test="examination_state != null" >
+			AND mcn.electronic_examination_state=#{examination_state}
+		</if>
+		<if test="external_auditor_state != null" >
+			AND mcn.external_auditor_state=#{external_auditor_state}
+		</if>
+		<if test="entrust_state != null" >
+			AND mcn.entrust_state=#{entrust_state}
+		</if>
+		<if test="cusName != null  and cusName!=''">
+			AND mcus.person_name LIKE   '%${cusName}%'
+		</if>
+		<if test="custTel != null  and custTel!=''" >
+			AND mcus.tel LIKE  '%${custTel}%'
+		</if>
+	</select>
+
+	<!-- 添加减免审批 -->
+	<insert id="addDerate" parameterType="java.util.Map">
+		INSERT INTO mag_derate
+		(id,orderId,repayment_id,derate_amount,derate_link,derate_state,derate_personnel,derate_date,state,effective_data)
+		VALUES
+		(#{id},#{orderId},#{repayment_id},#{reductionAmount},#{derate_link},#{derate_state},#{derate_personnel},#{derate_date},#{state},#{effective_data})
+	</insert>
+
+	<!-- 添加减免审批 -->
+	<insert id="addDerateHJD" parameterType="java.util.Map">
+		INSERT INTO mag_derate
+		(id,orderId,repayment_id,derate_amount,derate_link,derate_state,derate_personnel,derate_date,state)
+		VALUES
+		(#{id},#{orderId},#{repayment_id},#{reductionAmount},#{derate_link},#{derate_state},#{derate_personnel},#{derate_date},#{state})
+	</insert>
+	<!--结清修改数据-->
+	<update id="updateCollection" parameterType="java.util.Map">
+		UPDATE  mag_collection
+		<set>
+			<if test="electronic_examination_state != null">
+				electronic_examination_state = #{electronic_examination_state},
+				electric_examination_complete=#{complete},
+			</if>
+			<if test="external_auditor_state != null">
+				external_auditor_state = #{external_auditor_state},
+				external_auditor_complete=#{complete},
+			</if>
+			<if test="entrust_state != null">
+				entrust_state = #{entrust_state},
+				entrust_complete=#{complete},
+			</if>
+			<if test="state != null">
+				state = #{state}
+			</if>
+		</set>
+		WHERE  customerId=#{customerId}
+	</update>
+
+	<!--修改操作状态-->
+	<update id="updateEntrustedState" parameterType="java.util.Map">
+		UPDATE  mag_collection
+		set
+			entrust_sign=#{entrust_sign}
+
+		WHERE  customerId=#{customerId}
+	</update>
+
+
+	<!--结清修改数据-->
+	<update id="updateRepayment" parameterType="java.util.Map">
+		UPDATE  mag_repayment
+		set
+		state='2'
+		WHERE  order_id=#{orderId}
+	</update>
+
+
+	<!--减免金额审批-->
+	<select id="getApprovalList" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+		mde.id,mde.orderId,mde.repayment_id,mde.derate_amount,mde.derate_link,mde.derate_state,mde.derate_personnel,mde.derate_date,mde.approval_state,mde.state,mor.order_no, mr.amount,mcus.tel,mcus.person_name,mcus.id as  customerId,mr.pay_count,mr.order_id,mr.overdue_days,mr.penalty,mr.default_interest,mr.fee,mr.state AS mrState
+		FROM mag_derate mde
+		LEFT JOIN  mag_order mor ON  mor.id=mde.orderId
+		LEFT JOIN  mag_customer mcus ON  mor.CUSTOMER_ID=mcus.id
+		LEFT JOIN  mag_repayment mr ON  mde.repayment_id=mr.id
+		WHERE 1=1
+		<if test="cusName != null  and cusName!=''">
+			AND mcus.person_name LIKE   '%${cusName}%'
+		</if>
+		<if test="custTel != null  and custTel!=''" >
+			AND mcus.tel LIKE  '%${custTel}%'
+		</if>
+		ORDER BY mde.derate_date desc
+	</select>
+
+
+	<!--减免审批修改数据-->
+	<update id="updateApproval" parameterType="java.util.Map">
+		UPDATE  mag_derate
+		<set>
+			<if test="userId != null">
+				approval_personnel = #{userId},
+			</if>
+			<if test="approval_date != null">
+				approval_date = #{approval_date},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			<if test="approvalState != null">
+				approval_state = #{approvalState},
+			</if>
+			<if test="derateAmount != null">
+				derate_amount = #{derateAmount},
+			</if>
+			<if test="effective_data != null">
+				effective_data = #{effective_data},
+			</if>
+		</set>
+		WHERE  id=#{derateId}
+	</update>
+
+	<!--减免审批修改数据-->
+	<update id="updateApprovalHJD" parameterType="java.util.Map">
+		UPDATE  mag_derate
+		<set>
+			<if test="userId != null">
+				approval_personnel = #{userId},
+			</if>
+			<if test="approval_date != null">
+				approval_date = #{approval_date},
+			</if>
+			<if test="state != null">
+				state = #{state},
+			</if>
+			<if test="approvalState != null">
+				approval_state = #{approvalState},
+			</if>
+			<if test="approvalState != null">
+				derate_amount = #{derateAmount},
+			</if>
+		</set>
+		WHERE  id=#{derateId}
+	</update>
+</mapper>

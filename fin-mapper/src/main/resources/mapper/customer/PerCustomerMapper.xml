@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.PerCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.Customer" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="PERSON_ID" property="personId" jdbcType="VARCHAR" />
+    <result column="PERSON_NAME" property="personName" jdbcType="VARCHAR" />
+    <result column="CONTACT_ID" property="contactId" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+    <result column="CARD" property="card" jdbcType="VARCHAR" />
+    <result column="credential_id" property="credentialId" jdbcType="VARCHAR" />
+    <result column="live_id" property="liveId" jdbcType="VARCHAR" />
+    <result column="asset_id" property="assetId" jdbcType="VARCHAR" />
+    <result column="profession_id" property="professionId" jdbcType="VARCHAR" />
+    <result column="expend_id" property="expendId" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="branch" property="branch" jdbcType="VARCHAR" />
+    <result column="manager" property="manager" jdbcType="CHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="APEX1" property="apex1" jdbcType="VARCHAR" />
+    <result column="APEX2" property="apex2" jdbcType="VARCHAR" />
+    <result column="APEX3" property="apex3" jdbcType="VARCHAR" />
+    <result column="BAK" property="bak" jdbcType="VARCHAR" />
+    <result column="sale_adviser" property="saleAdviser" jdbcType="VARCHAR" />
+    <result column="occupation_type" property="occupationType" jdbcType="VARCHAR" />
+    <result column="bg_cust_info_id" property="bgCustInfoId" jdbcType="VARCHAR" />
+    <result column="crm_cust_info_id" property="crmCustInfoId" jdbcType="VARCHAR" />
+    <result column="bg_customer_id" property="bgCustomerId" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="card_type_id" property="cardTypeId" jdbcType="VARCHAR" />
+    <result column="emp_number" property="empNumber" jdbcType="VARCHAR" />
+    <result column="origin_id" property="originId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, PERSON_ID, PERSON_NAME, CONTACT_ID, TEL, CARD_TYPE, CARD, credential_id,
+    live_id, asset_id, profession_id, expend_id, origin, company, branch, manager, CREAT_TIME,
+    ALTER_TIME, state, APEX1, APEX2, APEX3, BAK, sale_adviser, occupation_type, bg_cust_info_id,
+    crm_cust_info_id, bg_customer_id, emp_id, card_type_id, emp_number, origin_id
+  </sql>
+
+  <select id="getCustomers" resultType="Map" parameterType="java.util.Map" >
+    select
+      mct.ID as id,mct.person_name,mct.tel,mct.card,mct.creat_time,mct.company,mct.branch,mct.manager,mct.emp_id,(SELECT COUNT(1) FROM mag_customer mc INNER JOIN mag_order mo
+                ON mc.ID = mo.CUSTOMER_ID
+    <where>
+      mc.ID = mct.ID
+      <choose>
+        <when test="param.orderState != null and param.orderState != ''">
+          and mo.state=#{param.orderState}) as num
+        </when>
+        <otherwise>
+          ) as num
+        </otherwise>
+      </choose>
+    </where>
+      FROM mag_customer mct
+    <where>
+      <if test="param.personName != null and param.personName != ''">
+        and mct.PERSON_NAME like '%${param.personName}%'
+      </if>
+      <if test="param.beginTime != null and param.beginTime != ''">
+        and mct.CREAT_TIME &gt;= #{param.beginTime}
+      </if>
+      <if test="param.endTime != null and param.endTime != ''">
+        and mct.CREAT_TIME &lt;= #{param.endTime}
+      </if>
+      <if test="param.state != null and param.state != ''">
+        and mct.state = #{param.state} <!--状态（0-意向客户，1-准客户，2-发送，3-成功客户）-->
+      </if>
+      <if test="param.emp_id != null and param.emp_id != ''">
+        and mct.emp_id = #{param.emp_id}
+      </if>
+    </where>
+    order by mct.CREAT_TIME desc
+  </select>
+
+</mapper>

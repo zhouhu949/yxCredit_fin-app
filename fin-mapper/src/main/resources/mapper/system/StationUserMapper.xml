@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.system.StationUserMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.po.StationUser" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" />
+    <result column="user_id" property="userId" />
+    <result column="station_name" property="stationName" />
+    <result column="account" property="account" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, station_id, user_id
+  </sql>
+  <insert id="insert" parameterType="com.zw.rule.po.StationUser" >
+    insert into zw_station_user_link (id, station_id, user_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{stationId,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="Map" >
+    select su.id, s.station_name, u.account
+    from zw_station_user_link su
+    left join zw_sys_station s on s.id = su.station_id
+    left join zw_sys_user u on u.user_id = su.user_id
+    <where>
+      <if test ="param.searchName != null and param.searchName != ''">
+        s.station_name like '%${param.searchName}%' or u.account like '%${param.searchName}%'
+      </if>
+    </where>
+    order by su.user_id desc limit #{page.firstIndex}, #{page.pageSize}
+  </select>
+  <select id="countAll" resultType="Integer" parameterType="Map" >
+    select count(*) from zw_station_user_link su
+    left join zw_sys_station s on s.id = su.station_id
+    left join zw_sys_user u on u.user_id = su.user_id
+    <where>
+      <if test ="searchName != null and searchName != ''">
+        s.station_name like '%${searchName}%' or u.account like '%${searchName}%'
+      </if>
+    </where>
+  </select>
+  <select id="selectByStationId" resultMap="BaseResultMap" parameterType="String" >
+    select <include refid="Base_Column_List" />
+    from zw_station_user_link
+    where station_id = #{stationId}
+  </select>
+
+  <delete id="deleteByStationId" parameterType="java.lang.String" >
+    delete from zw_station_user_link
+    where station_id = #{stationId,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id = "batchInsert" parameterType="java.util.List">
+    insert into zw_station_user_link (id, station_id, user_id)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id}, #{item.stationId}, #{item.userId})
+    </foreach>
+  </insert>
+</mapper>

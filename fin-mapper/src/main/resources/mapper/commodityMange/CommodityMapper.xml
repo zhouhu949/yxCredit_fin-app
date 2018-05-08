@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.commodityMapper.CommodityMapper">
+    <resultMap id="BaseResultMap" type="com.zw.rule.commodity.po.Commodity"  >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+        <result column="merchandise_code" property="merchandiseCode" jdbcType="VARCHAR" />
+        <result column="merchandise_name" property="merchandiseName" jdbcType="VARCHAR" />
+        <result column="color" property="color" jdbcType="VARCHAR" />
+        <result column="descri" property="descri" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="apex1" property="apex1" jdbcType="VARCHAR" />
+        <result column="apex2" property="apex2" jdbcType="VARCHAR" />
+        <result column="apex3" property="apex3" jdbcType="VARCHAR" />
+        <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+        <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
+        <result column="merchandise_type" property="merchandiseType" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="getMerchantdiseList" resultType="com.zw.rule.commodity.po.Commodity" parameterType="java.util.Map">
+
+        SELECT id,parent_id AS parentId,merchandise_code AS merchandiseCode ,merchandise_name AS merchandiseName,color, descri,
+        creat_time AS creatTime,alter_time AS alterTime,state,apex1,apex2,apex3,merchandise_type AS merchandiseType,type,img_url AS imgUrl
+        FROM mag_merchantdise
+        <where>
+            1=1 and id!='0'
+            <if test="mname != null and mname != ''">
+                and merchandise_name like '%${mname}%'
+            </if>
+            <if test="parentId != null and parentId != ''">
+               and  parent_id =#{parentId}
+            </if>
+        </where>
+        ORDER BY type, merchandise_name asc
+</select>
+
+
+    <select id="getMerchantListInfo" resultType="Map" parameterType="java.util.Map">
+
+        SELECT id,parent_id AS parentId,merchandise_code AS merchandiseCode ,merchandise_name AS merchandiseName,color, descri,
+        creat_time AS creatTime,alter_time AS alterTime,state,apex1,apex2,apex3,merchandise_type AS merchandiseType,type,img_url AS imgUrl
+        FROM mag_merchantdise
+        <where>
+            <if test="id != null and id != ''">
+                and  parent_id =#{id}
+            </if>
+        </where>
+        ORDER BY merchandise_name asc
+    </select>
+
+
+    <select id="getCommodityMenu" resultType="com.zw.rule.commodity.po.Commodity" parameterType="java.util.Map">
+        SELECT id,parent_id AS parentId,merchandise_code AS merchandiseCode ,merchandise_name AS merchandiseName,color, descri,creat_time AS creatTime,alter_time AS alterTime,state,apex1,apex2,apex3,merchandise_type AS merchandiseType,type,img_url AS imgUrl
+        FROM mag_merchantdise
+        <where>
+            state = 1 and type!='4'
+            <if test="id != null and id != ''">
+                and id =  #{id}
+            </if>
+
+        </where>
+        ORDER BY merchandise_name asc
+    </select>
+    <select id="getList" resultType="map" parameterType="map">
+        SELECT id,parent_id AS parentId,merchandise_code AS merchandiseCode ,merchandise_name AS merchandiseName,color, descri,creat_time AS creatTime,alter_time AS alterTime,state,apex1,apex2,apex3,merchandise_type AS merchandiseType,type,img_url AS imgUrl
+        FROM mag_merchantdise
+        <where>
+            state = 1
+            <if test="id != null and id != ''">
+                and id =  #{id}
+            </if>
+        </where>
+
+
+    </select>
+    <select id="getList1" resultType="map" parameterType="map">
+        SELECT id,parent_id AS parentId,merchandise_code AS merchandiseCode ,merchandise_name AS merchandiseName,color, descri,creat_time AS creatTime,alter_time AS alterTime,state,apex1,apex2,apex3,merchandise_type AS merchandiseType,type,img_url AS imgUrl
+        FROM mag_merchantdise WHERE id =  #{id}
+
+
+
+    </select>
+   <insert id="insertMerchantdise" parameterType="com.zw.rule.commodity.po.Commodity">
+       INSERT INTO mag_merchantdise
+       <trim prefix="(" suffix=")" suffixOverrides="," >
+           <if test="id != null" >
+               id,
+           </if>
+           <if test="parentId != null" >
+               parent_id,
+           </if>
+           <if test="merchandiseCode != null" >
+               merchandise_code,
+           </if>
+           <if test="merchandiseName != null" >
+               merchandise_name,
+           </if>
+           <if test="color != null" >
+               color,
+           </if>
+           <if test="descri != null" >
+               descri,
+           </if>
+           <if test="creatTime != null" >
+               creat_time,
+           </if>
+           <if test="alterTime != null" >
+               alter_time,
+           </if>
+           <if test="state != null" >
+               state,
+           </if>
+
+           <if test="apex1 != null" >
+               apex1,
+           </if>
+           <if test="apex2 != null" >
+               apex2,
+           </if>
+           <if test="apex3 != null" >
+               apex3,
+           </if>
+           <if test="merchandiseType != null" >
+               merchandise_type,
+           </if>
+           <if test="type != null" >
+               type,
+           </if>
+           <if test="imgUrl != null" >
+               img_url,
+           </if>
+       </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides="," >
+           <if test="id != null" >
+               #{id},
+           </if>
+           <if test="parentId != null" >
+               #{parentId},
+           </if>
+
+           <if test="merchandiseCode != null" >
+               #{merchandiseCode},
+           </if>
+           <if test="merchandiseName != null" >
+               #{merchandiseName},
+           </if>
+           <if test="color != null" >
+               #{color},
+           </if>
+           <if test="descri != null" >
+               #{descri},
+           </if>
+           <if test="creatTime != null" >
+               #{creatTime},
+           </if>
+           <if test="alterTime != null" >
+               #{creatTime},
+           </if>
+           <if test="state != null" >
+               #{state},
+           </if>
+           <if test="apex1 != null" >
+               #{apex1},
+           </if>
+           <if test="apex2 != null" >
+               #{apex2},
+           </if>
+           <if test="apex3 != null" >
+               #{apex3},
+           </if>
+           <if test="merchandiseType != null" >
+               #{merchandiseType},
+           </if>
+           <if test="type != null" >
+               #{type},
+           </if>
+           <if test="imgUrl != null" >
+               #{imgUrl},
+           </if>
+       </trim>
+   </insert>
+
+    <update id="updateState" parameterType="java.util.Map">
+        update mag_merchantdise set  state=#{state}  where id=#{id};
+    </update>
+
+    <update id="updateMerchantdise" parameterType="com.zw.rule.commodity.po.Commodity">
+        UPDATE mag_merchantdise
+        <set>
+            <if test="parentId != null and parentId != ''">
+                parent_id=#{parentId,jdbcType=VARCHAR},
+          </if>
+          <if test="merchandiseCode != null and merchandiseCode != ''">
+            merchandise_code=#{merchandiseCode,jdbcType=VARCHAR},
+          </if>
+          <if test="merchandiseName != null and merchandiseName != ''" >
+            merchandise_name=#{merchandiseName,jdbcType=VARCHAR},
+          </if>
+          <if test="color != null and color != ''" >
+            color=#{color,jdbcType=VARCHAR},
+          </if>
+          <if test="descri != null and descri != ''" >
+            descri=#{descri,jdbcType=VARCHAR},
+          </if>
+          <if test="creatTime != null and creatTime != ''" >
+            creat_time=#{creatTime,jdbcType=VARCHAR},
+          </if>
+          <if test="alterTime != null and alterTime != ''" >
+              alter_time=#{alterTime,jdbcType=VARCHAR},
+          </if>
+
+          <if test="state != null and state != ''" >
+            state=#{state,jdbcType=VARCHAR},
+          </if>
+          <if test="apex1 != null and apex1 != ''" >
+            apex1=#{apex1,jdbcType=VARCHAR},
+          </if>
+          <if test="apex2 != null and apex2 != ''" >
+            apex2=#{apex2,jdbcType=VARCHAR},
+          </if>
+          <if test="apex3 != null and apex3 != ''" >
+            apex3=#{apex3,jdbcType=VARCHAR},
+          </if>
+          <if test="merchandiseType != null and merchandiseType != ''" >
+            merchandise_type=#{merchandiseType,jdbcType=VARCHAR},
+          </if>
+          <if test="imgUrl != null and imgUrl != ''" >
+            img_url=#{imgUrl,jdbcType=VARCHAR},
+          </if>
+          <if test="type != null and type != ''" >
+              type=#{type,jdbcType=VARCHAR},
+          </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from mag_merchantdise where id = #{id} and state != 1
+
+    </delete>
+
+</mapper>

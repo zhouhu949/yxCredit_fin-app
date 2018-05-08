@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.reportMapper.ReportManageMapper">
+    <select id="selectCompanyIdByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        select org_id from zw_sys_user where user_id= #{userId}
+    </select>
+    <!--查询销售订单报表-->
+    <select id="selectReportAllToExcel" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        mo.id AS orderId,
+        mo.provinces AS province,
+        mo.city AS city,
+        mo.distric AS district,
+        mo.MERCHANT_NAME as merchantName,
+        mo.order_no as orderNo,
+        mo.CUSTOMER_NAME as customerName,
+        mo.TEL AS customerTel,
+        mo.CARD AS card,
+        CONCAT(mo.merchandise_brand,mo.merchandise_model,mo.merchandise_version) AS merchantdiseName,
+        mo.predict_price as predictPrice,
+        ms.realname as salesmanName,
+        ms.tel as salesmanTel,
+        ml.payable_amount  as yhze,
+        mo.applay_money as orderCapital,
+        mo.predict_price as yufukuan,
+        mo.PERIODS as payCount,
+        mo.order_submission_time  as sureOrderTime,
+        (case when mo.state='5' and mo.commodity_state &gt; '15' and mo.commodity_state &lt; '16.7' then '-1'
+        when mo.state='5' and mo.commodity_state = '16.7' then '-2'
+        when  mo.state='5' and mo.commodity_state &gt; '16.7' and mo.commodity_state &lt; '18' then '-3'
+        when mo.state='5' and mo.commodity_state = '18' then '-4'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and (mr.repayCount = 0 or mr.repayCount is null) then '-5'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and mr.repayCount > 0 then '-6'
+        else mo.state end) AS orderState,
+        mo.state as orderState1,
+        mo.commodity_state AS yufukuanState,
+        mo.commodity_state as deliveryState,
+        mo.loan_state as loanState,
+        mo.state as jsState,
+        mo.APEX3 as fahuoTime,
+        mo.rate as monthRate,
+        zsd.name as businessType
+        FROM
+        mag_order mo
+        LEFT JOIN mag_salesman ms on mo.emp_id = ms.id
+        LEFT JOIN mag_loan ml on mo.id = ml.order_id
+        LEFT JOIN mag_merchant mm ON mo.MERCHANT_ID  = mm.id
+        LEFT JOIN zw_sys_dict  zsd ON mm.type = zsd.id
+        LEFT JOIN (select count(1) as repayCount, order_id from mag_repayment where state=2 or state=3 or state=4 group by order_id) mr  ON mo.id=mr.order_id
+        WHERE mo.state in ('2','4','5','6','7','8','9') AND order_type = '2'
+        <if test="merchantName != null  and merchantName !='' ">
+            AND mo.MERCHANT_NAME LIKE concat('%',#{merchantName},'%')
+        </if>
+        <if test="customerName !=null and customerName !='' ">
+            AND mo.CUSTOMER_NAME LIKE concat('%',#{customerName},'%')
+        </if>
+        <if test=" customerTel !=null and customerTel !='' ">
+            AND  mo.TEL = #{customerTel}
+        </if>
+        <if test=" customerCard !=null and customerCard !='' ">
+            AND  mo.CARD = #{customerCard}
+        </if>
+        <if test="  orderEndTime !=null and orderEndTime !=''  ">
+            AND mo.order_submission_time &lt;= #{orderEndTime}
+        </if>
+        <if test=" orderBeginTime !=null and orderBeginTime!='' ">
+            AND mo.order_submission_time &gt;= #{orderBeginTime}
+        </if>
+        <if test=" orderCapitalStart !=null and orderCapitalStart !='' ">
+            AND  mo.applay_money &gt;= #{orderCapitalStart}
+        </if>
+        <if test=" orderCapitalEnd !=null and orderCapitalEnd !='' ">
+            AND mo.applay_money &lt;= #{orderCapitalEnd}
+        </if>
+        <if test=" orderNo !=null and orderNo !='' ">
+            AND  mo.order_no = #{orderNo}
+        </if>
+        <if test=" province !=null and province !='' ">
+            AND  mo.provinces_id = #{province}
+        </if>
+        <if test=" province !=null and province !='' ">
+            AND  mo.provinces_id = #{province}
+        </if>
+        <if test=" city !=null and city !='' ">
+            AND  mo.city_id = #{city}
+        </if>
+        <if test=" district !=null and district !='' ">
+            AND  mo.distric_id = #{district}
+        </if>
+        ORDER BY mo.CREAT_TIME DESC
+    </select>
+    <!--查询逾期报表-->
+    <select id="selectYuQiReportToExcel" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+        mo.id AS orderId, -- 订单id
+        mo.provinces AS province, -- 一级渠道
+        mo.city AS city,-- 二级渠道
+        mo.distric AS district, -- 区域
+        mo.MERCHANT_ID AS merchant_id, -- 商户编号
+        mo.MERCHANT_NAME as merchantName, -- 商户名称
+        mo.order_no as orderNo, -- 订单编号
+        mo.order_submission_time as orderDate, -- 订单日期
+        mo.CUSTOMER_NAME as customerName, -- 客户姓名
+        mo.CARD AS card,-- 身份证
+        mo.TEL AS customerTel,-- 手机号
+        mo.applay_money as applayMoney, -- 申请金额
+        mr.totalAmount as yqje, -- 逾期金额
+        mo.CUSTOMER_ID as customerId,
+        mr.amount,
+        mr.fee,
+        mr.penalty,
+        CONCAT(mo.merchandise_brand,mo.merchandise_model,mo.merchandise_version) AS merchantdiseName,-- 购买商品
+        ifnull(mo.applay_money,0)+ifnull(mo.fee,0)+ifnull(mso.amount,0) as orderTotalMoney, -- 订单总金额(本金利息服务包)
+        (IFNULL((select SUM(amount) from service_package_repayment where repayment_id in (select id from mag_repayment where order_id = mo.id and state in ('1','3')) ),0) +
+        IFNULL((select SUM(repayment_amount+IFNULL(penalty,0)+IFNULL(default_interest,0))  from mag_repayment where state in ('1','3') and order_id =  mo.id),0)) as syyhzje, -- 剩余应还总金额(加服务包)
+        mr.overdue_days as yuqiDays, -- yuqiDays, -- 逾期天数(取该订单下所有逾期里面逾期时间最长的那一个)
+        mr.default_interest as yqfx,  -- 逾期罚息(所有逾期的分期罚息之和)
+        mo.PERIODS as payCount,-- 分期数
+        tt.pay_time as pay_time, -- 应还日期(当期应还的日期)
+        (ifnull(tt.totalAmount, 0) + ifnull(mr.totalAmount,0) + ifnull(mr.packAmount,0)) as dqyhzje,  --  到期应还总金额
+        ms.realname as salesman, --  办单员
+        IFNULL(mr2.hkqs,0) as hkqs, -- 还款期数（已还起数）
+        mr1.lsyq as lsyq ,-- 历史逾期（曾经逾期过的所有逾期次数）
+        mc.card_register_address AS hjszd, -- 户籍所在地
+        mcj.province_name as provinceWork,-- 户籍所在地的省份
+        mcj.city_name as cityWork,  -- 户籍所在地的城市
+        mcl.address_detail as nowaddress ,-- 现居住地址
+        mcj.company_name as companyName,-- 工作单位
+        mcj.company_phone as companyPhone  -- 工作单位的电话
+        FROM
+        mag_order mo
+        left join (select mrr.order_id,sum(ifnull(mrr.amount, 0)+ifnull(mrr.fee,0)+ifnull(mrr.default_interest,0)+ifnull(mrr.penalty,0)) as totalAmount,sum(spr2.amount) as packAmount,sum(mrr.amount) as amount,min(mrr.pay_time) as payTime,max(mrr.overdue_days) as overdue_days,sum(mrr.fee) as fee, sum(mrr.default_interest) as default_interest, sum(mrr.penalty) as penalty from mag_repayment mrr
+        left join
+        (select sum(amount) as amount,repayment_id from service_package_repayment
+        group by repayment_id) spr2
+        on mrr.id=spr2.repayment_id
+        where state='3' group by order_id) mr
+        on mo.id = mr.order_id
+        LEFT JOIN (select order_id, count(id) as lsyq  from mag_repayment where  overdue_days not in ('0') GROUP BY order_id) mr1 on mo.id = mr1.order_id
+        LEFT JOIN (select order_id, count(id) as hkqs  from mag_repayment where  state = '2' GROUP BY order_id) mr2 on mo.id = mr2.order_id
+        LEFT JOIN mag_salesman ms on mo.emp_id = ms.id
+        LEFT JOIN mag_loan ml on mo.id = ml.order_id
+        LEFT JOIN logistics_info li on mo.id = li.order_id
+        LEFT JOIN mag_merchant mm ON mo.MERCHANT_ID  = mm.id
+        LEFT JOIN zw_sys_dict  zsd ON mm.type = zsd.id
+        LEFT JOIN (select SUM(amount) as amount, order_id from service_package_repayment where type!='1' group by order_id) mso on mo.id=mso.order_id
+        LEFT JOIN mag_customer mc on mo.CUSTOMER_ID = mc.id
+        LEFT JOIN mag_customer_job mcj on mo.CUSTOMER_ID = mcj.CUSTOMER_ID
+        LEFT JOIN mag_customer_live mcl on mo.CUSTOMER_ID = mcl.customer_id
+        left join (select max(mr1.pay_time) as pay_time,mr1.order_id,sum(ifnull(mr1.amount, 0)+ifnull(mr1.fee, 0)+ifnull(spr1.amount, 0)) as totalAmount
+        from mag_repayment mr1
+        INNER JOIN
+        (select min(pay_time) pay_time, order_id
+        from mag_repayment
+        where state in ('1','3')
+        GROUP BY order_id) mr2
+        on mr1.order_id=mr2.order_id
+        and mr1.pay_time= mr2.pay_time
+        left join
+        (select sum(amount) as amount,repayment_id from service_package_repayment
+        group by repayment_id) spr1
+        on mr1.id=spr1.repayment_id
+        group by order_id) tt
+        on tt.order_id=mo.id
+        where mo.state in ('2','4','5','6','7','8','9') AND order_type = '2' and mo.id in (select order_id from mag_repayment where state ='3')
+        <if test="customerName !=null and customerName !='' ">
+            and mo.CUSTOMER_NAME LIKE  CONCAT('%',#{customerName},'%')
+        </if>
+        <if test=" customerTel !=null and  customerTel !='' ">
+            and mo.TEL = #{customerTel}
+        </if>
+        <if test=" customerCard !=null and  customerCard!='' ">
+            and mo.CARD = #{customerCard}
+        </if>
+        <if test="yuqiDays !=null and  yuqiDays !='' ">
+            and mr.overdue_days = #{yuqiDays}
+        </if>
+        <if test=" dqyhTimeStart !=null and  dqyhTimeStart !='' ">
+            and pay_time &gt;=#{dqyhTimeStart}
+        </if>
+        <if test=" dqyhTimeEnd !=null and dqyhTimeEnd !='' ">
+            and pay_time &lt;=#{dqyhTimeEnd}
+        </if>
+        <if test=" yuqiMoneyStart !=null and  yuqiMoneyStart !='' ">
+            and mr.totalAmount &gt;= #{yuqiMoneyStart}
+        </if>
+        <if test=" yuqiMoneyEnd !=null and yuqiMoneyEnd !='' ">
+            and mr.totalAmount &lt;= #{yuqiMoneyEnd}
+        </if>
+        <if test="province !=null and province !='' ">
+            and mo.provinces_id = #{province}
+        </if>
+        <if test="city !=null and city !='' ">
+            and mo.city_id = #{city}
+        </if>
+        <if test="district !=null and district !='' ">
+            and mo.distric_id = #{district}
+        </if>
+        <if test="merchantName !=null and merchantName !='' ">
+            and mo.MERCHANT_NAME LIKE  CONCAT('%',#{merchantName},'%')
+        </if>
+        <if test="merchantNo !=null and merchantNo !='' ">
+            and mo.MERCHANT_ID = #{merchantNo}
+        </if>
+    </select>
+    <!--根据用户id查询联系人信息-->
+    <select id="getLinkManByCustomerId" parameterType="java.lang.String" resultType="java.util.Map">
+        select relationship_name,link_name,contact from mag_customer_linkman where customer_id = #{customerID} and type='1'
+    </select>
+    <!--查询离现在最近的那一条还款记录-->
+    <select id="selectDayForPayTime" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT
+            pay_time
+        FROM
+            mag_repayment
+        WHERE
+            order_id = #{orderId}
+        and (pay_time - #{time}) &gt;= 0
+        and state in('1','3')
+        ORDER BY
+            (pay_time - #{time}) ASC
+        LIMIT 0, 1
+    </select>
+    <!--根据id查询当前部门实体-->
+    <select id="selectBranchById" parameterType="java.lang.String" resultType="com.zw.rule.officeClerkEntity.Branch">
+        select
+			id,
+			type,
+			pid,
+			pname,
+			dept_name AS deptName
+		from zw_sys_department where id=#{id}
+    </select>
+    <!--查询顶级节点低-->
+   <select id="selectMostParsentId" resultType="java.lang.String">
+       select id from zw_sys_department where pid = 0
+   </select>
+    <!--查询二级节点id集合-->
+    <select id="selectSecondIds" parameterType="java.lang.String" resultType="java.lang.String">
+        select id from zw_sys_department where pid=#{topId} and type = 1
+    </select>
+    <!--查询所有子公司名称集合-->
+    <select id="selectSonCompanyNames" parameterType="java.lang.String" resultType="java.lang.String">
+        select dept_name as deptName from zw_sys_department where pid =#{nowCompanyId} and type='1'
+    </select>
+
+    <!--获取当前登录人公司订单的个数-->
+    <select id="selectNowCompanyOrderCount" parameterType="java.util.Map" resultType="java.lang.String">
+        select id from mag_order where  COMPANY = #{nowCompanyName}
+        <if test=" beginTime != null and beginTime != '' ">
+            and CREAT_TIME &gt;= #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and CREAT_TIME &lt;= #{endTime}
+        </if>
+    </select>
+    <!--获取代扣调用次数-->
+    <select id="getNumOfDeducting" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            min(zsd.id) as branch,
+            max(zsd.dept_name) AS companyName,
+            count(mtd.id) as total
+        FROM
+            zw_sys_department zsd
+            LEFT JOIN mag_order mo on zsd.dept_name = mo.company and order_type=2
+            LEFT JOIN (select max(id) as id,
+                               max(order_id) as order_id,
+                               max(fangkuanType) as fangkuanType,
+                               max(huankuanType) as huankuanType,
+                               max(source) as source,
+                               max(creat_time) as creat_time
+                          from mag_transaction_details group by batch_no) mtd
+                  on mo.id = mtd.order_id  and mtd.fangkuanType != 0 and mtd.huankuanType != 0 and mtd.source = 1
+        WHERE
+          zsd.type = '1'
+        <if test=" beginTime != null and beginTime != '' ">
+          and mtd.creat_time &gt;=#{beginTime}
+        </if>
+        <if test=" endTime != null and endTime != '' ">
+          and mtd.creat_time &lt;=#{endTime}
+        </if>
+        GROUP BY zsd.dept_name
+    </select>
+</mapper>

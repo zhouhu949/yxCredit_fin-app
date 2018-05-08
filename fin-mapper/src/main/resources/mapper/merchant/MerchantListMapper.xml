@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.merchant.MerchantListMapper">
+    <!--渠道商户管理++ 商户列表的 mapper文件-->
+    <!--商户等级配置的映射文件-->
+    <resultMap id="merchantGrade" type="com.zw.rule.merchantManagement.MerchantGrade">
+        <id column="id" property="id"/>
+        <result column="grade" property="grade"/>
+        <result column="number_day" property="numberDay"/>
+        <result column="number_week" property="numberWeek"/>
+        <result column="number_month" property="numberMonth"/>
+        <result column="quota_day" property="quotaDay"/>
+        <result column="quota_week" property="quotaWeek"/>
+        <result column="quota_month" property="quotaMonth"/>
+        <result column="single_quota" property="singleQuota"/>
+        <result column="state" property="state"/>
+    </resultMap>
+    <!--查询所有商户-->
+    <select id="selectAllMerchants" resultType="com.zw.rule.merchant.Merchant" parameterType="java.util.Map">
+        SELECT
+        mm.id AS id,
+        mm.mer_name AS merName,
+        mm.mer_email as merEmail,
+        mm.provinces,
+        mm.city,
+        mm.distric,
+        mm.mer_detail_address AS address,
+        mm.creat_time AS creatTime,
+        mm.state,
+        mm.apply_name AS applyName,
+        mm.mer_grade  AS merGradeId,
+        mm.check_state AS checkState,
+        mm.fanQIZha_state AS fanQIZhaState,
+        CONCAT(mm.provinces,mm.city,mm.distric) AS provinceCityiDstric,
+        (SELECT
+        NAME
+        FROM
+        zw_sys_dict
+        WHERE
+        parent_id IN (
+        SELECT
+        id
+        FROM
+        zw_sys_dict
+        WHERE
+        CODE = 'merchantGrade' )
+        and code = mmg.grade
+        ) as merGrade
+        FROM
+        mag_merchant mm
+        left JOIN ( SELECT id,grade from mag_merchant_grade )mmg on mm.mer_grade = mmg.id
+            WHERE 1=1
+            <if test="merchantName != null and merchantName != '' ">
+                AND  mm.mer_name like CONCAT('%',#{merchantName},'%')
+            </if>
+            <if test="applyName != null and applyName != '' ">
+                AND  mm.apply_name like CONCAT('%',#{applyName},'%')
+            </if>
+            <if test=" provinces_id !=null and provinces_id != '' ">
+                AND  mm.provinces_id = #{provinces_id}
+            </if>
+            <if test=" city_id !=null and city_id != '' ">
+                AND  mm.city_id = #{city_id}
+            </if>
+            <if test=" distric_id !=null and distric_id != '' ">
+                AND  mm.distric_id = #{distric_id}
+            </if>
+            <if test=" merchantGrade !=null and merchantGrade != '' ">
+                AND  mm.mer_grade = #{merchantGrade}
+            </if>
+        ORDER by mm.creat_time desc
+
+    </select>
+    <!--添加商户,文字信息-->
+    <insert id="insertOnerMerchant" parameterType="java.util.Map">
+        INSERT INTO mag_merchant (
+            id,
+            mer_name,
+            mer_email,
+            license_number,
+            main_business,
+            type,
+            license_date,
+            registered_capital,
+            employees_number,
+            provinces_id,
+            city_id,
+            distric_id,
+            provinces,
+            city,
+            distric,
+            mer_tel,
+            mer_detail_address,
+            apply_name,
+            apply_tel,
+            apply_card,
+            mer_des,
+            state,
+            creat_time,
+            mer_private_account_id,
+            check_state,
+            fanQIZha_state
+        )
+        VALUES
+            (
+            #{id},
+            #{mer_name},
+            #{add_merchant_email},
+            #{license_number},
+            #{main_business},
+            #{type},
+            #{license_date},
+            #{registered_capital},
+            #{employees_number},
+            #{provinces_id},
+            #{city_id},
+            #{distric_id},
+            #{provinces},
+            #{city},
+            #{distric},
+            #{mer_tel},
+            #{mer_detail_address},
+            #{apply_name},
+            #{apply_tel},
+            #{apply_card},
+            #{mer_des},
+            #{state},
+            #{creatTime},
+            #{mer_private_account_id},
+            #{checkState},
+            #{fanQiZhaState}
+            )
+    </insert>
+
+    <!--提交审核-->
+    <update id="updateCheckState" parameterType="java.util.Map">
+        UPDATE mag_merchant
+        SET check_state = #{checkState}
+        WHERE
+	      id = #{merchantId}
+    </update>
+
+    <!--商户账户信息插入-->
+    <insert id="insertAccountToMerchant" parameterType="com.zw.rule.merchant.MerchantAccountRel">
+            INSERT INTO mag_merchant_account (
+                    id,
+                    merchant_id,
+                    name,
+                    tel,
+                    idcard,
+                    account,
+                    province_id,
+                    city_id,
+                    province_name,
+                    city_name,
+                    bank_name,
+                    type,
+                    bank_head,
+                    bank_head_id
+
+            ) VALUES
+                (
+                    #{id},
+                    #{merchantId},
+                    #{name},
+                    #{tel},
+                    #{idcard},
+                    #{account},
+                    #{provinceId},
+                    #{cityId},
+                    #{provinceName},
+                    #{cityName},
+                    #{bankName},
+                    #{type},
+                    #{bankHead},
+                    #{bankHeadId}
+                )
+    </insert>
+    <!--商户图片关联表上传数据 商户图片-->
+    <insert id="insertImgsTomerchant" parameterType="java.util.Map">
+        INSERT INTO mag_merchant_img_rel (
+                id,
+                merchant_id,
+                img_url,
+                img_type
+            )
+        VALUES
+            (
+                #{id},
+                #{merchantId},
+                #{imgUrl},
+                #{imgType}
+            )
+    </insert>
+    <!--根据商户id查询商户的基本信息-->
+    <select id="selectMerchantBasicInformation" parameterType="java.util.Map" resultType="com.zw.rule.merchant.MerchantBasicInformation">
+        SELECT
+            mm.id,
+            mm.mer_name AS merName,
+            mm.license_number AS licenseNumber,
+            mm.main_business AS mainBusiness,
+            mm.type,
+            mm.license_date AS licenseDate,
+            mm.registered_capital AS registeredCapital,
+            mm.employees_number AS employeesNumber,
+            mm.provinces_id AS provincesId,
+            mm.city_id AS cityId,
+            mm.distric_id AS districId,
+            mm.provinces,
+            mm.city,
+            mm.distric,
+            mm.mer_tel AS merTel,
+            mm.mer_detail_address AS merDetailAddress,
+            mm.apply_name AS applyName,
+            mm.apply_tel AS applyTel,
+            mm.apply_card AS applyCard,
+            mm.mer_des AS merDes,
+            mm.state,
+            mm.creat_time AS creatTime,
+            mm.mer_private_account_id AS merPrivateAccountId,
+            mm.mer_email AS merEmail
+            <if test="nodeId !=null and nodeId != '' ">
+                ,par.approve_suggestion AS suggestion,
+                par.node_id AS nodeId,
+                par.id AS processId
+            </if>
+        FROM
+          mag_merchant mm
+        <if test="nodeId !=null and nodeId != '' ">
+          LEFT JOIN process_approve_record par ON mm.id = par.rel_id
+        </if>
+        WHERE
+            mm.id = #{merchantId}
+            <if test="nodeId !=null and nodeId != '' ">
+                AND par.node_id = #{nodeId}
+            </if>
+    </select>
+    <!--根据商户id查询该商户的账户信息  （法人，委托收款人 ，对公账号）-->
+    <select id="selectMerchantAccounts" parameterType="java.util.Map" resultType="com.zw.rule.merchant.MerchantAccountRel">
+        SELECT
+            id,
+            merchant_id AS merchantId,
+            NAME,
+            tel,
+            idcard,
+            account,
+            province_id AS provinceId,
+            city_id AS cityId,
+            province_name AS provinceName,
+            city_name AS cityName,
+            bank_name AS bankName,
+            type,
+            bank_head_id AS  bankHeadId,
+            bank_head AS  bankHead
+        FROM
+            mag_merchant_account
+        WHERE
+            merchant_id = #{merchantId}
+    </select>
+    <!--根据商户id查询该商户关联的图片信息-->
+    <select id="selectMerchantImgs" parameterType="java.util.Map" resultType="com.zw.rule.merchant.MerchantImgRel">
+        SELECT
+            id,
+            merchant_id,
+            img_url,
+            img_type
+        FROM
+            mag_merchant_img_rel
+        WHERE
+            merchant_id = #{merchantId}
+    </select>
+    <!--根据商户id来删除全部跟商户关联的图片(反欺诈图片除外)-->
+    <delete id="deleteMerchantImgsById" parameterType="java.lang.String">
+      DELETE
+          FROM
+              mag_merchant_img_rel
+          WHERE
+              merchant_id = #{merchantId}
+          AND img_type in('0','1','2','3','4','5','6','7','8')
+    </delete>
+
+    <!--根据商户id更改商户的基本信息-->
+    <update id="updateOnerMerchantById" parameterType="java.util.Map">
+        UPDATE mag_merchant
+        <set>
+            mer_name =#{mer_name},
+            license_number =#{license_number},
+            main_business =#{main_business},
+            type =#{type},
+            license_date =#{license_date},
+            registered_capital =#{registered_capital},
+            employees_number =#{employees_number},
+            provinces_id =#{provinces_id},
+            city_id =#{city_id},
+            distric_id =#{distric_id},
+            provinces =#{provinces},
+            city = #{city},
+            distric = #{distric},
+            mer_tel = #{mer_tel},
+            mer_detail_address =#{mer_detail_address},
+            apply_name = #{apply_name},
+            apply_tel = #{apply_tel},
+            apply_card = #{apply_card},
+            mer_des = #{mer_des},
+            alter_time = #{alterTime},
+            mer_email =#{add_merchant_email}
+        </set>
+        WHERE id=#{merchantId}
+    </update>
+
+    <!--更改商户的账户信息-->
+    <update id="updateMerchantAccounts" parameterType="com.zw.rule.merchant.MerchantAccountRel">
+        UPDATE mag_merchant_account
+            <set>
+                NAME =#{name},
+                tel =#{tel},
+                idcard =#{idcard},
+                account =#{account},
+                province_id  =#{provinceId},
+                city_id =#{cityId},
+                province_name =#{provinceName},
+                city_name =#{cityName},
+                bank_name =#{bankName},
+                bank_head=#{bankHead},
+                bank_head_id=#{bankHeadId}
+            </set>
+        WHERE
+            id=#{id}
+            and
+            merchant_id =#{merchantId}
+            and
+            type=#{type}
+    </update>
+
+    <!--更改商户的对私主账号-->
+    <update id="updateMerchantMainPriviteId" parameterType="java.util.Map">
+        UPDATE mag_merchant
+        <set>
+            mer_private_account_id =#{merPrivateAccountId}
+        </set>
+        <where>
+            id=#{merchantId}
+        </where>
+    </update>
+
+    <!--激活或者冻结-->
+    <update id="updateActivateOrFreeze" parameterType="java.util.Map">
+        <if test="merchantId != null and merchantId != '' ">
+            UPDATE mag_merchant
+            <set>
+                state=#{state}
+            </set>
+            WHERE id=#{merchantId}
+        </if>
+    </update>
+    <!--查询所有的商户分级信息-->
+    <select id="selectAllMerchantGrade" resultMap="merchantGrade" >
+        SELECT
+            mmg.id,
+            zsd. NAME AS grade,
+            mmg.number_day,
+            mmg.number_week,
+            mmg.number_month,
+            mmg.quota_day,
+            mmg.quota_week,
+            mmg.quota_month,
+            mmg.single_quota,
+            mmg.state,
+            mmg.grade AS grade_id
+        FROM
+            mag_merchant_grade mmg
+        LEFT JOIN (
+            SELECT
+                NAME,
+                CODE
+            FROM
+                zw_sys_dict
+            WHERE
+                parent_id IN (
+                    SELECT
+                        id
+                    FROM
+                        zw_sys_dict
+                    WHERE
+                        CODE = 'merchantGrade'
+                )
+        ) zsd ON zsd. CODE = mmg.grade
+        WHERE mmg.state='1'
+        </select>
+    <!--更改商户等级-->
+    <update id="updateMerGrade" parameterType="java.util.Map">
+        <if test="merchantId != null and merchantId != '' ">
+            UPDATE mag_merchant
+            SET  mer_grade=#{merGrade}
+            WHERE id=#{merchantId}
+        </if>
+    </update>
+    <!--查询所有未被冻结的和曾经没有被绑定过的办单员(没有任何关联关系) 作为给商户关联用-->
+    <select id="selectAllSalesman" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager" parameterType="java.util.Map">
+        SELECT
+            id,
+            tel,
+            realname,
+            branch
+            FROM
+            mag_salesman
+        WHERE
+          activation_state = '1'
+        AND id NOT IN (
+            SELECT
+            employee_id
+            FROM
+            mag_merchant_saleman_rel
+            WHERE
+            merchant_id = #{merchantId}
+        )
+        <if test="salesmanName != null and salesmanName !='' ">
+          AND realname like CONCAT('%',#{salesmanName},'%')
+        </if>
+        <if test="salesmanTel != null and salesmanTel != '' ">
+          AND  tel = #{salesmanTel}
+        </if>
+    </select>
+    <!--绑定办单员-->
+    <insert id="insertBidingSalesmans" parameterType="com.zw.rule.officeClerkEntity.MerchantSalemanRel">
+      INSERT into mag_merchant_saleman_rel
+      (id,employee_id,merchant_id,state)
+        VALUES(
+        #{id},
+        #{employeeId},
+        #{merchantId},
+        #{state}
+        )
+    </insert>
+    <!--查询该商户下的办单员(包括曾经绑定后来又解绑的)-->
+    <select id="selectAllSalesmanFromMerchant" parameterType="java.util.Map" resultType="com.zw.rule.officeClerkEntity.OfficeClerkManager">
+        SELECT
+            ms.id,
+            ms.tel,
+            ms.realname,
+            ms.branch,
+            ms.activation_state AS  activationState,
+            mmr.state as relState,
+            mmr.id as relId
+        FROM
+            (
+                SELECT
+                    id,
+                    tel,
+                    realname,
+                    branch,
+                    activation_state
+                FROM
+                    mag_salesman
+                WHERE
+                    id IN (
+                        SELECT
+                            employee_id
+                        FROM
+                            mag_merchant_saleman_rel
+                        WHERE
+                            merchant_id = #{merchantId}
+                    )
+            ) ms
+        LEFT JOIN
+          mag_merchant_saleman_rel mmr
+        ON
+          ms.id = mmr.employee_id
+        AND
+          mmr.merchant_id = #{merchantId}
+        WHERE 1=1
+        <if test="salesmanName != '' and salesmanName != null">
+            AND ms.realname=#{salesmanName}
+        </if>
+        <if test="salesmanTel != null and salesmanTel != '' ">
+            AND ms.tel=#{salesmanTel}
+        </if>
+    </select>
+    <!--解除绑定或者再次绑定(其实就是更改关联表的state)-->
+    <update id="changeMerchantSalesmanRelState" parameterType="java.util.Map">
+        update mag_merchant_saleman_rel
+          SET
+            state=#{relState}
+            WHERE id=#{relId}
+
+    </update>
+    
+    <select id="getLoanAccount"  parameterType="string" resultType="com.zw.rule.merchant.MerchantAccountRel">
+           SELECT
+            mma.id,
+            mma.merchant_id AS merchantId,
+            mma.NAME,
+            mma.tel,
+            mma.idcard,
+            mma.account,
+            mma.province_id AS provinceId,
+            mma.city_id AS cityId,
+            mma.province_name AS provinceName,
+            mma.city_name AS cityName,
+            mma.bank_name AS bankName,
+            mma.type,
+            mma.bank_head
+        FROM
+            mag_merchant_account mma
+        <where>
+            mma.id IN  (select mer_private_account_id from  mag_merchant  where id = #{merPrivateAccountid} )
+        </where>
+    </select>
+</mapper>

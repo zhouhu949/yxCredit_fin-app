@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerPropertyMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerProperty" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pro_area" property="proArea" jdbcType="VARCHAR" />
+    <result column="structure" property="structure" jdbcType="VARCHAR" />
+    <result column="pro_address" property="proAddress" jdbcType="VARCHAR" />
+    <result column="cell_name" property="cellName" jdbcType="VARCHAR" />
+    <result column="method_id" property="methodId" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="mortgage_bank" property="mortgageBank" jdbcType="VARCHAR" />
+    <result column="mortgage_date" property="mortgageDate" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="month" property="month" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="distric" property="distric" jdbcType="VARCHAR" />
+    <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pro_area, structure, pro_address, cell_name, method_id, method, mortgage_bank,mortgage_date,
+    year, month, amount, customer_id, creat_time, update_time, provinces, city, distric,
+    provinces_id, city_id, distric_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_property
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_property
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerProperty" >
+    insert into mag_customer_property (id, pro_area, structure,
+    pro_address, cell_name, method_id,
+    method, mortgage_bank, year,
+    month, amount, customer_id,
+    creat_time, update_time, provinces,
+    city, distric, provinces_id,
+    city_id, distric_id)
+    values (#{id,jdbcType=VARCHAR}, #{proArea,jdbcType=VARCHAR}, #{structure,jdbcType=VARCHAR},
+    #{proAddress,jdbcType=VARCHAR}, #{cellName,jdbcType=VARCHAR}, #{methodId,jdbcType=VARCHAR},
+    #{method,jdbcType=VARCHAR}, #{mortgageBank,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR},
+    #{month,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR},
+    #{creatTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{provinces,jdbcType=VARCHAR},
+    #{city,jdbcType=VARCHAR}, #{distric,jdbcType=VARCHAR}, #{provincesId,jdbcType=VARCHAR},
+    #{cityId,jdbcType=VARCHAR}, #{districId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerProperty" >
+    insert into mag_customer_property
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="proArea != null" >
+        pro_area,
+      </if>
+      <if test="structure != null" >
+        structure,
+      </if>
+      <if test="proAddress != null" >
+        pro_address,
+      </if>
+      <if test="cellName != null" >
+        cell_name,
+      </if>
+      <if test="methodId != null" >
+        method_id,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="mortgageBank != null" >
+        mortgage_bank,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="provinces != null" >
+        provinces,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="distric != null" >
+        distric,
+      </if>
+      <if test="provincesId != null" >
+        provinces_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="districId != null" >
+        distric_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="proArea != null" >
+        #{proArea,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="proAddress != null" >
+        #{proAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null" >
+        #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodId != null" >
+        #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="mortgageBank != null" >
+        #{mortgageBank,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces != null" >
+        #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="distric != null" >
+        #{distric,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesId != null" >
+        #{provincesId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districId != null" >
+        #{districId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerProperty" >
+    update mag_customer_property
+    <set >
+      <if test="proArea != null" >
+        pro_area = #{proArea,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        structure = #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="proAddress != null" >
+        pro_address = #{proAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null" >
+        cell_name = #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="methodId != null" >
+        method_id = #{methodId,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="mortgageBank != null" >
+        mortgage_bank = #{mortgageBank,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces != null" >
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="distric != null" >
+        distric = #{distric,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesId != null" >
+        provinces_id = #{provincesId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="districId != null" >
+        distric_id = #{districId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerProperty" >
+    update mag_customer_property
+    set pro_area = #{proArea,jdbcType=VARCHAR},
+      structure = #{structure,jdbcType=VARCHAR},
+      pro_address = #{proAddress,jdbcType=VARCHAR},
+      cell_name = #{cellName,jdbcType=VARCHAR},
+      method_id = #{methodId,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR},
+      mortgage_bank = #{mortgageBank,jdbcType=VARCHAR},
+      year = #{year,jdbcType=VARCHAR},
+      month = #{month,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR},
+      customer_id = #{customerId,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      provinces = #{provinces,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      distric = #{distric,jdbcType=VARCHAR},
+      provinces_id = #{provincesId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      distric_id = #{districId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getCustomerProperty" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_property
+    where customer_id = #{customerId}
+  </select>
+</mapper>

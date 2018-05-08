@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.orderRiskStringNumberMapper.RiskNumberMapper" >
+    <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.Order" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+        <result column="PERIODS" property="periods" jdbcType="VARCHAR" />
+        <result column="MERCHANT_ID" property="merchantId" jdbcType="VARCHAR" />
+        <result column="MERCHANT_NAME" property="merchantName" jdbcType="VARCHAR" />
+        <result column="merchandise_id" property="merchandiseId" jdbcType="VARCHAR" />
+        <result column="merchandise_type" property="merchandiseType" jdbcType="VARCHAR" />
+        <result column="merchandise_name" property="merchandiseName" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+        <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+        <result column="TEL" property="tel" jdbcType="VARCHAR" />
+        <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+        <result column="CARD" property="card" jdbcType="VARCHAR" />
+        <result column="CREDIT" property="credit" jdbcType="VARCHAR" />
+        <result column="PRECREDIT" property="precredit" jdbcType="VARCHAR" />
+        <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+        <result column="COMPANY" property="company" jdbcType="VARCHAR" />
+        <result column="BRANCH" property="branch" jdbcType="VARCHAR" />
+        <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+        <result column="MANAGER" property="manager" jdbcType="VARCHAR" />
+        <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+        <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="APEX1" property="apex1" jdbcType="VARCHAR" />
+        <result column="APEX2" property="apex2" jdbcType="VARCHAR" />
+        <result column="APEX3" property="apex3" jdbcType="VARCHAR" />
+        <result column="BAK" property="bak" jdbcType="VARCHAR" />
+        <result column="repay_type" property="repayType" jdbcType="VARCHAR" />
+        <result column="rate" property="rate" jdbcType="VARCHAR" />
+        <result column="merchandise_brand" property="merchandiseBrand" jdbcType="VARCHAR" />
+        <result column="merchandise_model" property="merchandiseModel" jdbcType="VARCHAR" />
+        <result column="merchandise_code" property="merchandiseCode" jdbcType="VARCHAR" />
+        <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+        <result column="distric_id" property="districId" jdbcType="VARCHAR" />
+        <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="distric" property="distric" jdbcType="VARCHAR" />
+        <result column="product_type" property="productType" jdbcType="VARCHAR" />
+        <result column="product_type_name" property="productTypeName" jdbcType="VARCHAR" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <result column="product_name_name" property="productNameName" jdbcType="VARCHAR" />
+        <result column="product_detail" property="productDetail" jdbcType="VARCHAR" />
+        <result column="product_detail_name" property="productDetailName" jdbcType="VARCHAR" />
+        <result column="product_detail_code" property="productDetailCode" jdbcType="VARCHAR" />
+        <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
+        <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="merchandise_brand_id" property="merchandiseBrandId" jdbcType="VARCHAR" />
+        <result column="merchandise_type_id" property="merchandiseTypeId" jdbcType="VARCHAR" />
+        <result column="emp_number" property="empNumber" jdbcType="VARCHAR" />
+        <result column="repay_money" property="repayMoney" jdbcType="VARCHAR" />
+        <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+        <result column="applay_money" property="applayMoney" jdbcType="VARCHAR" />
+        <result column="predict_price" property="predictPrice" jdbcType="VARCHAR" />
+        <result column="receive_id" property="receiveId" jdbcType="VARCHAR" />
+        <result column="score_card" property="scoreCard" jdbcType="VARCHAR" />
+        <result column="order_submission_time" property="orderSubmissionTime" jdbcType="VARCHAR" />
+        <result column="manageFee" property="manageFee" jdbcType="VARCHAR" />
+        <result column="quickTrialFee" property="quickTrialFee" jdbcType="VARCHAR" />
+        <result column="fee_state" property="feeState" jdbcType="VARCHAR" />
+        <result column="fee" property="fee" jdbcType="VARCHAR" />
+        <result column="repay_date" property="repayDate" jdbcType="VARCHAR" />
+        <result column="source" property="source" jdbcType="VARCHAR" />
+        <result column="weight" property="weight" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="VARCHAR" />
+        <result column="delivery_state" property="deliveryState" jdbcType="VARCHAR" />
+        <result column="rebates_state" property="rebatesState" jdbcType="VARCHAR" />
+        <result column="answer_state" property="answerState" jdbcType="VARCHAR" />
+        <result column="answer_score" property="answerScore" jdbcType="VARCHAR" />
+        <result column="loan_state" property="loanState" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ID, order_no, USER_ID, PERIODS, MERCHANT_ID, MERCHANT_NAME, merchandise_id, merchandise_type,
+        merchandise_name, CUSTOMER_ID, CUSTOMER_NAME, sex_name, TEL, CARD_TYPE,
+        CARD, CREDIT, PRECREDIT, AMOUNT, COMPANY, BRANCH, emp_id, MANAGER, CREAT_TIME,
+        ALTER_TIME, state, APEX3, BAK, repay_type, rate,
+        merchandise_brand, merchandise_model, merchandise_code,
+        provinces_id, city_id, distric_id, provinces, city, distric,
+        product_type, product_type_name, product_name,
+        product_name_name, product_detail, product_detail_name, product_detail_code,
+        contract_amount, loan_amount, sex, merchandise_brand_id, merchandise_type_id, emp_number,repay_money, order_type,
+        applay_money, predict_price, receive_id,score_card,order_submission_time,fee_state,quickTrialFee,manageFee,fee,repay_date,source,weight,price,answer_state,loan_state, order_type,answer_score
+    </sql>
+    <select id="getSubmitList" resultType="com.zw.rule.customer.po.Order" parameterType="java.util.Map" >
+        SELECT
+        mo.ID,
+        mo.order_no,
+        mo.USER_ID,
+        mo.PERIODS,
+        mo.MERCHANT_ID,
+        mo.MERCHANT_NAME,
+        mo.merchandise_id,
+        mo.merchandise_type,
+        mo.merchandise_name,
+        mo.CUSTOMER_ID,
+        mo.CUSTOMER_NAME,
+        mo.sex_name,
+        mo.TEL,
+        mo.CARD_TYPE,
+        mo.CARD,
+        mo.CREDIT,
+        mo.PRECREDIT,
+        mo.AMOUNT,
+        mo.COMPANY,
+        mo.BRANCH,
+        mo.emp_id,
+        mo.MANAGER,
+        mo.CREAT_TIME,
+        mo.ALTER_TIME,
+        (case when mo.state='5' and mo.commodity_state &gt; '15' and mo.commodity_state &lt; '16.7' then '-1'
+        when mo.state='5' and mo.commodity_state = '16.7' then '-2'
+        when  mo.state='5' and mo.commodity_state &gt; '16.7' and mo.commodity_state &lt; '18' then '-3'
+        when mo.state='5' and mo.commodity_state = '18' then '-4'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and (mr.repayCount = 0 or mr.repayCount is null) then '-5'
+        when mo.state='5' and mo.commodity_state &gt;= '19' and mo.commodity_state &lt; '21' and mr.repayCount > 0 then '-6'
+        when mo.state='0' and mo.commodity_state = '21' then '-7'
+        else mo.state end) as state,
+        mo.APEX3,
+        mo.BAK,
+        mo.repay_type,
+        mo.rate,
+        mo.merchandise_brand,
+        mo.merchandise_model,
+        mo.merchandise_code,
+        mo.provinces_id,
+        mo.city_id,
+        mo.distric_id,
+        mo.distric,
+        mo.product_type,
+        mo.product_type_name,
+        mo.product_name,
+        mo.product_name_name,
+        mo.product_detail,
+        mo.product_detail_name,
+        mo.product_detail_code,
+        mo.contract_amount,
+        mo.loan_amount,
+        mo.sex,
+        mo.merchandise_brand_id,
+        mo.merchandise_type_id,
+        mo.emp_number,
+        mo.repay_money,
+        mo.order_type,
+        mo.applay_money,
+        mo.predict_price,
+        mo.receive_id,
+        mo.score_card,
+        mo.order_submission_time,
+        mcl.provinces AS provinces,
+        mcl.city AS city,
+        mo.weight,
+        mo.price,
+        mo.delivery_state
+        FROM
+        mag_order mo
+        LEFT JOIN mag_customer_live mcl ON mo.CUSTOMER_ID = mcl.customer_id
+        LEFT JOIN mag_salesman ms ON mo.emp_id = ms.id
+        left join (select count(1) as repayCount, order_id from mag_repayment where state=2 or state=3 or state=4 group by order_id) mr
+        on mo.id=mr.order_id
+        <where>
+            1=1 AND
+            mo.state!='0'
+            AND  mo.merchandise_code in(select merchandise_code from mag_order GROUP BY merchandise_code HAVING COUNT(*)>1)
+            <if test=" headquarters!= null and headquarters != ''">
+                and  ms.branch  in (SELECT id  FROM zw_sys_department where FIND_IN_SET(id, getChildDepartment(${headquarters})))
+            </if>
+
+            <if test=" branch!= null and branch != ''">
+                and   ms.branch =#{branch}
+            </if>
+            <if test="customerName != null and customerName != ''">
+                and mo.CUSTOMER_NAME like '%${customerName}%'
+            </if>
+            <if test="card != null and card != ''">
+                and mo.CARD like '%${card}%'
+            </if>
+            <if test="tel != null and tel != ''">
+                and mo.TEL like '%${tel}%'
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and mo.order_no like '%${orderNo}%'
+            </if>
+
+            <choose>
+                <when test="condition=='-1'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt; '15'
+                    and mo.commodity_state &lt; '16.7'
+                </when>
+                <when test="condition=='-2'">
+                    and mo.state='5'
+                    and mo.commodity_state = '16.7'
+                </when>
+                <when test="condition=='-3'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt; '16.7'
+                    and mo.commodity_state &lt; '18'
+                </when>
+                <when test="condition=='-4'">
+                    and mo.state='5'
+                    and mo.commodity_state = '18'
+                </when>
+                <when test="condition=='-5'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt;= '19'
+                    and mo.commodity_state &lt; '21'
+                    and (mr.repayCount = 0 or mr.repayCount is null)
+                </when>
+                <when test="condition=='-6'">
+                    and mo.state='5'
+                    and mo.commodity_state &gt;= '19'
+                    and mo.commodity_state &lt; '21'
+                    and mr.repayCount > 0
+                </when>
+                <when test="condition=='-7'">
+                    and mo.state='0'
+                    and mo.commodity_state = '21'
+                </when>
+                <when test="condition=='5'">
+                    and mo.state='5'
+                    and mo.commodity_state &lt;= '15'
+                </when>
+                <when test="condition != null and condition != ''">
+                    and mo.state=#{condition}
+                </when>
+            </choose>
+
+            <if test="beginTime != null and beginTime != ''">
+                and mo.CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and mo.CREAT_TIME &lt;= #{endTime}
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and mo.CUSTOMER_ID = #{customerId}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and mo.order_type = #{orderType}
+            </if>
+            <if test="merchandiseCode != null and merchandiseCode != ''">
+                and mo.merchandise_code = #{merchandiseCode}
+            </if>
+        </where>
+        order by mo.merchandise_code desc
+    </select>
+
+
+</mapper>

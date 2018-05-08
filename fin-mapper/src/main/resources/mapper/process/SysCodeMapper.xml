@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.process.SysCodeMapper">
+
+	<resultMap type="com.zw.rule.process.po.SysCode" id="sysCode">
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="description" property="desc"/>
+	</resultMap>
+
+	<select id="getProductByList" parameterType="map" resultMap="sysCode">
+		SELECT code,name,description  from sys_code
+		<where>
+			state = '2'
+			<if test="searchKey != null">
+				and name LIKE CONCAT('%',#{searchKey},'%' )
+			</if>
+		</where>
+	</select>
+
+</mapper>

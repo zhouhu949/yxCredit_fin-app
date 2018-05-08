@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.smsManage.SmsMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.sms.po.SmsManage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sms_name" property="sms_name" jdbcType="VARCHAR" />
+    <result column="sms_content" property="sms_content" jdbcType="VARCHAR" />
+    <result column="sms_rule" property="sms_rule" jdbcType="VARCHAR" />
+    <result column="sms_state" property="sms_state" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+    <result column="platform_type" property="platform_type" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResultRecordMap" type="com.zw.rule.sms.po.SmsRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sms_id" property="smsId" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, sms_name, sms_content, sms_rule, sms_state, create_time,alter_time,platform_type
+  </sql>
+  <sql id="Base_Column_record_List" >
+    id, sms_id, customer_id, tel, content, create_time
+  </sql>
+  <select id="getSmsList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sms_manage
+    where 1=1
+    <if test="sms_name != null and sms_name != ''">
+      and sms_name like CONCAT('%',#{sms_name},'%')
+    </if>
+    order by create_time desc
+  </select>
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="addSms" parameterType="com.zw.rule.sms.po.SmsManage">
+    INSERT INTO sms_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sms_name != null" >
+        sms_name,
+      </if>
+      <if test="sms_content != null" >
+        sms_content,
+      </if>
+      <if test="sms_rule != null" >
+        sms_rule,
+      </if>
+      <if test="sms_state != null" >
+        sms_state,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+      <if test="platform_type != null" >
+        platform_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="sms_name != null" >
+        #{sms_name},
+      </if>
+      <if test="sms_content != null" >
+        #{sms_content},
+      </if>
+      <if test="sms_rule != null" >
+        #{sms_rule},
+      </if>
+      <if test="sms_state != null" >
+        #{sms_state},
+      </if>
+      <if test="create_time != null" >
+        #{create_time},
+      </if>
+      <if test="platform_type != null" >
+        #{platform_type}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSms" parameterType="com.zw.rule.sms.po.SmsManage" >
+    update sms_manage
+    <set >
+      <if test="sms_name != null" >
+        sms_name = #{sms_name,jdbcType=VARCHAR},
+      </if>
+      <if test="sms_content != null" >
+        sms_content = #{sms_content,jdbcType=VARCHAR},
+      </if>
+      <if test="sms_rule != null" >
+        sms_rule = #{sms_rule,jdbcType=VARCHAR},
+      </if>
+      <if test="sms_state != null" >
+        sms_state = #{sms_state,jdbcType=BIGINT},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alter_time,jdbcType=VARCHAR},
+      </if>
+      <if test="platform_type != null" >
+        platform_type = #{platform_type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteSms" parameterType="java.lang.String">
+    delete from sms_manage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />  from sms_manage where id=#{id};
+  </select>
+  <update id="updateState" parameterType="java.util.Map">
+    update sms_manage set  sms_state=#{sms_state}  where id=#{id};
+  </update>
+
+
+  <select id="getSmsRecordList" resultMap="BaseResultRecordMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_record_List" />
+    from sms_record
+    where 1=1
+    <if test="sms_tel != null and sms_tel != ''">
+      and tel like CONCAT('%',#{sms_tel},'%')
+    </if>
+    <if test="beginTime != null and beginTime != ''">
+      and create_time>#{beginTime}
+    </if>
+    <if test="endTime != null and endTime != ''">
+      and #{endTime}>create_time
+    </if>
+    order by create_time desc
+  </select>
+
+  <select id="getRecordById" parameterType="java.lang.String" resultMap="BaseResultRecordMap">
+    select <include refid="Base_Column_record_List" /> from sms_record where id=#{id};
+  </select>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerMatchingMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerMatching" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="cell_name" property="cellName" jdbcType="VARCHAR" />
+    <result column="average_house_price" property="averageHousePrice" jdbcType="VARCHAR" />
+    <result column="average_renovation_price" property="averageRenovationPrice" jdbcType="VARCHAR" />
+    <result column="provinces_id" property="provincesId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cell_name, average_house_price, average_renovation_price, provinces_id, city_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mag_customer_matching
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_matching
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerMatching" >
+    insert into mag_customer_matching (id, cell_name, average_house_price, 
+      average_renovation_price, provinces_id, city_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{cellName,jdbcType=VARCHAR}, #{averageHousePrice,jdbcType=VARCHAR}, 
+      #{averageRenovationPrice,jdbcType=VARCHAR}, #{provincesId,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerMatching" >
+    insert into mag_customer_matching
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cellName != null" >
+        cell_name,
+      </if>
+      <if test="averageHousePrice != null" >
+        average_house_price,
+      </if>
+      <if test="averageRenovationPrice != null" >
+        average_renovation_price,
+      </if>
+      <if test="provincesId != null" >
+        provinces_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cellName != null" >
+        #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="averageHousePrice != null" >
+        #{averageHousePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="averageRenovationPrice != null" >
+        #{averageRenovationPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesId != null" >
+        #{provincesId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerMatching" >
+    update mag_customer_matching
+    <set >
+      <if test="cellName != null" >
+        cell_name = #{cellName,jdbcType=VARCHAR},
+      </if>
+      <if test="averageHousePrice != null" >
+        average_house_price = #{averageHousePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="averageRenovationPrice != null" >
+        average_renovation_price = #{averageRenovationPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="provincesId != null" >
+        provinces_id = #{provincesId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerMatching" >
+    update mag_customer_matching
+    set cell_name = #{cellName,jdbcType=VARCHAR},
+      average_house_price = #{averageHousePrice,jdbcType=VARCHAR},
+      average_renovation_price = #{averageRenovationPrice,jdbcType=VARCHAR},
+      provinces_id = #{provincesId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getMatchingPrice" resultMap="BaseResultMap" parameterType="com.zw.rule.customer.po.CustomerMatching" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_matching
+    where cell_name like '%${cellName}%'
+    <if test="provincesId != null" >
+      and provinces_id = #{provincesId}
+    </if>
+    <if test="cityId != null" >
+      and city_id = #{cityId}
+    </if>
+  </select>
+</mapper>

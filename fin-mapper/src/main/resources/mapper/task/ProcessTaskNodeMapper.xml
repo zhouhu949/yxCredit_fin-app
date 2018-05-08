@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.task.ProcessTaskNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.task.po.ProcessTaskNode" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="rel_type" property="relType" jdbcType="VARCHAR" />
+    <result column="rel_id" property="relId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="process_node" property="processNode" jdbcType="BIGINT" />
+    <result column="operate_user" property="operateUser" jdbcType="BIGINT" />
+    <result column="node_json" property="nodeJson" jdbcType="LONGVARCHAR" />
+    <result column="node_script" property="nodeScript" jdbcType="LONGVARCHAR" />
+    <result column="page_url" property="pageUrl" jdbcType="VARCHAR" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="exc_type" property="excType" jdbcType="VARCHAR" />
+    <result column="node_state" property="nodeState" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="commit_time" property="commitTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id,exc_type, process_node, operate_user, node_state, create_time, commit_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from process_task_node
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from process_task_node
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.task.po.ProcessTaskNode" >
+    insert into process_task_node (id, task_id, process_node,
+    operate_user, node_state, create_time,
+    commit_time)
+    values (#{id,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{processNode,jdbcType=BIGINT},
+    #{operateUser,jdbcType=BIGINT}, #{nodeState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+    #{commitTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.task.po.ProcessTaskNode" >
+    insert into process_task_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="processNode != null" >
+        process_node,
+      </if>
+      <if test="operateUser != null" >
+        operate_user,
+      </if>
+      <if test="nodeState != null" >
+        node_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="commitTime != null" >
+        commit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="processNode != null" >
+        #{processNode,jdbcType=BIGINT},
+      </if>
+      <if test="operateUser != null" >
+        #{operateUser,jdbcType=BIGINT},
+      </if>
+      <if test="nodeState != null" >
+        #{nodeState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commitTime != null" >
+        #{commitTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.task.po.ProcessTaskNode" >
+    update process_task_node
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="processNode != null" >
+        process_node = #{processNode,jdbcType=BIGINT},
+      </if>
+      <if test="operateUser != null" >
+        operate_user = #{operateUser,jdbcType=BIGINT},
+      </if>
+      <if test="nodeState != null" >
+        node_state = #{nodeState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commitTime != null" >
+        commit_time = #{commitTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.task.po.ProcessTaskNode" >
+    update process_task_node
+    set task_id = #{taskId,jdbcType=VARCHAR},
+    process_node = #{processNode,jdbcType=BIGINT},
+    operate_user = #{operateUser,jdbcType=BIGINT},
+    node_state = #{nodeState,jdbcType=INTEGER},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    commit_time = #{commitTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getNextNodeByProcessNode" parameterType="long" resultType="string">
+    SELECT next_nodes
+    from zw_process_node
+    where node_id = #{processNode}
+  </select>
+
+  <select id="getNodeJsonByProcessNode" parameterType="long" resultType="string">
+    SELECT node_json
+    from zw_process_node
+    where node_id = #{processNode}
+  </select>
+
+  <update id="updateProcessTaskNodeStatus" parameterType="java.util.Map">
+    UPDATE process_task_node
+    SET node_state = #{status},commit_time = now()
+    where id = #{taskNodeId}
+  </update>
+
+  <update id="updateProcessTaskStatus" parameterType="java.util.Map">
+    UPDATE process_task
+    SET task_state = #{status},node_alter_time = now()
+    where id = #{taskId}
+  </update>
+
+  <select id="getTaskNodeId" parameterType="string" resultType="java.lang.String">
+    select id from process_task_node where rel_id=#{relId}
+  </select>
+
+  <update id="changeTask" parameterType="java.util.Map">
+    UPDATE process_task_node
+    SET operate_user = #{userId}
+    where id = #{taskNodeId}
+  </update>
+
+  <update id="exitTask" parameterType="java.lang.String">
+    UPDATE process_task_node
+    SET operate_user = NULL ,
+        node_state = 0
+    where id = #{taskNodeId}
+  </update>
+
+  <select id="isCommit" parameterType="string" resultType="map">
+    select * from process_task_node where id=#{taskNodeId} and node_state not in ('1','0','5')
+  </select>
+
+  <update id="updateApproveSuggestion" parameterType="map">
+    UPDATE process_task_node
+    SET approve_suggestion = #{approveSuggestion}
+    where id = #{taskNodeId}
+  </update>
+
+  <select id="findIdList" parameterType="string" resultType="map">
+    SELECT
+    id,process_node
+    FROM
+    process_task_node
+    WHERE
+    task_id = (
+    SELECT
+    task_id
+    FROM
+    process_task_node
+    WHERE
+    id = #{taskNodeId}
+    )
+    AND (SELECT
+    create_time
+    FROM
+    process_task_node
+    WHERE
+    id = #{taskNodeId}) > create_time
+    ORDER BY
+    create_time DESC;
+  </select>
+
+  <update id="initProcessTaskNode" parameterType="java.util.Map">
+    UPDATE process_task_node
+    SET node_state = #{status},operate_user = null, approve_suggestion=NULL ,commit_time = NULL
+    where id = #{taskNodeId}
+  </update>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.pcd.CityMapper" >
+    <resultMap type="com.zw.rule.pcd.po.City" id="cityMap">
+        <id column="id" property="id"/>
+        <result column="city_name" property="cityName"/>
+        <result column="short_name" property="shortName"/>
+        <result column="province_id" property="provinceId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="getCity" parameterType="Map" resultMap="cityMap">
+        select id ,city_name  from zw_sys_city where province_id=#{parentId}
+    </select>
+
+    <select id="getCityById" parameterType="String" resultMap="cityMap">
+        select id ,city_name  from zw_sys_city where id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.product.ICrmProductMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.product.ProCrmProduct" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="emp_id" property="emp_id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="pro_name" property="pro_name" jdbcType="VARCHAR" />
+    <result column="pro_quota" property="pro_quota" jdbcType="VARCHAR" />
+    <result column="pro_number" property="pro_number" jdbcType="VARCHAR" />
+    <result column="pro_describe" property="pro_describe" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parent_id" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="DECIMAL" />
+    <result column="provinces" property="provinces" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="distric" property="distric" jdbcType="VARCHAR" />
+    <result column="provinces_id" property="provinces_id" jdbcType="VARCHAR" />
+    <result column="city_id" property="city_id" jdbcType="VARCHAR" />
+    <result column="distric_id" property="distric_id" jdbcType="VARCHAR" />
+    <result column="img_url" property="img_url" jdbcType="VARCHAR" />
+    <result column="pro_quota_limit" property="pro_quota_limit" jdbcType="VARCHAR" />
+    <result column="pro_quota_proportion" property="pro_quota_proportion" jdbcType="VARCHAR" />
+    <result column="pro_series_type" property="pro_series_type" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="WorkProductMap" type="com.zw.rule.product.WorkingProductDetail" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+
+    <result column="crm_product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="periods" property="periods" jdbcType="DECIMAL" />
+    <result column="contract_rate" property="contractRate" jdbcType="DECIMAL" />
+    <result column="multiple_rate" property="multipleRate" jdbcType="DECIMAL" />
+    <result column="payment" property="payment" jdbcType="DECIMAL" />
+    <result column="actual_lower_limit" property="actualLowerLimit" jdbcType="DECIMAL" />
+    <result column="actual_upper_limit" property="actualUpperLimit" jdbcType="DECIMAL" />
+    <result column="credit_protect_day" property="creditProtectDay" jdbcType="DECIMAL" />
+    <result column="overdue_protect_day" property="overdueProtectDay" jdbcType="DECIMAL" />
+    <result column="interest_rate" property="interestRate" jdbcType="DECIMAL" />
+    <result column="interest_remark" property="interestRemark" jdbcType="VARCHAR" />
+    <result column="contract_violate_rate" property="contractViolateRate" jdbcType="DECIMAL" />
+    <result column="contract_violate_remark" property="contractViolateRemark" jdbcType="DECIMAL" />
+    <result column="bail_rate" property="bailRate" jdbcType="DECIMAL" />
+    <result column="bail_remark" property="bailRemark" jdbcType="VARCHAR" />
+    <result column="bail_pay_mode" property="bailPayMode" jdbcType="VARCHAR" />
+    <result column="staging_services_rate" property="stagingServicesRate" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="DECIMAL" />
+    <result column="duetime_type" property="duetimeType" jdbcType="INTEGER" />
+
+    <result column="before_service_fee_rate" property="beforeServiceFeeRate" jdbcType="DECIMAL" />
+    <result column="max_day" property="maxDay" jdbcType="VARCHAR" />
+    <result column="diy_type" property="diyType" jdbcType="VARCHAR" />
+    <result column="diy_days" property="diyDays" jdbcType="VARCHAR" />
+
+
+    <!--<result column="overdueDouble" property="overdueDouble" jdbcType="VARCHAR" />
+    <result column="interestRateTwo" property="interestRateTwo" jdbcType="VARCHAR" />
+    <result column="overdueThird" property="overdueThird" jdbcType="VARCHAR" />
+    <result column="overdueFourth" property="overdueFourth" jdbcType="VARCHAR" />
+    <result column="interestRateThird" property="interestRateThird" jdbcType="VARCHAR" />
+    <result column="interestRateFourth" property="interestRateFourth" jdbcType="VARCHAR" />-->
+  </resultMap>
+
+  <resultMap id="feeMap" type="com.zw.rule.product.Fee" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <id column="product_amount" property="productAmount" jdbcType="VARCHAR" />
+    <id column="product_periods" property="productPeriods" jdbcType="VARCHAR" />
+    <id column="product_com_fee" property="productComFee" jdbcType="VARCHAR" />
+    <id column="li_xi" property="li_xi" jdbcType="VARCHAR" />
+    <id column="zhifu_fee" property="zhifu_fee" jdbcType="VARCHAR" />
+    <id column="fengxian_fee" property="fengxian_fee" jdbcType="VARCHAR" />
+    <id column="shenhe_fee" property="shenhe_fee" jdbcType="VARCHAR" />
+    <id column="zhanghu_fee" property="zhanghu_fee" jdbcType="VARCHAR" />
+    <id column="zhina_fee" property="zhina_fee" jdbcType="VARCHAR" />
+    <id column="yuqi_fee" property="yuqi_fee" jdbcType="VARCHAR" />
+    <id column="state" property="state" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+
+
+  <sql id="Base_Column_List" >
+    id, type,create_time, emp_id,pro_quota_limit,pro_quota_proportion, pro_name,pro_quota,pro_number, parent_id, status,provinces_id,city_id,distric_id,provinces,city,distric,img_url,pro_describe,pro_series_type
+  </sql>
+
+  <sql id="Work_Product_List" >
+    id, actual_lower_limit, actual_upper_limit, bail_pay_mode, bail_rate, bail_remark, contract_rate,contract_violate_rate,contract_violate_remark,
+    credit_protect_day,interest_rate,interest_remark,multiple_rate,overdue_protect_day,payment,periods,crm_product_id,staging_services_rate,status,
+    before_service_fee_rate,duetime_type,max_day,diy_type,diy_days
+  </sql>
+
+  <select id="getProductSeries" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pro_crm_product
+    <where>
+      and parent_id='0'
+    </where>
+  </select>
+
+  <select id="countCrmProduct"  resultType="Integer">
+    select count(1) from pro_crm_product
+    <where>
+      and parent_id='0'
+    </where>
+  </select>
+
+  <select id="getProductType"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pro_crm_product
+    <where>
+      and parent_id=#{id}
+    </where>
+  </select>
+
+  <select id="getTypeDetail"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pro_crm_product
+    <where>
+      and id=#{id}
+    </where>
+  </select>
+
+  <select id="getProductDetail"  resultMap="WorkProductMap">
+    select
+    <include refid="Work_Product_List" />
+    from pro_working_product_detail
+    <where>
+      and crm_product_id=#{crmProductId}
+    </where>
+  </select>
+
+  <select id="getProductDetailSelect"  resultMap="WorkProductMap">
+    select
+    <include refid="Work_Product_List" />
+    from pro_working_product_detail
+    WHERE status = '1'
+  </select>
+
+  <update id="updateStatus">
+    update pro_crm_product set status=#{status}
+    <where>
+      and id=#{id}
+    </where>
+  </update>
+
+  <update id="updateProductStatus">
+    update pro_working_product_detail set status=#{status}
+    <where>
+      and id=#{id}
+    </where>
+  </update>
+
+  <select id="countAbleType" resultType="Integer">
+    select count(1) from pro_crm_product
+    <where>
+      and status='1'
+      and parent_id=#{id}
+    </where>
+  </select>
+
+  <select id="countPublisProduct" resultType="Integer">
+    select count(1) from pro_working_product_detail
+    <where>
+      and status='1'
+      and crm_product_id=#{id}
+    </where>
+  </select>
+
+  <insert id="addProductSeries" parameterType="com.zw.rule.product.ProCrmProduct">
+        insert into pro_crm_product (id, create_time, emp_id, pro_name,pro_quota,pro_describe, pro_number,parent_id,status,provinces_id,city_id,distric_id,provinces,city,distric,img_url,type,pro_quota_limit,pro_quota_proportion,pro_series_type)
+        values (#{id}, #{create_time}, #{emp_id}, #{pro_name}, #{pro_quota},#{pro_describe},#{pro_number}, #{parent_id}, #{status},#{provinces_id},#{city_id},#{distric_id},#{provinces},#{city},#{distric},#{img_url},#{type},#{pro_quota_limit},#{pro_quota_proportion},#{pro_series_type})
+    </insert>
+
+  <update id="updateProductSeriesById" parameterType="com.zw.rule.product.ProCrmProduct" >
+    update pro_crm_product
+    <set >
+      <if test="create_time != null" >
+        create_time = #{create_time,jdbcType=VARCHAR},
+      </if>
+      <if test="emp_id != null" >
+        emp_id = #{emp_id,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_name != null" >
+        pro_name = #{pro_name,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_quota != null" >
+        pro_quota = #{pro_quota,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_number != null" >
+        pro_number = #{pro_number,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_describe != null" >
+        pro_describe = #{pro_describe,jdbcType=VARCHAR},
+      </if>
+      <if test="parent_id != null" >
+        parent_id = #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="provinces != null" >
+        provinces = #{provinces,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="distric != null" >
+        distric = #{distric,jdbcType=VARCHAR},
+      </if>
+      <if test="provinces_id != null" >
+        provinces_id = #{provinces_id,jdbcType=VARCHAR},
+      </if>
+      <if test="city_id != null" >
+        city_id = #{city_id,jdbcType=VARCHAR},
+      </if>
+      <if test="distric_id != null" >
+        distric_id = #{distric_id,jdbcType=VARCHAR},
+      </if>
+      <if test="img_url != null" >
+        img_url = #{img_url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_quota_limit != null" >
+        pro_quota_limit = #{pro_quota_limit,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_quota_proportion != null" >
+        pro_quota_proportion = #{pro_quota_proportion,jdbcType=VARCHAR},
+      </if>
+      <if test="pro_series_type != null" >
+        pro_series_type = #{pro_series_type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getLastNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pro_crm_product p
+    <where>
+      and p.parent_id != '0' and p.pro_number like 'LCP%' order by isnull(p.pro_number)-1,p.pro_number desc
+    </where>
+  </select>
+
+  <select id="getProductInfo"  resultMap="WorkProductMap">
+    select
+    <include refid="Work_Product_List" />
+    from pro_working_product_detail
+    <where>
+      and id=#{id}
+    </where>
+  </select>
+
+  <insert id="insertProductDetail"  parameterType="com.zw.rule.product.WorkingProductDetail" >
+    insert into pro_working_product_detail (id,type, actual_lower_limit, actual_upper_limit,
+    bail_pay_mode, bail_rate, bail_remark,
+    contract_rate, contract_violate_rate, contract_violate_remark,
+    credit_protect_day, interest_rate, interest_remark,
+    multiple_rate, overdue_protect_day, payment,
+    periods, crm_product_id, staging_services_rate,
+    status, BEFORE_SERVICE_FEE_RATE, duetime_type,
+    max_day,diy_type,diy_days)
+    values (#{id},#{type}, #{actualLowerLimit}, #{actualUpperLimit},
+    #{bailPayMode}, #{bailRate}, #{bailRemark},
+    #{contractRate}, #{contractViolateRate}, #{contractViolateRemark},
+    #{creditProtectDay}, #{interestRate}, #{interestRemark},
+    #{multipleRate}, #{overdueProtectDay}, #{payment},
+    #{periods}, #{productId}, #{stagingServicesRate},
+    #{status}, #{beforeServiceFeeRate}, #{duetimeType},
+    #{maxDay},#{diyType},#{diyDays})
+  </insert>
+
+  <update id="updateProductDetail" parameterType="com.zw.rule.product.WorkingProductDetail">
+    update pro_working_product_detail
+    <set >
+      <if test="actualLowerLimit != null" >
+        actual_lower_limit = #{actualLowerLimit},
+      </if>
+      <if test="actualUpperLimit != null" >
+        actual_upper_limit = #{actualUpperLimit},
+      </if>
+      <if test="bailPayMode != null" >
+        bail_pay_mode = #{bailPayMode},
+      </if>
+      <if test="bailRate != null" >
+        bail_rate = #{bailRate},
+      </if>
+      <if test="bailRemark != null" >
+        bail_remark = #{bailRemark},
+      </if>
+      <if test="contractRate != null" >
+        contract_rate = #{contractRate},
+      </if>
+      <if test="contractViolateRate != null" >
+        contract_violate_rate = #{contractViolateRate},
+      </if>
+      <if test="contractViolateRemark != null" >
+        contract_violate_remark = #{contractViolateRemark},
+      </if>
+      <if test="creditProtectDay != null" >
+        credit_protect_day = #{creditProtectDay},
+      </if>
+      <if test="interestRate != null" >
+        interest_rate = #{interestRate},
+      </if>
+      <if test="interestRemark != null" >
+        interest_remark = #{interestRemark},
+      </if>
+      <if test="multipleRate != null" >
+        multiple_rate = #{multipleRate},
+      </if>
+      <if test="overdueProtectDay != null" >
+        overdue_protect_day = #{overdueProtectDay},
+      </if>
+      <if test="payment != null" >
+        payment = #{payment},
+      </if>
+      <if test="periods != null" >
+        periods = #{periods},
+      </if>
+      <if test="productId != null" >
+        crm_product_id = #{productId},
+      </if>
+      <if test="stagingServicesRate != null" >
+        staging_services_rate = #{stagingServicesRate},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="beforeServiceFeeRate != null" >
+        BEFORE_SERVICE_FEE_RATE = #{beforeServiceFeeRate},
+      </if>
+      <if test="duetimeType != null" >
+        duetime_type = #{duetimeType},
+      </if>
+      <if test="maxDay != null" >
+        max_day = #{maxDay},
+      </if>
+      <if test="diyType != null" >
+        diy_type = #{diyType},
+      </if>
+      <if test="diyDays != null" >
+        diy_days = #{diyDays},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="selectProduct"  resultType="Map">
+    select
+    id
+    from pro_crm_product
+    <where>
+      and parent_id=#{SeriesId}
+      and pro_name like '%${proName}%'
+    </where>
+  </select>
+  <select id="bgEfOrder"  resultType="Map">
+    select
+    co.credit_money creditMoney,
+    co.contract_money contractMoney,
+    p.staging_services_rate scrate,
+    p.periods,
+    p.multiple_rate rate
+    from mag_order co,pro_working_product_detail p
+    <where>
+      co.product_detail = p.id and co.id=#{orderId}
+    </where>
+  </select>
+  <select id="getRepayDetail"  resultType="Map">
+    select
+    co.contract_amount,
+    co.credit,
+    pwpd.contract_rate,
+    pwpd.multiple_rate,
+    pwpd.periods,
+    pwpd.staging_services_rate,
+    pwpd.bail_rate,
+    pwpd.duetime_type,
+    pwpr.*
+    from mag_order co,
+    pro_working_product_detail pwpd,
+    pro_working_prd_company_rate pwpr
+    <where>
+      co.product_detail = pwpd.id AND
+      co.id=#{orderId} AND
+      pwpd.id= pwpr.detail_id
+    </where>
+  </select>
+
+
+  <select id="getProductList" resultType="Map"  parameterType="java.util.Map">
+    SELECT pcp.pro_name AS proName,pcp.pro_number AS proNumber,pwpd.crm_product_id AS crmProductId,pwpd.id AS id,pwpd.periods AS periods,pwpd.contract_Rate AS contractRate from  pro_working_product_detail  pwpd
+    LEFT JOIN pro_crm_product pcp  on pwpd.crm_product_id=pcp.id
+    <where>
+      pcp.status='1' AND pwpd.status='1'
+      <if test="proName != null">
+        and pcp.pro_name like '%${proName}%'
+      </if>
+      <if test="crmProductId != null" >
+        AND pwpd.crm_product_id=#{crmProductId}
+      </if>
+      <if test="periods != null" >
+        AND  pwpd.periods=#{periods}
+      </if>
+      <if test="contractRate1 != null" >
+        AND pwpd.contract_Rate>=#{contractRate1}
+      </if>
+      <if test="contractRate2 != null" >
+        AND #{contractRate2}>=pwpd.contract_Rate
+      </if>
+    </where>
+  </select>
+
+  <select id="getFeeList"  resultType="map" parameterType="com.zw.rule.product.Fee">
+    select
+    id,product_id,(select crm_product_id from pro_working_product_detail where id = product_id) as crm_product_paraent_id,(SELECT pro_name FROM pro_crm_product where id = (select crm_product_id from pro_working_product_detail where id = product_id)) AS product_amount,product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,
+    shenhe_fee,fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate
+    from mag_product_fee
+    <where>
+      state='0'
+      <if test="id != null" >
+        AND id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="productId != null" >
+        AND product_id = #{productId,jdbcType=VARCHAR}
+      </if>
+      <if test="productPeriods != null" >
+        AND product_periods = #{productPeriods,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <update id="delFee" parameterType="java.lang.String">
+    UPDATE mag_product_fee SET state = '-1' WHERE id=#{id}
+  </update>
+
+  <select id="isExist"  resultMap="feeMap" parameterType="com.zw.rule.product.Fee">
+    select
+    id,product_id,product_amount,product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,
+    shenhe_fee,fengxian_fee,zhina_fee,yuqi_fee
+    from mag_product_fee
+    <where>
+      state='0'
+      <if test="id != null" >
+        AND id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <update id="updateFee"   parameterType="com.zw.rule.product.Fee" >
+    update  mag_product_fee
+    <set >
+      <if test="productComFee != null" >
+        product_com_fee = #{productComFee},
+      </if>
+      <if test="li_xi != null" >
+        li_xi = #{li_xi},
+      </if>
+
+      <if test="productPeriods != null" >
+        product_periods = #{productPeriods},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId},
+      </if>
+      <if test="productAmount != null" >
+        product_amount = #{productAmount},
+      </if>
+      <if test="li_xi != null" >
+        li_xi = #{li_xi},
+      </if>
+
+      <if test="zhifu_fee != null" >
+        zhifu_fee = #{zhifu_fee},
+      </if>
+      <if test="zhanghu_fee != null" >
+        zhanghu_fee = #{zhanghu_fee},
+      </if>
+      <if test="fengxian_fee != null" >
+        fengxian_fee = #{fengxian_fee},
+      </if>
+      <if test="shenhe_fee != null" >
+        shenhe_fee = #{shenhe_fee},
+      </if>
+      <if test="zhina_fee != null" >
+        zhina_fee = #{zhina_fee},
+      </if>
+      <if test="yuqi_fee != null" >
+        yuqi_fee = #{yuqi_fee},
+      </if>
+      <if test="zongheri_fee != null" >
+        zongheri_fee = #{zongheri_fee},
+      </if>
+      <if test="state != null" >
+        state = #{state},
+      </if>
+      <if test="year_rate != null" >
+        year_rate = #{year_rate},
+      </if>
+      <if test="month_rate != null" >
+        month_rate = #{month_rate}
+      </if>
+    </set>
+    where   id=#{id}
+  </update>
+
+  <insert id="addFee"   parameterType="com.zw.rule.product.Fee" >
+    insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,shenhe_fee,
+    fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate)
+    VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},#{zhifu_fee},#{zhanghu_fee},#{shenhe_fee},
+    #{fengxian_fee}, #{zhina_fee}, #{yuqi_fee},#{zongheri_fee},#{year_rate},#{month_rate})
+  </insert>
+
+  <select id="getProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pro_crm_product
+    <where>
+      and parent_id!='0'
+    </where>
+  </select>
+
+  <select id="getPeriodsList"  resultMap="WorkProductMap">
+    select
+    <include refid="Work_Product_List" />
+    from pro_working_product_detail
+    <where>
+      status = '1'
+      and crm_product_id=#{crmProductId}
+    </where>
+  </select>
+</mapper>

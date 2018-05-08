@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.engine.EngineNodeMapper">
+  <resultMap id="engineNode" type="com.zw.rule.engine.po.EngineNode">
+    <id column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <result column="process_id" jdbcType="INTEGER" property="processId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="node_name" jdbcType="VARCHAR" property="nodeName" />
+    <result column="node_code" jdbcType="VARCHAR" property="nodeCode" />
+    <result column="node_order" jdbcType="INTEGER" property="nodeOrder" />
+    <result column="node_type" jdbcType="INTEGER" property="nodeType" />
+    <result column="node_x" jdbcType="DECIMAL" property="nodeX" />
+    <result column="node_y" jdbcType="DECIMAL" property="nodeY" />
+    <result column="node_json" jdbcType="LONGVARCHAR" property="nodeJson" />
+    <result column="node_script" jdbcType="LONGVARCHAR" property="nodeScript" />
+    <result column="next_nodes" jdbcType="LONGVARCHAR" property="nextNodes" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    node_id, parent_id, ver_id, node_name, node_code, node_order, node_type, node_x, node_y,node_json,node_script,next_nodes,params
+  </sql>
+
+  <select id="getEngineNodeListByEngineVersionId" parameterType="long" resultMap="engineNode">
+      select <include refid="Base_Column_List"/> from zw_process_node where ver_id =#{verId}
+      ORDER BY node_order ASC
+  </select>
+
+  <select id="getNodeList" parameterType="Long" resultMap="engineNode">
+    SELECT
+    a.node_name,
+    a.params
+    FROM
+    zw_process_node a, zw_process b
+    where
+    b.status>-1  and
+    b.org_id =#{orgId} and
+    a.process_id = b.id
+  </select>
+
+  <insert id="insertSelective" parameterType="engineNode" useGeneratedKeys="true" keyProperty="nodeId">
+    insert into zw_process_node (process_id, node_name,
+    node_code, node_order, node_type,
+    node_x, node_y, node_json,
+    node_script, next_nodes, params
+    )
+    values (#{processId,jdbcType=INTEGER}, #{nodeName,jdbcType=VARCHAR},
+    #{nodeCode,jdbcType=VARCHAR}, #{nodeOrder,jdbcType=INTEGER}, #{nodeType,jdbcType=INTEGER},
+    #{nodeX,jdbcType=DECIMAL}, #{nodeY,jdbcType=DECIMAL}, #{nodeJson,jdbcType=LONGVARCHAR},
+    #{nodeScript,jdbcType=LONGVARCHAR}, #{nextNodes,jdbcType=LONGVARCHAR}, #{params,jdbcType=LONGVARCHAR}
+    )
+  </insert>
+</mapper>

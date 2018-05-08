@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.repayment.RepaymentMapper" >
+
+
+  <!-- 通用查询结果列-->
+  <sql id="Base_Column_List">
+    id,loan_id AS loanId ,pay_count AS payCount,fee,amount,rate,repayment_amount AS repaymentAmount ,order_id AS orderId,manageFee,quickTrialFee,loan_time AS loanTime,pay_time AS payTime,overdue_days AS overdueDays,penalty,create_time AS createTime,state,remark
+  </sql>
+
+  <insert id="insertRepaymentList" parameterType="java.util.List">
+    INSERT INTO mag_repayment(state,create_time,pay_time,pay_count,fee,amount,rate,repayment_amount,loan_time,loan_id,id,order_id)
+    VALUES
+    <foreach collection="list" item="repayment" index= "index" separator =",">
+      (#{repayment.state},#{repayment.createTime},#{repayment.payTime},#{repayment.payCount},#{repayment.fee},
+      #{repayment.amount},#{repayment.rate},#{repayment.repaymentAmount},#{repayment.loanTime},#{repayment.loanId},#{repayment.id},#{repayment.orderId})
+    </foreach>
+  </insert>
+
+  <select id="getAfterLoanList" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT * FROM (
+    SELECT IFNULL(mc.PERSON_NAME,'') AS userName,IFNULL(mc.CARD,'') AS card,IFNULL(mo.order_no,'') AS orderNo,
+    mo.PERIODS AS periods,mr.amount AS amount,mr.fee AS fee,FORMAT((mr.repayment_amount + mr.fee),2) AS
+    total,mr.pay_time AS payTime,mo.channel_name AS channelName,mo.end_credit AS endCredit,
+    mo.ID AS orderId,SUBSTR(mr.loan_time FROM 7 FOR 2) AS payDay,(MAX(mr.state)) AS state,ml.id AS
+    loanId,IFNULL(m.num,0) AS num ,mr.loan_time AS loanTime,IFNULL(ml.progress,'') AS progress,IFNULL(ml.is_warning,'0') AS isWarning FROM
+    mag_loan ml
+    LEFT JOIN mag_repayment mr ON mr.loan_id = ml.id
+    LEFT JOIN mag_customer mc ON ml.cust_id = mc.ID
+    LEFT JOIN mag_order mo ON ml.order_id = mo.ID
+    LEFT JOIN (SELECT COUNT(id) AS num,loan_id FROM mag_repayment WHERE state = '3' GROUP BY loan_id ) m ON m.loan_id =
+    mr.loan_id
+    WHERE ml.state = 2
+    <if test="cusName != null and cusName != ''">
+      AND mc.PERSON_NAME = #{cusName}
+    </if> GROUP BY mr.loan_id ORDER BY ml.loan_time DESC ) cm
+    <where>
+      <if test="isoverdue == 1">
+        AND cm.num &gt; 0
+      </if>
+      <if test="isoverdue == 0">
+        AND cm.num = 0
+      </if>
+    </where>
+  </select>
+
+  <select id="getRepaymentList" resultType="com.zw.rule.repayment.po.Repayment" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM mag_repayment
+    WHERE loan_id = #{loanId}
+  </select>
+
+  <select id="getRepaymentDerateList" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT
+     mr.id,mr.loan_id AS loanId ,mr.red_amount AS  redAmount ,mr.pay_count AS payCount,mr.fee,mr.amount,mr.rate,mr.repayment_amount AS repaymentAmount ,mr.order_id AS orderId,mr.manageFee,mr.quickTrialFee,mr.loan_time AS loanTime,mr.pay_time AS payTime,mr.overdue_days AS overdueDays,mr.penalty,mr.create_time AS createTime,mr.state,mr.remark,md.derate_amount as derateAmount,md.state AS derateState
+    FROM mag_repayment mr  LEFT  JOIN  mag_derate md ON mr.id=md.repayment_id and (md.state='1' OR md.state='3') AND md.approval_state='1'
+    WHERE loan_id = #{loanId}
+    order by mr.pay_count*1
+  </select>
+
+  <!--<select id="getRepaymentDerateListSP" resultType="java.util.Map" parameterType="java.util.Map">-->
+    <!--SELECT-->
+    <!--mr.id,mr.loan_id AS loanId ,mr.red_amount AS  redAmount ,mr.pay_count AS payCount,mr.fee,mr.amount,mr.rate,mr.repayment_amount AS repaymentAmount ,mr.order_id AS orderId,mr.manageFee,mr.quickTrialFee,mr.loan_time AS loanTime,mr.pay_time AS payTime,mr.overdue_days AS overdueDays,mr.penalty,mr.create_time AS createTime,mr.state,mr.remark,(ifnull(mr.default_interest, 0)+penalty) AS totalFine,md.derate_amount as derateAmount,md.state AS derateState,(select  SUM(amount) from  service_package_repayment  where repayment_id=mr.id) AS servicePackageAmount,FORMAT((mr.fee+mr.amount+(select  IFNULL(SUM(amount),0) from  service_package_repayment  where repayment_id=mr.id)),2) AS sunAmount-->
+    <!--FROM mag_repayment mr  LEFT  JOIN  mag_derate md ON mr.id=md.repayment_id and (md.state='1' OR md.state='3') AND md.approval_state='1'-->
+    <!--<where>-->
+      <!--1=1-->
+      <!--<if test="orderId!=null">-->
+       <!--AND mr.order_id = #{orderId}-->
+      <!--</if>-->
+      <!--<if test="loanId!=null">-->
+        <!--AND mr.loan_id = #{loanId}-->
+      <!--</if>-->
+    <!--</where>-->
+    <!--order by mr.pay_count*1-->
+  <!--</select>-->
+    <select id="getRepaymentDerateListSP" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT
+        mr.id,
+        mr.loan_id AS loanId,
+        mr.red_amount AS redAmount,
+        mr.pay_count AS payCount,
+        mr.fee,
+        mr.amount,
+        mr.rate,
+        mr.repayment_amount AS repaymentAmount,
+        mr.order_id AS orderId,
+        mr.manageFee,
+        mr.quickTrialFee,
+        mr.loan_time AS loanTime,
+        mr.pay_time AS payTime,
+        mr.overdue_days AS overdueDays,
+        mr.penalty,
+        mr.create_time AS createTime,
+        mr.state,
+        mr.remark,
+        mr.settle_type as settleType,
+        mr.default_interest as default_interest,
+        mr.actual_amount as actual_amount,
+        (ifnull(mr.default_interest, 0) + penalty) AS totalFine,
+        mr.actual_amount as actualAmount,
+        md.derate_amount AS derateAmount,
+        md.state AS derateState,
+        md.id AS magDerateId,
+        (SELECT SUM(amount) FROM  service_package_repayment WHERE repayment_id = mr.id ) AS servicePackageAmount,
+        FORMAT(  (  mr.fee + mr.amount + ( SELECT IFNULL(SUM(amount), 0) FROM service_package_repayment  WHERE repayment_id = mr.id ) ),  2 ) AS sunAmount,
+        mtd.id AS transactionId,
+        mtd.huankuanType AS huankuanType,
+        mre.amount as extensionAmount,
+        mre.day as extensionDay
+        FROM
+        mag_repayment mr
+        LEFT JOIN mag_derate md ON mr.id = md.repayment_id AND (md.state = '1' OR md.state = '3') AND md.approval_state = '1'
+        LEFT JOIN mag_transaction_details mtd ON mr.id = mtd.repayment_id and mtd.state='1'
+        left join (select sum(extension_amount) as amount,sum(extension_day) as day, repayment_id from mag_repayment_extension group by repayment_id) mre
+        on mre.repayment_id = mr.id
+    <where>
+      1=1
+      <if test="orderId!=null">
+       AND mr.order_id = #{orderId}
+      </if>
+      <if test="loanId!=null">
+        AND mr.loan_id = #{loanId}
+      </if>
+    </where>
+    order by mr.pay_count*1
+  </select>
+
+  <select id="getLoandetaillist" resultType="java.util.Map" parameterType="java.lang.String">
+    SELECT IFNULL(mc.PERSON_NAME,'') AS userName,IFNULL(mc.CARD,'') AS card,IFNULL(mo.order_no,'') AS orderNo,mld.loan_amount AS loanAmount,mld.loan_time AS loanTime
+    , FORMAT(mld.loan_amount/mo.end_credit*100,2) AS percent
+    FROM mag_loan_detail mld
+    LEFT JOIN mag_loan ml ON mld.loan_id = ml.id
+    LEFT JOIN mag_customer mc ON ml.cust_id = mc.ID
+    LEFT JOIN mag_order mo ON ml.order_id = mo.ID
+    WHERE mld.loan_id = #{loanId}
+  </select>
+
+  <select id="getLoanRepaymentList" resultType="com.zw.rule.repayment.po.Repayment" parameterType="java.util.Map">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM mag_repayment
+    WHERE order_id = #{orderId} and state = #{state}
+  </select>
+
+  <select id="getList" resultType="com.zw.rule.repayment.po.Repayment" parameterType="java.util.Map">
+    SELECT
+      mr.id,mr.loan_id AS loanId ,mr.pay_count AS payCount,mr.fee,mr.amount,mr.rate,mr.repayment_amount AS repaymentAmount ,mr.order_id AS orderId,mr.manageFee,mr.quickTrialFee,mr.loan_time AS loanTime,mr.pay_time AS payTime,mr.overdue_days AS overdueDays,mr.penalty,mr.create_time AS createTime,mr.state,mr.remark,md.id,md.derate_amount,md.approval_date,md.approval_state,mr.actual_amount AS actualAmount,mr.actual_time AS  actualTime,mr.derate_amount AS derateAmount
+    FROM mag_repayment mr LEFT JOIN mag_derate md ON md.repayment_id=mr.id AND  md.state IN ('1','3')
+    WHERE mr.order_id = #{orderId} and mr.state !='0'
+  </select>
+
+  <select id="getListSP" resultType="com.zw.rule.repayment.po.Repayment" parameterType="java.util.Map">
+    SELECT
+    mr.id,mr.loan_id AS loanId ,mr.pay_count AS payCount,mr.fee,mr.amount,mr.rate,mr.repayment_amount AS repaymentAmount ,mr.order_id AS orderId,mr.manageFee,mr.quickTrialFee,mr.loan_time AS loanTime,mr.pay_time AS payTime,mr.overdue_days AS overdueDays,mr.penalty,mr.create_time AS createTime,mr.state,mr.remark,md.id,md.derate_amount,md.approval_date,md.approval_state,mr.actual_amount AS actualAmount,mr.actual_time AS  actualTime,mr.derate_amount AS derateAmount,(select SUM(amount) from  service_package_repayment where repayment_id=mr.id )  AS servicePackageAmount,ifnull(mr.default_interest, 0) AS defaultInterest,md.effective_data as effectiveData
+    FROM mag_repayment mr LEFT JOIN mag_derate md ON md.repayment_id=mr.id AND  md.state IN ('1','3')
+    WHERE mr.id = #{repaymentId} and mr.state !='0'
+  </select>
+
+  <update id="updtaeRepayByorderId"  parameterType="java.util.Map">
+    UPDATE
+    mag_repayment
+    <set>
+      <if test="state != null">
+      state = #{state},
+      </if>
+      <if test="remark != null">
+      remark =#{remark},
+      </if>
+      <if test="derateAmount != null">
+        derate_amount =#{derateAmount},
+      </if>
+      <if test="remark != null">
+        remark =#{remark}
+      </if>
+    </set>
+    <where>
+      1 =1
+      <if test="orderId != null">
+        AND order_id = #{orderId}
+      </if>
+      <if test="id != null">
+        AND id = #{id}
+      </if>
+    </where>
+  </update>
+  <insert id="insertRepayment" parameterType="com.zw.rule.repayment.po.Repayment" >
+    insert into mag_repayment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payCount != null" >
+        pay_count,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="repaymentAmount != null" >
+        repayment_amount,
+      </if>
+      <if test="loanTime != null" >
+        loan_time,
+      </if>
+      <if test="loanId != null" >
+        loan_id,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="overdueDays != null" >
+        overdue_days,
+      </if>
+      <if test="penalty != null" >
+        penalty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="state != null" >
+        #{state},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="payTime != null" >
+        #{payTime},
+      </if>
+      <if test="payCount != null" >
+        #{payCount},
+      </if>
+      <if test="fee != null" >
+        #{fee},
+      </if>
+      <if test="amount != null" >
+        #{amount},
+      </if>
+      <if test="rate != null" >
+        #{rate},
+      </if>
+      <if test="repaymentAmount != null" >
+        #{repaymentAmount},
+      </if>
+      <if test="loanTime != null" >
+        #{loanTime},
+      </if>
+      <if test="loanId != null" >
+        #{loanId},
+      </if>
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="orderId != null" >
+        #{orderId},
+      </if>
+      <if test="overdueDays != null" >
+        #{overdueDays},
+      </if>
+      <if test="penalty != null" >
+        #{penalty},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="getAfterLoanDetails" resultType="java.util.Map" parameterType="java.util.Map">
+      SELECT
+      mrep.id,
+      mrep.fee,
+      mrep.repayment_amount,
+      mord.manageFee,
+      mord.quickTrialFee,
+      mrep.amount,
+      mrep.penalty,
+      mrep.default_interest,
+      mrep.overdue_days,
+      mrep.order_id,
+      mrep.pay_count,
+      mrep.pay_time,
+      mrep.state,
+      mcus.tel,
+      mcus.person_name,
+      mrep.loan_id,
+      mcus.id AS customerId,
+      mde.derate_amount,
+      mde.state AS derate_state,
+      mde.id AS derate_id,
+      mde.approval_state,
+      mord.order_type,
+      (select  SUM(amount) from  service_package_repayment  where repayment_id=mrep.id) AS servicePackageAmount,
+      FORMAT((mrep.fee+mrep.amount+(select  IFNULL(SUM(amount),0) from  service_package_repayment  where repayment_id=mrep.id)),2) AS sunAmount,
+      (ifnull(mrep.default_interest, 0)+penalty) AS totalFine,
+      mde.effective_data as effectiveData
+    FROM mag_repayment mrep
+    LEFT JOIN  mag_order mord ON mrep.order_id = mord.id
+    LEFT JOIN  mag_customer mcus ON  mord.CUSTOMER_ID=mcus.id
+    LEFT JOIN  mag_derate mde ON  mde.repayment_id=mrep.id
+    <if test="derateState != null">
+      AND mde.state!='${derateState}'
+    </if>
+    WHERE 1=1  AND  mrep.state IN (1,2,3)
+    <if test="id != null">
+      AND mrep.id='${id}'
+    </if>
+    <!--<if test="isoverdue != null" >-->
+      <!--<if test="isoverdue == 1" >-->
+        <!--AND  mrep.state IN (1,2,3)-->
+      <!--</if>-->
+      <!--<if test="isoverdue == 0" >-->
+        <!--AND  mrep.state IN (3)-->
+      <!--</if>-->
+    <!--</if>-->
+
+    <if test="orderId != null" >
+      AND  mrep.order_id='${orderId}'
+    </if>
+
+    order by mrep.pay_time asc
+  </select>
+
+
+  <select id="getAfterLoanDetailsHJD" resultType="java.util.Map" parameterType="java.util.Map">
+    SELECT mrep.id,mrep.fee,mrep.repayment_amount,mord.manageFee,mord.quickTrialFee,mrep.amount,mrep.penalty,mrep.overdue_days,mrep.order_id,mrep.pay_count,mrep.pay_time,mrep.state,mcus.tel,mcus.person_name,mrep.loan_id,mcus.id AS customerId,mde.derate_amount,mde.state AS  derate_state,mde.id AS derate_id,mde.approval_state
+    FROM mag_repayment mrep
+    LEFT JOIN  mag_order mord ON mrep.order_id = mord.id
+    LEFT JOIN  mag_customer mcus ON  mord.CUSTOMER_ID=mcus.id
+    LEFT JOIN  mag_derate mde ON  mde.repayment_id=mrep.id
+    <if test="derateState != null">
+      AND mde.state!='${derateState}'
+    </if>
+    WHERE 1=1  AND  mrep.state IN (1,2,3)
+    <if test="id != null">
+      AND mrep.id='${id}'
+    </if>
+    <!--<if test="isoverdue != null" >-->
+    <!--<if test="isoverdue == 1" >-->
+    <!--AND  mrep.state IN (1,2,3)-->
+    <!--</if>-->
+    <!--<if test="isoverdue == 0" >-->
+    <!--AND  mrep.state IN (3)-->
+    <!--</if>-->
+    <!--</if>-->
+
+    <if test="orderId != null" >
+      AND  mrep.order_id='${orderId}'
+    </if>
+
+    order by mrep.pay_time asc
+  </select>
+
+  <update id="updtaeRepayment"  parameterType="com.zw.rule.repayment.po.Repayment">
+    UPDATE  mag_repayment
+    <set>
+      <if test="state != null" >
+        state = #{state},
+      </if>
+      <if test="overdueDays != null" >
+        overdue_days = #{overdueDays},
+      </if>
+      <if test="penalty != null" >
+        penalty = #{penalty},
+      </if>
+    </set>
+    <where>
+      1=1
+      <if test="id != null" >
+        AND id = #{id}
+      </if>
+    </where>
+  </update>
+  <select id="getPaymentRepaymentLis" parameterType="java.util.Map" resultType="java.util.Map">
+    select mr.order_id,mr.pay_time,mr.pay_count,mr.amount,mr.fee,mr.state,mr.settle_type AS mrSettleType , ml.settle_state AS mlSettleState,
+    mo.tel,mo.customer_name,mo.periods,mo.order_no,mr.id AS repayment_id,
+    (select state from ((SELECT repayment_id,state,creat_time from  mag_transaction_details  mtd where type='2')
+    UNION
+    (SELECT repayment_id,state,creat_time from  mag_transaction_exception mte  where type='2' AND state=0)) t1 where  t1.repayment_id=mr.id order by creat_time desc limit 0,1) AS paymentState,(select  SUM(amount) from  service_package_repayment  where repayment_id=mr.id)+mr.repayment_amount+mr.penalty AS repayment_amount
+    from mag_repayment mr
+    LEFT JOIN mag_order mo ON mr.order_id=mo.id
+    LEFT JOIN mag_loan ml ON ml.order_id=mr.order_id
+    LEFT JOIN mag_salesman ms ON  mo.emp_id=ms.id
+   <where>
+     mo.order_type='2'
+     <if test="customerName != null and customerName != ''">
+       and mo.customer_name like '%${customerName}%'
+     </if>
+     <if test="tel != null and tel != ''">
+       and mo.tel like '%${tel}%'
+     </if>
+     <if test=" headquarters!= null and headquarters != ''">
+       and  ms.branch  in (SELECT id  FROM zw_sys_department where FIND_IN_SET(id, getChildDepartment(${headquarters})))
+     </if>
+
+     <if test=" branch!= null and branch != ''">
+       and   ms.branch =#{branch}
+     </if>
+   </where>
+    order by mo.order_no ASC ,mr.pay_count*1 ASC
+  </select>
+    <!--根据id查询单条还款记录-->
+    <select id="selectRepaymentById" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            id,
+            pay_count AS payCount,
+            amount,
+            fee,
+            repayment_amount AS repaymentAmount,
+            penalty,
+            derate_amount as derateAmount,
+            red_amount as redAmount
+        FROM
+            mag_repayment
+        WHERE
+            id = #{repaymentId}
+    </select>
+<!--更新还款表状态-->
+    <update id="updateRepaymentState" parameterType="java.util.Map">
+        update mag_repayment
+          set
+            state ='2',
+            actual_amount=#{sumAmount},
+            actual_time= #{actualTime}
+        where id =#{repaymentId}
+    </update>
+    <!--更新订单表状态-->
+    <update id="updateOrderState" parameterType="java.util.Map">
+        update mag_order set state='9' where id=#{orderId}
+    </update>
+    <!--getAllNotPayRepayments查询该订单下面的所有未还款的记录-->
+    <select id="getAllNotPayRepayments" parameterType="java.util.Map" resultType="java.util.Map">
+        select id as id from mag_repayment where order_id=#{orderId} and state in('1','3','4')
+    </select>
+    <!--插入交易记录明细表-->
+    <insert id="insertTransaction" parameterType="java.util.Map" >
+       insert into mag_transaction_details
+        (id,batch_no,amount,repayment_id,order_id,type,state,creat_time,source,huankuanType,des)
+        VALUES(#{id},#{transNo},#{amount},#{repayment_id},#{order_id},'2','1',#{creat_time},#{source},'0',#{des})
+    </insert>
+  <!--更改该条逾期减免状态为已使用-->
+  <update id="changeDerateState" parameterType="java.util.Map">
+      update mag_derate set state= '3' where id=#{magDerateId}
+  </update>
+
+</mapper>

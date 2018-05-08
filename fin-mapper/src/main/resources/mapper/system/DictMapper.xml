@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.process.FlowDictMapper">
+    <resultMap type="com.zw.rule.po.Dict" id="Dict">
+        <result column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="type" property="type"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="seq" property="seq"/>
+        <result column="is_catagory" property="isCatagory"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    <!--<select id="getProductByList" parameterType="map" resultMap="Dict">-->
+        <!--SELECT code , name  from zw_sys_dict-->
+        <!--<where>-->
+            <!--parent_id = '205'-->
+            <!--<if test="searchKey != null">-->
+                <!--and name LIKE CONCAT('%',#{searchKey},'%' )-->
+            <!--</if>-->
+        <!--</where>-->
+    <!--</select>-->
+
+    <select id="getProductByList" parameterType="map" resultMap="Dict">
+        SELECT id ,customer_name, product_name_name  from mag_order
+        <where>
+            state = '2'
+            and receive_id = ''
+            <if test="searchKey != null">
+                and product_name_name LIKE CONCAT('%',#{searchKey},'%' )
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+version '1.0'
+
+dependencies {
+    compile project(":fin-model")
+    compile project(":fin-mapper")
+    compile project(":fin-util")
+
+    compile "org.apache.poi:poi:${poi}"
+    compile "org.apache.poi:poi-ooxml:${poi}"
+    compile "org.apache.poi:poi-ooxml-schemas:${poi}"
+    compile "com.itextpdf:itextpdf:${itextpdf}"
+    compile "com.itextpdf:itext-asian:${itextAsian}"
+    compile "com.fasterxml.jackson.core:jackson-core:${jackson}"
+    compile "com.fasterxml.jackson.core:jackson-databind:${jackson}"
+    compile "org.springframework:spring-web:${spring}"
+
+    compile 'com.zw:CFCACertKitJS-1.0:1.0'
+    compile 'yeepayhtmlcommon:yeepayhtmlcommon:3.0'
+    compile 'yeepaycfcacertkitjs:yeepaycfcacertkitjs:1.0'
+    compile 'yeepaypkibase:yeepaypkibase:1.0'
+    compile 'org.bouncycastle:bcmail-jdk15on:1.58'
+    compile "dom4j:dom4j:${dom4j}"
+    compile group: 'com.google.zxing', name: 'javase', version: '3.3.0'
+    compile group: 'com.google.zxing', name: 'core', version: '3.3.0'
+}
+
+jar {
+    baseName = 'fin-service'
+}

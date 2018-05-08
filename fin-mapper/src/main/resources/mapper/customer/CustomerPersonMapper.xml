@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerPersonMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerPerson" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="oldname" property="oldname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="APEX1" property="apex1" jdbcType="VARCHAR" />
+    <result column="APEX2" property="apex2" jdbcType="VARCHAR" />
+    <result column="APEX3" property="apex3" jdbcType="VARCHAR" />
+    <result column="BAK" property="bak" jdbcType="VARCHAR" />
+    <result column="educational" property="educational" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="marry" property="marry" jdbcType="VARCHAR" />
+    <result column="complete" property="complete" jdbcType="VARCHAR" />
+    <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+    <result column="educational_name" property="educationalName" jdbcType="VARCHAR" />
+    <result column="marry_name" property="marryName" jdbcType="VARCHAR" />
+    <result column="child_num" property="childNum" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, customer_id, realname, oldname, sex, CREAT_TIME, ALTER_TIME, state, APEX1, APEX2, 
+    APEX3, BAK, educational, school, marry, complete, sex_name, educational_name, marry_name,child_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mag_customer_person
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mag_customer_person
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.CustomerPerson" >
+    insert into mag_customer_person (ID, customer_id, realname,
+      oldname, sex, CREAT_TIME,
+      ALTER_TIME, state, APEX1,
+      APEX2, APEX3, BAK,
+      educational, school, marry,
+      complete, sex_name, educational_name,
+      marry_name)
+    values (#{id,jdbcType=VARCHAR}, #{customerId,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{oldname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{creatTime,jdbcType=VARCHAR}, 
+      #{alterTime,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{apex1,jdbcType=VARCHAR}, 
+      #{apex2,jdbcType=VARCHAR}, #{apex3,jdbcType=VARCHAR}, #{bak,jdbcType=VARCHAR}, 
+      #{educational,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{marry,jdbcType=VARCHAR}, 
+      #{complete,jdbcType=VARCHAR}, #{sexName,jdbcType=VARCHAR}, #{educationalName,jdbcType=VARCHAR}, 
+      #{marryName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.CustomerPerson" >
+    insert into mag_customer_person
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="oldname != null" >
+        oldname,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+      <if test="alterTime != null" >
+        ALTER_TIME,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="apex1 != null" >
+        APEX1,
+      </if>
+      <if test="apex2 != null" >
+        APEX2,
+      </if>
+      <if test="apex3 != null" >
+        APEX3,
+      </if>
+      <if test="bak != null" >
+        BAK,
+      </if>
+      <if test="educational != null" >
+        educational,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="marry != null" >
+        marry,
+      </if>
+      <if test="complete != null" >
+        complete,
+      </if>
+      <if test="sexName != null" >
+        sex_name,
+      </if>
+      <if test="educationalName != null" >
+        educational_name,
+      </if>
+      <if test="marryName != null" >
+        marry_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="oldname != null" >
+        #{oldname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null" >
+        #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="apex1 != null" >
+        #{apex1,jdbcType=VARCHAR},
+      </if>
+      <if test="apex2 != null" >
+        #{apex2,jdbcType=VARCHAR},
+      </if>
+      <if test="apex3 != null" >
+        #{apex3,jdbcType=VARCHAR},
+      </if>
+      <if test="bak != null" >
+        #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="educational != null" >
+        #{educational,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="marry != null" >
+        #{marry,jdbcType=VARCHAR},
+      </if>
+      <if test="complete != null" >
+        #{complete,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalName != null" >
+        #{educationalName,jdbcType=VARCHAR},
+      </if>
+      <if test="marryName != null" >
+        #{marryName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.CustomerPerson" >
+    update mag_customer_person
+    <set >
+      <if test="customerId != null" >
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="oldname != null" >
+        oldname = #{oldname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=VARCHAR},
+      </if>
+      <if test="alterTime != null" >
+        ALTER_TIME = #{alterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="apex1 != null" >
+        APEX1 = #{apex1,jdbcType=VARCHAR},
+      </if>
+      <if test="apex2 != null" >
+        APEX2 = #{apex2,jdbcType=VARCHAR},
+      </if>
+      <if test="apex3 != null" >
+        APEX3 = #{apex3,jdbcType=VARCHAR},
+      </if>
+      <if test="bak != null" >
+        BAK = #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="educational != null" >
+        educational = #{educational,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="marry != null" >
+        marry = #{marry,jdbcType=VARCHAR},
+      </if>
+      <if test="complete != null" >
+        complete = #{complete,jdbcType=VARCHAR},
+      </if>
+      <if test="sexName != null" >
+        sex_name = #{sexName,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalName != null" >
+        educational_name = #{educationalName,jdbcType=VARCHAR},
+      </if>
+      <if test="marryName != null" >
+        marry_name = #{marryName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.CustomerPerson" >
+    update mag_customer_person
+    set customer_id = #{customerId,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      oldname = #{oldname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=VARCHAR},
+      ALTER_TIME = #{alterTime,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      APEX1 = #{apex1,jdbcType=VARCHAR},
+      APEX2 = #{apex2,jdbcType=VARCHAR},
+      APEX3 = #{apex3,jdbcType=VARCHAR},
+      BAK = #{bak,jdbcType=VARCHAR},
+      educational = #{educational,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      marry = #{marry,jdbcType=VARCHAR},
+      complete = #{complete,jdbcType=VARCHAR},
+      sex_name = #{sexName,jdbcType=VARCHAR},
+      educational_name = #{educationalName,jdbcType=VARCHAR},
+      marry_name = #{marryName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getCustomerPerson" resultType="Map" parameterType="java.lang.String" >
+     select cp.ID, cp.customer_id, mc.person_name as realname, cp.oldname, cp.sex, cp.CREAT_TIME, cp.ALTER_TIME, cp.state, mc1.PERSON_NAME AS APEX1, mc.reference_id AS APEX2,
+    cp.APEX3, cp.BAK, cp.educational,cp.withPerson, cp.school, cp.marry, cp.complete,  cp.educational_name, cp.marry_name,cp.child_num,
+    ca.bank_card,ca.tel,ca.account_city,cc.card_num,cc.valid_begin_time,cc.card_address,cc.card_type,cc.valid_end_time,cc.valid_term,
+    cc.card_type_id,cc.provinces as cardProvinces,cc.city as cardCity,cl.nowaddress,cl.addresslivetime,cl.citylivetime,cl.houseproperty,cl.rent,
+    cl.provinces as liveProvinces,cl.city as liveCity,cl.distric as liveDistric,mc.Zcard_src_base64 AS zcardSrcBase64,mc.Fcard_src_base64 AS fcardSrcBase64
+		,mc.sex_name AS sex_name,mc.birth,mc.card_register_address,mc.face_src,cp.receive_address
+    from mag_customer_person cp
+    left join mag_customer_account ca on ca.CUSTOMER_ID = cp.customer_id
+    left join mag_customer_credential cc on cc.CUSTOMER_ID = cp.customer_id
+    left join mag_customer_live cl on cl.CUSTOMER_ID = cp.customer_id
+    LEFT  JOIN mag_customer mc on  cp.customer_id=mc.id
+    LEFT  JOIN mag_customer mc1 on  mc.reference_id=mc1.USER_ID
+    where cp.customer_id = #{customerId}
+  </select>
+</mapper>

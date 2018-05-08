@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.RuleRiskMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.RuleRisk" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="crad_no" property="cradNo" jdbcType="VARCHAR" />
+    <result column="htrl" property="htrl" jdbcType="VARCHAR" />
+    <result column="siys" property="siys" jdbcType="VARCHAR" />
+    <result column="phone_real" property="phoneReal" jdbcType="VARCHAR" />
+    <result column="phone_time" property="phoneTime" jdbcType="VARCHAR" />
+    <result column="phone_gps" property="phoneGps" jdbcType="VARCHAR" />
+    <result column="accumulation" property="accumulation" jdbcType="VARCHAR" />
+    <result column="social" property="social" jdbcType="VARCHAR" />
+    <result column="alipay_realName" property="alipayRealname" jdbcType="VARCHAR" />
+    <result column="sesame_seeds" property="sesameSeeds" jdbcType="VARCHAR" />
+    <result column="py_ifo" property="pyIfo" jdbcType="VARCHAR" />
+    <result column="py_edu" property="pyEdu" jdbcType="VARCHAR" />
+    <result column="py_distress" property="pyDistress" jdbcType="VARCHAR" />
+    <result column="py_tax" property="pyTax" jdbcType="VARCHAR" />
+    <result column="py_judCase" property="pyJudcase" jdbcType="VARCHAR" />
+    <result column="py_judDishonesty" property="pyJuddishonesty" jdbcType="VARCHAR" />
+    <result column="py_judEnfor" property="pyJudenfor" jdbcType="VARCHAR" />
+    <result column="py_netLoanOver" property="pyNetloanover" jdbcType="VARCHAR" />
+    <result column="td_bHit" property="tdBhit" jdbcType="VARCHAR" />
+    <result column="td_loanProxy" property="tdLoanproxy" jdbcType="VARCHAR" />
+    <result column="td_loanTool" property="tdLoantool" jdbcType="VARCHAR" />
+    <result column="td_extPlatform" property="tdExtplatform" jdbcType="VARCHAR" />
+    <result column="tdId_criminal" property="tdidCriminal" jdbcType="VARCHAR" />
+    <result column="tdId_risk" property="tdidRisk" jdbcType="VARCHAR" />
+    <result column="tdId_taxes" property="tdidTaxes" jdbcType="VARCHAR" />
+    <result column="tdId_credit" property="tdidCredit" jdbcType="VARCHAR" />
+    <result column="tdPhone_risk" property="tdphoneRisk" jdbcType="VARCHAR" />
+    <result column="tdPhone_arrears" property="tdphoneArrears" jdbcType="VARCHAR" />
+    <result column="tdPhone_communication" property="tdphoneCommunication" jdbcType="VARCHAR" />
+    <result column="tdPhone_credit" property="tdphoneCredit" jdbcType="VARCHAR" />
+    <result column="tdPhone_falseNum" property="tdphoneFalsenum" jdbcType="VARCHAR" />
+    <result column="tdPhone_fraudNum" property="tdphoneFraudnum" jdbcType="VARCHAR" />
+    <result column="tdContPhone_risk" property="tdcontphoneRisk" jdbcType="VARCHAR" />
+    <result column="tdContPhone_communication" property="tdcontphoneCommunication" jdbcType="VARCHAR" />
+    <result column="tdContPhone_credit" property="tdcontphoneCredit" jdbcType="VARCHAR" />
+    <result column="tdContPhone_falseNum" property="tdcontphoneFalsenum" jdbcType="VARCHAR" />
+    <result column="tdContPhone_fraudNum" property="tdcontphoneFraudnum" jdbcType="VARCHAR" />
+    <result column="tdDg_falseNum" property="tddgFalsenum" jdbcType="VARCHAR" />
+    <result column="tdDg_fraudNum" property="tddgFraudnum" jdbcType="VARCHAR" />
+    <result column="tdDg_agencyNum" property="tddgAgencynum" jdbcType="VARCHAR" />
+    <result column="shzx_loan" property="shzxLoan" jdbcType="VARCHAR" />
+    <result column="shzx_outLoan" property="shzxOutloan" jdbcType="VARCHAR" />
+    <result column="shzx_overdue" property="shzxOverdue" jdbcType="VARCHAR" />
+    <result column="shzx_lineCredit" property="shzxLinecredit" jdbcType="VARCHAR" />
+    <result column="shzx_month" property="shzxMonth" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, crad_no, htrl, siys, phone_real, phone_time, phone_gps, accumulation, social, 
+    alipay_realName, sesame_seeds, py_ifo, py_edu, py_distress, py_tax, py_judCase, py_judDishonesty, 
+    py_judEnfor, py_netLoanOver, td_bHit, td_loanProxy, td_loanTool, td_extPlatform, 
+    tdId_criminal, tdId_risk, tdId_taxes, tdId_credit, tdPhone_risk, tdPhone_arrears, 
+    tdPhone_communication, tdPhone_credit, tdPhone_falseNum, tdPhone_fraudNum, tdContPhone_risk, 
+    tdContPhone_communication, tdContPhone_credit, tdContPhone_falseNum, tdContPhone_fraudNum, 
+    tdDg_falseNum, tdDg_fraudNum, tdDg_agencyNum, shzx_loan, shzx_outLoan, shzx_overdue, 
+    shzx_lineCredit, shzx_month
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rule_risk
+    where crad_no = #{cradNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from rule_risk
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.customer.po.RuleRisk" >
+    insert into rule_risk (id, crad_no, htrl, 
+      siys, phone_real, phone_time, 
+      phone_gps, accumulation, social, 
+      alipay_realName, sesame_seeds, py_ifo, 
+      py_edu, py_distress, py_tax, 
+      py_judCase, py_judDishonesty, py_judEnfor, 
+      py_netLoanOver, td_bHit, td_loanProxy, 
+      td_loanTool, td_extPlatform, tdId_criminal, 
+      tdId_risk, tdId_taxes, tdId_credit, 
+      tdPhone_risk, tdPhone_arrears, tdPhone_communication, 
+      tdPhone_credit, tdPhone_falseNum, tdPhone_fraudNum, 
+      tdContPhone_risk, tdContPhone_communication, 
+      tdContPhone_credit, tdContPhone_falseNum, 
+      tdContPhone_fraudNum, tdDg_falseNum, tdDg_fraudNum, 
+      tdDg_agencyNum, shzx_loan, shzx_outLoan, 
+      shzx_overdue, shzx_lineCredit, shzx_month
+      )
+    values (#{id,jdbcType=VARCHAR}, #{cradNo,jdbcType=VARCHAR}, #{htrl,jdbcType=VARCHAR}, 
+      #{siys,jdbcType=VARCHAR}, #{phoneReal,jdbcType=VARCHAR}, #{phoneTime,jdbcType=VARCHAR}, 
+      #{phoneGps,jdbcType=VARCHAR}, #{accumulation,jdbcType=VARCHAR}, #{social,jdbcType=VARCHAR}, 
+      #{alipayRealname,jdbcType=VARCHAR}, #{sesameSeeds,jdbcType=VARCHAR}, #{pyIfo,jdbcType=VARCHAR}, 
+      #{pyEdu,jdbcType=VARCHAR}, #{pyDistress,jdbcType=VARCHAR}, #{pyTax,jdbcType=VARCHAR}, 
+      #{pyJudcase,jdbcType=VARCHAR}, #{pyJuddishonesty,jdbcType=VARCHAR}, #{pyJudenfor,jdbcType=VARCHAR}, 
+      #{pyNetloanover,jdbcType=VARCHAR}, #{tdBhit,jdbcType=VARCHAR}, #{tdLoanproxy,jdbcType=VARCHAR}, 
+      #{tdLoantool,jdbcType=VARCHAR}, #{tdExtplatform,jdbcType=VARCHAR}, #{tdidCriminal,jdbcType=VARCHAR}, 
+      #{tdidRisk,jdbcType=VARCHAR}, #{tdidTaxes,jdbcType=VARCHAR}, #{tdidCredit,jdbcType=VARCHAR}, 
+      #{tdphoneRisk,jdbcType=VARCHAR}, #{tdphoneArrears,jdbcType=VARCHAR}, #{tdphoneCommunication,jdbcType=VARCHAR}, 
+      #{tdphoneCredit,jdbcType=VARCHAR}, #{tdphoneFalsenum,jdbcType=VARCHAR}, #{tdphoneFraudnum,jdbcType=VARCHAR}, 
+      #{tdcontphoneRisk,jdbcType=VARCHAR}, #{tdcontphoneCommunication,jdbcType=VARCHAR}, 
+      #{tdcontphoneCredit,jdbcType=VARCHAR}, #{tdcontphoneFalsenum,jdbcType=VARCHAR}, 
+      #{tdcontphoneFraudnum,jdbcType=VARCHAR}, #{tddgFalsenum,jdbcType=VARCHAR}, #{tddgFraudnum,jdbcType=VARCHAR}, 
+      #{tddgAgencynum,jdbcType=VARCHAR}, #{shzxLoan,jdbcType=VARCHAR}, #{shzxOutloan,jdbcType=VARCHAR}, 
+      #{shzxOverdue,jdbcType=VARCHAR}, #{shzxLinecredit,jdbcType=VARCHAR}, #{shzxMonth,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.customer.po.RuleRisk" >
+    insert into rule_risk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cradNo != null" >
+        crad_no,
+      </if>
+      <if test="htrl != null" >
+        htrl,
+      </if>
+      <if test="siys != null" >
+        siys,
+      </if>
+      <if test="phoneReal != null" >
+        phone_real,
+      </if>
+      <if test="phoneTime != null" >
+        phone_time,
+      </if>
+      <if test="phoneGps != null" >
+        phone_gps,
+      </if>
+      <if test="accumulation != null" >
+        accumulation,
+      </if>
+      <if test="social != null" >
+        social,
+      </if>
+      <if test="alipayRealname != null" >
+        alipay_realName,
+      </if>
+      <if test="sesameSeeds != null" >
+        sesame_seeds,
+      </if>
+      <if test="pyIfo != null" >
+        py_ifo,
+      </if>
+      <if test="pyEdu != null" >
+        py_edu,
+      </if>
+      <if test="pyDistress != null" >
+        py_distress,
+      </if>
+      <if test="pyTax != null" >
+        py_tax,
+      </if>
+      <if test="pyJudcase != null" >
+        py_judCase,
+      </if>
+      <if test="pyJuddishonesty != null" >
+        py_judDishonesty,
+      </if>
+      <if test="pyJudenfor != null" >
+        py_judEnfor,
+      </if>
+      <if test="pyNetloanover != null" >
+        py_netLoanOver,
+      </if>
+      <if test="tdBhit != null" >
+        td_bHit,
+      </if>
+      <if test="tdLoanproxy != null" >
+        td_loanProxy,
+      </if>
+      <if test="tdLoantool != null" >
+        td_loanTool,
+      </if>
+      <if test="tdExtplatform != null" >
+        td_extPlatform,
+      </if>
+      <if test="tdidCriminal != null" >
+        tdId_criminal,
+      </if>
+      <if test="tdidRisk != null" >
+        tdId_risk,
+      </if>
+      <if test="tdidTaxes != null" >
+        tdId_taxes,
+      </if>
+      <if test="tdidCredit != null" >
+        tdId_credit,
+      </if>
+      <if test="tdphoneRisk != null" >
+        tdPhone_risk,
+      </if>
+      <if test="tdphoneArrears != null" >
+        tdPhone_arrears,
+      </if>
+      <if test="tdphoneCommunication != null" >
+        tdPhone_communication,
+      </if>
+      <if test="tdphoneCredit != null" >
+        tdPhone_credit,
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        tdPhone_falseNum,
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        tdPhone_fraudNum,
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        tdContPhone_risk,
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        tdContPhone_communication,
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        tdContPhone_credit,
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        tdContPhone_falseNum,
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        tdContPhone_fraudNum,
+      </if>
+      <if test="tddgFalsenum != null" >
+        tdDg_falseNum,
+      </if>
+      <if test="tddgFraudnum != null" >
+        tdDg_fraudNum,
+      </if>
+      <if test="tddgAgencynum != null" >
+        tdDg_agencyNum,
+      </if>
+      <if test="shzxLoan != null" >
+        shzx_loan,
+      </if>
+      <if test="shzxOutloan != null" >
+        shzx_outLoan,
+      </if>
+      <if test="shzxOverdue != null" >
+        shzx_overdue,
+      </if>
+      <if test="shzxLinecredit != null" >
+        shzx_lineCredit,
+      </if>
+      <if test="shzxMonth != null" >
+        shzx_month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cradNo != null" >
+        #{cradNo,jdbcType=VARCHAR},
+      </if>
+      <if test="htrl != null" >
+        #{htrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siys != null" >
+        #{siys,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReal != null" >
+        #{phoneReal,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneTime != null" >
+        #{phoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneGps != null" >
+        #{phoneGps,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulation != null" >
+        #{accumulation,jdbcType=VARCHAR},
+      </if>
+      <if test="social != null" >
+        #{social,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null" >
+        #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="sesameSeeds != null" >
+        #{sesameSeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="pyIfo != null" >
+        #{pyIfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pyEdu != null" >
+        #{pyEdu,jdbcType=VARCHAR},
+      </if>
+      <if test="pyDistress != null" >
+        #{pyDistress,jdbcType=VARCHAR},
+      </if>
+      <if test="pyTax != null" >
+        #{pyTax,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudcase != null" >
+        #{pyJudcase,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJuddishonesty != null" >
+        #{pyJuddishonesty,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudenfor != null" >
+        #{pyJudenfor,jdbcType=VARCHAR},
+      </if>
+      <if test="pyNetloanover != null" >
+        #{pyNetloanover,jdbcType=VARCHAR},
+      </if>
+      <if test="tdBhit != null" >
+        #{tdBhit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoanproxy != null" >
+        #{tdLoanproxy,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoantool != null" >
+        #{tdLoantool,jdbcType=VARCHAR},
+      </if>
+      <if test="tdExtplatform != null" >
+        #{tdExtplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCriminal != null" >
+        #{tdidCriminal,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidRisk != null" >
+        #{tdidRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidTaxes != null" >
+        #{tdidTaxes,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCredit != null" >
+        #{tdidCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneRisk != null" >
+        #{tdphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneArrears != null" >
+        #{tdphoneArrears,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCommunication != null" >
+        #{tdphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCredit != null" >
+        #{tdphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        #{tdphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        #{tdphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        #{tdcontphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        #{tdcontphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        #{tdcontphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        #{tdcontphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        #{tdcontphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFalsenum != null" >
+        #{tddgFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFraudnum != null" >
+        #{tddgFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgAgencynum != null" >
+        #{tddgAgencynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLoan != null" >
+        #{shzxLoan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOutloan != null" >
+        #{shzxOutloan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOverdue != null" >
+        #{shzxOverdue,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLinecredit != null" >
+        #{shzxLinecredit,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxMonth != null" >
+        #{shzxMonth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.customer.po.RuleRisk" >
+    update rule_risk
+    <set >
+      <if test="cradNo != null" >
+        crad_no = #{cradNo,jdbcType=VARCHAR},
+      </if>
+      <if test="htrl != null" >
+        htrl = #{htrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siys != null" >
+        siys = #{siys,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReal != null" >
+        phone_real = #{phoneReal,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneTime != null" >
+        phone_time = #{phoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneGps != null" >
+        phone_gps = #{phoneGps,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulation != null" >
+        accumulation = #{accumulation,jdbcType=VARCHAR},
+      </if>
+      <if test="social != null" >
+        social = #{social,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null" >
+        alipay_realName = #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="sesameSeeds != null" >
+        sesame_seeds = #{sesameSeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="pyIfo != null" >
+        py_ifo = #{pyIfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pyEdu != null" >
+        py_edu = #{pyEdu,jdbcType=VARCHAR},
+      </if>
+      <if test="pyDistress != null" >
+        py_distress = #{pyDistress,jdbcType=VARCHAR},
+      </if>
+      <if test="pyTax != null" >
+        py_tax = #{pyTax,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudcase != null" >
+        py_judCase = #{pyJudcase,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJuddishonesty != null" >
+        py_judDishonesty = #{pyJuddishonesty,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudenfor != null" >
+        py_judEnfor = #{pyJudenfor,jdbcType=VARCHAR},
+      </if>
+      <if test="pyNetloanover != null" >
+        py_netLoanOver = #{pyNetloanover,jdbcType=VARCHAR},
+      </if>
+      <if test="tdBhit != null" >
+        td_bHit = #{tdBhit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoanproxy != null" >
+        td_loanProxy = #{tdLoanproxy,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoantool != null" >
+        td_loanTool = #{tdLoantool,jdbcType=VARCHAR},
+      </if>
+      <if test="tdExtplatform != null" >
+        td_extPlatform = #{tdExtplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCriminal != null" >
+        tdId_criminal = #{tdidCriminal,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidRisk != null" >
+        tdId_risk = #{tdidRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidTaxes != null" >
+        tdId_taxes = #{tdidTaxes,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCredit != null" >
+        tdId_credit = #{tdidCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneRisk != null" >
+        tdPhone_risk = #{tdphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneArrears != null" >
+        tdPhone_arrears = #{tdphoneArrears,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCommunication != null" >
+        tdPhone_communication = #{tdphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCredit != null" >
+        tdPhone_credit = #{tdphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        tdPhone_falseNum = #{tdphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        tdPhone_fraudNum = #{tdphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        tdContPhone_risk = #{tdcontphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        tdContPhone_communication = #{tdcontphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        tdContPhone_credit = #{tdcontphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        tdContPhone_falseNum = #{tdcontphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        tdContPhone_fraudNum = #{tdcontphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFalsenum != null" >
+        tdDg_falseNum = #{tddgFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFraudnum != null" >
+        tdDg_fraudNum = #{tddgFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgAgencynum != null" >
+        tdDg_agencyNum = #{tddgAgencynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLoan != null" >
+        shzx_loan = #{shzxLoan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOutloan != null" >
+        shzx_outLoan = #{shzxOutloan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOverdue != null" >
+        shzx_overdue = #{shzxOverdue,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLinecredit != null" >
+        shzx_lineCredit = #{shzxLinecredit,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxMonth != null" >
+        shzx_month = #{shzxMonth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.customer.po.RuleRisk" >
+    update rule_risk
+    set crad_no = #{cradNo,jdbcType=VARCHAR},
+      htrl = #{htrl,jdbcType=VARCHAR},
+      siys = #{siys,jdbcType=VARCHAR},
+      phone_real = #{phoneReal,jdbcType=VARCHAR},
+      phone_time = #{phoneTime,jdbcType=VARCHAR},
+      phone_gps = #{phoneGps,jdbcType=VARCHAR},
+      accumulation = #{accumulation,jdbcType=VARCHAR},
+      social = #{social,jdbcType=VARCHAR},
+      alipay_realName = #{alipayRealname,jdbcType=VARCHAR},
+      sesame_seeds = #{sesameSeeds,jdbcType=VARCHAR},
+      py_ifo = #{pyIfo,jdbcType=VARCHAR},
+      py_edu = #{pyEdu,jdbcType=VARCHAR},
+      py_distress = #{pyDistress,jdbcType=VARCHAR},
+      py_tax = #{pyTax,jdbcType=VARCHAR},
+      py_judCase = #{pyJudcase,jdbcType=VARCHAR},
+      py_judDishonesty = #{pyJuddishonesty,jdbcType=VARCHAR},
+      py_judEnfor = #{pyJudenfor,jdbcType=VARCHAR},
+      py_netLoanOver = #{pyNetloanover,jdbcType=VARCHAR},
+      td_bHit = #{tdBhit,jdbcType=VARCHAR},
+      td_loanProxy = #{tdLoanproxy,jdbcType=VARCHAR},
+      td_loanTool = #{tdLoantool,jdbcType=VARCHAR},
+      td_extPlatform = #{tdExtplatform,jdbcType=VARCHAR},
+      tdId_criminal = #{tdidCriminal,jdbcType=VARCHAR},
+      tdId_risk = #{tdidRisk,jdbcType=VARCHAR},
+      tdId_taxes = #{tdidTaxes,jdbcType=VARCHAR},
+      tdId_credit = #{tdidCredit,jdbcType=VARCHAR},
+      tdPhone_risk = #{tdphoneRisk,jdbcType=VARCHAR},
+      tdPhone_arrears = #{tdphoneArrears,jdbcType=VARCHAR},
+      tdPhone_communication = #{tdphoneCommunication,jdbcType=VARCHAR},
+      tdPhone_credit = #{tdphoneCredit,jdbcType=VARCHAR},
+      tdPhone_falseNum = #{tdphoneFalsenum,jdbcType=VARCHAR},
+      tdPhone_fraudNum = #{tdphoneFraudnum,jdbcType=VARCHAR},
+      tdContPhone_risk = #{tdcontphoneRisk,jdbcType=VARCHAR},
+      tdContPhone_communication = #{tdcontphoneCommunication,jdbcType=VARCHAR},
+      tdContPhone_credit = #{tdcontphoneCredit,jdbcType=VARCHAR},
+      tdContPhone_falseNum = #{tdcontphoneFalsenum,jdbcType=VARCHAR},
+      tdContPhone_fraudNum = #{tdcontphoneFraudnum,jdbcType=VARCHAR},
+      tdDg_falseNum = #{tddgFalsenum,jdbcType=VARCHAR},
+      tdDg_fraudNum = #{tddgFraudnum,jdbcType=VARCHAR},
+      tdDg_agencyNum = #{tddgAgencynum,jdbcType=VARCHAR},
+      shzx_loan = #{shzxLoan,jdbcType=VARCHAR},
+      shzx_outLoan = #{shzxOutloan,jdbcType=VARCHAR},
+      shzx_overdue = #{shzxOverdue,jdbcType=VARCHAR},
+      shzx_lineCredit = #{shzxLinecredit,jdbcType=VARCHAR},
+      shzx_month = #{shzxMonth,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <insert id="insertRuleRisk" parameterType="com.zw.rule.rulerisk.po.MagRuleRisk" >
+    insert into rule_risk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cradNo != null" >
+        crad_no,
+      </if>
+      <if test="htrl != null" >
+        htrl,
+      </if>
+      <if test="siys != null" >
+        siys,
+      </if>
+      <if test="phoneReal != null" >
+        phone_real,
+      </if>
+      <if test="phoneTime != null" >
+        phone_time,
+      </if>
+      <if test="phoneGps != null" >
+        phone_gps,
+      </if>
+      <if test="accumulation != null" >
+        accumulation,
+      </if>
+      <if test="social != null" >
+        social,
+      </if>
+      <if test="alipayRealname != null" >
+        alipay_realName,
+      </if>
+      <if test="sesameSeeds != null" >
+        sesame_seeds,
+      </if>
+      <if test="pyIfo != null" >
+        py_ifo,
+      </if>
+      <if test="pyEdu != null" >
+        py_edu,
+      </if>
+      <if test="pyDistress != null" >
+        py_distress,
+      </if>
+      <if test="pyTax != null" >
+        py_tax,
+      </if>
+      <if test="pyJudcase != null" >
+        py_judCase,
+      </if>
+      <if test="pyJuddishonesty != null" >
+        py_judDishonesty,
+      </if>
+      <if test="pyJudenfor != null" >
+        py_judEnfor,
+      </if>
+      <if test="pyNetloanover != null" >
+        py_netLoanOver,
+      </if>
+      <if test="tdBhit != null" >
+        td_bHit,
+      </if>
+      <if test="tdLoanproxy != null" >
+        td_loanProxy,
+      </if>
+      <if test="tdLoantool != null" >
+        td_loanTool,
+      </if>
+      <if test="tdExtplatform != null" >
+        td_extPlatform,
+      </if>
+      <if test="tdidCriminal != null" >
+        tdId_criminal,
+      </if>
+      <if test="tdidRisk != null" >
+        tdId_risk,
+      </if>
+      <if test="tdidTaxes != null" >
+        tdId_taxes,
+      </if>
+      <if test="tdidCredit != null" >
+        tdId_credit,
+      </if>
+      <if test="tdphoneRisk != null" >
+        tdPhone_risk,
+      </if>
+      <if test="tdphoneArrears != null" >
+        tdPhone_arrears,
+      </if>
+      <if test="tdphoneCommunication != null" >
+        tdPhone_communication,
+      </if>
+      <if test="tdphoneCredit != null" >
+        tdPhone_credit,
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        tdPhone_falseNum,
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        tdPhone_fraudNum,
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        tdContPhone_risk,
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        tdContPhone_communication,
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        tdContPhone_credit,
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        tdContPhone_falseNum,
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        tdContPhone_fraudNum,
+      </if>
+      <if test="tddgFalsenum != null" >
+        tdDg_falseNum,
+      </if>
+      <if test="tddgFraudnum != null" >
+        tdDg_fraudNum,
+      </if>
+      <if test="tddgAgencynum != null" >
+        tdDg_agencyNum,
+      </if>
+      <if test="shzxLoan != null" >
+        shzx_loan,
+      </if>
+      <if test="shzxOutloan != null" >
+        shzx_outLoan,
+      </if>
+      <if test="shzxOverdue != null" >
+        shzx_overdue,
+      </if>
+      <if test="shzxLinecredit != null" >
+        shzx_lineCredit,
+      </if>
+      <if test="shzxMonth != null" >
+        shzx_month,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cradNo != null" >
+        #{cradNo,jdbcType=VARCHAR},
+      </if>
+      <if test="htrl != null" >
+        #{htrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siys != null" >
+        #{siys,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReal != null" >
+        #{phoneReal,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneTime != null" >
+        #{phoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneGps != null" >
+        #{phoneGps,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulation != null" >
+        #{accumulation,jdbcType=VARCHAR},
+      </if>
+      <if test="social != null" >
+        #{social,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null" >
+        #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="sesameSeeds != null" >
+        #{sesameSeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="pyIfo != null" >
+        #{pyIfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pyEdu != null" >
+        #{pyEdu,jdbcType=VARCHAR},
+      </if>
+      <if test="pyDistress != null" >
+        #{pyDistress,jdbcType=VARCHAR},
+      </if>
+      <if test="pyTax != null" >
+        #{pyTax,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudcase != null" >
+        #{pyJudcase,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJuddishonesty != null" >
+        #{pyJuddishonesty,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudenfor != null" >
+        #{pyJudenfor,jdbcType=VARCHAR},
+      </if>
+      <if test="pyNetloanover != null" >
+        #{pyNetloanover,jdbcType=VARCHAR},
+      </if>
+      <if test="tdBhit != null" >
+        #{tdBhit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoanproxy != null" >
+        #{tdLoanproxy,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoantool != null" >
+        #{tdLoantool,jdbcType=VARCHAR},
+      </if>
+      <if test="tdExtplatform != null" >
+        #{tdExtplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCriminal != null" >
+        #{tdidCriminal,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidRisk != null" >
+        #{tdidRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidTaxes != null" >
+        #{tdidTaxes,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCredit != null" >
+        #{tdidCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneRisk != null" >
+        #{tdphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneArrears != null" >
+        #{tdphoneArrears,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCommunication != null" >
+        #{tdphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCredit != null" >
+        #{tdphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        #{tdphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        #{tdphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        #{tdcontphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        #{tdcontphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        #{tdcontphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        #{tdcontphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        #{tdcontphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFalsenum != null" >
+        #{tddgFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFraudnum != null" >
+        #{tddgFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgAgencynum != null" >
+        #{tddgAgencynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLoan != null" >
+        #{shzxLoan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOutloan != null" >
+        #{shzxOutloan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOverdue != null" >
+        #{shzxOverdue,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLinecredit != null" >
+        #{shzxLinecredit,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxMonth != null" >
+        #{shzxMonth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+<select id="selectCountByCardNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+  SELECT  count(*) FROM rule_risk WHERE  crad_no = #{cradNo}
+</select>
+
+
+  <update id="updateRuleRisk" parameterType="com.zw.rule.rulerisk.po.MagRuleRisk" >
+    update rule_risk
+    <set >
+      <if test="htrl != null" >
+        htrl = #{htrl,jdbcType=VARCHAR},
+      </if>
+      <if test="siys != null" >
+        siys = #{siys,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneReal != null" >
+        phone_real = #{phoneReal,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneTime != null" >
+        phone_time = #{phoneTime,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneGps != null" >
+        phone_gps = #{phoneGps,jdbcType=VARCHAR},
+      </if>
+      <if test="accumulation != null" >
+        accumulation = #{accumulation,jdbcType=VARCHAR},
+      </if>
+      <if test="social != null" >
+        social = #{social,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayRealname != null" >
+        alipay_realName = #{alipayRealname,jdbcType=VARCHAR},
+      </if>
+      <if test="sesameSeeds != null" >
+        sesame_seeds = #{sesameSeeds,jdbcType=VARCHAR},
+      </if>
+      <if test="pyIfo != null" >
+        py_ifo = #{pyIfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pyEdu != null" >
+        py_edu = #{pyEdu,jdbcType=VARCHAR},
+      </if>
+      <if test="pyDistress != null" >
+        py_distress = #{pyDistress,jdbcType=VARCHAR},
+      </if>
+      <if test="pyTax != null" >
+        py_tax = #{pyTax,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudcase != null" >
+        py_judCase = #{pyJudcase,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJuddishonesty != null" >
+        py_judDishonesty = #{pyJuddishonesty,jdbcType=VARCHAR},
+      </if>
+      <if test="pyJudenfor != null" >
+        py_judEnfor = #{pyJudenfor,jdbcType=VARCHAR},
+      </if>
+      <if test="pyNetloanover != null" >
+        py_netLoanOver = #{pyNetloanover,jdbcType=VARCHAR},
+      </if>
+      <if test="tdBhit != null" >
+        td_bHit = #{tdBhit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoanproxy != null" >
+        td_loanProxy = #{tdLoanproxy,jdbcType=VARCHAR},
+      </if>
+      <if test="tdLoantool != null" >
+        td_loanTool = #{tdLoantool,jdbcType=VARCHAR},
+      </if>
+      <if test="tdExtplatform != null" >
+        td_extPlatform = #{tdExtplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCriminal != null" >
+        tdId_criminal = #{tdidCriminal,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidRisk != null" >
+        tdId_risk = #{tdidRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidTaxes != null" >
+        tdId_taxes = #{tdidTaxes,jdbcType=VARCHAR},
+      </if>
+      <if test="tdidCredit != null" >
+        tdId_credit = #{tdidCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneRisk != null" >
+        tdPhone_risk = #{tdphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneArrears != null" >
+        tdPhone_arrears = #{tdphoneArrears,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCommunication != null" >
+        tdPhone_communication = #{tdphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneCredit != null" >
+        tdPhone_credit = #{tdphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFalsenum != null" >
+        tdPhone_falseNum = #{tdphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdphoneFraudnum != null" >
+        tdPhone_fraudNum = #{tdphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneRisk != null" >
+        tdContPhone_risk = #{tdcontphoneRisk,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCommunication != null" >
+        tdContPhone_communication = #{tdcontphoneCommunication,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneCredit != null" >
+        tdContPhone_credit = #{tdcontphoneCredit,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFalsenum != null" >
+        tdContPhone_falseNum = #{tdcontphoneFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tdcontphoneFraudnum != null" >
+        tdContPhone_fraudNum = #{tdcontphoneFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFalsenum != null" >
+        tdDg_falseNum = #{tddgFalsenum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgFraudnum != null" >
+        tdDg_fraudNum = #{tddgFraudnum,jdbcType=VARCHAR},
+      </if>
+      <if test="tddgAgencynum != null" >
+        tdDg_agencyNum = #{tddgAgencynum,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLoan != null" >
+        shzx_loan = #{shzxLoan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOutloan != null" >
+        shzx_outLoan = #{shzxOutloan,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxOverdue != null" >
+        shzx_overdue = #{shzxOverdue,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxLinecredit != null" >
+        shzx_lineCredit = #{shzxLinecredit,jdbcType=VARCHAR},
+      </if>
+      <if test="shzxMonth != null" >
+        shzx_month = #{shzxMonth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where crad_no = #{cradNo,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

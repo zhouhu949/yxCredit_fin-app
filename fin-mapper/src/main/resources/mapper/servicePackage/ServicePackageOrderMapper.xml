@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.servicePackage.ServicePackageOrderMapper" >
+    <select id="getServicePackageOrderList" parameterType="map" resultType="com.zw.rule.servicePackage.po.ServicePackageOrder">
+        SELECT
+            mso.id,
+            mso.package_service_id AS packageServiceId,
+            mso.state,
+            mso.create_time AS createTime,
+            mso.alter_time AS alterTime,
+            mso.apex1,
+            mso.order_id AS orderId,
+            mso.type,
+            mso.force_collection AS forceCollection,
+            mso.period_collection_type AS periodCollectionType,
+            mso.amount_collection AS amountCollection,
+            mso.period_collection_type AS periodCollectionType,
+            mso.amount_collection AS amountCollection,
+            mso. MONTH,
+            mso.period_collection AS periodCollection,
+            mso.package_name AS packageName,
+            mso.orig_trans_id AS origTransId,
+            mspt.package_type_name AS packageTypeName
+            FROM
+            mag_servicepag_order mso
+        LEFT JOIN mag_service_package_type mspt ON mso.type = mspt.id
+        <where>
+            1=1
+            <if test="orderId != null">
+                and order_id=#{orderId}
+            </if>
+        </where>
+        order by type
+    </select>
+    <select id="getServicePackageRepayment"  parameterType="map" resultType="com.zw.rule.servicePackage.po.ServicePackageRepayment">
+        SELECT  id,repayment_id AS repaymentId,package_name AS packageName,period,month,type,amount,state,order_id AS orderId,creat_time AS creatTime
+        FROM service_package_repayment
+        <where>
+            1=1
+            <if test="repaymentId !=null">
+                AND repayment_id=#{repaymentId}
+            </if>
+        </where>
+        order by type
+    </select>
+
+    <update id="updatePackState" parameterType="map">
+        update mag_servicepag_order
+           set state = #{state},
+               ALTER_TIME = #{date}
+        where order_id = #{orderId}
+          and state = '1'
+    </update>
+</mapper>

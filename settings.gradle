@@ -1,0 +1,8 @@
+rootProject.name = 'fin-app'
+include 'fin-web'
+include 'common-tools'
+include 'fin-service'
+include 'fin-model'
+include 'fin-mapper'
+include 'dao-base'
+include 'fin-util'

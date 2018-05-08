@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.loan.LoanMapper" >
+
+  <sql id="Base_Column_List" >
+    id, user_id AS userId, amount, state, createtime AS createTime, updatetime AS updateTime, des,order_id AS orderId,cust_id AS custId,settle_state AS settleState
+  </sql>
+
+  <select id="getLoanList" resultType="java.util.Map" parameterType="java.util.Map">
+    select ml.order_id as orderId,
+    ml.id AS id, ml.order_no AS orderNo, ml.user_id AS userId, ml.amount AS amount, ml.state AS state, ml.createtime AS createTime, ml.updatetime AS updateTime, ml.des AS des,mc.PERSON_NAME AS customerName
+    ,ml.progress AS progress,mo.end_credit AS endCredit,IFNULL(mca.bank_card,'') AS bankCard,IFNULL(mca.account_bank,'') AS accountBank,IFNULL(mo.payment_ratio,'0') AS paymentRatio
+    from mag_loan ml
+    LEFT JOIN mag_customer mc ON ml.cust_id = mc.ID
+    LEFT JOIN mag_order mo ON ml.order_no = mo.order_no
+    LEFT JOIN mag_customer_account mca ON mca.CUSTOMER_ID = ml.cust_id
+    <where>
+      <if test="state != null and state != ''">
+        and ml.state = #{state}
+      </if>
+      <if test="beginTime != null and beginTime != ''">
+        and ml.createtime &gt;= #{beginTime}
+      </if>
+      <if test="endTime != null and endTime != ''">
+        and ml.createtime &lt;= #{endTime}
+      </if>
+        <if test="custName != null and custName != ''">
+            and mc.PERSON_NAME = #{custName}
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            and ml.order_no = #{orderNo}
+        </if>
+    </where>
+    order by ml.createtime desc
+  </select>
+
+  <update id="reviewLoan" parameterType="java.util.Map" >
+    UPDATE mag_loan SET state = #{state},loan_time = #{loanTime},updatetime = #{updateTime} WHERE id = #{loanId}
+  </update>
+
+  <insert id="submitLoan" parameterType="java.util.Map">
+    insert into
+    mag_loan
+    <trim prefix="(" suffix=")">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      createtime,updatetime,progress
+    </trim>
+    values
+    <trim prefix="(" suffix=")">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="custId != null">
+        #{custId},
+      </if>
+      <if test="amount != null">
+        #{amount},
+      </if>
+      <if test="state != null">
+        #{state},
+      </if>
+      <if test="orderId != null">
+        #{orderId},
+      </if>
+      <if test="des != null">
+        #{des},
+      </if>
+      <if test="createtime != null">
+        #{createtime},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime}
+      </if>,1
+    </trim>
+  </insert>
+
+  <select id="getLoanById" resultType="com.zw.rule.loan.po.Loan" parameterType="java.lang.String">
+    SELECT <include refid="Base_Column_List" /> FROM mag_loan WHERE id = #{id}
+  </select>
+
+  <select id="getLoanByOrderId" resultType="com.zw.rule.loan.po.Loan" parameterType="java.lang.String">
+    SELECT <include refid="Base_Column_List" /> FROM mag_loan WHERE order_id = #{orderId}
+  </select>
+
+<select id="getUserInfoByloanId" resultType="java.util.Map" parameterType="java.lang.String">
+    SELECT IFNULL(au.registration_id,'') AS registrationId FROM mag_loan ml
+    LEFT JOIN mag_customer mc ON ml.cust_id = mc.ID
+    LEFT JOIN app_user au ON au.id = mc.USER_ID WHERE ml.id = #{loanId}
+</select>
+
+  <insert id="addLoanDetail" parameterType="java.util.Map">
+    INSERT INTO mag_loan_detail(id,loan_id,loan_amount,loan_time) VALUES (#{id},#{loanId},#{amount},#{loanTime})
+  </insert>
+
+
+  <select id="getAllList" resultType="java.util.Map" parameterType="java.lang.String">
+    select ml.order_id as orderId,
+    ml.id AS id, ml.order_no AS orderNo, ml.user_id AS userId, ml.amount AS amount, ml.state AS state, ml.createtime AS createTime, ml.updatetime AS updateTime, ml.des AS des,mc.PERSON_NAME AS customerName
+    ,ml.progress AS progress,mo.end_credit AS endCredit,IFNULL(mca.bank_card,'') AS bankCard,IFNULL(mca.account_bank,'') AS accountBank,IFNULL(mo.payment_ratio,'0') AS paymentRatio
+    from mag_loan ml
+    LEFT JOIN mag_customer mc ON ml.cust_id = mc.ID
+    LEFT JOIN mag_order mo ON ml.order_no = mo.order_no
+    LEFT JOIN mag_customer_account mca ON mca.CUSTOMER_ID = ml.cust_id
+    <where>
+      ml.loan_time LIKE CONCAT('',#{date},'%')
+    </where>
+    order by ml.createtime desc
+  </select>
+
+</mapper>

@@ -1,0 +1,147 @@
+.outs .out-content{
+    margin:0;
+}
+.l_left_buttons{
+    padding-right: 2em!important;
+    text-align: right;
+}
+#addNodes{
+    display: none;
+    position: absolute;
+}
+#addNodes select{
+    width:163px;
+}
+#addNodes .labelStyle{
+    margin:1.5em;
+    text-align: left;
+}
+#addNodes .labelStyle_hide{
+    display: none;
+}
+.main-content{
+    margin-left: 50px;
+}
+.c-sanbox-lie{
+    margin:1em 0;
+}
+.c-sanbox-lie {
+    margin:1em 0;
+}
+.c-sanbox-lie input{
+    width: 160px;
+}
+.c-enter-proportion{
+    float:left;
+    margin-left: 1.5em;
+}
+.c-sanbox-img{
+    cursor: pointer;
+    color:#398DEE;
+    float: right;
+    margin-right: 1.5em;
+}
+
+.c-sanbox-delete{
+    float: right;
+    margin-right: 2em;
+    cursor: pointer;
+}
+.c-swarm-interior .c-swarm-interior-left .c-swarm-name{
+    float: left;
+}
+.c-title{
+    margin-left:1.5em
+}
+.c-swarm-interior .c-positon-img{
+    position: absolute;
+    top:30px;
+    right: 0;
+    margin-right: 1em;
+    cursor: pointer;
+}
+.c-contains-outside{
+    margin:5px auto;
+}
+.c-contained-within{
+    overflow: hidden;
+    clear: both;
+    margin-left: 1.5em;
+}
+.c-swarm-dialog input{
+    width:80px;
+    line-height: 18px;
+}
+.c-contained-within div[class^="c-select-"]{
+    float:left;
+}
+.c-swarm-interior-left{
+    position: relative;
+}
+.c-swarm-interior{
+    position: relative;
+    line-height: 30px;
+}
+
+.c-black-frame,.c-white-frame{
+    float:left;
+    margin-left:1.5em;
+}
+.c-black-frame input,.c-white-frame input{
+    margin-right:1em;
+}
+.c-black-price,.c-white-price{
+    cursor: pointer;
+}
+input,select{
+    border-radius: 3px;
+}
+.c-swarm-iexternal{
+    position: absolute;
+    top: 2px;
+    right: 7px;
+    line-height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0 .5em;
+    background: #2E8DED;
+    color: #fff;
+    cursor: pointer;
+}
+
+#fieldsStyle{position: fixed;top:40px;z-index: 5;background: #fff;width: 100%;}
+#first_logical_select,#last_logical_select,#inputParameter_one_select,#inputParameter_two_select,#inputParameter_three_select,.add_last_logical_select,.add_inputParameter_one_select,.add_inputParameter_two_select,.add_inputParameter_three_select{width:100px}
+#input_parameter_style .pagination ul li{width:53px;margin:0}
+#option_popups .c-options-createuser{
+    margin:1em auto;
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    top: 40px;
+}
+#option_popups .c-decisions-switcher:first-child{
+    float: left;
+    width: 50%;
+}
+.active_active{
+    color:#2E8DED;
+}
+.sanbox-popups .c-sanbox-lie-input{
+    margin:1em 0;
+}
+.sanbox-popups .c-sanbox-lie-input input{
+    margin: 5px 5px 0 0!important;
+    position: relative;
+    left: 30%;
+}
+.c-swarms .c-sanbox-lie-input{
+    margin:1em 0;
+    line-height: 12px;
+}
+.c-swarms .c-sanbox-lie-input input{
+    position: relative;
+    left: 40%;
+}
+.write-data-every{
+    margin: 1em 0;
+}

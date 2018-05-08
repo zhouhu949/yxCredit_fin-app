@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.customer.CustomerLinkmanMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.customer.po.CustomerLinkman" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ID" property="customerId" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="VARCHAR" />
+    <result column="ALTER_TIME" property="alterTime" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="APEX1" property="apex1" jdbcType="VARCHAR" />
+    <result column="APEX2" property="apex2" jdbcType="VARCHAR" />
+    <result column="APEX3" property="apex3" jdbcType="VARCHAR" />
+    <result column="BAK" property="bak" jdbcType="VARCHAR" />
+    <result column="link_name" property="linkName" jdbcType="VARCHAR" />
+    <result column="relationship" property="relationship" jdbcType="VARCHAR" />
+    <result column="known_loan" property="knownLoan" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="idcard_num" property="idcardNum" jdbcType="VARCHAR" />
+    <result column="work_company" property="workCompany" jdbcType="VARCHAR" />
+    <result column="main_sign" property="mainSign" jdbcType="VARCHAR" />
+    <result column="crm_linkman_id" property="crmLinkmanId" jdbcType="VARCHAR" />
+    <result column="relationship_name" property="relationshipName" jdbcType="VARCHAR" />
+    <result column="known_loan_name" property="knownLoanName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CUSTOMER_ID,CREAT_TIME,ALTER_TIME,state,APEX1,APEX2,APEX3,BAK,link_name,relationship,known_loan,
+    contact,idcard_num,work_company,main_sign,crm_linkman_id,relationship_name,known_loan_name
+  </sql>
+  <select id="getCustomerLinkMan" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from mag_customer_linkman
+    where CUSTOMER_ID = #{customerId}
+  </select>
+</mapper>

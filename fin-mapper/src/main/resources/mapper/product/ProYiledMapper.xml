@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.product.ProYieldMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.product.ProYield" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="pro_quota_limit" property="pro_quota_limit" jdbcType="VARCHAR" />
+    <result column="pro_quota_proportion" property="pro_quota_proportion" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getQuato"  resultType="map" parameterType="com.zw.rule.product.ProYield">
+    select id,create_time,status,pro_quota_limit,pro_quota_proportion from pro_yield
+    <where>
+      status !='2'
+      <if test="id != null" >
+        AND id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="getQuatoList"  resultType="map" >
+    select id,create_time,status,pro_quota_limit,pro_quota_proportion from pro_yield
+    <where>
+      status !='2'
+      <if test="id != null" >
+        AND id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <insert id="addQuato"   parameterType="com.zw.rule.product.ProYield" >
+    insert into pro_yield (id,create_time,pro_quota_limit, pro_quota_proportion,status)
+    VALUES (#{id},#{create_time},#{pro_quota_limit}, #{pro_quota_proportion},#{status})
+  </insert>
+  <update id="updateQuato"   parameterType="com.zw.rule.product.ProYield" >
+    update  pro_yield
+    <set >
+      <if test="pro_quota_limit != null" >
+        pro_quota_limit = #{pro_quota_limit},
+      </if>
+      <if test="pro_quota_proportion != null" >
+        pro_quota_proportion = #{pro_quota_proportion},
+      </if>
+      <if test="status != null" >
+        status = #{status}
+      </if>
+    </set>
+    where  id=#{id}
+  </update>
+
+  <select id="getList"  resultType="map" parameterType="java.util.Map">
+    select id,create_time,status,pro_quota_limit,pro_quota_proportion from pro_yield
+    <where>
+      1=1
+      <if test="status != null" >
+        AND status = #{status}
+      </if>
+    </where>
+  </select>
+</mapper>

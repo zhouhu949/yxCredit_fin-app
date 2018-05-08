@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.system.StationProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.po.StationProcess" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" />
+    <result column="process_id" property="processId" />
+    <result column="node_id" property="nodeId" />
+  </resultMap>
+  <resultMap id="BaseResultMap1" type="com.zw.rule.po.StationProcess" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="station_id" property="stationId" />
+    <result column="process_id" property="processId" />
+    <result column="node_id" property="nodeId" />
+    <result column="station_name" property="stationName" />
+    <result column="name" property="processName" />
+    <result column="node_name" property="nodeName" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, station_id, process_id,node_id
+  </sql>
+  <delete id="deleteByStationId" parameterType="java.lang.String" >
+    delete from zw_station_process_link
+    where station_id = #{station_id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.po.StationProcess" >
+    insert into zw_station_process_link (id, station_id, process_id,node_id)
+    values (#{id}, #{stationId}, #{processId},#{nodeId})
+  </insert>
+  <select id="countStationProcess" parameterType="com.zw.rule.po.StationProcess" resultType="Integer">
+    select count(*) from zw_station_process_link
+    where station_id = #{stationId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStationId" parameterType="java.util.Map" resultMap="BaseResultMap1" >
+    select l.id, l.station_id, l.process_id,l.node_id,s.station_name,p.name,pn.node_name from zw_station_process_link l
+    left join zw_process p on p.id = l.process_id
+    left join zw_process_node pn on pn.node_id = l.node_id
+    left join zw_sys_station s on s.id = l.station_id
+    where station_id = #{stationId,jdbcType=VARCHAR}
+    order by l.process_id
+  </select>
+
+  <insert id = "batchInsert" parameterType="java.util.List">
+    insert into zw_station_process_link (id, station_id, process_id,node_id)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (#{item.id}, #{item.stationId}, #{item.processId},#{item.nodeId})
+    </foreach>
+  </insert>
+</mapper>

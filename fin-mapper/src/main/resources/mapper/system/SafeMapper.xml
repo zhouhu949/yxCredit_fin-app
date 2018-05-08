@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.system.SafeMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.po.Safe" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="conf_name" property="confName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="alter_time" property="alterTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, code, conf_name, description, creat_time, alter_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zw_sys_configure
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByConfName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from zw_sys_configure
+    where conf_name = #{confName,jdbcType=VARCHAR}
+  </select>
+  <select id="getSafeList" resultMap="BaseResultMap" parameterType="java.util.Map">
+      select
+      <include refid="Base_Column_List" />
+      from zw_sys_configure
+      <where>
+        <if test="param.confName != null and param.confName != ''">
+          conf_name like '%${param.confName}%'
+        </if>
+      </where>
+      order by creat_time desc limit #{page.firstIndex}, #{page.pageSize}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+      select count(*)
+      from zw_sys_configure
+      <where>
+        <if test="param.confName != null and param.confName != ''">
+          conf_name like '%${param.confName}%'
+        </if>
+      </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zw_sys_configure
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zw.rule.po.Safe" >
+    insert into zw_sys_configure (id, name, code, 
+      conf_name, description, creat_time,
+      alter_time)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{confName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP},
+      #{alterTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zw.rule.po.Safe" >
+    insert into zw_sys_configure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="conf_name != null" >
+        confName,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="creat_time != null" >
+        creatTime,
+      </if>
+      <if test="alter_time != null" >
+        alterTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="conf_name != null" >
+        #{confName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creat_time != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alter_time != null" >
+        #{alterTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.po.Safe" >
+    update zw_sys_configure
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="conf_name != null" >
+        conf_name = #{confName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creat_time != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alterTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zw.rule.po.Safe" >
+    update zw_sys_configure
+    set name = #{name,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      conf_name = #{confName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      alter_time = #{alterTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

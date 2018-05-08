@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.system.AppDictMapper">
+    <resultMap type="com.zw.rule.po.MagDict" id="Dict">
+        <result column="id" property="id"/>
+        <result column="description" property="description"/>
+        <result column="code" property="code"/>
+        <result column="name" property="name"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="alter_time" property="alterTime"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.zw.rule.po.MagDict">
+        insert into mag_dict
+        (id,code,name,description,state,create_time,alter_time)
+        values(#{id}, #{code}, #{name}, #{description}, #{state},DATE_FORMAT(now(),'%Y%m%d%H%i%s'),DATE_FORMAT(now(),'%Y%m%d%H%i%s'))
+    </insert>
+
+    <select id="getCatagory" resultMap="Dict">
+        select DISTINCT(id) as id ,name from mag_dict;
+    </select>
+    
+    <update id="update" parameterType="com.zw.rule.po.MagDict">
+        update mag_dict set code=#{code},name=#{name},description=#{description},alter_time=DATE_FORMAT(now(),'%Y%m%d%H%i%s')
+        where id=#{id}
+    </update>
+    
+    <select id="getMagDictList" parameterType="java.util.Map" resultMap="Dict">
+    	select * from mag_dict
+    	<where>
+            <if test="@Ognl@isNotEmpty(searchKey)">
+                name like '%${searchKey}%'
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <!--<select id="getListByParentId" parameterType="java.lang.String" resultMap="Dict">-->
+        <!--select * from mag_dict_detail where dict_id = #{id}-->
+    <!--</select>-->
+    <!---->
+    <!--<select id="getCount" parameterType="java.util.Map" resultType="Integer">-->
+        <!--select count(*) from mag_dict-->
+        <!--&lt;!&ndash;<where>&ndash;&gt;-->
+           <!--&lt;!&ndash;<if test="@Ognl@isNotEmpty(parentId)">&ndash;&gt;-->
+                <!--&lt;!&ndash;and parent_id = #{parentId}&ndash;&gt;-->
+            <!--&lt;!&ndash;</if>&ndash;&gt;-->
+        <!--&lt;!&ndash;</where>&ndash;&gt;-->
+    <!--</select>-->
+    <!---->
+   <!--<select id="getTree" parameterType="java.lang.String" resultType="Map">-->
+        <!--select DISTINCT(t1.id) as id,t1.dict_id as parent,t1.name as text-->
+        <!--from mag_dict_detail t1 left join mag_dict t2 on t1.dict_id = t2.id-->
+    <!--</select>-->
+    
+
+    <select id="getById" parameterType="java.lang.String" resultMap="Dict">
+        select * from mag_dict where id = #{id}
+    </select>
+    
+    <delete id="delete" parameterType="java.lang.String">
+        delete from mag_dict where id = #{id}
+    </delete>
+
+    <!--<delete id="deleteMagDictDetail" parameterType="java.lang.String">-->
+        <!--delete from mag_dict_detail where id = #{id}-->
+    <!--</delete>-->
+
+    <select id="findByDictName" parameterType="java.util.Map" resultMap="Dict">
+        select * from mag_dict where name = #{name}
+    </select>
+
+    <select id="findByDictCode" parameterType="java.util.Map" resultMap="Dict">
+        select * from mag_dict where code = #{code}
+    </select>
+
+    <select id="findByDictId" parameterType="java.util.Map" resultType="String">
+        select code from mag_dict where id != #{id}
+    </select>
+
+    <!--<select id="getDetailList" parameterType="java.util.Map" resultMap="Dict">-->
+        <!--select * from zw_sys_dict where parent_id =(select id from zw_sys_dict where name =#{dictName})-->
+    <!--</select>-->
+
+    <!--<select id="getListByName" parameterType="java.lang.String" resultMap="Dict">-->
+        <!--select * from zw_sys_dict where name = #{name}-->
+    <!--</select>-->
+    <!--<select id="getListByCode" parameterType="java.lang.String" resultMap="Dict">-->
+        <!--select * from zw_sys_dict where code = #{code}-->
+    <!--</select>-->
+    <!--<select id="getNameByCode" parameterType="java.lang.String" resultMap="Dict">-->
+        <!--select name from zw_sys_dict where code = #{code} and is_catagory = 'Y'-->
+    <!--</select>-->
+    <!--<select id="getDetailNameByCode" parameterType="java.util.Map" resultMap="Dict">-->
+        <!--select name from zw_sys_dict where code = #{code} and parent_id = #{parent_id}-->
+    <!--</select>-->
+
+</mapper>

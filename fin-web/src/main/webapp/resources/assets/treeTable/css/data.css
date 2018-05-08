@@ -1,0 +1,189 @@
+
+a {
+    color: #00c2c4;
+}
+a:hover,
+a:focus {
+    text-decoration:none;
+    cursor: pointer;
+    color: #03b4b6;
+}
+#magData thead tr th,
+ #magData tbody tr td {
+     border: 1px solid#ccc;
+     text-align: center;
+     height: 25px;
+     font-size: 14px;
+ }
+#magData_wrapper div.row-fluid:first-child {
+    display: none;
+}
+#magData thead tr th {
+    background: #f2f2f2;
+}
+#name {
+    width: 150px;
+    height: 28px;
+    border-radius: 0;
+    border: 1px solid#a9a9a9;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+#type {
+    width: 160px ! important;
+    border: 1px solid#a9a9a9 ! important;
+    border-radius: 0 ! important;
+    margin-bottom: 0 ! important;
+}
+
+table {
+    margin-left: -10px;
+}
+#magData_wrapper div.row-fluid:nth-child(3) {
+    margin-top: 20px;
+    margin-left: -10px;
+}
+#magData tbody tr td:nth-child(4) {
+    text-align: center;
+}
+.ly_positionBar {
+    border-bottom: 1px solid #dcdcdc;
+    height: 45px;
+    line-height: 45px;
+}
+.ly_positionBar .position {
+    padding-left: 10px;
+    font-size: 16px;
+    font-style: italic;
+}
+.s_treeGrid .s_tabPanel .tri{
+    cursor:pointer;
+    padding:5px 3px;
+    margin-right:5px;
+    border-bottom:2px solid #fff;
+}
+.s_treeGrid .s_tabPanel .active{
+    border-color:#05c1bc;
+    display:inline-block;
+}
+.s_treeGrid .s_tabPanel{
+    margin-bottom:10px;
+}
+/*************/
+table, thead, tbody, tr, td{
+    border: 0;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+.inputGroup_v.space_lg td {
+    padding: 8px 0;
+}
+.inputGroup_v td {
+    padding: 5px;
+    vertical-align: middle;
+}
+.inputGroup_v .inpText {
+    height: 26px;
+}
+.inputGroup_v .inpMax {
+    width: 100%;
+}
+.inpText {
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    text-indent: 2px;
+    line-height: 24px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+#organize input, #organize textarea{
+    margin-left: 0;
+    padding-left: 4px;
+}
+#organize table, #organize .wid-max{
+    width: 100%
+}
+#organize #type, #organize #name{
+    width: 100% !important;
+    border: 1px solid #ccc!important;
+}
+#organize .flexCtn{
+    display: flex;
+    -webkit-display: flex;
+}
+#organize #provinceId,#organize #cityId,#organize #districtId{
+    cursor: pointer;
+    padding-right: 24px;
+}
+.layui-layer.layui-anim.layui-layer-dialog.layui-layer-border.layui-layer-msg.layui-layer-hui{
+    top: 300px!important;
+}
+#organize input, #organize textarea, #organize select{
+    color: #333!important;
+    font-size: 14px;
+}
+#organize td{
+    font-size: 14px;
+}
+#organize select{
+    padding-left:1px;
+}
+#magData thead tr th, #magData tbody tr td{
+    border:none;
+    border-bottom: 1px solid #ccc;
+}
+#magData tbody tr td:first-child, #magData thead tr th:first-child{
+    border-left: 1px solid #ccc;
+}
+#magData tbody tr td:nth-child(7), #magData thead tr th:nth-child(7){
+    border-right: 1px solid #ccc;
+}
+#magData thead tr th{
+    border-top:1px solid #ccc;
+    border-bottom:1px solid #ccc;
+}
+#magData_info{
+    display: none;
+}
+#magData tbody .level1 .indenter{
+    margin-left: 5px!important;
+}
+#magData tbody .level2 .indenter{
+    margin-left: 15px!important;
+}
+#magData tbody .level3 .indenter{
+    margin-left: 25px!important;
+}
+#magData tbody .level4 .indenter{
+    margin-left: 35px!important;
+}
+#magData tbody .level5 .indenter{
+    margin-left: 45px!important;
+}
+#magData tbody .level6 .indenter{
+    margin-left: 55px!important;
+}
+#magData tbody .level7 .indenter{
+    margin-left: 65px!important;
+}
+#magData tbody .level8 .indenter{
+    margin-left: 75px!important;
+}
+#magData tbody .level9 .indenter{
+    margin-left: 85px!important;
+}
+#magData tbody .level10 .indenter{
+    margin-left: 95px!important;
+}
+#magData tbody .level11 .indenter{
+    margin-left: 105px!important;
+}
+#magData tbody .level12 .indenter{
+    margin-left: 110px!important;
+}
+#magData tbody .level13 .indenter{
+    margin-left: 115px!important;
+}
+

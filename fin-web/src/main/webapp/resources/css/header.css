@@ -1,0 +1,66 @@
+.change_Pass_style {
+    display: none;
+}
+
+.change_Pass_style .xg_style li {
+    height: 40px;
+    padding: 5px 0;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+
+.change_Pass_style .xg_style li .label_name {
+    float: left;
+    width: 80px;
+    text-align: right
+}
+
+.change_Pass_style .xg_style .btn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    text-align: center
+}
+
+/*tips*/
+#showTips,#showPreson{
+    position: absolute;
+    background: #fff;
+    border:1px solid #ddd;
+    top:47px;
+    left:-60px;
+    box-shadow: 2px 2px 2px #888888;
+    display: none;
+}
+#showPreson{
+    position: absolute;
+    background: #fff;
+    border:1px solid #ddd;
+    top:47px;
+    left:0px;
+    box-shadow: 2px 2px 2px #888888;
+    display: none;
+    cursor: pointer;
+}
+#showTips a,#showPreson a{
+    text-decoration: none;
+}
+#showPreson p{
+    width:150px;
+    padding:.8em .3em;
+    text-align: left;
+}
+#showTips p{
+    width:90px;
+    padding:.3em .3em .3em .5em;
+}
+#showTips p b,#showPreson p b{
+    margin-left:.5em;
+}
+#showTips p #processed{
+    color: #2EDA9F;
+}
+#showTips p #untreated{
+    color:#e4393c;
+}

@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.orderLog.MagOrderLogMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id,	USER_ID,	periods,	MERCHANT_ID,	MERCHANT_NAME,	merchandise_id,	CUSTOMER_ID,	CUSTOMER_NAME,	TEL,	CARD_TYPE,	CARD,	credit,	amount,	company,	branch,	manager,	tache,	CREAT_TIME,	ALTER_TIME,	state,	APEX1,	APEX2,	APEX3,	BAK,	APPROVER,	MESSAGE,	channel,	order_id,	bank,	account_name,	account,	precredit,	merchandise_type,	merchandise_brand,	merchandise_model,	product_type,	product_type_name,	product_name,	product_name_name,	product_detail,	product_detail_name,	msg_change,	order_change_msg,	card_type_id,	channel_name,	repay_type_id,	level_id,	cus_source_id,	merchandise_brand_id,	sex_name,	sex,	emp_number,	level,	order_no,	merchandise_name,	emp_id,	repay_type,	rate,	cus_source,	merchandise_code,	provinces_id,	city_id,	distric_id,	provinces,	city,	distric,	product_detail_code,	crm_apply_id,	contract_amount,	loan_amount,	merchandise_type_id,	message_id,	merchandise_codeprovinces_id
+	</sql>
+
+	<!-- 查询（根据主键ID查询） -->
+	<select id="selectByPrimaryKey" resultType="com.zw.rule.orderLog.po.MagOrderLog" parameterType="java.lang.String">
+		 SELECT
+		 <include refid="Base_Column_List" />
+		 FROM mag_order_log
+		 WHERE ID = #{ID}
+	</select>
+
+	<!--删除：根据主键ID删除-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		 DELETE FROM mag_order_log
+		 WHERE ID = #{ID}
+	</delete>
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="com.zw.rule.orderLog.po.MagOrderLog">
+		 INSERT INTO mag_order_log
+ 		(ID,USER_ID,periods,MERCHANT_ID,MERCHANT_NAME,merchandise_id,CUSTOMER_ID,CUSTOMER_NAME,TEL,CARD_TYPE,CARD,credit,amount,company,branch,manager,tache,CREAT_TIME,ALTER_TIME,state,APEX1,APEX2,APEX3,BAK,APPROVER,MESSAGE,channel,order_id,bank,account_name,account,precredit,merchandise_type,merchandise_brand,merchandise_model,product_type,product_type_name,product_name,product_name_name,product_detail,product_detail_name,msg_change,order_change_msg,card_type_id,channel_name,repay_type_id,level_id,cus_source_id,merchandise_brand_id,sex_name,sex,emp_number,level,order_no,merchandise_name,emp_id,repay_type,rate,cus_source,merchandise_code,provinces_id,city_id,distric_id,provinces,city,distric,product_detail_code,crm_apply_id,contract_amount,loan_amount,merchandise_type_id,message_id,merchandise_codeprovinces_id) 
+		 VALUES 
+ 		(#{ID},#{USERID},#{periods},#{MERCHANTID},#{MERCHANTNAME},#{merchandiseId},#{CUSTOMERID},#{CUSTOMERNAME},#{TEL},#{CARDTYPE},#{CARD},#{credit},#{amount},#{company},#{branch},#{manager},#{tache},#{CREATTIME},#{ALTERTIME},#{state},#{APEX1},#{APEX2},#{APEX3},#{BAK},#{APPROVER},#{MESSAGE},#{channel},#{orderId},#{bank},#{accountName},#{account},#{precredit},#{merchandiseType},#{merchandiseBrand},#{merchandiseModel},#{productType},#{productTypeName},#{productName},#{productNameName},#{productDetail},#{productDetailName},#{msgChange},#{orderChangeMsg},#{cardTypeId},#{channelName},#{repayTypeId},#{levelId},#{cusSourceId},#{merchandiseBrandId},#{sexName},#{sex},#{empNumber},#{level},#{orderNo},#{merchandiseName},#{empId},#{repayType},#{rate},#{cusSource},#{merchandiseCode},#{provincesId},#{cityId},#{districId},#{provinces},#{city},#{distric},#{productDetailCode},#{crmApplyId},#{contractAmount},#{loanAmount},#{merchandiseTypeId},#{messageId},#{merchandiseCodeprovincesId}) 
+	</insert>
+
+	<!-- 添加 （匹配有值的字段）-->
+	<insert id="insertSelective" parameterType="com.zw.rule.orderLog.po.MagOrderLog">
+		 INSERT INTO mag_order_log
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="ID != null">
+				 ID,
+			</if>
+			<if test="USERID != null">
+				 USER_ID,
+			</if>
+			<if test="periods != null">
+				 periods,
+			</if>
+			<if test="MERCHANTID != null">
+				 MERCHANT_ID,
+			</if>
+			<if test="MERCHANTNAME != null">
+				 MERCHANT_NAME,
+			</if>
+			<if test="merchandiseId != null">
+				 merchandise_id,
+			</if>
+			<if test="CUSTOMERID != null">
+				 CUSTOMER_ID,
+			</if>
+			<if test="CUSTOMERNAME != null">
+				 CUSTOMER_NAME,
+			</if>
+			<if test="TEL != null">
+				 TEL,
+			</if>
+			<if test="CARDTYPE != null">
+				 CARD_TYPE,
+			</if>
+			<if test="CARD != null">
+				 CARD,
+			</if>
+			<if test="credit != null">
+				 credit,
+			</if>
+			<if test="amount != null">
+				 amount,
+			</if>
+			<if test="company != null">
+				 company,
+			</if>
+			<if test="branch != null">
+				 branch,
+			</if>
+			<if test="manager != null">
+				 manager,
+			</if>
+			<if test="tache != null">
+				 tache,
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME,
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME,
+			</if>
+			<if test="state != null">
+				 state,
+			</if>
+			<if test="APEX1 != null">
+				 APEX1,
+			</if>
+			<if test="APEX2 != null">
+				 APEX2,
+			</if>
+			<if test="APEX3 != null">
+				 APEX3,
+			</if>
+			<if test="BAK != null">
+				 BAK,
+			</if>
+			<if test="APPROVER != null">
+				 APPROVER,
+			</if>
+			<if test="MESSAGE != null">
+				 MESSAGE,
+			</if>
+			<if test="channel != null">
+				 channel,
+			</if>
+			<if test="orderId != null">
+				 order_id,
+			</if>
+			<if test="bank != null">
+				 bank,
+			</if>
+			<if test="accountName != null">
+				 account_name,
+			</if>
+			<if test="account != null">
+				 account,
+			</if>
+			<if test="precredit != null">
+				 precredit,
+			</if>
+			<if test="merchandiseType != null">
+				 merchandise_type,
+			</if>
+			<if test="merchandiseBrand != null">
+				 merchandise_brand,
+			</if>
+			<if test="merchandiseModel != null">
+				 merchandise_model,
+			</if>
+			<if test="productType != null">
+				 product_type,
+			</if>
+			<if test="productTypeName != null">
+				 product_type_name,
+			</if>
+			<if test="productName != null">
+				 product_name,
+			</if>
+			<if test="productNameName != null">
+				 product_name_name,
+			</if>
+			<if test="productDetail != null">
+				 product_detail,
+			</if>
+			<if test="productDetailName != null">
+				 product_detail_name,
+			</if>
+			<if test="msgChange != null">
+				 msg_change,
+			</if>
+			<if test="orderChangeMsg != null">
+				 order_change_msg,
+			</if>
+			<if test="cardTypeId != null">
+				 card_type_id,
+			</if>
+			<if test="channelName != null">
+				 channel_name,
+			</if>
+			<if test="repayTypeId != null">
+				 repay_type_id,
+			</if>
+			<if test="levelId != null">
+				 level_id,
+			</if>
+			<if test="cusSourceId != null">
+				 cus_source_id,
+			</if>
+			<if test="merchandiseBrandId != null">
+				 merchandise_brand_id,
+			</if>
+			<if test="sexName != null">
+				 sex_name,
+			</if>
+			<if test="sex != null">
+				 sex,
+			</if>
+			<if test="empNumber != null">
+				 emp_number,
+			</if>
+			<if test="level != null">
+				 level,
+			</if>
+			<if test="orderNo != null">
+				 order_no,
+			</if>
+			<if test="merchandiseName != null">
+				 merchandise_name,
+			</if>
+			<if test="empId != null">
+				 emp_id,
+			</if>
+			<if test="repayType != null">
+				 repay_type,
+			</if>
+			<if test="rate != null">
+				 rate,
+			</if>
+			<if test="cusSource != null">
+				 cus_source,
+			</if>
+			<if test="merchandiseCode != null">
+				 merchandise_code,
+			</if>
+			<if test="provincesId != null">
+				 provinces_id,
+			</if>
+			<if test="cityId != null">
+				 city_id,
+			</if>
+			<if test="districId != null">
+				 distric_id,
+			</if>
+			<if test="provinces != null">
+				 provinces,
+			</if>
+			<if test="city != null">
+				 city,
+			</if>
+			<if test="distric != null">
+				 distric,
+			</if>
+			<if test="productDetailCode != null">
+				 product_detail_code,
+			</if>
+			<if test="crmApplyId != null">
+				 crm_apply_id,
+			</if>
+			<if test="contractAmount != null">
+				 contract_amount,
+			</if>
+			<if test="loanAmount != null">
+				 loan_amount,
+			</if>
+			<if test="merchandiseTypeId != null">
+				 merchandise_type_id,
+			</if>
+			<if test="messageId != null">
+				 message_id,
+			</if>
+			<if test="merchandiseCodeprovincesId != null">
+				 merchandise_codeprovinces_id,
+			</if>
+
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="ID!=null">
+				 #{ID},
+			</if>
+			<if test="USERID!=null">
+				 #{USERID},
+			</if>
+			<if test="periods!=null">
+				 #{periods},
+			</if>
+			<if test="MERCHANTID!=null">
+				 #{MERCHANTID},
+			</if>
+			<if test="MERCHANTNAME!=null">
+				 #{MERCHANTNAME},
+			</if>
+			<if test="merchandiseId!=null">
+				 #{merchandiseId},
+			</if>
+			<if test="CUSTOMERID!=null">
+				 #{CUSTOMERID},
+			</if>
+			<if test="CUSTOMERNAME!=null">
+				 #{CUSTOMERNAME},
+			</if>
+			<if test="TEL!=null">
+				 #{TEL},
+			</if>
+			<if test="CARDTYPE!=null">
+				 #{CARDTYPE},
+			</if>
+			<if test="CARD!=null">
+				 #{CARD},
+			</if>
+			<if test="credit!=null">
+				 #{credit},
+			</if>
+			<if test="amount!=null">
+				 #{amount},
+			</if>
+			<if test="company!=null">
+				 #{company},
+			</if>
+			<if test="branch!=null">
+				 #{branch},
+			</if>
+			<if test="manager!=null">
+				 #{manager},
+			</if>
+			<if test="tache!=null">
+				 #{tache},
+			</if>
+			<if test="CREATTIME!=null">
+				 #{CREATTIME},
+			</if>
+			<if test="ALTERTIME!=null">
+				 #{ALTERTIME},
+			</if>
+			<if test="state!=null">
+				 #{state},
+			</if>
+			<if test="APEX1!=null">
+				 #{APEX1},
+			</if>
+			<if test="APEX2!=null">
+				 #{APEX2},
+			</if>
+			<if test="APEX3!=null">
+				 #{APEX3},
+			</if>
+			<if test="BAK!=null">
+				 #{BAK},
+			</if>
+			<if test="APPROVER!=null">
+				 #{APPROVER},
+			</if>
+			<if test="MESSAGE!=null">
+				 #{MESSAGE},
+			</if>
+			<if test="channel!=null">
+				 #{channel},
+			</if>
+			<if test="orderId!=null">
+				 #{orderId},
+			</if>
+			<if test="bank!=null">
+				 #{bank},
+			</if>
+			<if test="accountName!=null">
+				 #{accountName},
+			</if>
+			<if test="account!=null">
+				 #{account},
+			</if>
+			<if test="precredit!=null">
+				 #{precredit},
+			</if>
+			<if test="merchandiseType!=null">
+				 #{merchandiseType},
+			</if>
+			<if test="merchandiseBrand!=null">
+				 #{merchandiseBrand},
+			</if>
+			<if test="merchandiseModel!=null">
+				 #{merchandiseModel},
+			</if>
+			<if test="productType!=null">
+				 #{productType},
+			</if>
+			<if test="productTypeName!=null">
+				 #{productTypeName},
+			</if>
+			<if test="productName!=null">
+				 #{productName},
+			</if>
+			<if test="productNameName!=null">
+				 #{productNameName},
+			</if>
+			<if test="productDetail!=null">
+				 #{productDetail},
+			</if>
+			<if test="productDetailName!=null">
+				 #{productDetailName},
+			</if>
+			<if test="msgChange!=null">
+				 #{msgChange},
+			</if>
+			<if test="orderChangeMsg!=null">
+				 #{orderChangeMsg},
+			</if>
+			<if test="cardTypeId!=null">
+				 #{cardTypeId},
+			</if>
+			<if test="channelName!=null">
+				 #{channelName},
+			</if>
+			<if test="repayTypeId!=null">
+				 #{repayTypeId},
+			</if>
+			<if test="levelId!=null">
+				 #{levelId},
+			</if>
+			<if test="cusSourceId!=null">
+				 #{cusSourceId},
+			</if>
+			<if test="merchandiseBrandId!=null">
+				 #{merchandiseBrandId},
+			</if>
+			<if test="sexName!=null">
+				 #{sexName},
+			</if>
+			<if test="sex!=null">
+				 #{sex},
+			</if>
+			<if test="empNumber!=null">
+				 #{empNumber},
+			</if>
+			<if test="level!=null">
+				 #{level},
+			</if>
+			<if test="orderNo!=null">
+				 #{orderNo},
+			</if>
+			<if test="merchandiseName!=null">
+				 #{merchandiseName},
+			</if>
+			<if test="empId!=null">
+				 #{empId},
+			</if>
+			<if test="repayType!=null">
+				 #{repayType},
+			</if>
+			<if test="rate!=null">
+				 #{rate},
+			</if>
+			<if test="cusSource!=null">
+				 #{cusSource},
+			</if>
+			<if test="merchandiseCode!=null">
+				 #{merchandiseCode},
+			</if>
+			<if test="provincesId!=null">
+				 #{provincesId},
+			</if>
+			<if test="cityId!=null">
+				 #{cityId},
+			</if>
+			<if test="districId!=null">
+				 #{districId},
+			</if>
+			<if test="provinces!=null">
+				 #{provinces},
+			</if>
+			<if test="city!=null">
+				 #{city},
+			</if>
+			<if test="distric!=null">
+				 #{distric},
+			</if>
+			<if test="productDetailCode!=null">
+				 #{productDetailCode},
+			</if>
+			<if test="crmApplyId!=null">
+				 #{crmApplyId},
+			</if>
+			<if test="contractAmount!=null">
+				 #{contractAmount},
+			</if>
+			<if test="loanAmount!=null">
+				 #{loanAmount},
+			</if>
+			<if test="merchandiseTypeId!=null">
+				 #{merchandiseTypeId},
+			</if>
+			<if test="messageId!=null">
+				 #{messageId},
+			</if>
+			<if test="merchandiseCodeprovincesId!=null">
+				 #{merchandiseCodeprovincesId},
+			</if>
+		 </trim>
+	</insert>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.orderLog.po.MagOrderLog">
+		 UPDATE mag_order_log
+ 		 <set> 
+			<if test="USERID != null">
+				 USER_ID = #{USERID},
+			</if>
+			<if test="periods != null">
+				 periods = #{periods},
+			</if>
+			<if test="MERCHANTID != null">
+				 MERCHANT_ID = #{MERCHANTID},
+			</if>
+			<if test="MERCHANTNAME != null">
+				 MERCHANT_NAME = #{MERCHANTNAME},
+			</if>
+			<if test="merchandiseId != null">
+				 merchandise_id = #{merchandiseId},
+			</if>
+			<if test="CUSTOMERID != null">
+				 CUSTOMER_ID = #{CUSTOMERID},
+			</if>
+			<if test="CUSTOMERNAME != null">
+				 CUSTOMER_NAME = #{CUSTOMERNAME},
+			</if>
+			<if test="TEL != null">
+				 TEL = #{TEL},
+			</if>
+			<if test="CARDTYPE != null">
+				 CARD_TYPE = #{CARDTYPE},
+			</if>
+			<if test="CARD != null">
+				 CARD = #{CARD},
+			</if>
+			<if test="credit != null">
+				 credit = #{credit},
+			</if>
+			<if test="amount != null">
+				 amount = #{amount},
+			</if>
+			<if test="company != null">
+				 company = #{company},
+			</if>
+			<if test="branch != null">
+				 branch = #{branch},
+			</if>
+			<if test="manager != null">
+				 manager = #{manager},
+			</if>
+			<if test="tache != null">
+				 tache = #{tache},
+			</if>
+			<if test="CREATTIME != null">
+				 CREAT_TIME = #{CREATTIME},
+			</if>
+			<if test="ALTERTIME != null">
+				 ALTER_TIME = #{ALTERTIME},
+			</if>
+			<if test="state != null">
+				 state = #{state},
+			</if>
+			<if test="APEX1 != null">
+				 APEX1 = #{APEX1},
+			</if>
+			<if test="APEX2 != null">
+				 APEX2 = #{APEX2},
+			</if>
+			<if test="APEX3 != null">
+				 APEX3 = #{APEX3},
+			</if>
+			<if test="BAK != null">
+				 BAK = #{BAK},
+			</if>
+			<if test="APPROVER != null">
+				 APPROVER = #{APPROVER},
+			</if>
+			<if test="MESSAGE != null">
+				 MESSAGE = #{MESSAGE},
+			</if>
+			<if test="channel != null">
+				 channel = #{channel},
+			</if>
+			<if test="orderId != null">
+				 order_id = #{orderId},
+			</if>
+			<if test="bank != null">
+				 bank = #{bank},
+			</if>
+			<if test="accountName != null">
+				 account_name = #{accountName},
+			</if>
+			<if test="account != null">
+				 account = #{account},
+			</if>
+			<if test="precredit != null">
+				 precredit = #{precredit},
+			</if>
+			<if test="merchandiseType != null">
+				 merchandise_type = #{merchandiseType},
+			</if>
+			<if test="merchandiseBrand != null">
+				 merchandise_brand = #{merchandiseBrand},
+			</if>
+			<if test="merchandiseModel != null">
+				 merchandise_model = #{merchandiseModel},
+			</if>
+			<if test="productType != null">
+				 product_type = #{productType},
+			</if>
+			<if test="productTypeName != null">
+				 product_type_name = #{productTypeName},
+			</if>
+			<if test="productName != null">
+				 product_name = #{productName},
+			</if>
+			<if test="productNameName != null">
+				 product_name_name = #{productNameName},
+			</if>
+			<if test="productDetail != null">
+				 product_detail = #{productDetail},
+			</if>
+			<if test="productDetailName != null">
+				 product_detail_name = #{productDetailName},
+			</if>
+			<if test="msgChange != null">
+				 msg_change = #{msgChange},
+			</if>
+			<if test="orderChangeMsg != null">
+				 order_change_msg = #{orderChangeMsg},
+			</if>
+			<if test="cardTypeId != null">
+				 card_type_id = #{cardTypeId},
+			</if>
+			<if test="channelName != null">
+				 channel_name = #{channelName},
+			</if>
+			<if test="repayTypeId != null">
+				 repay_type_id = #{repayTypeId},
+			</if>
+			<if test="levelId != null">
+				 level_id = #{levelId},
+			</if>
+			<if test="cusSourceId != null">
+				 cus_source_id = #{cusSourceId},
+			</if>
+			<if test="merchandiseBrandId != null">
+				 merchandise_brand_id = #{merchandiseBrandId},
+			</if>
+			<if test="sexName != null">
+				 sex_name = #{sexName},
+			</if>
+			<if test="sex != null">
+				 sex = #{sex},
+			</if>
+			<if test="empNumber != null">
+				 emp_number = #{empNumber},
+			</if>
+			<if test="level != null">
+				 level = #{level},
+			</if>
+			<if test="orderNo != null">
+				 order_no = #{orderNo},
+			</if>
+			<if test="merchandiseName != null">
+				 merchandise_name = #{merchandiseName},
+			</if>
+			<if test="empId != null">
+				 emp_id = #{empId},
+			</if>
+			<if test="repayType != null">
+				 repay_type = #{repayType},
+			</if>
+			<if test="rate != null">
+				 rate = #{rate},
+			</if>
+			<if test="cusSource != null">
+				 cus_source = #{cusSource},
+			</if>
+			<if test="merchandiseCode != null">
+				 merchandise_code = #{merchandiseCode},
+			</if>
+			<if test="provincesId != null">
+				 provinces_id = #{provincesId},
+			</if>
+			<if test="cityId != null">
+				 city_id = #{cityId},
+			</if>
+			<if test="districId != null">
+				 distric_id = #{districId},
+			</if>
+			<if test="provinces != null">
+				 provinces = #{provinces},
+			</if>
+			<if test="city != null">
+				 city = #{city},
+			</if>
+			<if test="distric != null">
+				 distric = #{distric},
+			</if>
+			<if test="productDetailCode != null">
+				 product_detail_code = #{productDetailCode},
+			</if>
+			<if test="crmApplyId != null">
+				 crm_apply_id = #{crmApplyId},
+			</if>
+			<if test="contractAmount != null">
+				 contract_amount = #{contractAmount},
+			</if>
+			<if test="loanAmount != null">
+				 loan_amount = #{loanAmount},
+			</if>
+			<if test="merchandiseTypeId != null">
+				 merchandise_type_id = #{merchandiseTypeId},
+			</if>
+			<if test="messageId != null">
+				 message_id = #{messageId},
+			</if>
+			<if test="merchandiseCodeprovincesId != null">
+				 merchandise_codeprovinces_id = #{merchandiseCodeprovincesId},
+			</if>
+
+ 		 </set>
+		 WHERE ID = #{ID}
+	</update>
+
+	<!-- 修 改-->
+	<update id="updateByPrimaryKey" parameterType="com.zw.rule.orderLog.po.MagOrderLog">
+		 UPDATE mag_order_log
+		 SET 
+			 USER_ID = #{USERID},
+			 periods = #{periods},
+			 MERCHANT_ID = #{MERCHANTID},
+			 MERCHANT_NAME = #{MERCHANTNAME},
+			 merchandise_id = #{merchandiseId},
+			 CUSTOMER_ID = #{CUSTOMERID},
+			 CUSTOMER_NAME = #{CUSTOMERNAME},
+			 TEL = #{TEL},
+			 CARD_TYPE = #{CARDTYPE},
+			 CARD = #{CARD},
+			 credit = #{credit},
+			 amount = #{amount},
+			 company = #{company},
+			 branch = #{branch},
+			 manager = #{manager},
+			 tache = #{tache},
+			 CREAT_TIME = #{CREATTIME},
+			 ALTER_TIME = #{ALTERTIME},
+			 state = #{state},
+			 APEX1 = #{APEX1},
+			 APEX2 = #{APEX2},
+			 APEX3 = #{APEX3},
+			 BAK = #{BAK},
+			 APPROVER = #{APPROVER},
+			 MESSAGE = #{MESSAGE},
+			 channel = #{channel},
+			 order_id = #{orderId},
+			 bank = #{bank},
+			 account_name = #{accountName},
+			 account = #{account},
+			 precredit = #{precredit},
+			 merchandise_type = #{merchandiseType},
+			 merchandise_brand = #{merchandiseBrand},
+			 merchandise_model = #{merchandiseModel},
+			 product_type = #{productType},
+			 product_type_name = #{productTypeName},
+			 product_name = #{productName},
+			 product_name_name = #{productNameName},
+			 product_detail = #{productDetail},
+			 product_detail_name = #{productDetailName},
+			 msg_change = #{msgChange},
+			 order_change_msg = #{orderChangeMsg},
+			 card_type_id = #{cardTypeId},
+			 channel_name = #{channelName},
+			 repay_type_id = #{repayTypeId},
+			 level_id = #{levelId},
+			 cus_source_id = #{cusSourceId},
+			 merchandise_brand_id = #{merchandiseBrandId},
+			 sex_name = #{sexName},
+			 sex = #{sex},
+			 emp_number = #{empNumber},
+			 level = #{level},
+			 order_no = #{orderNo},
+			 merchandise_name = #{merchandiseName},
+			 emp_id = #{empId},
+			 repay_type = #{repayType},
+			 rate = #{rate},
+			 cus_source = #{cusSource},
+			 merchandise_code = #{merchandiseCode},
+			 provinces_id = #{provincesId},
+			 city_id = #{cityId},
+			 distric_id = #{districId},
+			 provinces = #{provinces},
+			 city = #{city},
+			 distric = #{distric},
+			 product_detail_code = #{productDetailCode},
+			 crm_apply_id = #{crmApplyId},
+			 contract_amount = #{contractAmount},
+			 loan_amount = #{loanAmount},
+			 merchandise_type_id = #{merchandiseTypeId},
+			 message_id = #{messageId},
+			 merchandise_codeprovinces_id = #{merchandiseCodeprovincesId}
+		 WHERE ID = #{ID}
+	</update>
+
+	<select id="selectGetOrderLogList" parameterType="java.lang.String" resultType="com.zw.rule.orderLog.po.MagOrderLog">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM mag_order_log
+		WHERE order_id = #{orderId}
+	</select>
+
+</mapper>

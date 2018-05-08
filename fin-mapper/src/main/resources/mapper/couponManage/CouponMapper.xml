@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.couponManage.CouponMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.coupon.po.CouponManage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="coupon_name" property="coupon_name" jdbcType="VARCHAR" />
+    <result column="coupon_amount" property="coupon_amount" jdbcType="VARCHAR" />
+    <result column="coupon_desc" property="coupon_desc" jdbcType="VARCHAR" />
+    <result column="coupon_effective_time" property="coupon_effective_time" jdbcType="VARCHAR" />
+    <result column="coupon_type" property="coupon_type" jdbcType="VARCHAR" />
+    <result column="coupon_state" property="coupon_state" jdbcType="VARCHAR" />
+    <result column="is_del" property="is_del" jdbcType="VARCHAR" />
+    <result column="crm_product_id" property="crm_product_id" jdbcType="VARCHAR" />
+    <result column="create_time" property="create_time" jdbcType="VARCHAR" />
+    <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="PartnersResultMap" type="com.zw.rule.coupon.po.Partners" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="platform_type" property="platformType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, coupon_name,crm_product_id, coupon_amount,coupon_effective_time,is_del,coupon_desc,
+    coupon_type, coupon_state, create_time, alter_time
+  </sql>
+  <select id="getPartnersList"  resultMap="PartnersResultMap" parameterType="java.util.Map" >
+    SELECT  id,name,path,link,state
+    FROM mag_partners
+    <where>
+      1=1  AND  state='1'
+      <if test="name != null and name != ''">
+        and name like CONCAT('%',#{name},'%')
+      </if>
+    </where>
+  </select>
+
+  <insert id="addPartners" parameterType="com.zw.rule.coupon.po.Partners">
+    INSERT INTO mag_partners (id, name,path,link,state,platform_type) VALUES (#{id},#{name},#{path},#{link},#{state},#{platformType})
+  </insert>
+
+  <update id="updatePartners" parameterType="com.zw.rule.coupon.po.Partners">
+    update  mag_partners
+    <set >
+      <if test="name != null and name != ''">
+         name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null and path != ''">
+        path=#{path,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null and link != ''">
+        link=#{link,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null and state != ''">
+        state=#{state,jdbcType=VARCHAR},
+      </if>
+      <if test="platformType != null and platformType != ''">
+        platform_type=#{platformType,jdbcType=VARCHAR}
+      </if>
+  </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getPartnersId" parameterType="java.lang.String" resultMap="PartnersResultMap">
+    select id,name,path,link,state,platform_type from mag_partners where id=#{id};
+  </select>
+  <select id="getCouponList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    id, coupon_name,coupon_amount,coupon_effective_time,is_del,coupon_desc,
+    (SELECT `name` from zw_sys_dict where parent_id =(select id from zw_sys_dict where name ='优惠券类型') and code=coupon_type) as coupon_type,
+    (SELECT `name` from zw_sys_dict where parent_id =(select id from zw_sys_dict where name ='优惠券状态') and code=coupon_state) as coupon_state, create_time, alter_time
+    from coupon_manage
+    where is_del =1
+    <if test="coupon_name != null and coupon_name != ''">
+      and coupon_name like CONCAT('%',#{coupon_name},'%')
+    </if>
+    <if test="coupon_type != null and coupon_type != ''">
+      and coupon_type =#{coupon_type}
+    </if>
+    <if test="coupon_state != null and coupon_state != ''">
+      and coupon_state =#{coupon_state}
+    </if>
+    order by create_time desc
+  </select>
+
+  
+  <!-- 添加 （匹配有值的字段）-->
+  <insert id="addCoupon" parameterType="com.zw.rule.coupon.po.CouponManage">
+    INSERT INTO coupon_manage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="coupon_amount != null" >
+        coupon_amount,
+      </if>
+      <if test="coupon_effective_time != null" >
+        coupon_effective_time,
+      </if>
+      <if test="coupon_desc != null" >
+        coupon_desc,
+      </if>
+      is_del,
+      <if test="coupon_name != null" >
+        coupon_name,
+      </if>
+      <if test="coupon_type != null" >
+        coupon_type,
+      </if>
+      <if test="crm_product_id != null" >
+        crm_product_id,
+      </if>
+      <if test="coupon_state != null" >
+        coupon_state,
+      </if>
+      <if test="create_time != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="coupon_amount != null" >
+        #{coupon_amount},
+      </if>
+      <if test="coupon_effective_time != null" >
+        #{coupon_effective_time},
+      </if>
+      <if test="coupon_desc != null" >
+        #{coupon_desc},
+      </if>
+      1,
+      <if test="coupon_name != null" >
+        #{coupon_name},
+      </if>
+      <if test="coupon_type != null" >
+        #{coupon_type},
+      </if>
+      <if test="crm_product_id != null" >
+        #{crm_product_id},
+      </if>
+      <if test="coupon_state != null" >
+        #{coupon_state},
+      </if>
+      <if test="create_time != null" >
+        #{create_time}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateCoupon" parameterType="com.zw.rule.coupon.po.CouponManage" >
+    update coupon_manage
+    <set >
+      <if test="coupon_name != null" >
+        coupon_name = #{coupon_name,jdbcType=VARCHAR},
+      </if>
+      <if test="coupon_effective_time != null" >
+        coupon_effective_time = #{coupon_effective_time,jdbcType=VARCHAR},
+      </if>
+      <if test="coupon_desc != null" >
+        coupon_desc = #{coupon_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="coupon_amount != null" >
+        coupon_amount = #{coupon_amount,jdbcType=VARCHAR},
+      </if>
+      <if test="coupon_type != null" >
+        coupon_type = #{coupon_type,jdbcType=VARCHAR},
+      </if>
+      <if test="coupon_state != null" >
+        coupon_state = #{coupon_state,jdbcType=BIGINT},
+      </if>
+      <if test="crm_product_id != null" >
+        crm_product_id = #{crm_product_id,jdbcType=BIGINT},
+      </if>
+      <if test="alter_time != null" >
+        alter_time = #{alter_time,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from coupon_manage where id=#{id};
+  </select>
+  <update id="updateState" parameterType="java.util.Map">
+    update coupon_manage set  coupon_state=#{coupon_state}  where id=#{id};
+  </update>
+  <update id="deleteCoupon" parameterType="java.lang.String">
+    update coupon_manage set  is_del='-1'  where id=#{id};
+  </update>
+  <select id="productConfig" resultType="map">
+    SELECT pwpd.id,pwpd.periods,(SELECT pcp.pro_name from  pro_crm_product pcp where pcp.id = pwpd.crm_product_id ) as pro_name FROM pro_working_product_detail pwpd
+  </select>
+  <select id="getCustomerInfo" resultType="map">
+    SELECT id,PERSON_NAME,tel,CREAT_TIME FROM mag_customer
+    where 1 =1
+    <if test="customer_name != null and customer_name != ''">
+      and person_name like CONCAT('%',#{customer_name},'%')
+    </if>
+    <if test="tel != null and tel != ''">
+      and tel like CONCAT('%',#{tel},'%')
+    </if>
+    order by CREAT_TIME desc
+  </select>
+
+  <select id="getCustomerChecked" parameterType="java.lang.String" resultType="map">
+    SELECT customer_id from mag_coupon_info where coupon_id = #{coupon_id}
+  </select>
+  <delete id="deleteMagCouponInfo" parameterType="java.lang.String">
+    DELETE from mag_coupon_info where coupon_id = #{coupon_id}
+  </delete>
+  <insert id="insertMagCouponInfo" parameterType="map">
+    INSERT INTO mag_coupon_info(id,customer_id,coupon_id,mag_coupon_name,mag_coupon_amount,
+    mag_coupon_desc,mag_coupon_type,mag_coupon_effective_time,mag_coupon_state,create_time,crm_product_id)VALUES
+    (#{id},#{customer_id},#{coupon_id},#{mag_coupon_name},#{mag_coupon_amount},#{mag_coupon_desc},#{mag_coupon_type},
+    #{mag_coupon_effective_time},#{mag_coupon_state},#{create_time},#{crm_product_id})
+  </insert>
+</mapper>
