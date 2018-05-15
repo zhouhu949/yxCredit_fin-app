@@ -26,6 +26,43 @@ var g_whiteListManage = {
 };
 //初始化表格数据
 $(function (){
+    var beginTime = {
+        elem: '#beginTime',
+        /*format: 'YYYY-MM-DD hh:mm:ss',*/
+        format: 'YYYY-MM-DD',
+        max: laydate.now(),
+        istime: true,
+        istoday: false,
+       /* choose: function(datas){
+            endTime.min = datas; //开始日选好后，重置结束日的最小日期
+            endTime.start = datas //将结束日的初始值设定为开始日
+        }*/
+    };
+    var endTime = {
+        elem: '#endTime',
+        format: 'YYYY-MM-DD',
+        min: laydate.now(),
+        istime: true,
+        istoday: false,
+       /* choose: function(datas){
+            beginTime.max = datas; //结束日选好后，重置开始日的最大日期
+        }*/
+    };
+    var latestPayday = {
+        elem: '#latestPayday',
+        format: 'YYYY-MM-DD',
+       /* min: laydate.now(),*/
+        istime: true,
+        istoday: false,
+        /* choose: function(datas){
+             beginTime.max = datas; //结束日选好后，重置开始日的最大日期
+         }*/
+    };
+    laydate(beginTime);
+    laydate(endTime);
+    laydate(latestPayday);
+
+
     //获取权限集合
     Comm.ajaxPost(
         'user/getPermission',"{}",
@@ -123,6 +160,7 @@ $(function (){
                     $("#userCheckBox_All").attr("checked",false);
                 });
             });
+            loadContractorType1();
             //全选
             $("#userCheckBox_All").click(function(J) {
                 if (!$(this).prop("checked")) {
@@ -174,24 +212,52 @@ $(function (){
             cell.innerHTML = i + 1
         })
     }).draw()
-    loadContractorType();
 });
+
+
 
 //当前用户下总包商下拉框
 function loadContractorType(){
-    Comm.ajaxPost(
-        'contractorManage/findContractorByRoleId',
-        function (data) {
-            alert("2");
-            var result = data.data;
+    $.ajax({
+        type : "POST",
+        url : "findContractorByRoleId",
+        data : {
+            parentClassId : 1,
+        },
+        async : false,
+        dataType : 'json',
+        success : function(data) {
             var html="";
             html+="<option value=''>请选择</option>";
-            for ( var i = 0; i < result.length; i++) {
-                html+="<option value="+result[i].id+">"+result[i].contractorName+"</option>"
-            }
+            $.each(data.data,function(index,result) {
+                html+="<option value="+result.id+">"+result.contractorName+"</option>"
+            });
             $("select[name='contractorList']").html(html);
+
         }
-    );
+    });
+}
+
+//当前用户下总包商下拉框
+function loadContractorType1(){
+    $.ajax({
+        type : "POST",
+        url : "findContractorByRoleId",
+        data : {
+            parentClassId : 1,
+        },
+        async : false,
+        dataType : 'json',
+        success : function(data) {
+            var html="";
+            html+="<option value=''>请选择</option>";
+            $.each(data.data,function(index,result) {
+                html+="<option value="+result.id+">"+result.contractorName+"</option>"
+            });
+            $("select[name='proSeriesName']").html(html);
+
+        }
+    });
 }
 
 //下面用于图片上传预览功能
@@ -241,6 +307,7 @@ function setImagePreview1() {
 
 //添加、编辑白名单信息
 function updateWhite(sign,id) {
+    loadContractorType();
     if(sign==0){
         Comm.ajaxPost('contractorManage/whiteListDetail',id,function(data){
             layer.closeAll();
@@ -250,8 +317,14 @@ function updateWhite(sign,id) {
             $("#card").val(whiteList.card);
             $("#telphone").val(whiteList.telphone);
             $("#jobType").val(whiteList.jobType);
+            $("#latestPay").val(whiteList.latestPay);
             $("#contractorId option[value=" + whiteList.contractorId + "]").attr("selected","selected");
-
+            $("#job option[value=" + whiteList.job + "]").attr("selected","selected");
+            $("#payType option[value=" + whiteList.payType + "]").attr("selected","selected");
+            $("#beginTime").val(whiteList.contractStartDate);
+            $("#endTime").val(whiteList.contractEndDate);
+            $("#latestPayday").val(whiteList.latestPayday);
+            $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
           //  $("#organ").attr('disabled',true);
             /*if(whiteList.state==1){
                 $("#qiyong").attr('selected','selected');
@@ -280,6 +353,7 @@ function updateWhite(sign,id) {
                     }*/
                     var realName=$('input[name="real_name"]').val();
                     var card=$('input[name="card"]').val();
+                    var latestPay=$('input[name="latest_pay"]').val();
                     var telphone=$('input[name="tel_phone"]').val();
                     var jobType=$('input[name="job_type"]').val();
                     var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
@@ -288,8 +362,24 @@ function updateWhite(sign,id) {
                         return;
                     }
                     var contractStatus=$("#contractStatus").val();
+                    var localMonthlyMinWage=$("#localMonthlyMinWage").val();
                     var contractorId = $("#contractorId option:selected").val();
                     var job = $("#job option:selected").val();
+                    var payType = $("#payType option:selected").val();
+
+                    var beginTime = $("#beginTime").val();
+                    if(beginTime != null && beginTime != ''){
+                        beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    }
+                    var endTime = $("#endTime").val();
+                    if(endTime != null && endTime != ''){
+                        endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    }
+                    var latestPayday = $("#latestPayday").val();
+                    if(latestPayday != null && latestPayday != ''){
+                        latestPayday = latestPayday.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    }
+
                     var user={
                         id : id,
                         realName:realName,
@@ -298,14 +388,21 @@ function updateWhite(sign,id) {
                         jobType :jobType,
                         contractStatus:contractStatus,
                         contractorId:contractorId,
-                        job:job
+                        job:job,
+                        payType:payType,
+                        latestPay:latestPay,
+                        contractStartDate:beginTime,
+                        contractEndDate:endTime,
+                        latestPayday:latestPayday,
+                        localMonthlyMinWage:localMonthlyMinWage
                     };
                     Comm.ajaxPost(
                         'contractorManage/updateWhiteList',JSON.stringify(user),
                         function(data){
                             layer.closeAll();
                             layer.msg(data.msg,{time:2000},function () {
-                                $('#Contractor_list').dataTable().fnDraw(false);
+                                g_whiteListManage.tableUser.ajax.reload(function(){
+                                });
                             });
                         }, "application/json"
                     );
@@ -313,17 +410,15 @@ function updateWhite(sign,id) {
             });
         },"application/json","","","",false);
     }else{
-        //$("#organ").attr('disabled',false);
         $("#isEdit").show();
         $('input[name="real_name"]').val("");
         $('input[name="card"]').val("");
         $('input[name="tel_phone"]').val("");
         $('input[name="contractor_credit"]').val("");
-      //  $("#remark").val("");
+        $('input[name="local_monthly_min_wage"]').val("");
         $("#wu").attr('selected','selected');
         $("#bgt").attr('selected','selected');
         $("#xj").attr('selected','selected');
-        $("#organ").attr('disabled',false);
         layer.open({
             type : 1,
             title : '添加白名单',
@@ -349,14 +444,40 @@ function updateWhite(sign,id) {
                     return;
                 }
                 var contractStatus=$("#contractStatus").val();
+                var localMonthlyMinWage=$("#localMonthlyMinWage").val();
                 var contractorId = $("#contractorId option:selected").val();
+                var latestPay=$('input[name="latest_pay"]').val();
+                var job = $("#job option:selected").val();
+                var payType = $("#payType option:selected").val();
+
+                var beginTime = $("#beginTime").val();
+                if(beginTime != null && beginTime != ''){
+                    beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                }
+                var endTime = $("#endTime").val();
+                if(endTime != null && endTime != ''){
+                    endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                }
+                var latestPayday = $("#latestPayday").val();
+                if(latestPayday != null && latestPayday != ''){
+                    latestPayday = latestPayday.replace(/[^0-9]/ig,"");//字符串去除非数字
+                }
+
                 var contractor={
                     realName: realName,
                     card:card,
                     telphone:telphone,
                     jobType:jobType,
                     contractStatus:contractStatus,
-                    contractorId:contractorId
+                    contractorId:contractorId,
+                    job:job,
+                    payType:payType,
+                    latestPay:latestPay,
+                    contractStartDate:beginTime,
+                    contractEndDate:endTime,
+                    latestPayday:latestPayday,
+                    localMonthlyMinWage:localMonthlyMinWage
+
                 };
                 Comm.ajaxPost(
                     'contractorManage/addWhiteList',JSON.stringify(contractor),

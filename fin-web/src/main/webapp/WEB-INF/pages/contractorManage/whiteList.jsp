@@ -4,13 +4,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="${ctx}/resources/assets/select-mutiple/css/select-multiple.css${version}"/>
-    <link rel="stylesheet" href="${ctx}/resources/assets/zTree/css/zTreeStyle/zTreeStyle.css" />
+   <%-- <link rel="stylesheet" href="${ctx}/resources/assets/zTree/css/zTreeStyle/zTreeStyle.css" />--%>
     <%@include file ="../common/taglibs.jsp"%>
     <%@ include file="../common/importDate.jsp"%>
     <script src="${ctx}/resources/js/contractorManage/whiteList.js${version}"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/treeTable/js/jquery.treetable.js"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/zTree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/zTree/tree.js"></script>
+    <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
+    <%--<script type="text/javascript" src="${ctx}/resources/assets/treeTable/js/jquery.treetable.js"></script>--%>
     <title>白名单信息</title>
     <style>
         #organ{outline: none!important;appearance:none; -moz-appearance:none; -webkit-appearance:none;height:28px;line-height:19px;}
@@ -95,6 +94,18 @@
                                 <i style="color: #F60;">*</i>
                             </li>
 
+                            <li>
+                                <label class="label_name">工资发放</label>
+                                <label>
+                                    <select name="pay_type" size="1" id="payType">
+                                        <option value=1 id="xj">现金</option>
+                                        <option value=2 id="dk">打卡</option>
+                                        <option value=3 id="sy">均有</option>
+                                    </select>
+                                </label>
+                                <i style="color: #F60;">*</i>
+                            </li>
+
                             <li><label class="lf">合同时间</label>
                                 <label>
                                     <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
@@ -129,12 +140,14 @@
                                 </label>
                             </li>
 
-                            <li>
-                                <label class="label_name">发薪日</label>
-                                <label for="latestPayday">
-                                    <input name="latest_payday"  type="text"  id="latestPayday"/>
+
+                            <li><label class="lf">发薪日</label>
+                                <label>
+                                    <input readonly="true" placeholder="发薪日" class="eg-date" id="latestPayday" type="text"/>
+                                    <span class="date-icon"><i class="icon-calendar"></i></span>
                                     <i style="color: #F60;">*</i>
                                 </label>
+
                             </li>
 
                             <li>
@@ -145,17 +158,7 @@
                                 </label>
                             </li>
 
-                            <li>
-                                <label class="label_name">工资发放</label>
-                                <label>
-                                    <select name="pay_type" size="1" id="payType">
-                                        <option value=1 id="xj">现金</option>
-                                        <option value=2 id="dk">打卡</option>
-                                        <option value=3 id="sy">均有</option>
-                                    </select>
-                                </label>
-                                <i style="color: #F60;">*</i>
-                            </li>
+
                             <%--<li style="width:524px;">
                                 <label class="label_name">发薪证明（图片）</label>
                                 <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>

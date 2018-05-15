@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,7 +77,22 @@ public class ContractorController {
     @ResponseBody
     @PostMapping("findContractorByRoleId")
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
+        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor> contractorList = contractorService.selectContractorList();
+        if("总包商".equals(roleName)) {
+            List<Contractor> newContractorList = new ArrayList<Contractor>();
+            User  user = (User) UserContextUtil.getAttribute("currentUser");
+            for(Contractor oldContractor : contractorList) {
+               String userStr = oldContractor.getUserId();
+               for(String userId : userStr.split(",")){
+                   if(user.getUserId() == Long.parseLong(userId)) {
+                       newContractorList.add(oldContractor);
+                   }
+               }
+            }
+            return new Response(newContractorList);
+        }
         return new Response(contractorList);
     }
 
