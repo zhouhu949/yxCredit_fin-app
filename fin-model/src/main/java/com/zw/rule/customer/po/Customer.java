@@ -1,15 +1,47 @@
 package com.zw.rule.customer.po;
 
 public class Customer {
-    private String id;
 
-    private String userId;//app用户id
+    /****************************碧友信************************************/
+    private String id;//用户编号
 
-    private String personName;//姓名
+    private String userId;//APP用户ID
 
-    private String tel;
+    private String personName;//用户姓名
+
+    private String tel;//手机号码
 
     private String card;//身份证号
+
+    private String residenceAddress;//工作居住地地址
+
+    private String cardRegisterAddress;//籍贯居住地址
+
+    private String identityComplete;//身份认证完成度（完成显示100，未完成显示0）
+
+    private String linkManComplete;//联系人完整度(100,完成，0未完成)
+
+    private String personInfoComplete;//个人信息完成度(100已完成，0未完成)
+
+    private String authorizationComplete;//授权完成度(100已完成，0未完成)
+
+    private String baseinfoComplete; //基本信息完成度(100已完成，0未完成)
+
+    private String isIdentity;//是否通过实名认证（1，已认证，2未认证）
+
+    private String hometownHouseProperty;//老家住房性质
+
+    private String childrenStatus;//子女状况
+
+    private String maritalStatus;//婚姻状况
+
+    private String creatTime;//创建时间
+
+
+
+    /****************************碧友信************************************/
+
+    private String state;//状态
 
     private String origin;//客户来源
 
@@ -19,11 +51,7 @@ public class Customer {
 
     private String manager;//客户经理
 
-    private String creatTime;
-
-    private String alterTime;
-
-    private String state;
+    private String alterTime;//更新时间
 
     private String saleAdviser;//销售顾问
 
@@ -78,6 +106,7 @@ public class Customer {
     private String phoneBookList;
 
     private String isOpenAccount;
+
 
     public String getPhoneBookList() {
         return phoneBookList;
@@ -389,5 +418,93 @@ public class Customer {
 
     public void setIsOpenAccount(String isOpenAccount) {
         this.isOpenAccount = isOpenAccount;
+    }
+
+    public String getResidenceAddress() {
+        return residenceAddress;
+    }
+
+    public void setResidenceAddress(String residenceAddress) {
+        this.residenceAddress = residenceAddress;
+    }
+
+    public String getCardRegisterAddress() {
+        return cardRegisterAddress;
+    }
+
+    public void setCardRegisterAddress(String cardRegisterAddress) {
+        this.cardRegisterAddress = cardRegisterAddress;
+    }
+
+    public String getIdentityComplete() {
+        return identityComplete;
+    }
+
+    public void setIdentityComplete(String identityComplete) {
+        this.identityComplete = identityComplete;
+    }
+
+    public String getLinkManComplete() {
+        return linkManComplete;
+    }
+
+    public void setLinkManComplete(String linkManComplete) {
+        this.linkManComplete = linkManComplete;
+    }
+
+    public String getPersonInfoComplete() {
+        return personInfoComplete;
+    }
+
+    public void setPersonInfoComplete(String personInfoComplete) {
+        this.personInfoComplete = personInfoComplete;
+    }
+
+    public String getAuthorizationComplete() {
+        return authorizationComplete;
+    }
+
+    public void setAuthorizationComplete(String authorizationComplete) {
+        this.authorizationComplete = authorizationComplete;
+    }
+
+    public String getBaseinfoComplete() {
+        return baseinfoComplete;
+    }
+
+    public void setBaseinfoComplete(String baseinfoComplete) {
+        this.baseinfoComplete = baseinfoComplete;
+    }
+
+    public String getIsIdentity() {
+        return isIdentity;
+    }
+
+    public void setIsIdentity(String isIdentity) {
+        this.isIdentity = isIdentity;
+    }
+
+    public String getHometownHouseProperty() {
+        return hometownHouseProperty;
+    }
+
+    public void setHometownHouseProperty(String hometownHouseProperty) {
+        this.hometownHouseProperty = hometownHouseProperty;
+    }
+
+    public String getChildrenStatus() {
+        return childrenStatus;
+    }
+
+    public void setChildrenStatus(String childrenStatus) {
+        this.childrenStatus = childrenStatus;
+    }
+
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 }
