@@ -9,6 +9,8 @@ public class Customer {
 
     private String personName;//用户姓名
 
+    private String sexName;//性别
+
     private String tel;//手机号码
 
     private String card;//身份证号
@@ -506,5 +508,13 @@ public class Customer {
 
     public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
+    }
+
+    public String getSexName() {
+        return sexName;
+    }
+
+    public void setSexName(String sexName) {
+        this.sexName = sexName;
     }
 }
