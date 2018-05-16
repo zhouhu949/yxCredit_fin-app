@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.contractor.ContractorMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.contractor.po.Contractor" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="contractor_name" property="contractorName" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR" />
+    <result column="admission_date" property="admissionDate" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="licence_attachment" property="licenceAttachment" jdbcType="VARCHAR" />
+    <result column="credit" property="credit" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, contractor_name, linkman, linkman_phone, admission_date, state, licence_attachment, 
+    credit
+  </sql>
+
+  <resultMap id="UserVo" type="com.zw.rule.contractor.po.UserVo"></resultMap>
+
+  <select id="findContractorList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from byx_contractor
+    <where>
+     <if test="param.contractorName != null and param.contractorName != ''">
+        and contractor_name like '%${param.contractorName}%'
+      </if>
+    </where>
+    /*order by CREAT_TIME desc*/
+  </select>
+
+  <select id="findContractorOrderList" resultType="com.zw.rule.contractor.po.ContractorOrder" parameterType="java.util.Map">
+       SELECT
+      magorder.id as id,
+      magorder.order_no AS orderNo,
+      magorder.USER_ID AS userId,
+      magorder.PERIODS as periods,
+      magorder.state as orderState,
+      magorder.applay_money as applayMoney,
+      magorder.Examine_time as examineTime,
+      magorder.loan_amount as loanAmount,
+      magorder.service_fee as serviceFee,
+      userwhite.card as card,
+      userwhite.job as job,
+      userwhite.realName as realName,
+      userWhite.tel as tel,
+      userwhite.contractorName as contractorName
+    FROM
+      mag_order magorder
+    INNER JOIN (
+      SELECT
+          appuser.id AS id,
+          byxwhite.job AS job,
+          appuser.idcard AS card,
+          appuser.realname AS realName,
+          appuser.tel AS tel,
+          byxwhite.contractorName AS contractorName
+      FROM
+          (
+              SELECT
+                  bc.contractor_name AS contractorName,
+                  bwl.job AS job,
+                  bwl.card AS card,
+                  bwl.real_name as realName
+              FROM
+                  byx_white_list bwl
+              LEFT JOIN byx_contractor bc ON bc.id = bwl.contractor_id
+          ) byxwhite
+      INNER JOIN app_user appuser ON byxwhite.card = appuser.idcard where byxwhite.realName=appuser.realname
+    ) userwhite ON magorder.user_id = userwhite.id
+
+    <where>
+      <if test="param.realname != null and param.realname != ''">
+        and appuser.realname like '%${param.realname}%'
+      </if>
+      <if test="param.contractorName != null and param.contractorName != ''">
+        and userwhite.contractorName like '%${param.contractorName}%'
+      </if>
+      <if test="param.tel != null and param.tel != ''">
+        and appuser.tel like '%${param.tel}%'
+      </if>
+    </where>
+
+
+
+  </select>
+
+  <select id="selectContractorList" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from byx_contractor
+    <where>
+
+    </where>
+    /*order by CREAT_TIME desc*/
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from byx_contractor
+    where id = #{id}
+  </select>
+
+  <select id="findUserByMenuUrl" resultMap="UserVo" parameterType="java.lang.String" >
+   SELECT
+	sysuser.user_id AS userId,
+	sysuser.account AS account,
+    sysuser.tel as tel
+    FROM
+        zw_sys_user sysuser
+    WHERE
+        sysuser .user_id IN (
+            SELECT
+                usro.user_id
+            FROM
+                zw_sys_role role
+            LEFT JOIN zw_sys_user_role usro ON role.role_id = usro.role_id
+            WHERE
+                role.role_name = '总包商'
+        )
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from byx_contractor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.zw.rule.contractor.po.Contractor" >
+    insert into byx_contractor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="contractorName != null" >
+        contractor_name,
+      </if>
+      <if test="linkman != null" >
+        linkman,
+      </if>
+      <if test="linkmanPhone != null" >
+        linkman_phone,
+      </if>
+      <if test="admissionDate != null" >
+        admission_date,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="licenceAttachment != null" >
+        licence_attachment,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractorName != null" >
+        #{contractorName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone != null" >
+        #{linkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceAttachment != null" >
+        #{licenceAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.contractor.po.Contractor" >
+    update byx_contractor
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractorName != null" >
+        contractor_name = #{contractorName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="linkmanPhone != null" >
+        linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null" >
+        admission_date = #{admissionDate,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="licenceAttachment != null" >
+        licence_attachment = #{licenceAttachment,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
