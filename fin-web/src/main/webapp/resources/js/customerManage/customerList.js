@@ -111,8 +111,19 @@ $(function (){
                         return formatTime(data);
                     }
                 },
+
+                {"data": "isIdentity","orderable" : false,
+                    "render": function (data, type, row, meta) {
+                        if(data==1){
+                            return "已认证";
+                        }else{
+                            return "未认证";
+                        }
+                    }
+                },
+
                 // {"data": "current_quota_ratio","orderable" : false},
-                {"data": "submitCount","orderable" : false,
+                {"data": "applyCount","orderable" : false,
                     "render": function (data, type, row, meta) {
                         if(data==null){
                             return "0";
@@ -140,7 +151,7 @@ $(function (){
                 // if(data.current_quota_ratio||data.current_quota_ratio==""){
                 //     $('td', row).eq(6).append(spanQuota);
                 // }
-                $('td', row).eq(7).append(btnDel).append(resetPwd).append(changeTel).append(changeBankCard);
+                $('td', row).eq(8).append(btnDel).append(resetPwd).append(changeTel).append(changeBankCard);
             },
             "initComplete" : function(settings,json) {
                 //搜索
@@ -262,73 +273,84 @@ function showDetail(id,card,tel,occupationType){
                 debugger
                 var data = result.data;
                 if (data){
-                    var person=data.personList[0];//个人信息
-                    var deviceInfo = data.customerDeviceInfo;//设备信息
+                    //var person=data.personList[0];//个人信息
+                   // var deviceInfo = data.customerDeviceInfo;//设备信息
                     var linkmanList=data.linkmanList;//联系人信息
-                    var occupationList = data.occupationList[0];//职业信息
-                    var customerContact = data.customerContact;//客户的通讯信息
-                    var customer = data.customer;//客户信息
-                    if(customer){
+                   // var occupationList = data.occupationList[0];//职业信息
+                   // var customerContact = data.customerContact;//客户的通讯信息
+                    var person = data.customer;//客户信息
+                  /*  if(customer){
                         //if(customer.callRecordUrl&&customer.callRecordUrl!=''){
                             var btn='<a class="tabel_btn_style" href="'+_ctx+'/customer/getTelephoneRecord?customerId='+customer.id+'" target="_blank"> 话单下载 </a>';
                             $("#callRecordUrl").html(btn);
                         //}else {
                         //    $("#callRecordUrl").html('未生成话单');
                         //}
-                    }
+                    }*/
                 }
                 //银行卡信息
-                if (data.bankCard)
+            /*    if (data.bankCard)
                 {
                     $("#bankCard").html(data.bankCard.bank_card);
                     $("#accountBank").html(data.bankCard.account_bank);
-                }
+                }*/
 
                 //个人信息
                 var marry = "";
+                var childrenStatus = "";
                 if(person){
                     debugger
-                    $("#realname").html(person.realname);//姓名
-                    $("#sex").html(person.sex_name);//姓别
-                    if(person.marry =="1"){
+                    $("#personName").html(person.personName);//姓名
+                    $("#sex").html(person.sexName);//姓别
+                    if(person.maritalStatus =="1"){
                         marry = "已婚";
-                    }else if(person.marry =="2"){
+                    }else if(person.maritalStatus =="2"){
                         marry = "未婚";
-                    }else if(person.marry =="3"){
+                    }else if(person.maritalStatus =="3"){
                         marry = "离异";
-                    }else if(person.marry =="4"){
+                    }else if(person.maritalStatus =="4"){
                         marry = "丧偶";
                     }
                     $("#marry").html(marry);//婚姻状况
-                    $("#education").html(person.educational_name);
 
-                    $("#cusCard").html(card);
+                    if(person.childrenStatus =="1"){
+                        childrenStatus = "已有子女";
+                    }else if(person.childrenStatus =="2"){
+                        childrenStatus = "未有子女";
+                    }
+                    $("#childrenStatus").html(childrenStatus);//子女状况
+                   // $("#education").html(person.educational_name);
+
+                    $("#cusCard").html(card);//身份证号码
                     debugger
                     var datetime = new Date();
                     var year=datetime.getFullYear();
                     var cardYear = card.substr(6,4);
-                    $("#age").html(year-cardYear);
+                    $("#age").html(year-cardYear);//年龄
+                    $("#cusTel").html(person.tel);//电话号码
+                    $("#cardRegisterAddress").text(person.cardRegisterAddress);//户籍居住地址
+                    $("#residenceAddress").text(person.residenceAddress);//工作居住地址
+                    $("#contractor").text(person.contractorName);//所属总包商
 
 
-                    $("#house").html(person.houseproperty);
-
-                    $("#cusTel").html(tel);
 
 
-                    $("#bankTel").html(person.tel);
-                    $("#bankNo").html(person.bank_card);
+
+                   // $("#bankTel").html(person.tel);
+
+               /*     $("#bankNo").html(person.bank_card);
                     $("#withPerson").html(person.withPerson);
                     $('#tdRefereeId').text(person.APEX2);//推荐人编号
                     $('#tdReferee').text(person.APEX1);//推荐人名称
-                    $("#applyCensus").text(person.card_register_address);//户籍
+                     $("#house").html(person.houseproperty);
                     $("#tdBirth").text(person.birth);//出生日期
                     $("#applyMerry").text(person.marry_name);//婚姻状况
                     $("#zcardSrcBase64").attr('src',person.zcardSrcBase64);
                     $("#fcardSrcBase64").attr('src',person.fcardSrcBase64);
-                    $("#face_src").attr('src',person.face_src);
+                    $("#face_src").attr('src',person.face_src);*/
                 }
                 //公司信息
-                if(occupationList){
+               /* if(occupationList){
                     $("#unitName").text(occupationList.companyName);//单位名称
                     $("#unitPro").text(occupationList.companyProperty);//单位性质
                     $("#unitTel").text(occupationList.companyCode+occupationList.companyPhone);//单位电话
@@ -360,23 +382,24 @@ function showDetail(id,card,tel,occupationType){
                     $("#is_prison").html(deviceInfo.is_prison);
                     $("#is_moni_online").html(deviceInfo.is_moni_online);
                     $("#location_permission").html(deviceInfo.location_permission);
-                }
+                }*/
                 //联系人信息
                 var html = '';
                 var html1 = '';
                 $("#relation").empty();
                 for(var i=0;i<linkmanList.length;i++){
                     var rel = linkmanList[i].mainSign;
-                    if(rel=='0'){//直系
-                        var yesno = "";
-                        html=html+ '<tr>'+
-                            '<td width="10%" >关系</td>'+
-                            '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
-                            '<td width="10%" >名称</td>'+
-                            '<td width="23%">'+linkmanList[i].linkName+'</td>'+
-                            '<td width="10%" >联系方式</td>'+
-                            '<td width="23%">'+linkmanList[i].contact+'</td>'+
-                            '</tr>';
+                    var yesno = "";
+                    html=html+ '<tr>'+
+                        '<td width="10%" >关系</td>'+
+                        '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
+                        '<td width="10%" >名称</td>'+
+                        '<td width="23%">'+linkmanList[i].linkName+'</td>'+
+                        '<td width="10%" >联系方式</td>'+
+                        '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                        '</tr>';
+/*                    if(rel=='0'){//直系
+
 
                     }else {
                         var yesno = "";
@@ -389,11 +412,11 @@ function showDetail(id,card,tel,occupationType){
                             '<td width="23%">'+linkmanList[i].contact+'</td>'+
                             '</tr>';
 
-                    }
+                    }*/
                 }
                 debugger
-                html='<tr><td colspan="6"  style="text-align: left">直系联系人</td></tr>'+html;
-                html1='<tr><td colspan="6" style="text-align: left">其他联系人</td></tr>'+html1;
+              /*  html='<tr><td colspan="6"  style="text-align: left">直系联系人</td></tr>'+html;*/
+              /*  html1='<tr><td colspan="6" style="text-align: left">其他联系人</td></tr>'+html1;*/
                 $("#relation").html('');//直系
                 $("#relation1").html('');//直系
                 $("#relation").append(html);//直系

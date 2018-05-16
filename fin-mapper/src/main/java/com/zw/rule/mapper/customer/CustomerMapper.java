@@ -20,7 +20,7 @@ public interface CustomerMapper {
 
     int updateByPrimaryKey(Customer record);
 
-    List<Customer> getCustomers(ParamFilter paramFilter);
+
 
     //客户订单关联查得到金额和注册时间之类的
     List<Map> getCustomerAndOrder(ParamFilter paramFilter);
@@ -73,4 +73,22 @@ public interface CustomerMapper {
     String selectUserIdFromCustomer(Map map);
     //查询现金分期总公司（秒付金服）
     Map getXJCompany();
+
+    /****************************************碧友信*******************************************/
+
+    /**
+     *获取客户列表
+     * @param paramFilter
+     * @return
+     */
+    List<Customer> getCustomers(ParamFilter paramFilter);
+
+    /**
+     *根据ID获取客户信息
+     * @param id
+     * @return
+     */
+    Map getCustomerById(String id);
+
+
 }
