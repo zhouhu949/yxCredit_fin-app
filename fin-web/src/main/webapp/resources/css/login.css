@@ -14,7 +14,7 @@ body {
 }
 
 body.login {
-	background: url(../images/login_bg.png) no-repeat center center;
+	background: url(../images/login_bg2.png) no-repeat center center;
 	background-size:cover ;
 }
 
