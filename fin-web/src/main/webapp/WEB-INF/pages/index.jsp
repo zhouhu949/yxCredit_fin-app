@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>秒付金服后台管理系统</title>
+    <title>友信贷后台管理系统</title>
     <link rel="icon" href="${ctx}/resources/logo.png" type="image/x-icon"/>
     <%@include file ="common/taglibs.jsp"%>
     <link rel="stylesheet" href="${ctx}/resources/css/home.css${version}"/>

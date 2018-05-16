@@ -20,7 +20,7 @@
 <body>
 <div class="page-content"  ng-controller="homeCtrl" >
     <div id="xiaofuBg">
-        <img src="${ctx}/resources/images/miaofuBg.jpg" width="100%"  alt="">
+        <img src="${ctx}/resources/images/miaofuBg1.jpg" width="100%"  alt="">
     </div>
     <%--<div class="row">--%>
         <%--<div class="col-xs-12">--%>
