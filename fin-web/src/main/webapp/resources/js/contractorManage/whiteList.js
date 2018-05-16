@@ -13,7 +13,7 @@ var g_whiteListManage = {
         //自行处理查询参数
         param.fuzzySearch = g_whiteListManage.fuzzySearch;
         if (g_whiteListManage.fuzzySearch) {
-            param.contractorName = $("[name='contractorName']").val();
+            param.trueName = $("[name='trueName']").val();
         }
         paramFilter.param = param;
 
@@ -32,7 +32,7 @@ $(function (){
         format: 'YYYY-MM-DD',
         max: laydate.now(),
         istime: true,
-        istoday: false,
+        istoday: false
        /* choose: function(datas){
             endTime.min = datas; //开始日选好后，重置结束日的最小日期
             endTime.start = datas //将结束日的初始值设定为开始日
@@ -43,7 +43,7 @@ $(function (){
         format: 'YYYY-MM-DD',
         min: laydate.now(),
         istime: true,
-        istoday: false,
+        istoday: false
        /* choose: function(datas){
             beginTime.max = datas; //结束日选好后，重置开始日的最大日期
         }*/
@@ -53,7 +53,7 @@ $(function (){
         format: 'YYYY-MM-DD',
        /* min: laydate.now(),*/
         istime: true,
-        istoday: false,
+        istoday: false
         /* choose: function(datas){
              beginTime.max = datas; //结束日选好后，重置开始日的最大日期
          }*/
@@ -61,7 +61,6 @@ $(function (){
     laydate(beginTime);
     laydate(endTime);
     laydate(latestPayday);
-
 
     //获取权限集合
     Comm.ajaxPost(
@@ -91,6 +90,7 @@ $(function (){
         "dom": 'rt<"bottom"i><"bottom"flp><"clear">',
         "ajax" : function(data, callback, settings) {
             var queryFilter = g_whiteListManage.getQueryCondition(data);
+            debugger
             Comm.ajaxPost('contractorManage/whiteListPage',JSON.stringify(queryFilter),function(result){
                 var returnData = {};
                 var resData = result.data.list;
@@ -125,6 +125,8 @@ $(function (){
                         return '农民工'
                     } else if(data.job==3){
                         return '临时工'
+                    } else {
+                        return ''
                     }
                 }
             },
@@ -179,29 +181,7 @@ $(function (){
                     $("#userCheckBox_All").attr("checked",false);
                 });
             });
-            //单选行
-            $("#User_list tbody").delegate( 'tr','click',function(e){
-                var target=e.target;
-                if(target.nodeName=='TD'){
-                    var input=target.parentNode.children[1].children[0];
-                    var isChecked=$(input).attr('isChecked');
-                    if(isChecked=='false'){
-                        if($(input).attr('checked')){
-                            $(input).attr('checked',false);
-                        }else{
-                            $(input).attr('checked','checked');
-                        }
-                        $(input).attr('isChecked','true');
-                    }else{
-                        if($(input).attr('checked')){
-                            $(input).attr('checked',false);
-                        }else{
-                            $(input).attr('checked','checked');
-                        }
-                        $(input).attr('isChecked','false');
-                    }
-                }
-            });
+
         }
     }, CONSTANT.DATA_TABLES.DEFAULT_OPTION)).api();
     g_whiteListManage.tableUser.on("order.dt search.dt", function() {
@@ -339,14 +319,7 @@ function updateWhite(sign,id) {
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
-                    /*if ($('input[name="contractor_name"]').val() == "") {
-                        layer.msg("总包商名不能为空",{time:2000});
-                        return;
-                    }
-                    if ($('input[name="contractor_linkman"]').val() == "") {
-                        layer.msg("联系人不能为空",{time:2000});
-                        return;
-                    }
+                    /*
                     if ($('input[name="contractor_mobile"]').val() == "") {
                         layer.msg("联系方式不能为空",{time:2000});
                         return;
@@ -494,158 +467,3 @@ function updateWhite(sign,id) {
     }
 
 }
-//启用或停止
-/*function updateState(state) {
-    var selectArray = $("#Data_list tbody input:checked");
-    if (!selectArray || (selectArray.length <= 0)) {
-        layer.msg("请选择一个用户", {time: 2000});
-        return;
-    }
-    var param = {
-        Ids: null,
-        status: null
-    }
-    var roleIds = new Array();
-    $.each(selectArray, function (i, e) {
-        var val = $(this).val();
-        roleIds.push(val);
-    });
-    if (roleIds.length == 0) {
-        return;
-    }
-
-    param.Ids = roleIds;
-    param.status = state;
-    Comm.ajaxPost(
-        'datamanage/listmanage/updateStatus', JSON.stringify(param),
-        function (data) {
-            layer.msg(data.msg, {time: 1000}, function () {
-                g_whiteListManage.fuzzySearch = true;
-                g_whiteListManage.tableUser.ajax.reload(function(){
-                    contentChange();//点击东西过长显示省略号
-                });
-            });
-        }, "application/json"
-    );
-
-}*/
-//删除用户信息
-function deleteUser(userId){
-    var userIds = new Array();
-    userIds.push(userId);
-    // var selectArray = $("#User_list tbody input:checked");
-    // if(!selectArray || selectArray.length==0){
-    //     layer.msg("请选择用户");
-    //     return;
-    // }
-    // var userIds = new Array();
-    // $.each(selectArray,function(i,e){
-    //     var val = $(this).val();
-    //     userIds.push(val);
-    // });
-    // if(userIds.length==0){
-    //     return;
-    // }
-    layer.confirm('是否删除用户？', {
-        btn : [ '确定', '取消' ]
-    }, function() {
-        Comm.ajaxPost(
-            'user/delete', JSON.stringify(userIds),
-            function(data){
-                layer.closeAll();
-                layer.msg(data.msg,{time:2000},function () {
-                    g_whiteListManage.tableUser.ajax.reload(function(){
-                        $("#userCheckBox_All").attr("checked",false);
-                    });
-                });
-            },"application/json");
-    });
-}
-
-//角色分配
-function asignRole(userId) {
-    Comm.ajaxPost('role/getRoleMap',JSON.stringify(userId),function(response){
-        $("#multiselect option").remove();
-        $("#multiselect_to option").remove();
-        var roleIds = response.data.roleIds;
-        $.each(response.data.roleList,function(i,roleMap){
-            var roleId = roleMap.roleId;
-            if(roleIds.indexOf(roleId)>=0){
-                $("#multiselect_to").prepend("<option value='"+roleId+"'>"+roleMap.role_name+"</option>");
-            }else{
-                $("#multiselect").prepend("<option value='"+roleId+"'>"+roleMap.role_name+"</option>");
-            }
-        });
-    },"application/json");
-    layer.open({
-        type : 1,
-        title : "角色分配",
-        maxmin : true,
-        area : [ '576px', '468px' ],
-        content : $('#asignRole'),
-        btn : [ '保存', '取消' ],
-        yes : function(index, layero) {
-            var roleIds = [];
-            $("#multiselect_to option").each(function(i,e){
-                var selectVal = $(this).val();
-                roleIds.push(selectVal);
-            });
-            var param = {"userId":userId,"roleIds":roleIds};
-            Comm.ajaxPost('userRole/add',param, function(data){
-                layer.closeAll();
-                layer.msg(data.msg,{time:2000},function () {
-                    g_whiteListManage.tableUser.ajax.reload(function(){
-                        $("#userCheckBox_All").attr("checked",false);
-                    });
-                });
-            })
-        }});
-}
-//角色-单个按钮功能
-function rightAll(){
-    var options=$("#multiselect option");
-    $("#multiselect_to").prepend(options);
-}
-function rightSelected(){
-    var options=$("#multiselect option:selected");
-    $("#multiselect_to").append(options);
-    $("#multiselect_to option:selected").attr('selected',false);
-}
-function leftSelected(){
-    var options=$("#multiselect_to option:selected");
-    $("#multiselect").append(options);
-    $("#multiselect option:selected").attr('selected',false);
-}
-function leftAll(){
-    var options=$("#multiselect_to option");
-    $("#multiselect").prepend(options);
-}
-
-//点击所属部门，加载树
-var showDeptZtree = function(){
-    //打开部门ztree弹框
-    var deptTree = layer.open({
-        title:"部门",
-        type: 1,
-        maxWidth:'auto',
-        area:['300px','300px'],
-        skin: 'layer_normal',
-        shift: 5,
-        offset:'150px',
-        btn : [ '保存', '取消' ],
-        shadeClose:false,
-        content: $("#jstree").show(),
-        success: function(layero, index){
-            getDepartmentZtree();
-            $('#jstree').delegate('span.text', 'click', function () {
-                var id = $(this).attr('title');
-                var deptName = $(this).text();
-                $('#deptPname').val(deptName);
-                $('#deptPid').val(id);
-            })
-        },
-        yes: function () {
-            layer.close(deptTree);
-        }
-    });
-};
