@@ -1282,6 +1282,15 @@ function sureDiyType(value){
         $('#diy_days').val('');
     }
 }
+
+function  sureRepayment(value) {
+    if(value === '1'){
+        $('.repayment').css('display','');
+    }else if(value === '0'){
+        $('.repayment').css('display','none');
+    }
+}
+
 /*$('select[name="provinces_id"]').on('change',function(){
  var htmlSel=$("#province option:selected").html();
  if(htmlSel=="-请选择-"){
