@@ -517,16 +517,10 @@ function getPeriods(crmProductId,productPeriods) {
                 var product_term_min = resData[i].productTermMin;
                 var product_term_max = resData[i].productTermMax;
                 var product_term_unit = resData[i].productTermUnit;
-                if(product_term_unit=='0'){
-                    product_term_unit='日';
-                }else if(product_term_unit=='1'){
-                    product_term_unit='月';
-                }else {
-                    product_term_unit='年';
-                }
+
                 //debugger
                 //var text=resData[i].periods;
-                var text = product_term_min+" 至 "+product_term_max+product_term_unit;
+                var text = product_term_min+" 至 "+product_term_max+" "+product_term_unit;
                 //var text=resData[i].periods;
                 selObj.append("<option  value='"+resData[i].id+"'>"+text+"</option>");
             }
@@ -565,13 +559,7 @@ function getPeriodsSelect() {
             var product_term_min = resData[i].product_term_min;
             var product_term_max = resData[i].product_term_max;
             var product_term_unit = resData[i].product_term_unit;
-             if(product_term_unit=='0'){
-                 product_term_unit='日';
-             }else if(product_term_unit=='1'){
-                 product_term_unit='月';
-             }else {
-                 product_term_unit='年';
-             }
+
              //debugger
             //var text=resData[i].periods;
             var text = product_term_min+" 至 "+product_term_max+product_term_unit;

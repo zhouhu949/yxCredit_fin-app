@@ -139,12 +139,12 @@ function renderPrd(id,flag,type){
                     Allhtml+="<input type='hidden'  value='"+result[i].id+"' detailview='flase' product='"+result[i].productId+"' isview='false'>";
                     Allhtml+="<h3 style='width: 190px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden'>"+productType.pro_name+"</h3>";
 
-                    Allhtml+="<p>综合利率：</p>";
-                    Allhtml+="<p style='height:32px;'><lable class='ransomDetailLable' title='"+result[i].multipleRate+"'>"+result[i].multipleRate+"</lable></p></div>";
+                    // Allhtml+="<p>综合利率：</p>";
+                    // Allhtml+="<p style='height:32px;'><lable class='ransomDetailLable' title='"+result[i].multipleRate+"'>"+result[i].multipleRate+"</lable></p></div>";
 
                     Allhtml+="</div><div class='lcprdetail'><table><tbody><tr><td width='100'></td>";
                     Allhtml+="<td width='180' align='right'></td></tr>";//
-                    Allhtml+="<tr><td>期限</td> <td align='right'>"+result[i].productTermMin+" 至  "+result[i].productTermMax+"</td></tr>";///
+                    Allhtml+="<tr><td>期限</td> <td align='right'>"+result[i].productTermMin+" 至  "+result[i].productTermMax+" "+result[i].productTermUnit+"</td></tr>";///
                     Allhtml+="<tr><td>还款方式</td><td align='right'>一次性还本付息</td></tr>";////
                     Allhtml+="<tr><td></td><td align='right'></td></tr>";////
                     if(result[i].status=="0"){

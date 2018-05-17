@@ -253,7 +253,7 @@
     <include refid="Base_Column_List" />
     from pro_crm_product p
     <where>
-      and p.parent_id != '0' and p.pro_number like 'LCP%' order by isnull(p.pro_number)-1,p.pro_number desc
+      and p.parent_id != '0' and p.pro_number like 'BYX%' order by isnull(p.pro_number)-1,p.pro_number desc
     </where>
   </select>
 
@@ -552,10 +552,9 @@
   </update>
 
   <insert id="addFee"   parameterType="com.zw.rule.product.Fee" >
-    insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,shenhe_fee,
-    fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate,loan_rate,asuer_rate,zbs_jujian_fee)
-    VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},#{zhifu_fee},
-    #{fengxian_fee}, #{zhina_fee}, #{yuqi_fee},#{zongheri_fee},#{year_rate},#{month_rate},#{loan_rate},#{asuer_rate},#{zbs_jujian_fee})
+    insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,yuqi_fee,year_rate,month_rate,loan_rate,asuer_rate,zbs_jujian_fee)
+    VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},
+     #{yuqi_fee},#{year_rate},#{month_rate},#{loan_rate},#{asuer_rate},#{zbs_jujian_fee})
   </insert>
 
   <select id="getProduct" resultMap="BaseResultMap">
