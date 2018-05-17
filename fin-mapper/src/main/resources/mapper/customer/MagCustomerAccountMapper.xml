@@ -391,7 +391,9 @@
 	mac.end_time FROM mag_customer mc
 	LEFT JOIN mag_customer_account mac ON mc.ID = mac.CUSTOMER_ID
 	LEFT JOIN mag_order mo ON mc.id = mo.CUSTOMER_ID WHERE mo.id = #{orderId}
+
 </select>
+
 	<select id ="getCustBankCardInfo" parameterType="java.lang.String" resultType="Map">
 	SELECT mac.id,mac.merchant_id,mac.USER_ID,mac.CUSTOMER_ID,mac.customer_type,
 	mac.tel,mac.channel,mac.CREAT_TIME,mac.	ALTER_TIME,mac.	state,mac.APEX1,mac.APEX2,
@@ -399,5 +401,16 @@
 	mac.draw_password,mac.login_password,mac.province_id,mac.account_province,mac.city_id,mac.account_city,
 	mac.account_bank_id,mac.account_bank,mac.account_branch_bank,mac.channel_name,mac.begin_time,mac.bank_card,
 	mac.end_time FROM mag_customer_account mac where mac.CUSTOMER_ID = #{customerId}
+	</select>
+
+
+	<!--                                                 碧友信                                                      -->
+
+	<!--根据客户ID查询绑定银行卡信息-->
+	<select id ="getCustBankCardInfoByCustId"  resultType="java.util.Map" parameterType="java.lang.String">
+	SELECT  bc.id AS bankCardId , bc.bank_name AS bankName , bc.bank_subbranch AS bankSubbranch ,
+	bc.card_number AS cardNumber , bc.prov_name AS provName , bc.city_name AS cityName ,
+	bc.create_time AS registrationTime , cu.is_identity AS isIdentity
+	FROM sys_bank_card bc INNER JOIN mag_customer cu  ON bc.cust_id=cu.ID  WHERE cust_id= #{id,jdbcType=VARCHAR}
 	</select>
 </mapper>

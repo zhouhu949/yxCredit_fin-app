@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zw.rule.mapper.contractor.WhiteListMapper" >
+  <resultMap id="BaseResultMap" type="com.zw.rule.contractor.po.WhiteList" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="contractor_id" property="contractorId" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="card" property="card" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="contract_status" property="contractStatus" jdbcType="VARCHAR" />
+    <result column="contract_start_date" property="contractStartDate" jdbcType="VARCHAR" />
+    <result column="contract_end_date" property="contractEndDate" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="job_type" property="jobType" jdbcType="VARCHAR" />
+    <result column="latest_payday" property="latestPayday" jdbcType="VARCHAR" />
+    <result column="latest_pay" property="latestPay" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="pay_ proof" property="payProof" jdbcType="VARCHAR" />
+    <result column="local_monthly_min_wage" property="localMonthlyMinWage" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, contractor_id, real_name, card, telphone, contract_status, contract_start_date, 
+    contract_end_date, job, job_type, latest_payday, latest_pay, pay_type, "pay_ proof", 
+    local_monthly_min_wage
+  </sql>
+
+  <select id="findWhiteList" resultType="com.zw.rule.contractor.po.WhiteList" parameterType="java.util.Map" >
+    SELECT
+    whitelist.id as id,
+    whitelist.real_name AS realName,
+    whitelist.card AS card,
+    whitelist.telphone AS telPhone,
+    whitelist.job AS job,
+    contractor.contractor_name as contractorName
+
+    FROM
+    byx_white_list whitelist
+    LEFT JOIN byx_contractor contractor ON whitelist.contractor_id = contractor.id
+    <where>
+     <!-- <if test="param.contractorName != null and param.contractorName != ''">
+        and contractor_name like '%${param.contractorName}%'
+      </if>-->
+    </where>
+    /*order by CREAT_TIME desc*/
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from byx_white_list
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from byx_white_list
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.zw.rule.contractor.po.WhiteList" >
+    insert into byx_white_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractorId != null" >
+        contractor_id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="card != null" >
+        card,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="contractStatus != null" >
+        contract_status,
+      </if>
+      <if test="contractStartDate != null" >
+        contract_start_date,
+      </if>
+      <if test="contractEndDate != null" >
+        contract_end_date,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="jobType != null" >
+        job_type,
+      </if>
+      <if test="latestPayday != null" >
+        latest_payday,
+      </if>
+      <if test="latestPay != null" >
+        latest_pay,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payProof != null" >
+        "pay_ proof",
+      </if>
+      <if test="localMonthlyMinWage != null" >
+        local_monthly_min_wage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="contractorId != null" >
+        #{contractorId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null" >
+        #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStatus != null" >
+        #{contractStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStartDate != null" >
+        #{contractStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEndDate != null" >
+        #{contractEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="latestPayday != null" >
+        #{latestPayday,jdbcType=VARCHAR},
+      </if>
+      <if test="latestPay != null" >
+        #{latestPay,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payProof != null" >
+        #{payProof,jdbcType=VARCHAR},
+      </if>
+      <if test="localMonthlyMinWage != null" >
+        #{localMonthlyMinWage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zw.rule.contractor.po.WhiteList" >
+    update byx_white_list
+    <set >
+      <if test="contractorId != null" >
+        contractor_id = #{contractorId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null" >
+        card = #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStatus != null" >
+        contract_status = #{contractStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="contractStartDate != null" >
+        contract_start_date = #{contractStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="contractEndDate != null" >
+        contract_end_date = #{contractEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="jobType != null" >
+        job_type = #{jobType,jdbcType=VARCHAR},
+      </if>
+      <if test="latestPayday != null" >
+        latest_payday = #{latestPayday,jdbcType=VARCHAR},
+      </if>
+      <if test="latestPay != null" >
+        latest_pay = #{latestPay,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payProof != null" >
+        "pay_ proof" = #{payProof,jdbcType=VARCHAR},
+      </if>
+      <if test="localMonthlyMinWage != null" >
+        local_monthly_min_wage = #{localMonthlyMinWage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

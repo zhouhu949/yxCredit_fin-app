@@ -66,4 +66,15 @@ public class LoanClientServiceImpl implements LoanClientService{
     public Fee getFeeByProductName(Map map) {
         return feeMapper.getFeeByProductName(map);
     }
+
+    /**
+     * 根据客户ID查询绑定银行卡信息
+     * @author 仙海峰
+     * @param customerId
+     * @return
+     */
+    @Override
+    public Map getCustBankCardInfoByCustId(String customerId) {
+        return magCustomerAccountMapper.getCustBankCardInfoByCustId(customerId);
+    }
 }

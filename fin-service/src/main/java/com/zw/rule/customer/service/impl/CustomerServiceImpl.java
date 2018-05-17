@@ -298,4 +298,21 @@ public class CustomerServiceImpl implements CustomerService {
     public Map getXJCompany(){
         return customerMapper.getXJCompany();
     }
+
+
+    /*******************************************碧友信***********************************************************/
+
+
+    /**
+     * 根据客户ID获取客户信息
+     * @author 仙海峰
+     * @param customerId
+     * @return
+     */
+    @Override
+    public Map getCustomerById(String customerId) {
+        return customerMapper.getCustomerById(customerId);
+    }
+
+
 }

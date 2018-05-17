@@ -77,9 +77,11 @@
                         <th>手机号码</th>
                         <th>注册时间</th>
                         <%--<th>提额比例(%)</th>--%>
-                        <th>订单数</th>
+                        <th>认证状态</th>
+                        <th>订单数量</th>
                         <th>操作</th>
                     </tr>
+
                     </thead>
                     <tbody>
                     </tbody>
@@ -117,6 +119,42 @@
                         <table class="tb_info " style="font-size:12px;">
                             <tbody>
                             <tr>
+                                <td width="14%">姓&emsp;&emsp;名：</td>
+                                <td  id="personName" width="19%"></td>
+                                <td width="14%">性&emsp;&emsp;别：</td>
+                                <td id="sex" width="19%"></td>
+                                <td width="14%">年&emsp;&emsp;龄：</td>
+                                <td id="age" width="20%"></td>
+                            </tr>
+                            <tr>
+                                <td >手机号码：</td>
+                                <td id="cusTel" ></td>
+                                <td >证件号码：</td>
+                                <td id="cusCard" ></td>
+                                <td >所属总包商：</td>
+                                <td id="contractor" ></td>
+                            </tr>
+
+                            <tr>
+                                <td >婚姻状况：</td>
+                                <td id="marry" ></td>
+                                <td >子女状况：</td>
+                                <td id="childrenStatus" ></td>
+                                <td >注册时间：</td>
+                                <td id="registrationTime" ></td>
+
+                            </tr>
+                            <tr>
+                                <td >户籍居住地址：</td>
+                                <td id="cardRegisterAddress" colspan="5"></td>
+
+                            </tr>
+                            <tr>
+
+                                <td >工作居住地址：</td>
+                                <td id="residenceAddress" colspan="5"></td>
+                            </tr>
+                           <%-- <tr>
                                 <td  width="10%">姓名</td>
                                 <td  width="23%" id="realname"></td>
                                 <td  width="10%">性别</td>
@@ -161,7 +199,41 @@
                                 <td >开户银行</td>
                                 <td id ="accountBank" ></td>
                                 <td colspan="2"></td>
+                            </tr>--%>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="paperBlockfree">
+                        <div class="block_hd" style="float:left;">
+                            <s class="ico icon-file-text-alt"></s><span class="bl_tit">认证信息</span>
+                        </div>
+                        <table class="tb_info " style="font-size:12px;">
+                            <tbody>
+                            <tr>
+                                <td width="14%">认证状态：</td>
+                                <td  id="isIdentity" width="19%"></td>
+                                <td width="14%">认证时间：</td>
+                                <td id="authenticationTime" width="19%"></td>
+                                <td width="14%">银行卡号：</td>
+                                <td id="cardNumber" width="20%"></td>
                             </tr>
+                            <tr>
+                                <td>开户银行：</td>
+                                <td id="bankName" ></td>
+                                <td >所属省份：</td>
+                                <td id="provName" ></td>
+                                <td >所属城市：</td>
+                                <td id="cityName" ></td>
+
+                            </tr>
+
+                            <tr>
+                                <td >开户支行：</td>
+                                <td id="bankSubbranch" colspan="5"></td>
+                            </tr>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -243,14 +315,14 @@
                         <%--</table>--%>
                     <%--</div>--%>
                     <%--手持身份证照片--%>
-                    <div class="paperBlockfree" style="position: relative;margin-top:20px;">
+                 <%--   <div class="paperBlockfree" style="position: relative;margin-top:20px;">
                         <div class="block_hd" style="float:left;">
                             <s class="ico icon-file-text-alt"></s><span class="bl_tit">影像资料</span>
                         </div>
                         <table class="tb_info" style="font-size:12px;">
                             <tbody>
                             <tr>
-                                <%--手持身份证照片--%>
+                                &lt;%&ndash;手持身份证照片&ndash;%&gt;
                                 <td style="background: #DEF0D8;width: 10%">身份证正反面</td>
                                 <td class="tdTitle align" id="showNewImg1" style="text-align: left" colspan="3"><ul style="text-align: left;">
                                     <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="zcardSrcBase64" onclick="imgShow(this)"></div><p>身份证正面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
@@ -259,7 +331,7 @@
                             </tr>
 
                             <tr>
-                                <%--手持身份证照片--%>
+                                &lt;%&ndash;手持身份证照片&ndash;%&gt;
                                 <td style="background: #DEF0D8;width: 10%">人脸识别照片</td>
                                 <td class="tdTitle align" id="showNewImg1" style="text-align: left" colspan="3"><ul style="text-align: left;">
                                     <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="face_src" onclick="imgShow(this)"></div><p>人脸识别照片</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
@@ -267,11 +339,11 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
                 </div>
-        <div id="updateWpd" style="display: none">
+    <%--    <div id="updateWpd" style="display: none">
             <div class="commonManager ">
                 <div class="addCommon">
                     <ul class="clearfix">
@@ -290,18 +362,18 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>--%>
             </div>
         </div>
 
     </div>
 </div>
-<div style="display: none;" id="imgDisplay">
+<%--<div style="display: none;" id="imgDisplay">
     <img src="" alt="">
-</div>
+</div>--%>
 
 <%--更改手机号弹出窗--%>
-<div id="changeTelDiv" style="display: none">
+<%--<div id="changeTelDiv" style="display: none">
     <div class="commonManager ">
         <div class="addCommon">
             <ul class="clearfix">
@@ -320,7 +392,7 @@
             </ul>
         </div>
     </div>
-</div>
+</div>--%>
 
 
 </body>

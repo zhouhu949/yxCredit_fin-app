@@ -22,4 +22,14 @@ public interface LoanClientService {
     Boolean inserRepayPlan(Repayment repayment);
     Fee getFeeByProductName(Map map);//查询费率
 
+    /**
+     * 根据客户ID查询绑定银行卡信息
+     * @author 仙海峰
+     * @param customerId
+     * @return
+     */
+    Map getCustBankCardInfoByCustId(String customerId);
+
+
+
 }

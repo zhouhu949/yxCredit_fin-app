@@ -104,4 +104,13 @@ public interface CustomerService {
 
     //查询现金贷的公司
     Map getXJCompany();
+
+    /*******************************************碧友信***********************************************************/
+    /**
+     * 根据客户ID获取客户信息
+     * @author 仙海峰
+     * @param customerId
+     * @return
+     */
+    Map getCustomerById(String customerId);
 }
