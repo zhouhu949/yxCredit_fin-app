@@ -142,11 +142,11 @@ function renderPrd(id,flag,type){
                     Allhtml+="<p>综合利率：</p>";
                     Allhtml+="<p style='height:32px;'><lable class='ransomDetailLable' title='"+result[i].multipleRate+"'>"+result[i].multipleRate+"</lable></p></div>";
 
-                    Allhtml+="</div><div class='lcprdetail'><table><tbody><tr><td width='100'>资方编号</td>";
-                    Allhtml+="<td width='180' align='right'>"+result[i].contractRate+"</td></tr>";//
-                    Allhtml+="<tr><td>期数</td> <td align='right'>"+result[i].periods+"</td></tr>";///
-                    Allhtml+="<tr><td>还款方式</td><td align='right'>"+result[i].payment+"</td></tr>";////
-                    Allhtml+="<tr><td>贷后编号</td><td align='right'>"+result[i].actualLowerLimit+"</td></tr>";////
+                    Allhtml+="</div><div class='lcprdetail'><table><tbody><tr><td width='100'></td>";
+                    Allhtml+="<td width='180' align='right'></td></tr>";//
+                    Allhtml+="<tr><td>期限</td> <td align='right'>"+result[i].productTermMin+" 至  "+result[i].productTermMax+"</td></tr>";///
+                    Allhtml+="<tr><td>还款方式</td><td align='right'>一次性还本付息</td></tr>";////
+                    Allhtml+="<tr><td></td><td align='right'></td></tr>";////
                     if(result[i].status=="0"){
                         Allhtml+="<tr><td colspan='2'>&nbsp;</td></tr></tr>";
                         Allhtml+="</tbody></table></div><div class='lcprbtn'>";
@@ -569,42 +569,60 @@ function updataProStatus(Id,flag,me,status){
 function showFormView(id,parentId,flag,add,me,type){
      console.log("flag:"+flag+"~~"+"add:"+add);
     debugger
-    var a = $('#product_type').val();
-    if(type=='undefined'){
-        type = $('#product_type').val();
-    }
-    if ($("#pro_series_type").val() == '0')
-    {
-        $("#product_periods").text('每期天数');
-        $("#periods_day").text('天/期');
-    }
-    else
-    {
-        $("#product_periods").text('期数');
-        $("#periods_day").text('期');
-    }
+    // var a = $('#product_type').val();
+    // if(type=='undefined'){
+    //     type = $('#product_type').val();
+    // }
+    // if ($("#pro_series_type").val() == '0')
+    // {
+    //     $("#product_periods").text('每期天数');
+    //     $("#periods_day").text('天/期');
+    // }
+    // else
+    // {
+    //     $("#product_periods").text('期数');
+    //     $("#periods_day").text('期');
+    // }
     /*
      $("#localImag img").attr("src","");
      $("#file").val("");*/
     $("#cpNumber").val("").attr("readOnly",false);
     $("#cpName").val("").attr("readOnly",false);
-    $("#periods").val("").attr("readOnly",false);
-    $("#contractRate").val("").attr("readOnly",false);
-    $("#multipleRate").val("").attr("readOnly",false);
+    // $("#periods").val("").attr("readOnly",false);
+    // $("#contractRate").val("").attr("readOnly",false);
+    // $("#multipleRate").val("").attr("readOnly",false);
     //var payment=dataList.payment;
-    $("#parentInfo").attr("disabled",false);
-    $("#actualLowerLimit").val("").attr("readOnly",false);
-    $("#actualUpperLimit").val("").attr("readOnly",false);
-    $("#creditProtectDay").val("").attr("readOnly",false);
-    $("#overdueProtectDay").val("").attr("readOnly",false);
-    $("#interestRate").val("").attr("readOnly",false);
-    $("#interestRemark").val("").attr("readOnly",false);
-    $("#contractViolateRate").val("").attr("readOnly",false);
-    $("#contractViolateRemark").val("").attr("readOnly",false);
-    $("#bailRate").val("").attr("readOnly",false);
-    $("#giveInfo").attr("disabled",false);
-    $("#bailRemark").val("").attr("readOnly",false);
-    $("#stagingServicesRate").val("").attr("readOnly",false);
+    $("#parentInfo").val("").attr("disabled",false);
+
+    //产品期限单位
+    $("#product_term_unit").val("").attr("disabled",false);
+    //产品期限起始日期
+    $("#product_term_min").val("").attr("readOnly",false);
+    //产品期限结束日期
+    $("#product_term_max").val("").attr("readOnly",false);
+    //申请额度最小值
+    $("#apply_quota_min").val("").attr("readOnly",false);
+    //申请额度最大值
+    $("#apply_quota_max").val("").attr("readOnly",false);
+    //是否计算居间服务费
+    $("#service_charge").val("").attr("disabled",false);
+    //是否提前还款
+    $("#repayment").val("").attr("disabled",false);
+
+    $("#repayment_days").val("").attr("readOnly",false);
+
+    // $("#actualLowerLimit").val("").attr("readOnly",false);
+    // $("#actualUpperLimit").val("").attr("readOnly",false);
+    // $("#creditProtectDay").val("").attr("readOnly",false);
+    // $("#overdueProtectDay").val("").attr("readOnly",false);
+    // $("#interestRate").val("").attr("readOnly",false);
+    // $("#interestRemark").val("").attr("readOnly",false);
+    // $("#contractViolateRate").val("").attr("readOnly",false);
+    // $("#contractViolateRemark").val("").attr("readOnly",false);
+    // $("#bailRate").val("").attr("readOnly",false);
+    // $("#giveInfo").attr("disabled",false);
+    // $("#bailRemark").val("").attr("readOnly",false);
+    // $("#stagingServicesRate").val("").attr("readOnly",false);
     var addOredit=layer.open({
         type : 1,
         title:"<s class='preLine'>信贷产品信息</s>",
@@ -617,11 +635,11 @@ function showFormView(id,parentId,flag,add,me,type){
             if(flag==0||flag==2){//查看
                 Comm.ajaxPost("product/getProductInfo","id="+id+"&parentId="+parentId,function(data){
                     //pro_series_type 来判断（0-现金贷 1-商品贷）
-                    if ($("#pro_series_type").val() == '0') {//现金贷
-                        $('#diy_duoqi').css('display','none');
-                    }else {//商品贷
-                        $('#diy_duoqi').css('display','table-row');
-                    }
+                    // if ($("#pro_series_type").val() == '0') {//现金贷
+                    //     $('#diy_duoqi').css('display','none');
+                    // }else {//商品贷
+                    //     $('#diy_duoqi').css('display','table-row');
+                    // }
                     debugger
                     var productType=data.data.productType;
                     var dataList=data.data.data[0];
@@ -629,77 +647,133 @@ function showFormView(id,parentId,flag,add,me,type){
                     if(flag==0){//查看
                         $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly").css("border","none");
                         $("#cpName").val(productType.pro_name).attr("readOnly","readOnly").css("border","none");
-                        $("#periods").val(dataList.periods).attr("readOnly","readOnly").css("border","none");
-                        $("#contractRate").val(dataList.contractRate).attr("readOnly","readOnly").css("border","none");
-                        $("#multipleRate").val(dataList.multipleRate).attr("readOnly","readOnly").css("border","none");
+                        //$("#periods").val(dataList.periods).attr("readOnly","readOnly").css("border","none");
+                       // $("#contractRate").val(dataList.contractRate).attr("readOnly","readOnly").css("border","none");
+                        //$("#multipleRate").val(dataList.multipleRate).attr("readOnly","readOnly").css("border","none");
                         var payment=dataList.payment;
                         $("#parentInfo").attr("value",payment).attr("disabled",true).css("border","none");
-                        $("#actualLowerLimit").val(dataList.actualLowerLimit).attr("readOnly","readOnly").css("border","none");
-                        $("#actualUpperLimit").val(dataList.actualUpperLimit).attr("readOnly","readOnly").css("border","none");
-                        $("#creditProtectDay").val(dataList.creditProtectDay).attr("readOnly","readOnly").css("border","none");
-                        $("#overdueProtectDay").val(dataList.overdueProtectDay).attr("readOnly","readOnly").css("border","none");
-                        $("#interestRate").val(dataList.interestRate).attr("readOnly","readOnly").css("border","none");
-                        $("#interestRemark").val(dataList.interestRemark).attr("readOnly","readOnly").css("border","none");
-                        $("#contractViolateRate").val(dataList.contractViolateRate).attr("readOnly","readOnly").css("border","none");
-                        $("#contractViolateRemark").val(dataList.contractViolateRemark).attr("readOnly","readOnly").css("border","none");
-                        $("#bailRate").val(dataList.bailRate).attr("readOnly","readOnly").css("border","none");
-                        var bailPayMode=dataList.bailPayMode;
-                        $("#giveInfo").attr("value",bailPayMode).attr("disabled",true).css("border","none");
-                        $("#bailRemark").val(dataList.bailRemark).attr("readOnly","readOnly").css("border","none");
-                        $("#stagingServicesRate").val(dataList.stagingServicesRate).attr("readOnly","readOnly").css("border","none");
-                        //清空选择方式 自定义天数输入框
-                        $('#diy_type').val('');
-                        $('#diy_days').val('');
+                        //产品期限单位
+                        var productTermUnit = dataList.productTermUnit;
+                        $("#product_term_unit").attr("value",productTermUnit).attr("disabled",true).css("border","none");
+                        //产品期限起始日期
+                        $("#product_term_min").val(dataList.productTermMin).attr("readOnly","readOnly").css("border","none");
+                        //产品期限结束日期
+                        $("#product_term_max").val(dataList.productTermMax).attr("readOnly","readOnly").css("border","none");
+                        //申请额度最小值
+                        $("#apply_quota_min").val(dataList.applyQuotaMin).attr("readOnly","readOnly").css("border","none");
+                        //申请额度最大值
+                        $("#apply_quota_max").val(dataList.applyQuotaMax).attr("readOnly","readOnly").css("border","none");
+                        //是否计算居间服务费
+                        var serviceCharge = dataList.serviceCharge;
+                        $("#service_charge").attr("value",serviceCharge).attr("disabled",true).css("border","none");
+                        //是否提前还款
+                        var repayment = dataList.repayment;
+                        $("#repayment").attr("value",repayment).attr("disabled",true).css("border","none");
 
-                        //选择方式
-                        $('#diy_type').val(dataList.diyType);
-                        if(dataList.diyType == '0'){//该选择为自然月
-                            $(".diy_days").css({"display":"none"});
-                            $("#diy_days").val('');
-                        }else if(dataList.diyType == '1'){//该选择为自定义天数
-                            $(".diy_days").css({"display":"table-cell"});
-                            $("#diy_days").val(dataList.diyDays);
+                        if(repayment == '1'){//该选择为提前还款
+                            $(".repayment").css({"display":"table-cell"});
+                            //提前还款时间
+                            $("#repayment_days").val(dataList.repaymentDays).attr("readOnly","readOnly").css("border","none");
+                        }else if(repayment == '0'){
+                            $(".repayment").css({"display":"none"});
+                            $("#repayment_days").val('');
                         }
 
-                        //设置只读
-                        $("#diy_type,#diy_days").attr("disabled",true);
+
+                        //
+                        // $("#actualLowerLimit").val(dataList.actualLowerLimit).attr("readOnly","readOnly").css("border","none");
+                        // $("#actualUpperLimit").val(dataList.actualUpperLimit).attr("readOnly","readOnly").css("border","none");
+                        // $("#creditProtectDay").val(dataList.creditProtectDay).attr("readOnly","readOnly").css("border","none");
+                        // $("#overdueProtectDay").val(dataList.overdueProtectDay).attr("readOnly","readOnly").css("border","none");
+                        // $("#interestRate").val(dataList.interestRate).attr("readOnly","readOnly").css("border","none");
+                        // $("#interestRemark").val(dataList.interestRemark).attr("readOnly","readOnly").css("border","none");
+                        // $("#contractViolateRate").val(dataList.contractViolateRate).attr("readOnly","readOnly").css("border","none");
+                        // $("#contractViolateRemark").val(dataList.contractViolateRemark).attr("readOnly","readOnly").css("border","none");
+                        // $("#bailRate").val(dataList.bailRate).attr("readOnly","readOnly").css("border","none");
+                        // var bailPayMode=dataList.bailPayMode;
+                        // $("#giveInfo").attr("value",bailPayMode).attr("disabled",true).css("border","none");
+                        // $("#bailRemark").val(dataList.bailRemark).attr("readOnly","readOnly").css("border","none");
+                        // $("#stagingServicesRate").val(dataList.stagingServicesRate).attr("readOnly","readOnly").css("border","none");
+                        // //清空选择方式 自定义天数输入框
+                        // $('#diy_type').val('');
+                        // $('#diy_days').val('');
+                        //
+                        // //选择方式
+                        // $('#diy_type').val(dataList.diyType);
+                        // if(dataList.diyType == '0'){//该选择为自然月
+                        //     $(".diy_days").css({"display":"none"});
+                        //     $("#diy_days").val('');
+                        // }else if(dataList.diyType == '1'){//该选择为自定义天数
+                        //     $(".diy_days").css({"display":"table-cell"});
+                        //     $("#diy_days").val(dataList.diyDays);
+                        // }
+                        //
+                        // //设置只读
+                        // $("#diy_type,#diy_days").attr("disabled",true);
 
                     }else{//编辑"../"+dataList.imgUrl
                         $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly");
                         $("#cpName").val(productType.pro_name).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#periods").val(dataList.periods).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#contractRate").val(dataList.contractRate).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#multipleRate").val(dataList.multipleRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#periods").val(dataList.periods).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#contractRate").val(dataList.contractRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#multipleRate").val(dataList.multipleRate).attr("readOnly",false).css("border","1px solid #ccc");
                         var payment=dataList.payment;
                         $("#parentInfo").attr("value",payment).attr("disabled",false).css("border","1px solid #ccc");
-                        $("#actualLowerLimit").val(dataList.actualLowerLimit).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#actualUpperLimit").val(dataList.actualUpperLimit).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#creditProtectDay").val(dataList.creditProtectDay).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#overdueProtectDay").val(dataList.overdueProtectDay).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#interestRate").val(dataList.interestRate).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#interestRemark").val(dataList.interestRemark).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#contractViolateRate").val(dataList.contractViolateRate).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#contractViolateRemark").val(dataList.contractViolateRemark).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#bailRate").val(dataList.bailRate).attr("readOnly",false).css("border","1px solid #ccc");
-                        var bailPayMode=dataList.bailPayMode;
-                        $("#giveInfo").attr("value",bailPayMode).attr("disabled",false).css("border","1px solid #ccc");
-                        $("#bailRemark").val(dataList.bailRemark).attr("readOnly",false).css("border","1px solid #ccc");
-                        $("#stagingServicesRate").val(dataList.stagingServicesRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        //产品期限单位
+                        var productTermUnit = dataList.productTermUnit;
+                        $("#product_term_unit").attr("value",productTermUnit).attr("disabled",false).css("border","1px solid #ccc");
+                        //产品期限起始日期
+                        $("#product_term_min").val(dataList.productTermMin).attr("readOnly",false).css("border","1px solid #ccc");
+                        //产品期限结束日期
+                        $("#product_term_max").val(dataList.productTermMax).attr("readOnly",false).css("border","1px solid #ccc");
+                        //申请额度最小值
+                        $("#apply_quota_min").val(dataList.applyQuotaMin).attr("readOnly",false).css("border","1px solid #ccc");
+                        //申请额度最大值
+                        $("#apply_quota_max").val(dataList.applyQuotaMax).attr("readOnly",false).css("border","1px solid #ccc");
+                        //是否计算居间服务费
+                        var serviceCharge = dataList.serviceCharge;
+                        $("#service_charge").attr("value",serviceCharge).attr("disabled",false).css("border","1px solid #ccc");
+                        //是否提前还款
+                        var repayment = dataList.repayment;
+                        $("#repayment").attr("value",repayment).attr("disabled",false).css("border","1px solid #ccc");
+
+                        if(repayment == '1'){//该选择为提前还款
+                            $(".repayment").css({"display":"table-cell"});
+                            //提前还款
+                            $("#repayment_days").val(dataList.repaymentDays).attr("readOnly",false).css("border","1px solid #ccc");
+
+                        }else if(repayment == '0'){
+                            $(".repayment").css({"display":"none"});
+                            $("#repayment_days").val('');
+                        }
+                        // $("#actualLowerLimit").val(dataList.actualLowerLimit).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#actualUpperLimit").val(dataList.actualUpperLimit).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#creditProtectDay").val(dataList.creditProtectDay).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#overdueProtectDay").val(dataList.overdueProtectDay).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#interestRate").val(dataList.interestRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#interestRemark").val(dataList.interestRemark).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#contractViolateRate").val(dataList.contractViolateRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#contractViolateRemark").val(dataList.contractViolateRemark).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#bailRate").val(dataList.bailRate).attr("readOnly",false).css("border","1px solid #ccc");
+                        // var bailPayMode=dataList.bailPayMode;
+                        // $("#giveInfo").attr("value",bailPayMode).attr("disabled",false).css("border","1px solid #ccc");
+                        // $("#bailRemark").val(dataList.bailRemark).attr("readOnly",false).css("border","1px solid #ccc");
+                        // $("#stagingServicesRate").val(dataList.stagingServicesRate).attr("readOnly",false).css("border","1px solid #ccc");
                         $("#picName").val(dataList.imgUrl);
                         //清空选择方式 自定义天数输入框
-                        $('#diy_type').val('');
-                        $('#diy_days').val('');
-                        //选择方式
-                        $('#diy_type').val(dataList.diyType);
-                        if(dataList.diyType == '0'){//该选择为自然月
-                            $(".diy_days").css({"display":"none"});
-                            $("#diy_days").val('');
-                        }else if(dataList.diyType == '1'){//该选择为自定义天数
-                            $(".diy_days").css({"display":"table-cell"});
-                            $("#diy_days").val(dataList.diyDays);
-                        }
-                        //去除只读属性
-                        $("#diy_type,#diy_days").attr("disabled",false);
+                        // $('#diy_type').val('');
+                        // $('#diy_days').val('');
+                        // //选择方式
+                        // $('#diy_type').val(dataList.diyType);
+                        // if(dataList.diyType == '0'){//该选择为自然月
+                        //     $(".diy_days").css({"display":"none"});
+                        //     $("#diy_days").val('');
+                        // }else if(dataList.diyType == '1'){//该选择为自定义天数
+                        //     $(".diy_days").css({"display":"table-cell"});
+                        //     $("#diy_days").val(dataList.diyDays);
+                        // }
+                        // //去除只读属性
+                        // $("#diy_type,#diy_days").attr("disabled",false);
                     }
                 });
             }else if(flag==1){//新增
@@ -711,27 +785,28 @@ function showFormView(id,parentId,flag,add,me,type){
                     for(var i=0;i<divFrom.length;i++){
                         $(divFrom[i]).css("border","1px solid #ccc");
                     }
-                    $("#interestRemark").css("border","1px solid #ccc");
-                    $("#contractViolateRemark").css("border","1px solid #ccc");
-                    $("#bailRemark").css("border","1px solid #ccc");
-                    //产品序列 产品名称
-                    $("#cpNumber").val($("#cpNumber1").val()).attr("readOnly","readOnly");
-                    $("#cpName").val(productType.pro_name);
-                    $("#localImag img").attr("src","");
-                    $("#localImag input").val("");
-                    //清空选择方式 自定义天数输入框
-                    $('#diy_type').val('');
-                    $('#diy_days').val('');
-                    //去除只读属性
-                    $("#diy_type,#diy_days").attr("disabled",false);
+                    // $("#interestRemark").css("border","1px solid #ccc");
+                    // $("#contractViolateRemark").css("border","1px solid #ccc");
+                    // $("#bailRemark").css("border","1px solid #ccc");
+                     //产品序列 产品名称
+                     $("#cpNumber").val($("#cpNumber1").val()).attr("readOnly","readOnly");
+                     $("#cpName").val(productType.pro_name);
+                     $("#localImag img").attr("src","");
+                     $("#localImag input").val("");
+                    // //清空选择方式 自定义天数输入框
+                    //
+                    // $('#repayment_min').val('');
+                    // $('#repayment_max').val('');
+                    // //去除只读属性
+                    // $("#diy_type,#diy_days").attr("disabled",false);
 
                 });
                 //pro_series_type 来判断（0-现金贷 1-商品贷）
-                if ($("#pro_series_type").val() == '0') {//现金贷
-                    $('#diy_duoqi').css('display','none');
-                }else {//商品贷
-                    $('#diy_duoqi').css('display','table-row');
-                }
+                // if ($("#pro_series_type").val() == '0') {//现金贷
+                //     $('#diy_duoqi').css('display','none');
+                // }else {//商品贷
+                //     $('#diy_duoqi').css('display','table-row');
+                // }
             }
         },
         yes: function(index, layerqw){//新增
@@ -752,45 +827,135 @@ function showFormView(id,parentId,flag,add,me,type){
                     return;
                 }
             }
-            if($("#periods").val()!=""){
+            // if($("#periods").val()!=""){
+            //     var reg=/^[0-9]*$/;
+            //     var valTest=reg.test($("#periods").val());
+            //     if(!valTest){
+            //         layer.msg("产品期数只能输入数字！！",{time:2000});
+            //         return;
+            //     }
+            // }
+            // if($("#contractRate").val()!=""){
+            //     var reg=/^[0-9]+(.[0-9]{0,4})?$/;
+            //     var valTest=reg.test($("#contractRate").val());
+            //     if(!valTest){
+            //         layer.msg("只能输入小数点最多四位数字！！！",{time:2000});
+            //         return;
+            //     }
+            // }
+            // //贷后编号
+            // if($("#actualLowerLimit").val()!=""){
+            //     var reg=/^[0-9]*$/;
+            //     var valTest=reg.test($("#actualLowerLimit").val());
+            //     if(!valTest){
+            //         layer.msg("只能输入数字！",{time:2000});
+            //         return;
+            //     }
+            // }
+            /**
+             * @create 韩梅生
+             * 申请额度最小值
+             */
+            if($("#apply_quota_min").val() === ""){
+                layer.msg("请输入最小申请额度！",{time:2000});
+                return;
+            }else if($("#apply_quota_min").val()!=""){
                 var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#periods").val());
-                if(!valTest){
-                    layer.msg("产品期数只能输入数字！！",{time:2000});
-                    return;
-                }
-            }
-            if($("#contractRate").val()!=""){
-                var reg=/^[0-9]+(.[0-9]{0,4})?$/;
-                var valTest=reg.test($("#contractRate").val());
-                if(!valTest){
-                    layer.msg("只能输入小数点最多四位数字！！！",{time:2000});
-                    return;
-                }
-            }
-            //贷后编号
-            if($("#actualLowerLimit").val()!=""){
-                var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#actualLowerLimit").val());
+                var valTest=reg.test($("#product_term_min").val());
                 if(!valTest){
                     layer.msg("只能输入数字！",{time:2000});
                     return;
                 }
             }
-            //新增字段验证
-            if ($("#pro_series_type").val() == '1') {//商品贷
-                if($("#diy_type").val() == ''){
-                    layer.msg("选择方式不能为空！",{time:2000});return ;
+            /**
+             * @create 韩梅生
+             * 申请额度最大值
+             */
+            if($("#apply_quota_max").val() === ""){
+                layer.msg("请输入最大申请额度！",{time:2000});
+                return;
+            }else if($("#apply_quota_max").val()!=""){
+                var reg=/^[0-9]*$/;
+                var valTest=reg.test($("#product_term_max").val());
+                if(!valTest){
+                    layer.msg("只能输入数字！",{time:2000});
+                    return;
                 }
-                if($("#diy_type").val() == '1'){
-                    if($("#diy_days").val() == '' ){
-                        layer.msg("自定义天数不能为空！",{time:2000});return ;
-                    }
-                    if( !/^[1-9]\d*$/.test($("#diy_days").val())){
-                        layer.msg("自定义天数必须为正整数！",{time:2000});return ;
+                if(parseInt($("#apply_quota_max").val()) < parseInt($("#apply_quota_min").val())){
+                    layer.msg("最大申请额度不能小于最小申请额度！",{time:2000});
+                    return;
+                }
+            }
+            /**
+             * @create 韩梅生
+             * 申请期限最小天数
+             */
+            if($("#product_term_min").val() === ""){
+                layer.msg("请输入申请期限最小天数！",{time:2000});
+                return;
+            }else if($("#product_term_min").val()!=""){
+                var reg=/^[0-9]*$/;
+                var valTest=reg.test($("#product_term_min").val());
+                if(!valTest){
+                    layer.msg("只能输入数字！",{time:2000});
+                    return;
+                }
+
+            }
+            /**
+             * @create 韩梅生
+             * 申请期限最大天数
+             */
+            if($("#product_term_max").val() === ""){
+                layer.msg("请输入申请期限最大天数！",{time:2000});
+                return;
+            }else if($("#product_term_max").val()!=""){
+                var reg=/^[0-9]*$/;
+                var valTest=reg.test($("#product_term_max").val());
+                if(!valTest){
+                    layer.msg("只能输入数字！",{time:2000});
+                    return;
+                }
+                if(parseInt($("#product_term_max").val()) < parseInt($("#product_term_max").val())){
+                    layer.msg("最大申请期限不能小于最小申请期限！",{time:2000});
+                    return;
+                }
+            }
+            /**
+             * @create 韩梅生
+             * 还款时限
+             */
+            if($("repayment").val() === "1"){
+                if($("#repayment_days").val() === ""){
+                    layer.msg("请输入还款时限！",{time:2000});
+                    return;
+                }else if($("#repayment_days").val()!=""){
+                    var reg=/^[0-9]*$/;
+                    var valTest=reg.test($("#repayment_days").val());
+                    if(!valTest){
+                        layer.msg("只能输入数字！",{time:2000});
+                        return;
                     }
                 }
             }
+
+
+
+
+            //新增字段验证
+            // if ($("#pro_series_type").val() == '1') {//商品贷
+            //     if($("#diy_type").val() == ''){
+            //         layer.msg("选择方式不能为空！",{time:2000});return ;
+            //     }
+            //     if($("#diy_type").val() == '1'){
+            //         if($("#diy_days").val() == '' ){
+            //             layer.msg("自定义天数不能为空！",{time:2000});return ;
+            //         }
+            //         if( !/^[1-9]\d*$/.test($("#diy_days").val())){
+            //             layer.msg("自定义天数必须为正整数！",{time:2000});return ;
+            //         }
+            //     }
+            // }
             if(add==0){//新增
                 $("#productId").val(parentId);
                 //表单提交
@@ -1085,16 +1250,16 @@ function apendSelect() {
         },"application/json"
     );
 
-    Comm.ajaxPost('product/apendSelect',null, function (data) {
-            if(data.code==0){
-                var map = [];map = data.data;
-                for (var i = 0 ;i<map.length;i++){
-                    var btndel='<option value="'+map[i].code+'">'+map[i].name+'</option>';
-                    $('#parentInfo').append(btndel);
-                }
-            }
-        },"application/json"
-    );
+    // Comm.ajaxPost('product/apendSelect',null, function (data) {
+    //         if(data.code==0){
+    //             var map = [];map = data.data;
+    //             for (var i = 0 ;i<map.length;i++){
+    //                 var btndel='<option value="'+map[i].code+'">'+map[i].name+'</option>';
+    //                 $('#parentInfo').append(btndel);
+    //             }
+    //         }
+    //     },"application/json"
+    // );
     Comm.ajaxPost('product/platformType',null, function (data) {
             if(data.code==0){
                 var map = [];map = data.data;

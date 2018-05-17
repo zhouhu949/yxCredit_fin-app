@@ -57,9 +57,11 @@ $(function (){
                     "render": function (data, type, row, meta) {
                         if (data == 1) {
                             return "商品贷";
-                        } else if (data == 0) {
-                            return "金棒棒";
-                        } else {
+                        }
+                        // else if (data == 0) {
+                        //     return "金棒棒";
+                        // }
+                        else {
                             return "";
                         }
                     }

@@ -83,7 +83,7 @@
         <%--费率信息--%>
         <div id="editDetail" style="display: none">
             <div class="addCommon clearfix">
-                <ul class="clearfix">
+                <ul id="detailInfo" class="clearfix">
                     <li style="width:260px">
                         <label class="lf licss">产品名称</label>
                         <label>
@@ -125,7 +125,7 @@
                         </label>
                     </li>
                     <li style="width:260px">
-                        <label class="lf licss"  >逾期罚息(%)</label>
+                        <label class="lf licss"  >逾期费率(%)</label>
                         <label >
                             <input type="text" name="yuqi_fee" id="yuqi_fee">
                         </label>
@@ -136,10 +136,16 @@
                             <%--<input type="text" name="zhifu_fee" id="zhifu_fee">--%>
                         <%--</label>--%>
                     <%--</li>--%>
+                    <%--<li style="width:260px">--%>
+                        <%--<label class="lf licss"  >平台管理(元)</label>--%>
+                        <%--<label >--%>
+                            <%--<input type="text"  name="zhanghu_fee" id="zhanghu_fee">--%>
+                        <%--</label>--%>
+                    <%--</li>--%>
                     <li style="width:260px">
-                        <label class="lf licss"  >平台管理(元)</label>
+                        <label class="lf licss"  >借款利率(%)</label>
                         <label >
-                            <input type="text"  name="zhanghu_fee" id="zhanghu_fee">
+                            <input type="text"  name="loan_rate" id="loan_rate">
                         </label>
                     </li>
                     <%--<li>--%>
@@ -149,9 +155,9 @@
                         <%--</label>--%>
                     <%--</li>--%>
                     <li style="width:260px">
-                        <label class="lf licss"  >快速信审(元)</label>
+                        <label class="lf licss"  >担保费率(%)</label>
                         <label >
-                            <input type="text" name="shenhe_fee" id="shenhe_fee">
+                            <input type="text" name="asuer_rate" id="asuer_rate">
                         </label>
                     </li>
                     <%--<li>--%>
@@ -169,6 +175,14 @@
                     <%--</li>--%>
                 </ul>
             </div>
+            <div>
+                <ul>
+                <li style="width:155px;margin: 0 auto;">
+                    <button id="zbsAdd" type="button" class="btn btn-primary queryBtn" onclick="addZBS()">新增</button>
+                </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

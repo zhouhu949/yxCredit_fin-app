@@ -26,7 +26,6 @@
 
   <resultMap id="WorkProductMap" type="com.zw.rule.product.WorkingProductDetail" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-
     <result column="crm_product_id" property="productId" jdbcType="VARCHAR" />
     <result column="periods" property="periods" jdbcType="DECIMAL" />
     <result column="contract_rate" property="contractRate" jdbcType="DECIMAL" />
@@ -46,11 +45,17 @@
     <result column="staging_services_rate" property="stagingServicesRate" jdbcType="DECIMAL" />
     <result column="status" property="status" jdbcType="DECIMAL" />
     <result column="duetime_type" property="duetimeType" jdbcType="INTEGER" />
-
     <result column="before_service_fee_rate" property="beforeServiceFeeRate" jdbcType="DECIMAL" />
     <result column="max_day" property="maxDay" jdbcType="VARCHAR" />
     <result column="diy_type" property="diyType" jdbcType="VARCHAR" />
     <result column="diy_days" property="diyDays" jdbcType="VARCHAR" />
+    <result column="product_term_unit" property="productTermUnit" jdbcType="VARCHAR" />
+    <result column="product_term_min" property="productTermMin" jdbcType="VARCHAR" />
+    <result column="product_term_max" property="productTermMax" jdbcType="VARCHAR" />
+    <result column="apply_quota_min" property="applyQuotaMin" jdbcType="DECIMAL" />
+    <result column="apply_quota_max" property="applyQuotaMax" jdbcType="DECIMAL" />
+    <result column="service_charge" property="serviceCharge" jdbcType="VARCHAR" />
+    <result column="repayment_days" property="repaymentDays" jdbcType="VARCHAR" />
 
 
     <!--<result column="overdueDouble" property="overdueDouble" jdbcType="VARCHAR" />
@@ -75,6 +80,9 @@
     <id column="zhina_fee" property="zhina_fee" jdbcType="VARCHAR" />
     <id column="yuqi_fee" property="yuqi_fee" jdbcType="VARCHAR" />
     <id column="state" property="state" jdbcType="VARCHAR" />
+    <id column="asuer_rate" property="asuer_rate" jdbcType="VARCHAR" />
+    <id column="loan_rate" property="loan_rate" jdbcType="VARCHAR" />
+    <id column="zbs_jujian_fee" property="zbs_jujian_fee" jdbcType="VARCHAR" />
   </resultMap>
 
 
@@ -87,7 +95,8 @@
   <sql id="Work_Product_List" >
     id, actual_lower_limit, actual_upper_limit, bail_pay_mode, bail_rate, bail_remark, contract_rate,contract_violate_rate,contract_violate_remark,
     credit_protect_day,interest_rate,interest_remark,multiple_rate,overdue_protect_day,payment,periods,crm_product_id,staging_services_rate,status,
-    before_service_fee_rate,duetime_type,max_day,diy_type,diy_days
+    before_service_fee_rate,duetime_type,max_day,diy_type,diy_days,product_term_unit,product_term_min,product_term_max,apply_quota_min,apply_quota_max,
+    service_charge,repayment,repayment_days
   </sql>
 
   <select id="getProductSeries" resultMap="BaseResultMap">
@@ -265,7 +274,8 @@
     multiple_rate, overdue_protect_day, payment,
     periods, crm_product_id, staging_services_rate,
     status, BEFORE_SERVICE_FEE_RATE, duetime_type,
-    max_day,diy_type,diy_days)
+    max_day,diy_type,diy_days,product_term_unit,product_term_min,product_term_max,
+    apply_quota_min,apply_quota_max,service_charge,repayment,repayment_days)
     values (#{id},#{type}, #{actualLowerLimit}, #{actualUpperLimit},
     #{bailPayMode}, #{bailRate}, #{bailRemark},
     #{contractRate}, #{contractViolateRate}, #{contractViolateRemark},
@@ -273,7 +283,8 @@
     #{multipleRate}, #{overdueProtectDay}, #{payment},
     #{periods}, #{productId}, #{stagingServicesRate},
     #{status}, #{beforeServiceFeeRate}, #{duetimeType},
-    #{maxDay},#{diyType},#{diyDays})
+    #{maxDay},#{diyType},#{diyDays},#{productTermUnit},#{productTermMin},#{productTermMax},
+    #{applyQuotaMin},#{applyQuotaMax},#{serviceCharge},#{repayment},#{repaymentDays})
   </insert>
 
   <update id="updateProductDetail" parameterType="com.zw.rule.product.WorkingProductDetail">
@@ -348,6 +359,32 @@
       <if test="diyDays != null" >
         diy_days = #{diyDays},
       </if>
+
+      <if test="productTermUnit != null" >
+        product_term_unit = #{productTermUnit},
+      </if>
+      <if test="productTermMin != null" >
+        product_term_min = #{productTermMin},
+      </if>
+      <if test="productTermMax != null" >
+        product_term_max = #{productTermMax},
+      </if>
+      <if test="applyQuotaMin != null" >
+        apply_quota_min = #{applyQuotaMin},
+      </if>
+      <if test="applyQuotaMax != null" >
+        apply_quota_max = #{applyQuotaMax},
+      </if>
+      <if test="serviceCharge != null" >
+        service_charge = #{serviceCharge},
+      </if>
+      <if test="repayment != null" >
+        repayment = #{repayment},
+      </if>
+      <if test="repaymentDays != null" >
+        repayment_days = #{repaymentDays}
+      </if>
+
     </set>
     where id = #{id}
   </update>
@@ -421,7 +458,7 @@
   <select id="getFeeList"  resultType="map" parameterType="com.zw.rule.product.Fee">
     select
     id,product_id,(select crm_product_id from pro_working_product_detail where id = product_id) as crm_product_paraent_id,(SELECT pro_name FROM pro_crm_product where id = (select crm_product_id from pro_working_product_detail where id = product_id)) AS product_amount,product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,
-    shenhe_fee,fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate
+    shenhe_fee,fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate,asuer_rate,loan_rate,zbs_jujian_fee
     from mag_product_fee
     <where>
       state='0'
@@ -486,8 +523,8 @@
       <if test="fengxian_fee != null" >
         fengxian_fee = #{fengxian_fee},
       </if>
-      <if test="shenhe_fee != null" >
-        shenhe_fee = #{shenhe_fee},
+      <if test="asuer_rate != null" >
+        asuer_rate = #{asuer_rate},
       </if>
       <if test="zhina_fee != null" >
         zhina_fee = #{zhina_fee},
@@ -495,8 +532,8 @@
       <if test="yuqi_fee != null" >
         yuqi_fee = #{yuqi_fee},
       </if>
-      <if test="zongheri_fee != null" >
-        zongheri_fee = #{zongheri_fee},
+      <if test="loan_rate != null" >
+        loan_rate = #{loan_rate},
       </if>
       <if test="state != null" >
         state = #{state},
@@ -505,7 +542,10 @@
         year_rate = #{year_rate},
       </if>
       <if test="month_rate != null" >
-        month_rate = #{month_rate}
+        month_rate = #{month_rate},
+      </if>
+      <if test="zbs_jujian_fee != null" >
+        zbs_jujian_fee = #{zbs_jujian_fee}
       </if>
     </set>
     where   id=#{id}
@@ -513,9 +553,9 @@
 
   <insert id="addFee"   parameterType="com.zw.rule.product.Fee" >
     insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,zhifu_fee,zhanghu_fee,shenhe_fee,
-    fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate)
-    VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},#{zhifu_fee},#{zhanghu_fee},#{shenhe_fee},
-    #{fengxian_fee}, #{zhina_fee}, #{yuqi_fee},#{zongheri_fee},#{year_rate},#{month_rate})
+    fengxian_fee,zhina_fee,yuqi_fee,zongheri_fee,year_rate,month_rate,loan_rate,asuer_rate,zbs_jujian_fee)
+    VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},#{zhifu_fee},
+    #{fengxian_fee}, #{zhina_fee}, #{yuqi_fee},#{zongheri_fee},#{year_rate},#{month_rate},#{loan_rate},#{asuer_rate},#{zbs_jujian_fee})
   </insert>
 
   <select id="getProduct" resultMap="BaseResultMap">

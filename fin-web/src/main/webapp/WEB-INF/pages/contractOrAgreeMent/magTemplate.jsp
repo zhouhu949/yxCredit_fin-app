@@ -299,7 +299,7 @@
                             <label class="lf">平台类型</label>
                             <label>
                                 <select id="platformType" style="min-width:60px;height: 28px;">
-                                    <option value="0">金棒棒</option>
+                                    <%--<option value="0">金棒棒</option>--%>
                                     <option value="1">商品贷</option>
                                 </select>
                             </label>
