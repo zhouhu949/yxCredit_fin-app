@@ -278,34 +278,6 @@
   </update>
 
 
-    <select id="getCustomerAndOrder" resultType="Map" parameterType="java.util.Map">
-        select cu.ID as customerId,cu.occupation_type as occupationType,cu.TEL as tel,cu.CARD as card,cu.user_id as
-        userId,cu.PERSON_NAME as personName,cu.CREAT_TIME as creatTime, is_identity as isIdentity,applyCount.applyCount
-        /* ,submitCount.submitCount,mqd.current_quota_ratio,py.pro_quota_proportion*/
-        from mag_customer cu
-        LEFT JOIN (SELECT CUSTOMER_ID ,COUNT(id)as applyCount FROM mag_order group by CUSTOMER_ID ) applyCount on
-        cu.id=applyCount.CUSTOMER_ID
-        /* LEFT JOIN (SELECT CUSTOMER_ID ,COUNT(id)as SubmitCount FROM mag_order where state!='0' group by CUSTOMER_ID )
-        submitCount on cu.id=submitCount.CUSTOMER_ID*/
-        /*LEFT JOIN mag_quota_del mqd ON mqd.customer_id=cu.id AND type='1'*/
-        /* LEFT JOIN pro_yield py ON py.status='1'*/
-        <where>
-            <if test="param.personName != null and param.personName != ''">
-                and cu.PERSON_NAME like '%${param.personName}%'
-            </if>
-            <if test="param.beginTime != null and param.beginTime != ''">
-                and cu.CREAT_TIME &gt;= #{param.beginTime}
-            </if>
-            <if test="param.endTime != null and param.endTime != ''">
-                and cu.CREAT_TIME &lt;= #{param.endTime}
-            </if>
-            <if test="param.tel !=null and param.tel !='' ">
-                and cu.TEL like '%${param.tel}%'
-            </if>
-        </where>
-        order by cu.CREAT_TIME desc
-    </select>
-
 
     <select id="getQuotaList" resultType="Map" parameterType="java.util.Map">
         select id,order_no,apply_money,periods,current_quota_ratio,loan_time,ALTER_TIME,remark
@@ -518,17 +490,47 @@
         order by CREAT_TIME desc
     </select>
 
+    <!--获取客户列表-->
+    <select id="getCustomerAndOrder" resultType="Map" parameterType="java.util.Map">
+        select cu.ID as customerId,cu.occupation_type as occupationType,cu.TEL as tel,cu.CARD as card,cu.user_id as
+        userId,cu.PERSON_NAME as personName,cu.CREAT_TIME as creatTime, is_identity as isIdentity,applyCount.applyCount,
+        au.creat_time AS registrationTime
+        /* ,submitCount.submitCount,mqd.current_quota_ratio,py.pro_quota_proportion*/
+        from mag_customer cu
+        LEFT JOIN (SELECT CUSTOMER_ID ,COUNT(id)as applyCount FROM mag_order group by CUSTOMER_ID ) applyCount on
+        cu.id=applyCount.CUSTOMER_ID INNER JOIN app_user au ON cu.USER_ID=au.id
+        /* LEFT JOIN (SELECT CUSTOMER_ID ,COUNT(id)as SubmitCount FROM mag_order where state!='0' group by CUSTOMER_ID )
+        submitCount on cu.id=submitCount.CUSTOMER_ID*/
+        /*LEFT JOIN mag_quota_del mqd ON mqd.customer_id=cu.id AND type='1'*/
+        /* LEFT JOIN pro_yield py ON py.status='1'*/
+        <where>
+            <if test="param.personName != null and param.personName != ''">
+                and cu.PERSON_NAME like '%${param.personName}%'
+            </if>
+            <if test="param.beginTime != null and param.beginTime != ''">
+                and cu.CREAT_TIME &gt;= #{param.beginTime}
+            </if>
+            <if test="param.endTime != null and param.endTime != ''">
+                and cu.CREAT_TIME &lt;= #{param.endTime}
+            </if>
+            <if test="param.tel !=null and param.tel !='' ">
+                and cu.TEL like '%${param.tel}%'
+            </if>
+        </where>
+        order by cu.CREAT_TIME desc
+    </select>
+
     <!--根据客户ID获取客户信息-->
     <select id="getCustomerById" resultType="java.util.Map" parameterType="java.lang.String">
         select
             cu.id as customerId , cu.PERSON_NAME as personName, cu.card as card, cu.sex_name as sexName,
             cu.TEL as tel , cu.marital_status as maritalStatus , cu.children_status as childrenStatus,
             cu.card_register_address as cardRegisterAddress, cu.residence_address as residenceAddress,
-            contractorWL.contractorName as contractorName
+            contractorWL.contractorName as contractorName, au.creat_time AS registrationTime
         from  mag_customer cu   LEFT JOIN
         (SELECT wl.card AS card,contractor.contractor_name AS contractorName
           FROM byx_white_list wl LEFT JOIN byx_contractor contractor ON contractor.id = wl.contractor_id)
-          contractorWL ON cu.card = contractorWL.card
+          contractorWL ON cu.card = contractorWL.card INNER JOIN app_user au ON cu.USER_ID=au.id
         where cu.ID = #{id,jdbcType=VARCHAR}
     </select>
 

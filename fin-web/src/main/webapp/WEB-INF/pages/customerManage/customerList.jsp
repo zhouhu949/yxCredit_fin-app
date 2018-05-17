@@ -119,41 +119,41 @@
                         <table class="tb_info " style="font-size:12px;">
                             <tbody>
                             <tr>
-                                <td width="15%">姓名</td>
-                                <td  id="personName"></td>
-                                <td width="15%">性别</td>
-                                <td id="sex" ></td>
+                                <td width="14%">姓&emsp;&emsp;名：</td>
+                                <td  id="personName" width="19%"></td>
+                                <td width="14%">性&emsp;&emsp;别：</td>
+                                <td id="sex" width="19%"></td>
+                                <td width="14%">年&emsp;&emsp;龄：</td>
+                                <td id="age" width="20%"></td>
                             </tr>
                             <tr>
-                                <td>年龄</td>
-                                <td id="age" ></td>
-                                <td >所属总包商</td>
+                                <td >手机号码：</td>
+                                <td id="cusTel" ></td>
+                                <td >证件号码：</td>
+                                <td id="cusCard" ></td>
+                                <td >所属总包商：</td>
                                 <td id="contractor" ></td>
                             </tr>
+
                             <tr>
-                                <td >手机号码</td>
-                                <td id="cusTel" ></td>
-                                <td >身份证号码</td>
-                                <td id="cusCard" ></td>
-                            </tr>
-                            <tr>
-                                <td >婚姻状况</td>
+                                <td >婚姻状况：</td>
                                 <td id="marry" ></td>
-                                <td >子女状况</td>
+                                <td >子女状况：</td>
                                 <td id="childrenStatus" ></td>
+                                <td >注册时间：</td>
+                                <td id="registrationTime" ></td>
 
                             </tr>
                             <tr>
-                                <td >户籍居住地址</td>
-                                <td id="cardRegisterAddress" ></td>
-                                <td >工作居住地址</td>
-                                <td id="residenceAddress"></td>
-                            </tr>
-                           <%-- <tr>
-                                <td >所属总包商</td>
-                                <td id="contractor" colspan="3"></td>
+                                <td >户籍居住地址：</td>
+                                <td id="cardRegisterAddress" colspan="5"></td>
 
-                            </tr>--%>
+                            </tr>
+                            <tr>
+
+                                <td >工作居住地址：</td>
+                                <td id="residenceAddress" colspan="5"></td>
+                            </tr>
                            <%-- <tr>
                                 <td  width="10%">姓名</td>
                                 <td  width="23%" id="realname"></td>
@@ -200,6 +200,40 @@
                                 <td id ="accountBank" ></td>
                                 <td colspan="2"></td>
                             </tr>--%>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="paperBlockfree">
+                        <div class="block_hd" style="float:left;">
+                            <s class="ico icon-file-text-alt"></s><span class="bl_tit">认证信息</span>
+                        </div>
+                        <table class="tb_info " style="font-size:12px;">
+                            <tbody>
+                            <tr>
+                                <td width="14%">认证状态：</td>
+                                <td  id="isIdentity" width="19%"></td>
+                                <td width="14%">认证时间：</td>
+                                <td id="authenticationTime" width="19%"></td>
+                                <td width="14%">银行卡号：</td>
+                                <td id="cardNumber" width="20%"></td>
+                            </tr>
+                            <tr>
+                                <td>开户银行：</td>
+                                <td id="bankName" ></td>
+                                <td >所属省份：</td>
+                                <td id="provName" ></td>
+                                <td >所属城市：</td>
+                                <td id="cityName" ></td>
+
+                            </tr>
+
+                            <tr>
+                                <td >开户支行：</td>
+                                <td id="bankSubbranch" colspan="5"></td>
+                            </tr>
+
+
                             </tbody>
                         </table>
                     </div>
@@ -309,7 +343,7 @@
                 </div>
             </div>
                 </div>
-        <div id="updateWpd" style="display: none">
+    <%--    <div id="updateWpd" style="display: none">
             <div class="commonManager ">
                 <div class="addCommon">
                     <ul class="clearfix">
@@ -328,18 +362,18 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>--%>
             </div>
         </div>
 
     </div>
 </div>
-<div style="display: none;" id="imgDisplay">
+<%--<div style="display: none;" id="imgDisplay">
     <img src="" alt="">
-</div>
+</div>--%>
 
 <%--更改手机号弹出窗--%>
-<div id="changeTelDiv" style="display: none">
+<%--<div id="changeTelDiv" style="display: none">
     <div class="commonManager ">
         <div class="addCommon">
             <ul class="clearfix">
@@ -358,7 +392,7 @@
             </ul>
         </div>
     </div>
-</div>
+</div>--%>
 
 
 </body>

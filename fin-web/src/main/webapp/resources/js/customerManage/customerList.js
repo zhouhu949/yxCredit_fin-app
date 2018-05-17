@@ -106,7 +106,7 @@ $(function (){
                 {"data": "personName","orderable" : false},
                 {"data": "card","orderable" : false},
                 {"data": "tel","orderable" : false},
-                { "data": "creatTime","orderable" : false,
+                { "data": "registrationTime","orderable" : false,
                     "render": function (data, type, row, meta) {
                         return formatTime(data);
                     }
@@ -139,19 +139,20 @@ $(function (){
             ],
             "createdRow": function ( row, data, index,settings,json ) {
                 var btnDel = $('<a class="tabel_btn_style" onclick="showDetail(\''+data.customerId+'\',\''+data.card+'\',\''+data.tel+'\',\''+data.occupationType+'\')">查看 </a>');
-                var resetPwd=$('<a class="tabel_btn_style" onclick="resetPwd(\''+data.customerId+'\')"> 重置密码 </a>');
-                var changeTel=$('<a class="tabel_btn_style" onclick="changeTel(\''+data.customerId+'\',\''+data.tel+'\')"> 更改手机号 </a>');
-                var changeBankCard=$('<a class="tabel_btn_style" onclick="changeBankCard(\''+data.userId+'\',\''+data.personName+'\')"> 更改银行卡 </a>');
-                var quotaSee = $('<a class="tabel_btn_style" onclick="quotaSee(\''+data.customerId+'\')">  提额明细</a>');
-                var pro_quota_proportion= parseInt(data.pro_quota_proportion)+100;
-                if (data.pro_quota_proportion==""){
+               // var resetPwd=$('<a class="tabel_btn_style" onclick="resetPwd(\''+data.customerId+'\')"> 重置密码 </a>');
+               // var changeTel=$('<a class="tabel_btn_style" onclick="changeTel(\''+data.customerId+'\',\''+data.tel+'\')"> 更改手机号 </a>');
+                //var changeBankCard=$('<a class="tabel_btn_style" onclick="changeBankCard(\''+data.userId+'\',\''+data.personName+'\')"> 更改银行卡 </a>');
+                //var quotaSee = $('<a class="tabel_btn_style" onclick="quotaSee(\''+data.customerId+'\')">  提额明细</a>');
+               // var pro_quota_proportion= parseInt(data.pro_quota_proportion)+100;
+             /*   if (data.pro_quota_proportion==""){
                     pro_quota_proportion="0";
-                }
-                var spanQuota = $('<span >'+pro_quota_proportion+'</span>');
+                }*/
+                //var spanQuota = $('<span >'+pro_quota_proportion+'</span>');
                 // if(data.current_quota_ratio||data.current_quota_ratio==""){
                 //     $('td', row).eq(6).append(spanQuota);
                 // }
-                $('td', row).eq(8).append(btnDel).append(resetPwd).append(changeTel).append(changeBankCard);
+                //$('td', row).eq(8).append(btnDel).append(resetPwd).append(changeTel).append(changeBankCard);
+                $('td', row).eq(8).append(btnDel);
             },
             "initComplete" : function(settings,json) {
                 //搜索
@@ -279,6 +280,7 @@ function showDetail(id,card,tel,occupationType){
                    // var occupationList = data.occupationList[0];//职业信息
                    // var customerContact = data.customerContact;//客户的通讯信息
                     var person = data.customer;//客户信息
+                    var bankCard = data.bankCard;//客户信息
                   /*  if(customer){
                         //if(customer.callRecordUrl&&customer.callRecordUrl!=''){
                             var btn='<a class="tabel_btn_style" href="'+_ctx+'/customer/getTelephoneRecord?customerId='+customer.id+'" target="_blank"> 话单下载 </a>';
@@ -333,6 +335,8 @@ function showDetail(id,card,tel,occupationType){
                     $("#contractor").text(person.contractorName);//所属总包商
 
 
+                    $("#registrationTime").text(formatTime(person.registrationTime));//注册时间
+
 
 
 
@@ -348,6 +352,27 @@ function showDetail(id,card,tel,occupationType){
                     $("#zcardSrcBase64").attr('src',person.zcardSrcBase64);
                     $("#fcardSrcBase64").attr('src',person.fcardSrcBase64);
                     $("#face_src").attr('src',person.face_src);*/
+                }
+
+                //客户绑定银行卡信息
+                if(bankCard){
+                    var isIdentity = "";
+                    if(bankCard.isIdentity=="1"){
+                        isIdentity = "已认证";
+                    }else {
+                        isIdentity = "未认证";
+                    }
+                    $("#isIdentity").html(isIdentity);//认证状态
+                    $("#authenticationTime").html(bankCard.registrationTime);//认证时间
+                    $("#bankName").html(bankCard.bankName);//开户行
+                    $("#bankSubbranch").html(bankCard.bankSubbranch);//开户支行
+                    $("#cardNumber").html(bankCard.cardNumber);//银行卡号
+                    $("#provName").html(bankCard.provName);//省
+                    $("#cityName").html(bankCard.cityName);//市
+
+
+
+
                 }
                 //公司信息
                /* if(occupationList){
@@ -391,12 +416,12 @@ function showDetail(id,card,tel,occupationType){
                     var rel = linkmanList[i].mainSign;
                     var yesno = "";
                     html=html+ '<tr>'+
-                        '<td width="10%" >关系</td>'+
-                        '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
-                        '<td width="10%" >名称</td>'+
-                        '<td width="23%">'+linkmanList[i].linkName+'</td>'+
-                        '<td width="10%" >联系方式</td>'+
-                        '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                        '<td width="14%" >关&emsp;&emsp;系：</td>'+
+                        '<td width="19%">'+linkmanList[i].relationshipName+'</td>'+
+                        '<td width="14%" >名&emsp;&emsp;称：</td>'+
+                        '<td width="19%">'+linkmanList[i].linkName+'</td>'+
+                        '<td width="14%" >联系方式：</td>'+
+                        '<td width="20%">'+linkmanList[i].contact+'</td>'+
                         '</tr>';
 /*                    if(rel=='0'){//直系
 

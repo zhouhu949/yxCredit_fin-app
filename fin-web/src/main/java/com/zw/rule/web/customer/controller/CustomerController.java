@@ -971,8 +971,12 @@ public class CustomerController {
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 
+        //获取客户绑定银行卡信息
+        Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
+
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
+        map.put("bankCard",bankCard);
         return new Response(map);
         //查询分公司名称
         //Map departmentMap=customerService.getDepartmentInfo();
