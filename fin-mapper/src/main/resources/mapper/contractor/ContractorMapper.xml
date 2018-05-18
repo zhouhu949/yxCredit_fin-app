@@ -33,44 +33,51 @@
   </select>
 
   <select id="findContractorOrderList" resultType="com.zw.rule.contractor.po.ContractorOrder" parameterType="java.util.Map">
-       SELECT
-      magorder.id as id,
-      magorder.order_no AS orderNo,
-      magorder.USER_ID AS userId,
-      magorder.PERIODS as periods,
-      magorder.state as orderState,
-      magorder.applay_money as applayMoney,
-      magorder.Examine_time as examineTime,
-      magorder.loan_amount as loanAmount,
-      magorder.service_fee as serviceFee,
-      userwhite.card as card,
-      userwhite.job as job,
-      userwhite.realName as realName,
-      userWhite.tel as tel,
-      userwhite.contractorName as contractorName
-    FROM
-      mag_order magorder
-    INNER JOIN (
       SELECT
-          appuser.id AS id,
-          byxwhite.job AS job,
-          appuser.idcard AS card,
-          appuser.realname AS realName,
-          appuser.tel AS tel,
-          byxwhite.contractorName AS contractorName
+          magorder.id AS id,
+          magorder.order_no AS orderNo,
+          magorder.USER_ID AS userId,
+          magorder.PERIODS AS periods,
+          magorder.state AS orderState,
+          magorder.applay_money AS applayMoney,
+          magorder.Examine_time AS examineTime,
+          magorder.loan_amount AS loanAmount,
+          magorder.service_fee AS serviceFee,
+          userwhite.card AS card,
+          userwhite.job AS job,
+          userwhite.realName AS realName,
+          userWhite.tel AS tel,
+          userwhite.contractorName AS contractorName
       FROM
-          (
+          mag_order magorder
+      INNER JOIN (
+          SELECT
+              appuser.id AS id,
+              byxwhite.job AS job,
+              appuser.idcard AS card,
+              appuser.realname AS realName,
+              appuser.tel AS tel,
+              byxwhite.contractorName AS contractorName
+          FROM
+              (
               SELECT
-                  bc.contractor_name AS contractorName,
-                  bwl.job AS job,
-                  bwl.card AS card,
-                  bwl.real_name as realName
+              bc.contractor_name AS contractorName,
+              bwl.job AS job,
+              bwl.card AS card,
+              bwl.real_name AS realName
               FROM
-                  byx_white_list bwl
+              byx_white_list bwl
               LEFT JOIN byx_contractor bc ON bc.id = bwl.contractor_id
-          ) byxwhite
-      INNER JOIN app_user appuser ON byxwhite.card = appuser.idcard where byxwhite.realName=appuser.realname
-    ) userwhite ON magorder.user_id = userwhite.id
+              <where>
+                  <if test="param.userId != null and param.userId != ''">
+                      and bc.user_id like '%${param.userId}%'
+                  </if>
+              </where>
+              ) byxwhite
+      INNER JOIN app_user appuser ON byxwhite.card = appuser.idcard
+      WHERE
+          byxwhite.realName = appuser.realname
+          ) userwhite ON magorder.user_id = userwhite.id
 
     <where>
       <if test="param.realname != null and param.realname != ''">
@@ -83,9 +90,6 @@
         and appuser.tel like '%${param.tel}%'
       </if>
     </where>
-
-
-
   </select>
 
   <select id="selectContractorList" resultMap="BaseResultMap" >

@@ -10,6 +10,8 @@ public class WhiteList extends BaseEntity {
 
     private String contractorName;
 
+    private String whiteStatus;
+
     private String realName;
 
     private String card;
@@ -19,6 +21,14 @@ public class WhiteList extends BaseEntity {
     private String contractStatus;
 
     private String contractStartDate;
+
+    public String getWhiteStatus() {
+        return whiteStatus;
+    }
+
+    public void setWhiteStatus(String whiteStatus) {
+        this.whiteStatus = whiteStatus;
+    }
 
     private String contractEndDate;
 

@@ -9,6 +9,7 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.po.User;
+import com.zw.rule.util.StringUtil;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.UserContextUtil;
@@ -109,11 +110,15 @@ public class ContractorController {
     public Response whiteList(@RequestBody ParamFilter queryFilter) throws Exception{
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        User user=(User) UserContextUtil.getAttribute("currentUser");
+        String roleName = (String) UserContextUtil.getAttribute("roleName");
         Map<String, Object> Param = queryFilter.getParam();
-        Param.put("userId", user.getUserId());
+        String userStr = "";
+        if(!"超级管理员".equals(roleName)) {
+            User user=(User) UserContextUtil.getAttribute("currentUser");
+            userStr = ","+user.getUserId()+",";
+        }
+        Param.put("userId", userStr);
         queryFilter.setParam(Param);
-        System.out.println(queryFilter);
         List list = contractorService.findWhiteList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
@@ -124,7 +129,15 @@ public class ContractorController {
     public Response contractorOrderList(@RequestBody ParamFilter queryFilter) throws Exception{
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        System.out.println(queryFilter);
+        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        Map<String, Object> Param = queryFilter.getParam();
+        String userStr = "";
+        if(!"超级管理员".equals(roleName)) {
+            User user=(User) UserContextUtil.getAttribute("currentUser");
+            userStr = ","+user.getUserId()+",";
+        }
+        Param.put("userId", userStr);
+        queryFilter.setParam(Param);
         List list = contractorService.findContractorOrderList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
@@ -168,13 +181,16 @@ public class ContractorController {
         Contractor contractor = new Contractor();
         contractor.setId(map.get("id").toString());
         contractor.setUserId(map.get("userStr").toString());
+        if(!StringUtil.isBlank(map.get("userStr").toString())) {
+            contractor.setUserId(","+map.get("userStr").toString()+",");
+        }
         int num = contractorService.updateContractor(contractor);
         Response response = new Response();
         if (num > 0){
-            response.setMsg("绑定成功");
+            response.setMsg("操作成功");
             return response;
         }
-        response.setMsg("绑定失败");
+        response.setMsg("操作失败");
         response.setCode(1);
         return response;
     }

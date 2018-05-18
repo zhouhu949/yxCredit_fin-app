@@ -48,19 +48,8 @@ $(function (){
             beginTime.max = datas; //结束日选好后，重置开始日的最大日期
         }*/
     };
-    var latestPayday = {
-        elem: '#latestPayday',
-        format: 'YYYY-MM-DD',
-       /* min: laydate.now(),*/
-        istime: true,
-        istoday: false
-        /* choose: function(datas){
-             beginTime.max = datas; //结束日选好后，重置开始日的最大日期
-         }*/
-    };
     laydate(beginTime);
     laydate(endTime);
-    laydate(latestPayday);
 
     //获取权限集合
     Comm.ajaxPost(
@@ -151,7 +140,11 @@ $(function (){
             }
         ],
         "createdRow": function ( row, data, index,settings,json ) {
-            var btnDel = $('<a class="tabel_btn_style" onclick="updateWhite(0,\''+data.id+'\')">修改</a>');
+            var whiteStatusStr = "启用";
+            if(data.whiteStatus==1) {
+                whiteStatusStr = "注销";
+            }
+            var btnDel = $('<a class="tabel_btn_style" onclick="updateWhite(0,\''+data.id+'\')">修改</a><a class="tabel_btn_style" onclick="updateWhiteStatue('+data.whiteStatus+' ,\''+data.id+'\')">'+whiteStatusStr+'</a>');
             $('td', row).eq(7).append(btnDel);
         },
         "initComplete" : function(settings,json) {
@@ -214,6 +207,24 @@ function loadContractorType(){
             });
             $("select[name='contractorList']").html(html);
 
+        }
+    });
+}
+
+//更新白名单状态
+function updateWhiteStatue(statue, id){
+    $.ajax({
+        type : "POST",
+        url : "updateWhiteList",
+        contentType: "application/json",
+        data : JSON.stringify({id : id, whiteStatus : statue == '0'? '1': '0' }),
+        async : true,
+        dataType : 'json',
+        success : function(data) {
+            layer.msg(data.msg,{time:2000},function () {
+                g_whiteListManage.tableUser.ajax.reload(function(){
+                });
+            });
         }
     });
 }
@@ -319,11 +330,18 @@ function updateWhite(sign,id) {
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
-                    /*
-                    if ($('input[name="contractor_mobile"]').val() == "") {
-                        layer.msg("联系方式不能为空",{time:2000});
+                    if ($('input[name="real_name"]').val() == "") {
+                        layer.msg("姓名不能为空",{time:2000});
                         return;
-                    }*/
+                    }
+                    if ($('input[name="tel_phone"]').val() == "") {
+                        layer.msg("手机号码不能为空",{time:2000});
+                        return;
+                    }
+                    if (latestPayday == "") {
+                        layer.msg("发薪日不能为空",{time:2000});
+                        return;
+                    }
                     var realName=$('input[name="real_name"]').val();
                     var card=$('input[name="card"]').val();
                     var latestPay=$('input[name="latest_pay"]').val();
@@ -348,9 +366,11 @@ function updateWhite(sign,id) {
                     if(endTime != null && endTime != ''){
                         endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                     }
-                    var latestPayday = $("#latestPayday").val();
-                    if(latestPayday != null && latestPayday != ''){
-                        latestPayday = latestPayday.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    var latestPayday=$('input[name="latest_payday"]').val();
+                    var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+                    if(!latestPaydayReg.test(latestPayday)) {
+                        layer.msg("发薪日只能在0-32之间",{time:2000});
+                        return;
                     }
 
                     var user={
@@ -399,12 +419,17 @@ function updateWhite(sign,id) {
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
+                var latestPayday = $('input[name="latest_payday"]').val();
                 if ($('input[name="real_name"]').val() == "") {
                     layer.msg("姓名不能为空",{time:2000});
                     return;
                 }
                 if ($('input[name="tel_phone"]').val() == "") {
                     layer.msg("手机号码不能为空",{time:2000});
+                    return;
+                }
+                if (latestPayday == "") {
+                    layer.msg("发薪日不能为空",{time:2000});
                     return;
                 }
                 var realName=$('input[name="real_name"]').val();
@@ -416,13 +441,6 @@ function updateWhite(sign,id) {
                     layer.msg("手机号码格式不正确~",{time:2000});
                     return;
                 }
-                var contractStatus=$("#contractStatus").val();
-                var localMonthlyMinWage=$("#localMonthlyMinWage").val();
-                var contractorId = $("#contractorId option:selected").val();
-                var latestPay=$('input[name="latest_pay"]').val();
-                var job = $("#job option:selected").val();
-                var payType = $("#payType option:selected").val();
-
                 var beginTime = $("#beginTime").val();
                 if(beginTime != null && beginTime != ''){
                     beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
@@ -431,10 +449,18 @@ function updateWhite(sign,id) {
                 if(endTime != null && endTime != ''){
                     endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                 }
-                var latestPayday = $("#latestPayday").val();
-                if(latestPayday != null && latestPayday != ''){
-                    latestPayday = latestPayday.replace(/[^0-9]/ig,"");//字符串去除非数字
+                var latestPayday=$('input[name="latest_payday"]').val();
+                var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+                if(!latestPaydayReg.test(latestPayday)) {
+                    layer.msg("发薪日只能在0-32之间",{time:2000});
+                    return;
                 }
+                var contractStatus=$("#contractStatus").val();
+                var localMonthlyMinWage=$("#localMonthlyMinWage").val();
+                var contractorId = $("#contractorId option:selected").val();
+                var latestPay=$('input[name="latest_pay"]').val();
+                var job = $("#job option:selected").val();
+                var payType = $("#payType option:selected").val();
 
                 var contractor={
                     realName: realName,

@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="contractor_id" property="contractorId" jdbcType="VARCHAR" />
     <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="white_status" property="whiteStatus" jdbcType="VARCHAR" />
     <result column="card" property="card" jdbcType="VARCHAR" />
     <result column="telphone" property="telphone" jdbcType="VARCHAR" />
     <result column="contract_status" property="contractStatus" jdbcType="VARCHAR" />
@@ -22,13 +23,14 @@
   <sql id="Base_Column_List" >
     id, contractor_id, real_name, card, telphone, contract_status, contract_start_date, 
     contract_end_date, job, job_type, latest_payday, latest_pay, pay_type, "pay_ proof", 
-    local_monthly_min_wage
+    local_monthly_min_wage,white_status
   </sql>
 
   <select id="findWhiteList" resultType="com.zw.rule.contractor.po.WhiteList" parameterType="java.util.Map" >
     SELECT
     whitelist.id as id,
     whitelist.real_name AS realName,
+    whitelist.white_status AS whiteStatus,
     whitelist.card AS card,
     whitelist.telphone AS telPhone,
     whitelist.job AS job,
@@ -38,9 +40,9 @@
     byx_white_list whitelist
     LEFT JOIN byx_contractor contractor ON whitelist.contractor_id = contractor.id
     <where>
-     <!-- <if test="param.contractorName != null and param.contractorName != ''">
-        and contractor_name like '%${param.contractorName}%'
-      </if>-->
+     <if test="param.userId != null and param.userId != ''">
+        and contractor.user_id like '%${param.userId}%'
+      </if>
     </where>
     /*order by CREAT_TIME desc*/
   </select>
@@ -68,6 +70,9 @@
       </if>
       <if test="realName != null" >
         real_name,
+      </if>
+      <if test="whiteStatus != null" >
+        white_status,
       </if>
       <if test="card != null" >
         card,
@@ -116,6 +121,9 @@
       <if test="realName != null" >
         #{realName,jdbcType=VARCHAR},
       </if>
+      <if test="whiteStatus != null" >
+        #{whiteStatus,jdbcType=VARCHAR},
+      </if>
       <if test="card != null" >
         #{card,jdbcType=VARCHAR},
       </if>
@@ -163,6 +171,9 @@
       </if>
       <if test="realName != null" >
         real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="whiteStatus != null" >
+        white_status = #{whiteStatus,jdbcType=VARCHAR},
       </if>
       <if test="card != null" >
         card = #{card,jdbcType=VARCHAR},

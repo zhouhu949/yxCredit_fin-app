@@ -139,15 +139,12 @@
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
-
-
-                            <li><label class="lf">发薪日</label>
-                                <label>
-                                    <input readonly="true" placeholder="发薪日" class="eg-date" id="latestPayday" type="text"/>
-                                    <span class="date-icon"><i class="icon-calendar"></i></span>
+                            <li>
+                                <label class="label_name">发薪日</label>
+                                <label for="latestPayday">
+                                    <input name="latest_payday"  type="text"  id="latestPayday"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
-
                             </li>
 
                             <li>
