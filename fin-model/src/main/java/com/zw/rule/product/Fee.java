@@ -21,6 +21,38 @@ public class Fee {
     private String year_rate;//年利率
     private String month_rate;//月利率   删除：-1；正常：0；
 
+    /**
+     * 韩梅生
+     * @return
+     */
+    private  String asuer_rate;//担保利率
+    private  String loan_rate;//借款利率
+    private  String zbs_jujian_fee;//总包商居间服务费
+
+    public String getZbs_jujian_fee() {
+        return zbs_jujian_fee;
+    }
+
+    public void setZbs_jujian_fee(String zbs_jujian_fee) {
+        this.zbs_jujian_fee = zbs_jujian_fee;
+    }
+
+    public String getAsuer_rate() {
+        return asuer_rate;
+    }
+
+    public void setAsuer_rate(String asuer_rate) {
+        this.asuer_rate = asuer_rate;
+    }
+
+    public String getLoan_rate() {
+        return loan_rate;
+    }
+
+    public void setLoan_rate(String loan_rate) {
+        this.loan_rate = loan_rate;
+    }
+
     public String getYear_rate() {
         return year_rate;
     }

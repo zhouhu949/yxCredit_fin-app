@@ -19,6 +19,30 @@ public class WorkingProductDetail {
 	
 	private String productId;	//信贷产品id
 
+	/**
+	 * 韩梅生 开始
+	 */
+	private String productTermUnit; //产品期限单位
+
+	private  String productTermMin;//产品期限起始日期
+
+	private  String productTermMax;//产品期限结束日期
+
+	private  String applyQuotaMin;//申请额度最小值
+
+	private  String applyQuotaMax;//申请额度最大值
+
+	private String serviceCharge; // 是否计算居间服务费
+
+	private  String repayment; //是否提前还款
+
+	private  String repaymentDays;//提前还款时间
+
+	/**
+	 * 韩梅生 结束
+	 */
+
+
 	private String type;			//产品类型（1单期产品，2多期产品）
 	
 	private String periods;// 期数
@@ -77,18 +101,7 @@ public class WorkingProductDetail {
 		this.diyDays = diyDays;
 	}
 
-	/*//宽贷产品专用
-	private Integer overdueDouble;// 逾期第一期限
-	
-	private Integer interestRateTwo;// 逾期罚息费1
-	
-	private Integer overdueThird;// 逾期第二期限 下限
-	
-	private Integer overdueFourth;// 逾期第二期限 上限
-	
-	private Integer interestRateThird;// 逾期罚息费2
-	
-	private Integer interestRateFourth;// 逾期罚息费3*/
+
 
 	private String maxDay;// ***
 
@@ -280,5 +293,69 @@ public class WorkingProductDetail {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getProductTermUnit() {
+		return productTermUnit;
+	}
+
+	public void setProductTermUnit(String productTermUnit) {
+		this.productTermUnit = productTermUnit;
+	}
+
+	public String getProductTermMin() {
+		return productTermMin;
+	}
+
+	public void setProductTermMin(String productTermMin) {
+		this.productTermMin = productTermMin;
+	}
+
+	public String getProductTermMax() {
+		return productTermMax;
+	}
+
+	public void setProductTermMax(String productTermMax) {
+		this.productTermMax = productTermMax;
+	}
+
+	public String getApplyQuotaMin() {
+		return applyQuotaMin;
+	}
+
+	public void setApplyQuotaMin(String applyQuotaMin) {
+		this.applyQuotaMin = applyQuotaMin;
+	}
+
+	public String getApplyQuotaMax() {
+		return applyQuotaMax;
+	}
+
+	public void setApplyQuotaMax(String applyQuotaMax) {
+		this.applyQuotaMax = applyQuotaMax;
+	}
+
+	public String getServiceCharge() {
+		return serviceCharge;
+	}
+
+	public void setServiceCharge(String serviceCharge) {
+		this.serviceCharge = serviceCharge;
+	}
+
+	public String getRepayment() {
+		return repayment;
+	}
+
+	public void setRepayment(String repayment) {
+		this.repayment = repayment;
+	}
+
+	public String getRepaymentDays() {
+		return repaymentDays;
+	}
+
+	public void setRepaymentDays(String repaymentDays) {
+		this.repaymentDays = repaymentDays;
 	}
 }

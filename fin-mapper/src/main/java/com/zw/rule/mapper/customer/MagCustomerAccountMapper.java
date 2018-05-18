@@ -4,6 +4,7 @@ import com.zw.rule.customer.po.MagCustomerAccount;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -59,4 +60,11 @@ public interface MagCustomerAccountMapper{
 	MagCustomerAccount getAccountInfoByOrderId(String orderId);
 
 	List getCustBankCardInfo(String customerId);
+
+	/**
+	 * 根据客户ID查询绑定银行卡信息
+	 * @param customerId
+	 * @return
+	 */
+	Map getCustBankCardInfoByCustId(String customerId);
 }

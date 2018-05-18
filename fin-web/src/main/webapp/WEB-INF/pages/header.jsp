@@ -8,7 +8,7 @@
             <a href="${ctx}/index" class="navbar-brand">
                 <span id="titleName">
                     <!--<b>小窝金融消费管理系统</b>-->
-                    <img src="${ctx}/resources/images/logo1.png${version}" style="width: 170px;height: 45px">
+                    <img src="${ctx}/resources/images/logo1.png${version}" style="width: 140px;height: 45px">
                 </span>
             </a>
         </div>
@@ -33,16 +33,16 @@
                     <li style="position: absolute">
                         <img src="${ctx}/resources/images/person.png" alt="" style="visibility: hidden;margin:0 .5em;cursor: pointer;width:43%">
                     </li>
-                    <li style="position: relative;padding-bottom:30px;border-right: 0" id="showTipsParent" onclick="showDiv()">
-                        <img src="${ctx}/resources/images/msg.png" alt="" id="img" style="margin:0 .5em;cursor: pointer;">
-                        <div id="showTips">
-                            <input id="type" type="hidden">
-                            <input id="typed" type="hidden">
-                            <a href="javascript:void(0)" url="${ctx}/taskMsg/pageIn"><p>处理中:<b id="waite"></b></p></a>
-                            <a href="javascript:void(0)" url="${ctx}/taskMsg/pageNot"><p>待处理:<b id="untreated"></b></p></a>
-                            <a href="javascript:void(0)" url="${ctx}/taskMsg/monitor"><p>任务监控:<b id="processed"></b></p></a>
-                        </div>
-                    </li>
+                    <%--<li style="position: relative;padding-bottom:30px;border-right: 0" id="showTipsParent" onclick="showDiv()">--%>
+                        <%--<img src="${ctx}/resources/images/msg.png" alt="" id="img" style="margin:0 .5em;cursor: pointer;">--%>
+                        <%--<div id="showTips">--%>
+                            <%--<input id="type" type="hidden">--%>
+                            <%--<input id="typed" type="hidden">--%>
+                            <%--<a href="javascript:void(0)" url="${ctx}/taskMsg/pageIn"><p>处理中:<b id="waite"></b></p></a>--%>
+                            <%--<a href="javascript:void(0)" url="${ctx}/taskMsg/pageNot"><p>待处理:<b id="untreated"></b></p></a>--%>
+                            <%--<a href="javascript:void(0)" url="${ctx}/taskMsg/monitor"><p>任务监控:<b id="processed"></b></p></a>--%>
+                        <%--</div>--%>
+                    <%--</li>--%>
                 </ul>
             </div>
         </div>

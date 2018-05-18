@@ -533,41 +533,86 @@
                             <td style="text-align: center;"><input type="text" name="pro_number" id="cpNumber"  style="border-style: solid; border-width: 0px; background-color: #fff!important; border:none;text-align: center;float:left;"></td>
                             <td style="text-align: center;">产品名称：</td>
                             <td><input type="text" style ='text-align: center' class="inpText info-inpW1" name="pro_name" id="cpName" maxlength="20" datatype="/^[\s|\S]*$/" nullmsg="请输入产品名称！" errormsg="请输入合法名称！" style="border:none;background-color: #fff!important;text-align: right;float:left;width:73%;"><span style="color:red;position: relative;top:6px;">*</span></td>
-                            <td id="product_periods">产品期数：</td>
-                            <td><input type="text" class="inpText info-inpW1" name="periods" id="periods"  maxlength="2" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;"><span id="periods_day">&nbsp;期</span></td>
-                            <input type="hidden" name="duetimeType" value="1">
-                        </tr>
-                        <tr id="diy_duoqi">
-                            <td style="text-align: center;">选择方式：</td>
-                            <td style="text-align: center;">
-                                <select id="diy_type" style='height: 28px; margin-left: -13px; width: 163px;' name="diyType" onchange="sureDiyType(this.options[this.options.selectedIndex].value)">
-                                    <option style="text-align: center;" value="">请选择</option>
-                                    <option style="text-align: center;" value="0">自然月</option>
-                                    <option style="text-align: center;" value="1">自定义天数</option>
-                                </select>
-                            </td>
-                            <td class="diy_days" style="text-align: center;">自定义天数：</td>
-                            <td class="diy_days" style="text-align: center;"><input type="text" class="inpText info-inpW1" name="diyDays" id="diy_days"  maxlength="2" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;margin-left: 39px; width: 163px;"><span>&nbsp;天/期</span></td>
-                        </tr>
-
-
-                        <tr style="display: none">
-                            <td>资方编号：</td>
-                            <td><input type="text" class="inpText info-inpW1" name="contractRate"  id="contractRate" datatype="/^[0-9]+(.[0-9]{0,4})?$/" errormsg="只能输入小数点最多四位数字！" style="border:none;background-color: #fff!important;text-align: right;float:left;"></td>
-                            <td>综合利率：</td>
-                            <td><input type="text" class="inpText info-inpW1" name="multipleRate"  id="multipleRate" datatype="/^[0-9]+(.[0-9]{0,4})?$/" errormsg="只能输入小数点最多四位数字！" style="border:none;background-color: #fff!important;text-align: right;float:left;"></td>
                             <td>还款方式：</td>
                             <td>
                                 <select class="info-selW1" id="parentInfo" style="line-height:11px;float: left; padding-right: 6px;margin-left:24px;width:160px;" name="payment">
-                                    <option value="">请选择</option>
+                                    <option style="text-align: center;" value="">请选择</option>
+                                    <option style="text-align: center;" value="0">一次性还本付息</option>
                                 </select>
                             </td>
+
                         </tr>
                         <tr style="display: none">
-                            <td>贷后编号：</td>
-                            <td><input type="text" class="inpText info-inpW1" name="actualLowerLimit" id="actualLowerLimit" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: right;float:left">
-                            </td>
+                            <td>综合利率：</td>
+                            <td><input type="text" class="inpText info-inpW1" name="multipleRate" id="multipleRate" datatype="/^[0-9]+(.[0-9]{0,4})?$/" errormsg="只能输入小数点最多四位数字！" style="border:none;background-color: #fff!important;text-align: right;float:left">
                         </tr>
+                        <%--<tr style="display: none">--%>
+                            <%--<td>资方编号：</td>--%>
+                            <%--<td><input type="text" class="inpText info-inpW1" name="contractRate"  id="contractRate" datatype="/^[0-9]+(.[0-9]{0,4})?$/" errormsg="只能输入小数点最多四位数字！" style="border:none;background-color: #fff!important;text-align: right;float:left;"></td>--%>
+                            <%--<td>综合利率：</td>--%>
+                            <%--<td><input type="text" class="inpText info-inpW1" name="multipleRate"  id="multipleRate" datatype="/^[0-9]+(.[0-9]{0,4})?$/" errormsg="只能输入小数点最多四位数字！" style="border:none;background-color: #fff!important;text-align: right;float:left;"></td>--%>
+                            <%--<td>还款方式：</td>--%>
+                            <%--<td>--%>
+                                <%--<select class="info-selW1" id="parentInfo" style="line-height:11px;float: left; padding-right: 6px;margin-left:24px;width:160px;" name="payment">--%>
+                                    <%--<option value="">请选择</option>--%>
+                                <%--</select>--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+                        <%--<tr style="display: none">--%>
+                            <%--<td>贷后编号：</td>--%>
+                            <%--<td><input type="text" class="inpText info-inpW1" name="actualLowerLimit" id="actualLowerLimit" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: right;float:left">--%>
+                            <%--</td>--%>
+                        <%--</tr>--%>
+
+                        <tr>
+                            <td>产品期限单位：</td>
+                            <td style="text-align: center;">
+                                <select id="product_term_unit" style='height: 28px; margin-left: -13px; width: 163px;' name="product_term_unit" onchange="productTermType(this.options[this.options.selectedIndex].value)">
+                                    <option style="text-align: center;" value="">请选择</option>
+                                    <option style="text-align: center;" value="日">日</option>
+                                    <option style="text-align: center;" value="月">月</option>
+                                    <option style="text-align: center;" value="年">年</option>
+                                </select>
+                            </td>
+                            <td>产品期限：</td>
+                            <td>
+                                <input type="text" class="inpText info-inpW11" name="product_term_min" id="product_term_min" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left">
+                                <span style="float: left;display: inline-block;width:30px;height:28px;line-height: 28px"> --</span>
+                                <input type="text" class="inpText info-inpW11" name="product_term_max" id="product_term_max" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left">
+                            </td>
+                            <td>申请额度：</td>
+                            <td>
+                                <input type="text"  class="inpText info-inpW11" name="apply_quota_min" id="apply_quota_min" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left">
+                                <span style="float: left;display: inline-block;width:30px;height:28px;line-height: 28px"> --</span>
+                                <input type="text" class="inpText info-inpW11" name="apply_quota_max" id="apply_quota_max" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>是否计算居间服务费：</td>
+                            <td style="text-align: center;">
+                                <select id="service_charge" style='height: 28px; margin-left: -13px; width: 163px;' name="service_charge">
+                                    <option style="text-align: center;" value="">请选择</option>
+                                    <option style="text-align: center;" value="1">是</option>
+                                    <option style="text-align: center;" value="0">否</option>
+                                </select>
+                            </td>
+                            <td>提前还款：</td>
+                            <td style="text-align: center;">
+                                <select id="repayment" style='height: 28px; margin-left: -13px; width: 163px;' name="repayment" onchange="sureRepayment(this.options[this.options.selectedIndex].value)">
+                                    <option style="text-align: center;" value="">请选择</option>
+                                    <option style="text-align: center;" value="1">是</option>
+                                    <option style="text-align: center;" value="0">否</option>
+                                </select>
+                            </td>
+
+                            <td class="repayment" style="display: none">还款时限：</td>
+                            <td class="repayment"  style="display: none"><input type="text" style ='text-align: center' class="inpText info-inpW1" name="repayment_days" id="repayment_days" maxlength="20" datatype="/^[0-9]*$/"  errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: right;float:left;width:73%;"></td>
+
+                        </tr>
+
+
                         </tbody></table>
                 </div>
                 <%-- 4/10注释（查看不展示这些）--%>

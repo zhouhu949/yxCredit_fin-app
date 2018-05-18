@@ -238,7 +238,7 @@
                             <label style="width: 173px;">
                                 <select id="platform_type" style="min-width:60px;height: 28px;">
                                     <%--<option value="">请选择</option>--%>
-                                    <option value="0">金棒棒</option>
+                                    <%--<option value="0">金棒棒</option>--%>
                                     <option value="1">商品贷</option>
                                 </select>
                             </label>

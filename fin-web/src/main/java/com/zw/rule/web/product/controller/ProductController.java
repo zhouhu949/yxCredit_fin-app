@@ -430,10 +430,10 @@ public class ProductController {
             intNum++;
             DecimalFormat df=new DecimalFormat("0000");
             proNumber=df.format(intNum);
-            response.setData("LCP"+proNumber);
+            response.setData("BYX"+proNumber);
             return response;
         }
-        response.setData("LCP0001");
+        response.setData("BYX0001");
         response.setCode(1);
         return response;
     }

@@ -30,7 +30,7 @@ $(function (){
         $("#yuelixi").val(yuelilv);
         $("#li_xi").val(rililv);
     });
-})
+});
 $(function (){
     getProduct();
     getPeriodsSelect();
@@ -73,9 +73,9 @@ $(function (){
                 {"data": "month_rate","orderable" : false},
                 {"data": "li_xi","orderable" : false},
                 // {"data": "zhifu_fee","orderable" : false},
-                {"data": "zhanghu_fee","orderable" : false},
+                {"data": "loan_rate","orderable" : false},
                 // {"data": "fengxian_fee","orderable" : false},
-                {"data": "shenhe_fee","orderable" : false},
+                {"data": "asuer_rate","orderable" : false},
                 // {"data": "zhina_fee","orderable" : false},
                 {"data": "yuqi_fee","orderable" : false},
                 // {"data": "zongheri_fee","orderable" : false},
@@ -142,6 +142,9 @@ function  editDetail(type,productId,productPeriods,id) {
             content : $('#editDetail'),
             btn : [ '提交', '取消' ],
             success: function () {
+                $(".newField").remove();
+               // $("input[name='zbs']").remove();
+               // $("input[name='jujian_fee']").remove();
                 $("#productPeriods").empty();
                 $("#productPeriods").append("<option  value=''>请选择</option>");
                 $("#productAmount").val('');
@@ -150,8 +153,11 @@ function  editDetail(type,productId,productPeriods,id) {
                 $("#nianlixi").val('');
                 $("#yuelixi").val('');
                 // $("#zhifu_fee").val('');
-                $("#zhanghu_fee").val('');
-                $("#shenhe_fee").val('');
+                //$("#loan_rate").val('');
+                //$("#asuer_rate").val('');
+                $("#loan_rate").val('');
+                $("#asuer_rate").val('');
+
                 // $("#fengxian_fee").val('');
                 // $("#zhina_fee").val('');
                 $("#yuqi_fee").val('');
@@ -161,11 +167,16 @@ function  editDetail(type,productId,productPeriods,id) {
                 var productComFee=$("#productComFee").val();
                 var li_xi=$("#li_xi").val();
                 // var zhifu_fee=$("#zhifu_fee").val();
-                var zhanghu_fee=$("#zhanghu_fee").val();
-                var shenhe_fee=$("#shenhe_fee").val();
+                var loan_rate=$("#loan_rate").val();
+                var asuer_rate=$("#asuer_rate").val();
                 // var fengxian_fee=$("#fengxian_fee").val();
                 // var zhina_fee=$("#zhina_fee").val();
                 var yuqi_fee=$("#yuqi_fee").val();
+                debugger
+                var zbs_jujian_fee = "";
+                $("input[name='zbs_jujian_fee']").each(function(){
+                    zbs_jujian_fee += $(this).val()+",";
+                });
                 // var zongheri_fee=$("#zongheri_fee").val();
                 if($("#productAmount").val()==""){
                     layer.alert("产品名称未选择！",{icon: 2, title:'操作提示'});
@@ -206,12 +217,12 @@ function  editDetail(type,productId,productPeriods,id) {
                 //         return
                 //     }
                 // }
-                if(zhanghu_fee==""){
-                    layer.alert("平台管理费不能为空！",{icon: 2, title:'操作提示'});
+                if(loan_rate==""){
+                    layer.alert("借款利率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
-                    if(isNaN(zhanghu_fee)){
-                        layer.alert("平台管理费格式有误！",{icon: 2, title:'操作提示'});
+                    if(isNaN(loan_rate)){
+                        layer.alert("借款利率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -224,12 +235,12 @@ function  editDetail(type,productId,productPeriods,id) {
                 //         return
                 //     }
                 // }
-                if(shenhe_fee==""){
-                    layer.alert("快速信审费不能为空！",{icon: 2, title:'操作提示'});
+                if(asuer_rate==""){
+                    layer.alert("担保费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
-                    if(isNaN(shenhe_fee)){
-                        layer.alert("快速信审费格式有误！",{icon: 2, title:'操作提示'});
+                    if(isNaN(asuer_rate)){
+                        layer.alert("担保费率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -243,11 +254,11 @@ function  editDetail(type,productId,productPeriods,id) {
                 //     }
                 // }
                 if(yuqi_fee==""){
-                    layer.alert("逾期罚息费不能为空！",{icon: 2, title:'操作提示'});
+                    layer.alert("逾期费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
                     if(isNaN(yuqi_fee)){
-                        layer.alert("逾期罚息费格式有误！",{icon: 2, title:'操作提示'});
+                        layer.alert("逾期费率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -269,11 +280,12 @@ function  editDetail(type,productId,productPeriods,id) {
                 param.year_rate=$("#nianlixi").val();
                 param.month_rate=$("#yuelixi").val();
                 // param.zhifu_fee=zhifu_fee;
-                param.shenhe_fee=shenhe_fee;
+                param.asuer_rate=asuer_rate;
                 // param.fengxian_fee=fengxian_fee;
-                param.zhanghu_fee=zhanghu_fee;
+                param.loan_rate=loan_rate;
                 // param.zhina_fee=zhina_fee;
                 param.yuqi_fee=yuqi_fee;
+                param.zbs_jujian_fee = zbs_jujian_fee;
                 // param.zongheri_fee=zongheri_fee;
                 Comm.ajaxPost('product/addFee', JSON.stringify(param), function (result) {
                     debugger
@@ -298,6 +310,7 @@ function  editDetail(type,productId,productPeriods,id) {
             success: function () {
                 // getPeriodsSelect();
                 getProduct();
+                $(".newField").remove();
                 var param = {};
                 param.id=id;
                 Comm.ajaxPost('product/getFee', JSON.stringify(param), function (result) {
@@ -308,25 +321,48 @@ function  editDetail(type,productId,productPeriods,id) {
                     getPeriods(resData.crm_product_paraent_id,resData.product_id);
                     $("#li_xi").val(resData.li_xi);
                     // $("#zhifu_fee").val(resData.zhifu_fee);
-                    $("#shenhe_fee").val(resData.shenhe_fee);
+                    $("#asuer_rate").val(resData.asuer_rate);
                     // $("#fengxian_fee").val(resData.fengxian_fee);
-                    $("#zhanghu_fee").val(resData.zhanghu_fee);
+                    $("#loan_rate").val(resData.loan_rate);
                     $("#yuqi_fee").val(resData.yuqi_fee);
                     $("#nianlixi").val(resData.year_rate);
                     $("#yuelixi").val(resData.month_rate);
+                    var zbs_jujian_fee = resData.zbs_jujian_fee;
+                    var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
+                    $.each(zbsArray,function(index,value){
+                        if(index%2 === 0){
+                            $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
+                                "                        <label  class=\"lf licss\"  >总包商</label>\n" +
+                                "                        <label >\n" +
+                                "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value='"+zbsArray[index]+"'>\n" +
+                                "                        </label>\n" +
+                                "                    </li>");
+                        }else{
+                            $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
+                                "                        <label  class=\"lf licss\"  >居间服务费</label>\n" +
+                                "                        <label >\n" +
+                                "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
+                                "                        </label>\n" +
+                                "                    </li>");
+                        }
+                    });
                     // $("#zhina_fee").val(resData.zhina_fee);
                     // $("#zongheri_fee").val(resData.zongheri_fee);
                 },"application/json");
             },
             yes:function(index, layero){
-                debugger
+                debugger;
                 var productComFee=$("#productComFee").val();
                 var li_xi=$("#li_xi").val();
                 // var zhifu_fee=$("#zhifu_fee").val();
-                var shenhe_fee=$("#shenhe_fee").val();
+                var asuer_rate=$("#asuer_rate").val();
                 // var fengxian_fee=$("#fengxian_fee").val();
-                var zhanghu_fee=$("#zhanghu_fee").val();
+                var loan_rate=$("#loan_rate").val();
                 var yuqi_fee=$("#yuqi_fee").val();
+                var zbs_jujian_fee_new = "";
+                $("input[name='zbs_jujian_fee']").each(function(){
+                    zbs_jujian_fee_new += $(this).val()+",";
+                });
                 // var zhina_fee=$("#zhina_fee").val();
                 // var zongheri_fee=$("#zongheri_fee").val();
                 if($("#productAmount").val()==""){
@@ -369,12 +405,12 @@ function  editDetail(type,productId,productPeriods,id) {
                 //         return
                 //     }
                 // }
-                if(zhanghu_fee==""){
-                    layer.alert("平台管理费不能为空！",{icon: 2, title:'操作提示'});
+                if(loan_rate==""){
+                    layer.alert("借款利率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
-                    if(isNaN(zhanghu_fee)){
-                        layer.alert("平台管理费格式有误！",{icon: 2, title:'操作提示'});
+                    if(isNaN(loan_rate)){
+                        layer.alert("借款利率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -387,12 +423,12 @@ function  editDetail(type,productId,productPeriods,id) {
                 //         return
                 //     }
                 // }
-                if(shenhe_fee==""){
-                    layer.alert("快速信审费不能为空！",{icon: 2, title:'操作提示'});
+                if(asuer_rate==""){
+                    layer.alert("担保费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
-                    if(isNaN(shenhe_fee)){
-                        layer.alert("快速信审费格式有误！",{icon: 2, title:'操作提示'});
+                    if(isNaN(asuer_rate)){
+                        layer.alert("担保费率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -406,11 +442,11 @@ function  editDetail(type,productId,productPeriods,id) {
                 //     }
                 // }
                 if(yuqi_fee==""){
-                    layer.alert("逾期罚息费不能为空！",{icon: 2, title:'操作提示'});
+                    layer.alert("逾期费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }else {
                     if(isNaN(yuqi_fee)){
-                        layer.alert("逾期罚息费格式有误！",{icon: 2, title:'操作提示'});
+                        layer.alert("逾期费率格式有误！",{icon: 2, title:'操作提示'});
                         return
                     }
                 }
@@ -434,10 +470,11 @@ function  editDetail(type,productId,productPeriods,id) {
                 param.month_rate=$("#yuelixi").val();
                 // param.zhifu_fee=zhifu_fee;
                 // param.fengxian_fee=fengxian_fee;
-                param.shenhe_fee=shenhe_fee;
-                param.zhanghu_fee=zhanghu_fee;
+                param.asuer_rate=asuer_rate;
+                param.loan_rate=loan_rate;
                 // param.zhina_fee=zhina_fee;
                 param.yuqi_fee=yuqi_fee;
+                param.zbs_jujian_fee = zbs_jujian_fee_new;
                 // param.zongheri_fee=zongheri_fee;
                 Comm.ajaxPost('product/updateFee', JSON.stringify(param), function (result) {
                     layer.msg(result.msg,{time:1000},function () {
@@ -477,7 +514,14 @@ function getPeriods(crmProductId,productPeriods) {
             $("#productPeriods").empty();
             var selObj = $("#productPeriods");
             for (var i=0;i<resData.length;i++){
-                var text=resData[i].periods;
+                var product_term_min = resData[i].productTermMin;
+                var product_term_max = resData[i].productTermMax;
+                var product_term_unit = resData[i].productTermUnit;
+
+                //debugger
+                //var text=resData[i].periods;
+                var text = product_term_min+" 至 "+product_term_max+" "+product_term_unit;
+                //var text=resData[i].periods;
                 selObj.append("<option  value='"+resData[i].id+"'>"+text+"</option>");
             }
             if(productPeriods!=undefined && productPeriods!=''){
@@ -512,8 +556,33 @@ function getPeriodsSelect() {
         $("#productPeriods").append("<option value=''>请选择</option>");
         for (var i=0;i<resData.length;i++){
             var value=resData[i].id;
-            var text=resData[i].periods;
+            var product_term_min = resData[i].product_term_min;
+            var product_term_max = resData[i].product_term_max;
+            var product_term_unit = resData[i].product_term_unit;
+
+             //debugger
+            //var text=resData[i].periods;
+            var text = product_term_min+" 至 "+product_term_max+product_term_unit;
             $("#productPeriods").append("<option name='"+text+"' value='"+value+"'>"+text+"</option>");
         }
     },"application/json",null,null,null,false);
+
+
+}
+
+//添加总包商
+function addZBS() {
+    //var liIndex = $("#detailInfo li").length-7;
+    $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
+        "                        <label  class=\"lf licss\"  >总包商</label>\n" +
+        "                        <label >\n" +
+        "                            <input type=\"text\"  name=\"zbs_jujian_fee\" >\n" +
+        "                        </label>\n" +
+        "                    </li>" +
+        "                    <li class='newField' style=\"width:260px\">\n" +
+        "                        <label class=\"lf licss\"  >居间服务费</label>\n" +
+        "                        <label >\n" +
+        "                            <input type=\"text\"  name=\"zbs_jujian_fee\" >\n" +
+        "                        </label>\n" +
+        "                    </li>");
 }
