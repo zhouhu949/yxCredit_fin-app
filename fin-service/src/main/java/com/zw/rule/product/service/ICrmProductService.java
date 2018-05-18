@@ -171,5 +171,13 @@ public interface ICrmProductService {
      * @return
      */
     JSONObject getPeriodsList(String crmProductId);
+
+    /**
+     * @author:韩梅生
+     * @Description 获取总包商列表
+     * @Date 15:49 2018/5/18
+     * @param
+     */
+    JSONObject getZbsList();
 }
 

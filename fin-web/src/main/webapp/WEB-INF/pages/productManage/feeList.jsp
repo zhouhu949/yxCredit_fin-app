@@ -63,12 +63,12 @@
                         <th>产品期数</th>
                         <%--<th>综合费率(%)</th>--%>
                         <th>年利息(%)</th>
-                        <th>月利息(%)</th>
+                        <%--<th>月利息(%)</th>--%>
                         <th>日利息(%)</th>
                         <%--<th>支付服务费(%)</th>--%>
-                        <th>平台管理费(元)</th>
+                        <th>担保费率(%)</th>
                         <%--<th>风险评估费(%)</th>--%>
-                        <th>快速信审费(元)</th>
+                        <%--<th>快速信审费(元)</th>--%>
                         <%--<th>滞纳金(%)</th>--%>
                        <th>逾期费率(%)</th>
                         <%--<th>综合日费率(%)</th>--%>
@@ -112,12 +112,12 @@
                             <input type="text" name="li_xi" id="nianlixi" >
                         </label>
                     </li>
-                    <li style="width:260px">
-                        <label class="lf licss"  >月利率(%)</label>
-                        <label >
-                            <input type="text" name="li_xi" id="yuelixi"  readonly="readonly">
-                        </label>
-                    </li>
+                    <%--<li style="width:260px">--%>
+                        <%--<label class="lf licss"  >月利率(%)</label>--%>
+                        <%--<label >--%>
+                            <%--<input type="text" name="li_xi" id="yuelixi"  readonly="readonly">--%>
+                        <%--</label>--%>
+                    <%--</li>--%>
                     <li style="width:260px">
                         <label class="lf licss"  >日利率(%)</label>
                         <label >
@@ -142,12 +142,12 @@
                             <%--<input type="text"  name="zhanghu_fee" id="zhanghu_fee">--%>
                         <%--</label>--%>
                     <%--</li>--%>
-                    <li style="width:260px">
-                        <label class="lf licss"  >借款利率(%)</label>
-                        <label >
-                            <input type="text"  name="loan_rate" id="loan_rate">
-                        </label>
-                    </li>
+                    <%--<li style="width:260px">--%>
+                        <%--<label class="lf licss"  >借款利率(%)</label>--%>
+                        <%--<label >--%>
+                            <%--<input type="text"  name="loan_rate" id="loan_rate">--%>
+                        <%--</label>--%>
+                    <%--</li>--%>
                     <%--<li>--%>
                         <%--<label class="lf"  >风险评估(%)</label>--%>
                         <%--<label >--%>

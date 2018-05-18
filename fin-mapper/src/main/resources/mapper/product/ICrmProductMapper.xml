@@ -575,4 +575,9 @@
       and crm_product_id=#{crmProductId}
     </where>
   </select>
+
+    <select id="getZbsList"  resultType="java.util.Map">
+        select
+         id,contractor_name from byx_contractor
+    </select>
 </mapper>

@@ -561,6 +561,20 @@ public class ProductController {
         return response;
     }
 
+    @PostMapping("getZbs")
+    @ResponseBody
+    @WebLogger("获取总包商下拉")
+    public Response getZbs(){
+        Response response = new Response();
+        // 创建返回结果对象
+        JSONObject resultjson = new JSONObject();
+        //接收调用接口的返回值，获取总包商详情信息
+        resultjson = crmProductService.getZbsList();
+        List list = (List)resultjson.get("data");
+        response.setData(list);
+        return response;
+    }
+
     @PostMapping("getPeriodsList")
     @ResponseBody
     @WebLogger("获取产品分期列表")

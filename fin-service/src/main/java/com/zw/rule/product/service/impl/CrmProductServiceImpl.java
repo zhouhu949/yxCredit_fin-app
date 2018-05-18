@@ -282,4 +282,20 @@ public class CrmProductServiceImpl implements ICrmProductService {
         json.put("data", list);
         return json;
     }
+
+    /**
+     * @author:韩梅生
+     * @Description 获取总包商列表
+     * @Date 15:50 2018/5/18
+     * @param
+     */
+    @Override
+    public JSONObject getZbsList(){
+        //返回的json 数据
+        JSONObject json = new JSONObject();
+        List<Map> list= crmProductMapper.getZbsList();
+        json.put("data", list);
+        return json;
+    }
+
 }

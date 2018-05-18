@@ -182,4 +182,7 @@ public interface ICrmProductMapper{
 
 	//获取产品下所有分期
 	List getPeriodsList(String crmProductId);
+
+	//获取总包商下拉选项
+	List getZbsList();
 }
