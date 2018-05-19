@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zw.rule.mapper.orderOperationRecordMapper.OrderOperationRecordMapper">
+
+    <sql id="Base_Column_List">
+
+
+    </sql>
+
+
+    <select id="getOrderOperationRecordByOrderId" resultType="java.util.Map" parameterType="java.lang.String" >
+        select
+          <include refid="Base_Column_List"/>
+        from zw_api_result
+        where only_key= #{orderId,jdbcType=VARCHAR}
+    </select>
+
+
+
+
+
+</mapper>

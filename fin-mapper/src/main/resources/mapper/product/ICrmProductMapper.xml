@@ -514,21 +514,10 @@
         li_xi = #{li_xi},
       </if>
 
-      <if test="zhifu_fee != null" >
-        zhifu_fee = #{zhifu_fee},
-      </if>
-      <if test="zhanghu_fee != null" >
-        zhanghu_fee = #{zhanghu_fee},
-      </if>
-      <if test="fengxian_fee != null" >
-        fengxian_fee = #{fengxian_fee},
-      </if>
       <if test="asuer_rate != null" >
         asuer_rate = #{asuer_rate},
       </if>
-      <if test="zhina_fee != null" >
-        zhina_fee = #{zhina_fee},
-      </if>
+
       <if test="yuqi_fee != null" >
         yuqi_fee = #{yuqi_fee},
       </if>
@@ -541,9 +530,7 @@
       <if test="year_rate != null" >
         year_rate = #{year_rate},
       </if>
-      <if test="month_rate != null" >
-        month_rate = #{month_rate},
-      </if>
+
       <if test="zbs_jujian_fee != null" >
         zbs_jujian_fee = #{zbs_jujian_fee}
       </if>
@@ -552,9 +539,9 @@
   </update>
 
   <insert id="addFee"   parameterType="com.zw.rule.product.Fee" >
-    insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,yuqi_fee,year_rate,month_rate,loan_rate,asuer_rate,zbs_jujian_fee)
+    insert into mag_product_fee (id,product_id, product_amount, product_periods,product_com_fee,li_xi,yuqi_fee,year_rate,loan_rate,asuer_rate,zbs_jujian_fee)
     VALUES (#{id},#{productId}, #{productAmount}, #{productPeriods},#{productComFee},#{li_xi},
-     #{yuqi_fee},#{year_rate},#{month_rate},#{loan_rate},#{asuer_rate},#{zbs_jujian_fee})
+     #{yuqi_fee},#{year_rate},#{loan_rate},#{asuer_rate},#{zbs_jujian_fee})
   </insert>
 
   <select id="getProduct" resultMap="BaseResultMap">
