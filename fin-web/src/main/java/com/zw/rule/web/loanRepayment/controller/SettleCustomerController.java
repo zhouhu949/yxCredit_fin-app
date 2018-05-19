@@ -13,6 +13,7 @@ import com.zw.rule.customer.service.OrderService;
 import com.zw.rule.customer.service.RuleRiskService;
 import com.zw.rule.loanRepayment.service.SettleCustomerService;
 import com.zw.rule.mybatis.ParamFilter;
+import com.zw.rule.orderOperationRecord.service.OrderOperationRecordService;
 import com.zw.rule.po.User;
 import com.zw.rule.product.WorkingProductDetail;
 import com.zw.rule.product.service.ICrmProductService;
@@ -70,6 +71,8 @@ public class SettleCustomerController {
     private ScoreCardService scoreCardService;
     @Autowired
     private ICrmProductService crmProductService;
+    @Autowired
+    private OrderOperationRecordService orderOperationRecordService;
 
     /**
      * 订单页面
@@ -331,16 +334,7 @@ public class SettleCustomerController {
         return new Response(list);
     }
 
-    @PostMapping("orderLogList")
-    @ResponseBody
-    @WebLogger("查询订单信息")
-    public Response orderLogList(@RequestBody ParamFilter queryFilter){
-        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
-        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List list = settleCustomerService.getOrderLogList(queryFilter);
-        PageInfo pageInfo = new PageInfo(list);
-        return new Response(pageInfo);
-    }
+
 
     @PostMapping("overtimeOrderList")
     @ResponseBody
@@ -360,5 +354,22 @@ public class SettleCustomerController {
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map<String, Object> map = orderService.closeOrder(orderId, user);
         return new Response(map);
+    }
+    /****************************************************碧友信*****************************************************/
+
+    /**
+     * 获取订单操作流程记录信息
+     * @param queryFilter
+     * @return
+     */
+    @PostMapping("orderLogList")
+    @ResponseBody
+    @WebLogger("查询订单信息")
+    public Response orderLogList(@RequestBody ParamFilter queryFilter){
+        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
+        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
+        List list = orderOperationRecordService.getOrderOperationRecordByOrderIdList(queryFilter);
+        PageInfo pageInfo = new PageInfo(list);
+        return new Response(pageInfo);
     }
 }

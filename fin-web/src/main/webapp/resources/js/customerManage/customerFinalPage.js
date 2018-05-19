@@ -39,23 +39,66 @@ $().ready(function(){
             var customer = data.customer;//客户信息
             var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
             var apiResultList= data.apiResultList;//风控审核信息
+            var orderOperationRecord= data.orderOperationRecord;//订单操作记录审核信息
+            var loanRecord= data.loanRecord;//订单操作记录放款信息
 
         }
 
-        //订单信息和银行卡信息
-        if(orderAndbank){
-            $("#orderNo").html(orderAndbank.orderNo);//订单编号
-            $("#productName").html(orderAndbank.productName);//产品名称
-            $("#rate").text(orderAndbank.rate);//利率
-            $("#applayMoney").text(orderAndbank.applayMoney);//申请金额
-            $("#periods").text(orderAndbank.periods);//申请期限
-            $("#applayTime").text(orderAndbank.applayTime);//申请时间
-            $("#bankName").text(orderAndbank.applayTime);//开户行
-            $("#bankSubbranch").text(orderAndbank.applayTime);//支行
-            $("#cardNumber").text(orderAndbank.cardNumber);//银行卡号
+        //订单操作记录信息
+        if(orderOperationRecord){
+            var operationResult="";
+            var number = orderOperationRecord.operationResult;
+            if (number == 1){
+                operationResult="提交";
+            }else if(number == 2){
+                operationResult="通过";
+            }else if(number == 3){
+                operationResult="拒绝";
+            }else if(number == 4){
+                operationResult="回退";
+            }else if(number == 5){
+                operationResult="同意";
+            }else if(number == 6){
+                operationResult="放弃";
+            }else if(number == 7){
+                operationResult="放款";
+            }
+
+            $("#amount").html(orderOperationRecord.amount);//金额
+            $("#operationResult").html(operationResult);//审核结果
+            $("#empName").text(orderOperationRecord.empName);//审核人员
+            $("#operationTime").text(orderOperationRecord.operationTime);//审核时间
+            $("#description").text(orderOperationRecord.description);//审核意见
+
+        }
+
+        //订单放款信息
+        if(loanRecord){
+            var loanState="";
+            var number = loanRecord.operationResult;
+            if (number == 1){
+                loanState="提交";
+            }else if(number == 2){
+                loanState="通过";
+            }else if(number == 3){
+                loanState="拒绝";
+            }else if(number == 4){
+                loanState="回退";
+            }else if(number == 5){
+                loanState="同意";
+            }else if(number == 6){
+                loanState="放弃";
+            }else if(number == 7){
+                loanState="放款";
+            }
+
+            $("#loanAmount").html(loanRecord.amount);//放款金额
+            $("#loanTime").text(loanRecord.operationTime);//放款时间
+            $("#loanState").html(loanState);//放款状态
 
 
         }
+
 
         //数据写入隐藏域
         $("#orderId").val(orderId);

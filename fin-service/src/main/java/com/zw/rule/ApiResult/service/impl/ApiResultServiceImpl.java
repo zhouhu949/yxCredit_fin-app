@@ -20,8 +20,6 @@ import java.util.List;
 public class ApiResultServiceImpl implements ApiResultService {
     private static final Logger logger = Logger.getLogger(ApiResultServiceImpl.class);
 
-
-
     @Autowired
     private ApiResultMapper apiResultMapper;
 

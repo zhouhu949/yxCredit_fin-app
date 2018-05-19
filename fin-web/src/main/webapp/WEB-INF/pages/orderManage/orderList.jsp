@@ -86,6 +86,51 @@
             </div>
         </div>
     </div>
+
+    <%--查看--%>
+
+    <div class="Manager_style" style="display: none ;overflow: hidden;" id="salesmanOrdersList">
+        <input type="hidden" value="" id="orderId">
+        <div class="Manager_style add_user_info search_style">
+            <ul class="search_content clearfix" style="margin-left: 2px;">
+                <li><label class="lf">创建时间</label>
+                    <label>
+                        <input readonly="true" placeholder="开始" class="eg-date" id="beginTime1" type="text"/>
+                        <span class="date-icon"><i class="icon-calendar"></i></span>
+                    </label>
+                </li><span class="line-cut"></span>
+                <li style="width:200px;">
+                    <label>
+                        <input readonly="true" placeholder="结束" class="eg-date" id="overTime" type="text"/>
+                        <span class="date-icon"><i class="icon-calendar"></i></span>
+                    </label>
+                </li>
+                <li style="width:155px;">
+                    <button id="btn_search1" type="button" class="btn btn-primary queryBtn">查询</button>
+                    <button id="btn_search_reset1" type="button" class="btn btn-primary queryBtn">查询重置</button>
+                </li>
+            </ul>
+        </div>
+        <div class="shanghu_list">
+            <table style=" clear:both ;cursor:pointer; font-size: 10px; width:99%;margin-top: 10px;"
+                   id="salesmanOrdersListTable" cellpadding="0" cellspacing="0"
+                   class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>订单编号</th>
+                    <th>操作人员</th>
+                    <%--  <th>操作人类型</th>--%>
+                    <th>审核时间</th>
+                    <th>审核环节</th>
+                    <th>描述</th>
+                </tr>
+                </thead>
+                <tbody >
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

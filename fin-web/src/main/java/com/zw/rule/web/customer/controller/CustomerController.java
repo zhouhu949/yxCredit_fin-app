@@ -23,6 +23,7 @@ import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.officeClerk.service.OfficeClerkManageService;
 import com.zw.rule.officeClerkEntity.Branch;
 import com.zw.rule.officeClerkEntity.OfficeClerkManager;
+import com.zw.rule.orderOperationRecord.service.OrderOperationRecordService;
 import com.zw.rule.ruleResult.po.RuleResult;
 import com.zw.rule.ruleResult.service.RuleResultService;
 import com.zw.rule.rulerisk.po.MagRuleRisk;
@@ -100,6 +101,13 @@ public class CustomerController {
 
     @Autowired
     private ApiResultService apiResultService;
+
+    @Autowired
+    private OrderOperationRecordService orderOperationRecordService;
+
+
+
+
     @PostMapping("quotaList")
     @ResponseBody
     @WebLogger("查询客户提额信息")
@@ -464,6 +472,7 @@ public class CustomerController {
 
     /***
      * 获取订单详情页面信息
+     * @author 仙海峰
      * @param request
      * @param param
      * @return
@@ -482,8 +491,17 @@ public class CustomerController {
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 
+
+
+        //获取审核信息
+        Map orderOperationRecord = orderOperationRecordService.getOrderOperationRecordByOrderId(orderId);
+        //获取放款信息
+        Map loanRecord = orderOperationRecordService.getLoanRecordByOrderId(orderId);
+
         map.put("apiResultList",apiResultList);
         map.put("linkmanList",linkmanList);
+        map.put("orderOperationRecord",orderOperationRecord);
+        map.put("loanRecord",loanRecord);
 
         return new Response(map);
 
