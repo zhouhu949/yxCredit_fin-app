@@ -57,7 +57,7 @@ public interface OrderMapper {
 
     List<Order> getOrderListSP(Map map);
 
-    List<Order> getSubmitList(Map map);
+
 
     //黄金订单
     List<Order> getGoldSubmitList(Map map);
@@ -99,4 +99,23 @@ public interface OrderMapper {
    List<ProcessApproveRecord> selectProByOrderIdAndNode(Map map);
 
     List<Order> getOverTimeOrders(Map map);
+    //获取所有订单
+    List<Order> getSubmitList(Map map);
+/************************************************碧友信*************************************************/
+
+    /**
+     * 查询所有订单
+     * @author 仙海峰
+     * @param map
+     * @return
+     */
+    List<Order> getAllOrderList(Map map);
+
+    /**
+     * 根据订单ID 获取订单信息和银行卡信息
+     * @author 仙海峰
+     * @param orderId
+     * @return
+     */
+    Map getOrderAndBank (String orderId);
 }
