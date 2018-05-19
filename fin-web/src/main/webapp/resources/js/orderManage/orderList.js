@@ -224,6 +224,7 @@ $(function (){
 function orderDetail(orderId,customerId){
     var url = "/finalAudit/examineDetails?orderId="+orderId+"&customerId="+customerId;
     alert(customerId);
+    alert(orderId);
     layer.open({
         type : 2,
         title : '审核订单及客户资料',
