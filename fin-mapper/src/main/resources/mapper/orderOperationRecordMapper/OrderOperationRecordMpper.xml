@@ -4,19 +4,41 @@
 <mapper namespace="com.zw.rule.mapper.orderOperationRecordMapper.OrderOperationRecordMapper">
 
     <sql id="Base_Column_List">
-
-
+          id AS operationId , operation_node AS operationNode , operation_result AS operationResult ,
+          status AS status , amount AS amount , order_id AS orderId , operation_time AS operationTime  ,
+          emp_id AS empId , emp_name AS empName ,description AS description
     </sql>
 
 
-    <select id="getOrderOperationRecordByOrderId" resultType="java.util.Map" parameterType="java.lang.String" >
+    <select id="getOrderOperationRecordByOrderId" resultType="java.util.Map" parameterType="java.lang.String">
         select
-          <include refid="Base_Column_List"/>
-        from zw_api_result
-        where only_key= #{orderId,jdbcType=VARCHAR}
+        <include refid="Base_Column_List"/>
+        from order_operation_record
+        where order_id= #{orderId,jdbcType=VARCHAR} and operation_node = 3
     </select>
 
+    <select id="getLoanRecordByOrderId" resultType="java.util.Map" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from order_operation_record
+        where order_id= #{orderId,jdbcType=VARCHAR} and operation_node = 5
+    </select>
 
+    <select id="getOrderOperationRecordByOrderIdList" resultType="java.util.Map" parameterType="java.util.Map" >
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM order_operation_record
+        <where>
+            order_id=#{orderId}
+            <if test="beganTime != null and beganTime != ''">
+                and operation_time &gt;= #{beganTime}
+            </if>
+            <if test="endthTime != null and endthTime != ''">
+                and operation_time &lt;= #{endthTime}
+            </if>
+        </where>
+        order by operation_time desc
+    </select>
 
 
 

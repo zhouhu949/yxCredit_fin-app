@@ -289,6 +289,7 @@ var g_salesmanOrders = {
 };
 
 
+//查看订单日志
 function showSalesmanOrders(orderId){
     $("#orderId").val(orderId);
     layer.open({
