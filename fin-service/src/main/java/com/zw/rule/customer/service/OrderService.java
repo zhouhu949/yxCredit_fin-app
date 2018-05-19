@@ -48,8 +48,6 @@ public interface OrderService {
     //查询订单列表
     List getOrderListSP(Map map);
 
-    //查询所有订单列表
-    List getSubmitList(Map map);
 
     //查询黄金订单列表
     List getGoldSubmitList(Map map);
@@ -105,4 +103,26 @@ public interface OrderService {
      * @return
      */
     Map<String, Object> closeOrder(String orderId, User user);
+
+    List getSubmitList(Map map);
+
+
+
+    /************************************************碧友信*************************************************/
+
+    /**
+     * 获取全部订单信息
+     * @param map
+     * @return
+     */
+    List getAllOrderList(Map map);
+
+    /**
+     * 根据订单ID 获取订单信息和银行卡信息
+     * @author 仙海峰
+     * @param orderId
+     * @return
+     */
+    Map getOrderAndBank (String orderId);
+
 }

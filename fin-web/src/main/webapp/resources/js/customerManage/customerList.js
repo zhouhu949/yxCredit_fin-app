@@ -409,35 +409,35 @@ function showDetail(id,card,tel,occupationType){
                     $("#location_permission").html(deviceInfo.location_permission);
                 }*/
                 //联系人信息
-                var html = '';
-                var html1 = '';
-                $("#relation").empty();
-                for(var i=0;i<linkmanList.length;i++){
-                    var rel = linkmanList[i].mainSign;
-                    var yesno = "";
-                    html=html+ '<tr>'+
-                        '<td width="14%" >关&emsp;&emsp;系：</td>'+
-                        '<td width="19%">'+linkmanList[i].relationshipName+'</td>'+
-                        '<td width="14%" >名&emsp;&emsp;称：</td>'+
-                        '<td width="19%">'+linkmanList[i].linkName+'</td>'+
-                        '<td width="14%" >联系方式：</td>'+
-                        '<td width="20%">'+linkmanList[i].contact+'</td>'+
-                        '</tr>';
-/*                    if(rel=='0'){//直系
-
-
-                    }else {
+                    var html = '';
+                    var html1 = '';
+                    $("#relation").empty();
+                    for(var i=0;i<linkmanList.length;i++){
+                        var rel = linkmanList[i].mainSign;
                         var yesno = "";
-                        html1= html1+ '<tr>'+
-                            '<td width="10%" >关系</td>'+
-                            '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
-                            '<td width="10%" >名称</td>'+
-                            '<td width="23%">'+linkmanList[i].linkName+'</td>'+
-                            '<td width="10%" >联系方式</td>'+
-                            '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                        html=html+ '<tr>'+
+                            '<td width="14%" >关&emsp;&emsp;系：</td>'+
+                            '<td width="19%">'+linkmanList[i].relationshipName+'</td>'+
+                            '<td width="14%" >名&emsp;&emsp;称：</td>'+
+                            '<td width="19%">'+linkmanList[i].linkName+'</td>'+
+                            '<td width="14%" >联系方式：</td>'+
+                            '<td width="20%">'+linkmanList[i].contact+'</td>'+
                             '</tr>';
+                        /*                    if(rel=='0'){//直系
 
-                    }*/
+
+                                            }else {
+                                                var yesno = "";
+                                                html1= html1+ '<tr>'+
+                                                    '<td width="10%" >关系</td>'+
+                                                    '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
+                                                    '<td width="10%" >名称</td>'+
+                                                    '<td width="23%">'+linkmanList[i].linkName+'</td>'+
+                                                    '<td width="10%" >联系方式</td>'+
+                                                    '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                                                    '</tr>';
+
+                                            }*/
                 }
                 debugger
               /*  html='<tr><td colspan="6"  style="text-align: left">直系联系人</td></tr>'+html;*/

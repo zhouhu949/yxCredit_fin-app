@@ -228,22 +228,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.getOrderListSP(map);
     }
 
-    //查询所有订单列表
-    @Override
-    public List getSubmitList(Map map){
-//        if ("admin".equals(map.get("account"))){
-//            map.put("admin",map.get("account"));
-//        }else {
-//            SysDepartment sysDepartment=sysDepartmentMapper.findById((Long) map.get("orgid"));
-//            //Pid=0是总公司
-//            if (sysDepartment.getPid()==0){
-//                map.put("headquarters",sysDepartment.getId());
-//            }else {
-//                map.put("branch",sysDepartment.getId());
-//            }
-//        }
-        return orderMapper.getSubmitList(map);
-    }
+
     //查询所有黄金订单列表
     @Override
     public List getGoldSubmitList(Map map){
@@ -890,5 +875,36 @@ public class OrderServiceImpl implements OrderService {
         }
         map.put("msg", "关闭订单成功");
         return map;
+    }
+
+    @Override
+    public List getSubmitList(Map map){
+
+        return orderMapper.getSubmitList(map);
+    }
+
+    /**********************************************碧友信*****************************************************/
+
+    /**
+     * 查询所有订单
+     * @author 仙海峰
+     * @param map
+     * @return
+     */
+    @Override
+    public List getAllOrderList(Map map){
+
+        return orderMapper.getAllOrderList(map);
+    }
+
+    /**
+     * 根据订单ID 获取订单信息和银行卡信息
+     * @author 仙海峰
+     * @param orderId
+     * @return
+     */
+    @Override
+    public Map getOrderAndBank(String orderId) {
+        return orderMapper.getOrderAndBank(orderId);
     }
 }

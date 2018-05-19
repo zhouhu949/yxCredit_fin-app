@@ -1508,4 +1508,45 @@
     </where>
     order by CREAT_TIME desc
   </select>
+
+  <!--                                             碧友信                                                       -->
+
+    <!--获取所有订单-->
+    <select id="getAllOrderList" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ID AS orderId , order_no AS orderNo ,  CUSTOMER_ID AS customerId , CUSTOMER_NAME AS customerName , CARD AS card ,
+              TEL AS tel , product_name_name AS productName , applay_money AS applayMoney ,
+          PERIODS AS periods , applay_time AS applayTime , Order_state AS orderState
+        FROM mag_order
+        <where>
+            1=1
+            <if test="customerName != null and customerName != ''">
+                and CUSTOMER_NAME like '%${customerName}%'
+            </if>
+
+            <if test="condition != '' and condition != null ">
+                and Order_state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and CREAT_TIME &lt;= #{endTime}
+            </if>
+
+        </where>
+        order by CREAT_TIME desc
+    </select>
+
+
+    <!--根据订单ID获取订单和银行卡信息-->
+    <select id="getOrderAndBank" resultType="java.util.Map" parameterType="java.lang.String">
+      SELECT o.ID AS orderId  , o.CUSTOMER_ID as customerId, o.order_no AS orderNo , o.product_name_name AS productName  ,
+      o.applay_money AS applayMoney , o.PERIODS AS  periods , o.applay_time AS applayTime ,
+      o.rate AS rate , bc.bank_name AS bankName , bc.bank_subbranch AS bankSubbranch ,
+      bc.card_number AS cardNumber
+      FROM mag_order o  LEFT JOIN sys_bank_card bc ON o.CUSTOMER_ID=bc.cust_id
+      WHERE o.ID=#{orderId}
+    </select>
+
 </mapper>

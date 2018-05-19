@@ -283,38 +283,29 @@
                             <tbody>
                             <tr>
                                 <td class="align" width="10%">订单编号:</td>
-                                <td id="proLoan" width="23%">${order.id}</td>
-                                <td class="align" width="10%">产品类型:</td>
-                                <td id="proType"width="23%">${order.productTypeName}</td>
-                                <td class="align" width="10%">订单来源:</td>
-                                <td  width="23%" id="tdPlatform">${order.source=="1"?"微信":"APP"}</td>
+                                <td id="proLoan" width="23%">${orderAndBank.orderId}</td>
+                                <td class="align" width="10%">产品名称:</td>
+                                <td id="productName"width="23%">${orderAndBank.productName}</td>
+                                <td class="align" width="10%">产品利率:</td>
+                                <td  width="23%" id="rate">${order.rate}</td>
                             </tr>
                             <tr>
-                                <td class="align">购买金额:</td>
-                                <td id="proSum">${order.amount}</td>
-                                <td class="align">购买期限:</td>
-                                <td id="proDeadline">${order.periods}</td>
-                                <%--<td class="align">利息:</td>--%>
-                                <%--<td id="tdFee">${order.fee}</td>--%>
-                                <td class="align">购买时间:</td>
-                                <td id="proApplytime">${order.creatTime}</td>
+                                <td class="align">申请金额:</td>
+                                <td id="applayMoney">${order.applayMoney}</td>
+                                <td class="align">申请期限:</td>
+                                <td id="periods">${order.periods}</td>
+                                <td class="align">申请时间:</td>
+                                <td id="applayTime">${order.applayTime}</td>
                             </tr>
                             <tr>
-                                <td class="align">每克单价:</td>
-                                <td id="proSum">${order.price}元/克</td>
-                                <td class="align">克数:</td>
-                                <td id="proDeadline">${order.weight}克</td>
-                                <%--<td class="align">利息:</td>--%>
-                                <%--<td id="tdFee">${order.fee}</td>--%>
-                                <%--<td class="align">购买时间:</td>--%>
-                                <%--<td id="proApplytime">${order.creatTime}</td>--%>
-                                <td class="align">推荐人编号:</td>
-                                <td id="tdRefereeId"></td>
+                                <td class="align">开户银行:</td>
+                                <td id="bankName">${order.bankName}元/克</td>
+                                <td class="align">开户支行:</td>
+                                <td id="bankSubbranch">${order.bankSubbranch}克</td>
+                                <td class="align">银行卡号:</td>
+                                <td id="cardNumber">${order.cardNumber}克</td>
                             </tr>
-                            <tr>
-                                    <td class="align">推荐人:</td>
-                                    <td id="tdReferee"></td>
-                            </tr>
+
                             </tbody>
                         </table>
                     </div>

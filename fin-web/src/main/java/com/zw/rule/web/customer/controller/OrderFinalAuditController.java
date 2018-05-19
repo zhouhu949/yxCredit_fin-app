@@ -1,11 +1,14 @@
 package com.zw.rule.web.customer.controller;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.Order;
+import com.zw.rule.customer.service.CustomerService;
 import com.zw.rule.customer.service.OrderService;
 import com.zw.rule.finalOrderAudit.service.IFinalOrderAuditService;
 import com.zw.rule.mybatis.ParamFilter;
@@ -15,6 +18,7 @@ import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.PropertiesUtil;
 import com.zw.rule.web.util.UserContextUtil;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +28,10 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +59,9 @@ public class OrderFinalAuditController {
 
     @Resource
     private OrderService orderService;
+
+    @Resource
+    private CustomerService customerService;
 
     @GetMapping("listPage")
     public String listPage(String leftStatus){
@@ -226,23 +235,7 @@ public class OrderFinalAuditController {
         finalOrderAuditService.bindCardPayCallback(map);
     }
 
-    @GetMapping("examineDetails")
-    public ModelAndView details(String orderId, String customerId) throws  Exception{
-        ModelAndView modelAndView = new ModelAndView("customerManage/customerFinalPage");
-        Order order = orderService.selectById(orderId);
-        modelAndView.addObject("order",order);
-        //获取审核人意见等信息
-        Map map=new HashedMap();
-        map.put("orderId",orderId);
-        map.put("nodeId","5");
-        List<ProcessApproveRecord> list=orderService.getApproveSuggestion(map);
-        if(list.size()>0){
-            String time=list.get(0).getCommitTime();
-            list.get(0).setCommitTime(time.substring(0,4)+"-"+time.substring(4,6)+"-"+time.substring(6,8)+" "+time.substring(8,10)+":"+time.substring(10,12)+":"+time.substring(12,14));
-            modelAndView.addObject("processApproveRecord",list.get(0));//2018 01 13 17 29 13
-        }
-        return  modelAndView;
-    }
+
 
 
     @PostMapping("auditOrder")
@@ -302,4 +295,48 @@ public class OrderFinalAuditController {
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
     }
+    /***************************************************碧友信***************************************************/
+
+
+
+    /**
+     * 获取订单信息和银行信息
+     * @author 仙海峰
+     * @param orderId
+     * @param customerId
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("examineDetails")
+    public ModelAndView details(String orderId, String customerId) throws  Exception{
+        ModelAndView modelAndView = new ModelAndView("customerManage/customerFinalPage");
+        Map order = orderService.getOrderAndBank(orderId);
+        Map customer = customerService.getCustomerById(customerId);
+        List linkmanList = customerService.getCustomerLinkMan(customerId);
+
+
+        //获取身份证号码
+
+        if(customer !=null){
+            String card =customer.get("card").toString();
+            //截取出生年月
+            card = card.substring(6,14);
+            //转化成时间格式
+            Date date = DateUtils.strConvertToDate2(DateUtils.STYLE_3, card);
+            //算出年龄
+            long age = (System.currentTimeMillis()-date.getTime())/(1000*60*60*24*365L);
+
+            customer.put("age",age);
+            //获取审核人意见等信息
+        }
+
+
+        modelAndView.addObject("order",order);
+        modelAndView.addObject("customer",customer);
+        modelAndView.addObject("linkmanList",linkmanList);
+        return  modelAndView;
+    }
+
+
+
 }

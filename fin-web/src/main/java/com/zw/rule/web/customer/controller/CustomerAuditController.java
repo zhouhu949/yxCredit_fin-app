@@ -115,21 +115,6 @@ public class CustomerAuditController {
         return new Response(pageInfo);
     }
 
-    //订单列表
-    @PostMapping("getSubmitList")
-    @ResponseBody
-    public Response getSubmitList(@RequestBody ParamFilter queryFilter){
-        Map map=queryFilter.getParam();
-        map.put("orgid", UserContextUtil.getOrganId());
-        map.put("account", UserContextUtil.getAccount());
-        //获取订单访问权限
-        map=orderService.getJurisdiction(map);
-        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
-        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List list = orderService.getSubmitList(map);
-        PageInfo pageInfo = new PageInfo(list);
-        return new Response(pageInfo);
-    }
     @PostMapping("approved")
     @ResponseBody
     @WebLogger("总部审核通过")
@@ -627,6 +612,30 @@ public class CustomerAuditController {
         PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
         String url =prop.get("ruleUrlSP")+"/szt/jxlQuestion/submitAnswer";
         return  customerAuditService.addAnswer(list,url);
+    }
+
+    /*****************************************碧友信***********************************************************/
+
+
+    /**
+     * 显示所有注册用户订单列表
+     * @author 仙海峰
+     * @param queryFilter
+     * @return
+     */
+    @PostMapping("getSubmitList")
+    @ResponseBody
+    public Response getSubmitList(@RequestBody ParamFilter queryFilter){
+        Map map=queryFilter.getParam();
+        map.put("orgid", UserContextUtil.getOrganId());
+        map.put("account", UserContextUtil.getAccount());
+        //获取订单访问权限
+        //map=orderService.getJurisdiction(map);
+        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
+        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
+        List list = orderService.getAllOrderList(map);
+        PageInfo pageInfo = new PageInfo(list);
+        return new Response(pageInfo);
     }
 
 }

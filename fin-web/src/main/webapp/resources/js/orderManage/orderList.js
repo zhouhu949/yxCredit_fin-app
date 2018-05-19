@@ -87,15 +87,39 @@ $(function (){
             },
             "order": [],
             "columns": [
-                {"data": null ,"searchable":false,"orderable" : false},
-                {"data": "orderNo","orderable" : false},
-                {"data": "merchantName","orderable" : false},
-                {"data": "customerName","orderable" : false},
-                {"data": "card","orderable" : false},
-                {"data": "tel","orderable" : false},
-                {"data": "creatTime","orderable" : false,
+                {"data": null ,"searchable":false,"orderable" : false},//序号
+                {"data": "orderNo","orderable" : false},//订单编号
+                {"data": "customerName","orderable" : false},//客户姓名
+                {"data": "card","orderable" : false},//身份证号码
+                {"data": "tel","orderable" : false},//电话号码
+                {"data": "productName","orderable" : false},//产品名称
+                {"data": "applayMoney","orderable" : false},//申请金额
+                {"data": "periods","orderable" : false},//申请期限
+                {"data": "applayTime","orderable" : false },//申请时间
+                //订单状态
+                {"data": "orderState","orderable" : false,
                     "render": function (data, type, row, meta) {
-                        return  formatTime(data);
+                        if(data==1){
+                            return "待申请";
+                        }else if(data==2){
+                            return "审核中";
+                        }else if(data==3){
+                            return "待签约";
+                        }else if(data==4){
+                            return "待放款";
+                        }else if(data==5){
+                            return "待还款";
+                        }else if(data==6){
+                            return "已结清";
+                        }else if(data==7){
+                            return "已结清";
+                        }else if(data==8){
+                            return "申请失败";
+                        }else if(data==9){
+                            return "已放弃";
+                        }else {
+                            return "未知状态";
+                        }
                     }
                 },
                 // { "data": "orderSubmissionTime","orderable" : false,
@@ -105,69 +129,29 @@ $(function (){
                 // },
                 // {"data": "provinces","orderable" : false},
                 // {"data": "city","orderable" : false},
-                {"data": "productTypeName","orderable" : false},
-                {"data": "productNameName","orderable" : false},
-                {"data": null, "searchable": false, "orderable": false,
+
+             /*   {"data": null, "searchable": false, "orderable": false,
                     "render": function (data, type, row, meta) {
                         return data.merchandiseBrand+data.merchandiseModel;
                     }
-                },
-                {"data": "amount","orderable" : false},
-                {"data": "predictPrice","orderable" : false},
-                {"data": "applayMoney","orderable" : false,
+                },*/
+
+               /* {"data": "applayTime","orderable" : false},*/
+               /* {"data": "applayMoney","orderable" : false,
                     "render": function (data, type, row, meta) {
                         return data ? parseFloat(data).toFixed(2) : "";
                     }},
-                {"data": "periods","orderable" : false},
-                {"data": "state","orderable" : false,
-                    "render": function (data, type, row, meta) {
-                        if(data.toString()=="0"){
-                            return "未提交";
-                        }else if(data.toString()=="1"){
-                            return "借款申请";
-                        }else if(data.toString()=="2"){
-                            return "自动化审批通过";
-                        }else if(data.toString()=="3"){
-                            return "自动化审批拒绝";
-                        }else if(data.toString()=="4"){
-                            return "自动化审批异常";
-                        }else if(data.toString()=="5"){
-                            return "人工审批通过";
-                        }else if(data.toString()=="6"){
-                            return "人工审批拒绝";
-                        }else if(data.toString()=="7"){
-                            return "合同确认";
-                        }else if(data.toString()=="8"){
-                            return "放款成功";
-                        }else if(data.toString()=="9"){
-                            return "结清";
-                        }else if(data.toString()=="10"){
-                            return "关闭";
-                        }else if(data.toString()=="-1"){
-                            return "待确认合同";
-                        }else if(data.toString()=="-2"){
-                            return "合同确认";
-                        }else if(data.toString()=="-3"){
-                            return "待付预付款";
-                        }else if(data.toString()=="-4"){
-                            return "待发货";
-                        }else if(data.toString()=="-5"){
-                            return "已发货";
-                        }else if(data.toString()=="-6"){
-                            return "还款中";
-                        }else if(data.toString()=="-7"){
-                            return "退回";
-                        }
-                    }
-                },
+                {"data": "periods","orderable" : false},*/
+
+
                 {
                     "data": "null", "orderable": false,
                     "defaultContent":""
                 }
             ],
             "createdRow": function ( row, data, index,settings,json ) {
-                var btnDel = $('<a class="tabel_btn_style" onclick="orderDetail(\''+data.id+'\',\''+data.customerId+'\',\''+data.state+'\',\''+data.antifraudState+'\',\''+data.tache+'\')">查看</a>');
-                $('td', row).eq(15).append(btnDel);
+                var btnDel = $('<a class="tabel_btn_style" onclick="orderDetail(\''+data.orderId+'\',\''+data.customerId+'\')">查看订单</a>');
+                $('td', row).eq(10).append(btnDel)
             },
             "initComplete" : function(settings,json) {
                 //全选
@@ -239,6 +223,7 @@ $(function (){
 //打开查看页面
 function orderDetail(orderId,customerId){
     var url = "/finalAudit/examineDetails?orderId="+orderId+"&customerId="+customerId;
+    alert(customerId);
     layer.open({
         type : 2,
         title : '审核订单及客户资料',
