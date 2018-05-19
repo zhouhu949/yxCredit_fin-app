@@ -356,7 +356,7 @@ function  editDetail(type,productId,productPeriods,id) {
             yes:function(index, layero){
                 debugger;
                 var productComFee=$("#productComFee").val();
-                var li_xi=$("#li_xi").val();
+                //var li_xi=$("#li_xi").val();
                 // var zhifu_fee=$("#zhifu_fee").val();
                 var asuer_rate=$("#asuer_rate").val();
                 // var fengxian_fee=$("#fengxian_fee").val();
