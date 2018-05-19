@@ -252,6 +252,17 @@
 
                     </div>
 
+                    <%--风控审核信息--%>
+                    <div class="paperBlockfree">
+                        <div class="block_hd" style="float:left;">
+                            <s class="ico icon-file-text-alt"></s><span class="bl_tit">风控审核信息</span>
+                        </div>
+                        <table class="tb_info" id="apiResult" style="font-size:12px;">
+
+                        </table>
+
+                    </div>
+
                 </div>
 
                      <div class="s_floatToolA" id="buttonsApplay" style="text-align: center">

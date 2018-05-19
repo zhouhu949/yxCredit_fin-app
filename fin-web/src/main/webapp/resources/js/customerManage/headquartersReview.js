@@ -12,6 +12,7 @@ $().ready(function(){
         if(data){
             var linkmanList=data.linkmanList;//联系人信息
             //var customer = data.customer;//客户信息
+            var apiResultList= data.apiResultList;//风控审核信息
             var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
         }
 
@@ -31,6 +32,23 @@ $().ready(function(){
 
 
         }
+
+        //风控信息审核列表
+        var html = '';
+        $("#apiResult").empty();
+        for(var i=0;i<apiResultList.length;i++){
+            html=html+ '<tr>'+
+                '<td width="10%" >规则名称：</td>'+
+                '<td width="23%">'+apiResultList[i].sourceName+'</td>'+
+                '<td width="10%" >审核结果：</td>'+
+                '<td width="23%">'+apiResultList[i].message+'</td>'+
+                '<td width="10%" >报告浏览：</td>'+
+                '<td width="23%"> <a href="#">查看报告</a></td>'+
+                '</tr>';
+
+        }
+        $("#apiResult").append(html);
+
         //联系人信息
         var html = '';
         $("#relation").empty();

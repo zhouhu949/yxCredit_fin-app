@@ -455,6 +455,9 @@ public class CustomerController {
         //根据客户ID获取客户信息
         Map customer= customerService.getCustomerById(customerId);
 
+        //获取风控审核信息列表
+        List apiResultList = apiResultService.getApiResultByOrderId(orderId);
+
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 
@@ -464,6 +467,7 @@ public class CustomerController {
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
         map.put("bankCard",bankCard);
+        map.put("apiResultList",apiResultList);
         return new Response(map);
 
 

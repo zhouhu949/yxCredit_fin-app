@@ -34,7 +34,6 @@ $().ready(function(){
         var data = result.data;
         if(data){
             var linkmanList=data.linkmanList;//联系人信息
-            console.log(linkmanList);
             var host = data.hostUrl;//url
             var customer = data.customer;//客户信息
             var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
@@ -162,14 +161,6 @@ function clickNextButton(){
             var owerLimit=parseInt ($("#LowerLimit").val());
             var upperLimit = $("#UpperLimit").val();
             var taskNodeId =  $("#taskNodeId").val();
-            // if(amount < owerLimit){
-            //     layer.msg("预授信额度小于到手金额范围。");
-            //     return;
-            // }
-            // if(amount > upperLimit){
-            //     layer.msg("预授信额度大于到手金额范围。");
-            //     return;
-            // }
             var customerId = $("#customerId").val();
             //Comm.ajaxPost('customerAudit/approved',JSON.stringify({id:orderId,credit:amount,precredit:amount,approveSuggestion:approveSuggestion,customerId:customerId,taskNodeId:taskNodeId})
             Comm.ajaxPost('customerAudit/approved',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,taskNodeId:taskNodeId}) , function (result) {
@@ -213,39 +204,6 @@ function reasonClick(){
             },"application/json");
         }
     })
-}
-function showCumIng(imgList,host) {
-    var html="";
-    var html1="";
-    var html2="";
-    for(var i=0;i<imgList.length;i++){
-        if(imgList[i].type== "1"){//身份证
-            var time=getFirstTime(imgList[i].creatTime);
-            if(imgList[i].isfront=="0"){
-                html+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="'+host+imgList[i].src+'" class="imgShow" onclick="imgShow(this)"></div><p>身份证正面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>';
-            }else{
-                html+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="'+host+imgList[i].src+'" class="imgShow" onclick="imgShow(this)"></div><p>身份证反面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>';
-            }
-        }
-        if(imgList[i].type== "2"){//手持身份证明
-            var time=getFirstTime(imgList[i].creatTime);
-            if(imgList[i].isfront=="0") {
-                html1 += '<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="' + host + imgList[i].src + '" class="imgShow" onclick="imgShow(this)"></div><p>手持身份证明正面</p><p class="hideTime" style="margin:1em;">' + time + '</p></li>';
-            }else{
-                html1+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="'+host+imgList[i].src+'" class="imgShow" onclick="imgShow(this)"></div><p>手持身份证明反面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>';
-            }
-        }
-        if(imgList[i].type== "3"){//工作证明
-            var time=getFirstTime(imgList[i].creatTime);
-            html2+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="'+host+imgList[i].src+'" class="imgShow" onclick="imgShow(this)"></div><p>银行卡</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>';
-        }
-    }
-    $("#showNewImg ul").empty();
-    $("#showNewImg ul").append(html);
-    $("#showNewImg1 ul").empty();
-    $("#showNewImg1 ul").append(html1);
-    $("#showNewImg2 ul").empty();
-    $("#showNewImg2 ul").append(html2);
 }
 //获取当前时间
 function getFirstTime() {
