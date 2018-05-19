@@ -79,11 +79,18 @@
                                 <i style="color: #F60;">*</i>
                             </li>
                             <li style="width:524px;">
+
                                 <label class="label_name">营业执照附件</label>
                                 <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
                                 <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
 
-                               <%-- <textarea name="licenceAttachment"  type="text" style="width:428px;margin-top:10px;margin-left:-4px;" id="licenceAttachment" rows="4" cols="25" maxlength="150"></textarea>--%>
+                                <%--<form method="post" enctype="multipart/form-data" id="myForm">
+                                    <input onchange="UpImg()" type="file" name="uploadImg" class="uploadImg" value="" accept="image/png,image/gif,image/jpeg"/>
+                                    <input type="submit" value="上传图片"/>
+                                </form>--%>
+
+
+                            <%-- <textarea name="licenceAttachment"  type="text" style="width:428px;margin-top:10px;margin-left:-4px;" id="licenceAttachment" rows="4" cols="25" maxlength="150"></textarea>--%>
                             </li>
                         </ul>
                     </div>

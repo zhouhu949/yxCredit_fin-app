@@ -71,7 +71,7 @@ public class OrderFinalAuditController {
 
     @PostMapping("orderList")
     @ResponseBody
-    @WebLogger("查询确认放款")
+    @WebLogger("查询放款审核列表")
     public Response orderList(@RequestBody ParamFilter paramFilter) throws Exception {
         Map map=paramFilter.getParam();
         map.put("orgid", UserContextUtil.getOrganId());
@@ -121,10 +121,10 @@ public class OrderFinalAuditController {
         return  response;
     }
 
-    //商品贷给商户放款
+    //放款审核放款
     @PostMapping("confirmationMerchant")
     @ResponseBody
-    @WebLogger("商品贷确认放款")
+    @WebLogger("确认放款")
     public Response confirmationMerchant(@RequestBody Map param) throws Exception {
         String orderId=param.get("orderId").toString();
         String fangkuanStyle=param.get("fangkuanStyle").toString();
@@ -133,19 +133,9 @@ public class OrderFinalAuditController {
         Map<String,Object> map= new HashedMap();
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
-        PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-        String pfxPath = ResourceUtils.getFile("classpath:properties/m_pri.pfx").getPath();
-        String cerPath = ResourceUtils.getFile("classpath:properties/baofoo_pub.cer").getPath();
-        map.put("pfxPath",pfxPath);
-        map.put("cerPath",cerPath);
-        map.put("memberId",prop.get("baofu.memberId"));
-        map.put("terminalId",prop.get("baofu.terminalId"));
-        map.put("loanUrl",prop.get("baofu.loanUrl"));
-        map.put("debitUrl",prop.get("baofu.debitUrl"));
-        map.put("loanQueryUrl",prop.get("baofu.loanQueryUrl"));
-        map.put("keyStorePassword",prop.get("baofu.keyStorePassword"));
+
+
         map.put("orderId",orderId);
-        map.put("appHGUrl",prop.get("appHGUrlSP"));
         String responseMsg;
         if("xianxia".equals(fangkuanStyle)){
             responseMsg=finalOrderAuditService.confirmationMerchantXianXia(map);

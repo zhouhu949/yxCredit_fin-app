@@ -342,11 +342,12 @@ function showSalesmanOrders(orderId){
                         {"data": "operatorName","orderable" : false},//操作人
                       /*  {"data": "operatorType", "orderable": false},//操作人类型*/
                         {"data": "creatTimeLog","orderable" : false,"render":function (data, type, row, meta) {
-                            if(data !=null && data !=''){
+                            /*if(data !=null && data !=''){
                                 return formatTime(data);
                             }else {
                                 return '';
-                            }
+                            }*/
+                                return '';
                         }},//创建时间
                         {"data": "tache","orderable" : false},//操作环节
                         {"data": "changeValue","orderable" : false},//操作具体描述

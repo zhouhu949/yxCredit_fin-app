@@ -1,5 +1,6 @@
 package com.zw.rule.mapper.approveRecord;
 
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.mybatis.ParamFilter;
 
@@ -11,6 +12,8 @@ public interface ProcessApproveRecordMapper {
     int insert(ProcessApproveRecord record);
 
     int insertSelective(ProcessApproveRecord record);
+
+    int insertOrderOperRecord(OrderOperationRecord record);
 
     ProcessApproveRecord selectByPrimaryKey(String id);
 

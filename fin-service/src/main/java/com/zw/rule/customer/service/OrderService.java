@@ -125,4 +125,11 @@ public interface OrderService {
      */
     Map getOrderAndBank (String orderId);
 
+    /**
+     * 获取风控审核列表
+     * @param map
+     * @return
+     */
+    List findWindControlAuditList(Map map);
+
 }

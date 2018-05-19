@@ -1159,8 +1159,8 @@
             <if test="applayMoney!=null and applayMoney!=''">
                 applay_money=#{applayMoney},
             </if>
-            <if test="state!=null and state!=''">
-                state=#{state},
+            <if test="orderState != null and orderState!=''">
+                Order_state=#{orderState},
             </if>
             <if test="answerState!=null and answerState!=''">
                 answer_state=#{answerState},
@@ -1519,6 +1519,61 @@
         FROM mag_order
         <where>
             1=1
+            <if test="customerName != null and customerName != ''">
+                and CUSTOMER_NAME like '%${customerName}%'
+            </if>
+
+            <if test="condition != '' and condition != null ">
+                and Order_state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and CREAT_TIME &lt;= #{endTime}
+            </if>
+
+        </where>
+        order by CREAT_TIME desc
+    </select>
+
+
+    <!--获取风控审核订单列表-->
+    <select id="findWindControlAuditList" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ID AS orderId , order_no AS orderNo ,  CUSTOMER_ID AS customerId , CUSTOMER_NAME AS customerName , CARD AS card ,
+        TEL AS tel , product_name_name AS productName , applay_money AS applayMoney ,
+        PERIODS AS periods , applay_time AS applayTime , Order_state AS orderState
+        FROM mag_order
+        <where>
+            Order_state = 2
+            <if test="customerName != null and customerName != ''">
+                and CUSTOMER_NAME like '%${customerName}%'
+            </if>
+
+            <if test="condition != '' and condition != null ">
+                and Order_state=#{condition}
+            </if>
+
+            <if test="beginTime != null and beginTime != ''">
+                and CREAT_TIME &gt;= #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and CREAT_TIME &lt;= #{endTime}
+            </if>
+
+        </where>
+        order by CREAT_TIME desc
+    </select>
+
+    <!--获取放款审核订单列表-->
+    <select id="findLoanSincereList" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT ID AS orderId , order_no AS orderNo ,  CUSTOMER_ID AS customerId , CUSTOMER_NAME AS customerName , CARD AS card ,
+        TEL AS tel , product_name_name AS productName , applay_money AS applayMoney ,
+        PERIODS AS periods , applay_time AS applayTime , Order_state AS orderState
+        FROM mag_order
+        <where>
+            Order_state = 4
             <if test="customerName != null and customerName != ''">
                 and CUSTOMER_NAME like '%${customerName}%'
             </if>

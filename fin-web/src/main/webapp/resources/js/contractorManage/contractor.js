@@ -177,6 +177,29 @@ $(function (){
     }).draw()
 });
 
+function uploadFile() {
+    $.ajax({
+        type : "POST",
+        url : "findContractorByRoleId",
+        data : {
+            Name : $("#file").val(),
+        },
+        async : false,
+        dataType : 'json',
+        success : function(data) {
+            var html="";
+            html+="<option value=''>请选择</option>";
+            $.each(data.data,function(index,result) {
+                html+="<option value="+result.id+">"+result.contractorName+"</option>"
+            });
+            $("select[name='contractorList']").html(html);
+
+        }
+    });
+}
+
+
+
 //下面用于图片上传预览功能
 function setImagePreview1() {
     var docObj=document.getElementById("file");
@@ -280,6 +303,7 @@ function updateContractor(sign,id) {
                         linkmanPhone:linkmanPhone,
                         credit:credit,
                         userId:userId,
+                        licenceAttachment : $("#file").val(),
                         state:parseInt(state)
                     };
                     Comm.ajaxPost(
@@ -392,19 +416,6 @@ function updateContractor(sign,id) {
 function deleteUser(userId){
     var userIds = new Array();
     userIds.push(userId);
-    // var selectArray = $("#User_list tbody input:checked");
-    // if(!selectArray || selectArray.length==0){
-    //     layer.msg("请选择用户");
-    //     return;
-    // }
-    // var userIds = new Array();
-    // $.each(selectArray,function(i,e){
-    //     var val = $(this).val();
-    //     userIds.push(val);
-    // });
-    // if(userIds.length==0){
-    //     return;
-    // }
     layer.confirm('是否删除用户？', {
         btn : [ '确定', '取消' ]
     }, function() {

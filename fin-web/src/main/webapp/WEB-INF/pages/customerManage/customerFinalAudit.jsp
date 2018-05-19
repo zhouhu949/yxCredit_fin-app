@@ -153,7 +153,7 @@
                         <input name="tel" type="text" class="text_add"/>
                     </label>
                 </li>
-                <li >
+                <%--<li >
                     <label class="lf">审核状态</label>
                     <label>
                         <select name="condition" size="1" id="isLock" style="width:163px;margin-left: 10px;height: 28px" >
@@ -163,7 +163,7 @@
                             <option value="3">已放款</option>
                         </select>
                     </label>
-                </li>
+                </li>--%>
                 <li><label class="lf">创建时间</label>
                     <label>
                         <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
@@ -191,23 +191,16 @@
                     <thead>
                     <tr>
                         <th>序号</th>
-                        <th></th>
                         <th>订单编号</th>
                         <th>客户名称</th>
                         <th>身份证号</th>
                         <th>手机号码</th>
-                        <th>申请时间</th>
-                        <th>产品类型</th>
                         <th>产品名称</th>
-                        <th>商户名称</th>
-                        <th>商品金额</th>
-                        <th>首付金额</th>
                         <th>申请金额</th>
                         <th>申请期限</th>
-                        <th>放款状态</th>
+                        <th>申请时间</th>
                         <th>状态</th>
                         <th>操作</th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -216,7 +209,7 @@
             </div>
         </div>
 
-        <%--//对应的贷款订单--%>
+       <%-- &lt;%&ndash;//对应的贷款订单&ndash;%&gt;
         <div class="Manager_style" id="cus_order" style="display: none">
             <div class="order_list">
                 <table style="cursor:pointer;" id="withdrawal_list" cellpadding="0" cellspacing="0" class="table table-striped table-bordered table-hover">
@@ -238,7 +231,7 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>
 <div style="display: none;" id="imgDisplay">
     <img src="" alt="">

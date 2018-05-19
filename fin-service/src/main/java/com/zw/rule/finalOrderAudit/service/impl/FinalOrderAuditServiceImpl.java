@@ -182,18 +182,7 @@ public class FinalOrderAuditServiceImpl implements IFinalOrderAuditService {
 
     @Override
     public List queryOrders(Map map) throws Exception {
-//        if ("admin".equals(map.get("account"))){
-//            map.put("admin",map.get("account"));
-//        }else {
-//            SysDepartment sysDepartment=sysDepartmentMapper.findById((Long) map.get("orgid"));
-//            //Pid=0是总公司
-//            if (sysDepartment.getPid()==0){
-//                map.put("headquarters",sysDepartment.getId());
-//            }else {
-//                map.put("branch",sysDepartment.getId());
-//            }
-//        }
-        return orderMapper.getWithdrawalsList(map);
+        return orderMapper.findLoanSincereList(map);
     }
 
     @Override

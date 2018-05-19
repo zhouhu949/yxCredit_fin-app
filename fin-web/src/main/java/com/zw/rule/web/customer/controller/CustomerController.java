@@ -97,11 +97,6 @@ public class CustomerController {
     @Autowired
     private ScoreCardService scoreCardService;
 
-
-
-
-
-
     @PostMapping("quotaList")
     @ResponseBody
     @WebLogger("查询客户提额信息")
@@ -122,59 +117,6 @@ public class CustomerController {
         response.setMsg("修改成功！");
         return response;
     }
-
-//        public static void main(String args[]) {
-//            try {
-//                List<String> headList=new ArrayList<>();
-//                headList.add("号码");
-//                headList.add("号码归属地");
-//                headList.add("号码标注");
-//                headList.add("需求类别");
-//                headList.add("通话次数");
-//                headList.add("通话时长");
-//                headList.add("呼出次数");
-//                headList.add("呼出时间");
-//                headList.add("呼入次数");
-//                headList.add("呼入时间");
-//                headList.add("关系推测");
-//                headList.add("最近一周联系次数");
-//                headList.add("最近一月联系次数");
-//                headList.add("最近三月联系次数");
-//                headList.add("三个月以上联系次数");
-//                headList.add("凌晨联系次数");
-//                headList.add("上午联系次数");
-//                headList.add("中午联系次数");
-//                headList.add("下午联系次数");
-//                headList.add("晚上联系次数");
-//                headList.add("是否全天联系");
-//                headList.add("周中联系次数");
-//                headList.add("周末联系次数");
-//                headList.add("节假日联系次数");
-//                List<Map<String,Object>> listValue=new ArrayList<>();
-//                Map<String,Object> mapRule=new HashedMap();
-//
-//
-//                mapRule.put("phone","18019565938");
-//                mapRule.put("name","周军");
-//                mapRule.put("idNo","341124198602051430");
-//                String jsonPdf= HttpUtil.doGet("http://120.55.51.242:8080/szt/jxl/creditQuery", mapRule);
-//                JSONArray  jsonArray=JSON.parseObject(jsonPdf).getJSONObject("reportData").getJSONArray("contact_list");
-//                if (jsonArray!=null&&jsonArray.size()>0){
-//                    for (int i=0;i<jsonArray.size();i++){
-//                        listValue.add((Map<String, Object>) jsonArray.get(i));
-//                    }
-//                    ContextToPdf.insertPDF(listValue,headList,"C:\\test\\test.pdf");
-//                }
-//            }catch (Exception e){
-//                String SS="";
-//            }
-//
-//        }
-
-
-
-
-
 
     /**
      * 风险评估

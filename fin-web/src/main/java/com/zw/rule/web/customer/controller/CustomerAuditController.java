@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
+import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.*;
 import com.zw.rule.customer.service.CustomerAuditService;
@@ -70,6 +71,9 @@ public class CustomerAuditController {
     private DictService dictService;
 
     @Resource
+    private ContractorService contractorService;
+
+    @Resource
     private RuleResultService ruleResultService;
 
     /**
@@ -90,8 +94,14 @@ public class CustomerAuditController {
     @GetMapping("details")
     public ModelAndView details(String orderId, String customerId) throws  Exception{
         ModelAndView modelAndView = new ModelAndView("customerManage/headquartersReview");
-          Order order = orderService.selectById(orderId);
-          modelAndView.addObject("order",order);
+        Map order = orderService.getOrderAndBank(orderId);
+        Map customer = customerService.getCustomerById(customerId);
+        List linkmanList = customerService.getCustomerLinkMan(customerId);
+        //TODO 需要获取建议额度［应发工资－最低日工资标准＊期数（日）］＊80%
+        modelAndView.addObject("order",order);
+        modelAndView.addObject("customer",customer);
+
+
         return  modelAndView;
     }
 
@@ -110,7 +120,7 @@ public class CustomerAuditController {
         map=orderService.getJurisdiction(map);
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List list = orderService.getOrderListSP(queryFilter.getParam());
+        List list = orderService.findWindControlAuditList(queryFilter.getParam());
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
     }
@@ -161,35 +171,36 @@ public class CustomerAuditController {
 
     @PostMapping("approvedSP")
     @ResponseBody
-    @WebLogger("总部审核通过商品")
+    @WebLogger("风控审核通过")
     public Response approvedSP(@RequestBody String str) throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
-        map.put("state","5");
+        map.put("orderState","3");//待签约
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
-        map.put("nodeId","5");//5是总部审核
+        map.put("nodeId","5");//5是风控审核
+        map.put("approType","pass");
         orderService.addApproveRecord(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
         logsMap.put("handlerId",user.getUserId());
         logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","5");
-        logsMap.put("tache","总部审核");
-        logsMap.put("changeValue","总部审核通过");
+        logsMap.put("state","2");
+        logsMap.put("tache","风控审核");
+        logsMap.put("changeValue","风控审核通过");
         orderService.addOrderLogs(logsMap);
         Response response = new Response();
         response.setMsg("审核通过");
-        //调app接口推送
+        /*//调app接口推送
         try {
             PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
             String url =prop.get("appHGUrlSP")+"/orderMessage/orderPushMessage?state=3&orderId="+map.get("id");
             HttpClientUtil.getInstance().sendHttpGet(url);
-        }catch (Exception e){}
+        }catch (Exception e){}*/
         return response;
     }
     @PostMapping("approvalRefused")
@@ -207,49 +218,44 @@ public class CustomerAuditController {
         map.put("type","1");
         map.put("nodeId","5");//5是总部审核
         orderService.addApproveRecord(map);
-        Map<String,Object> logsMap=new HashedMap();
+        /*Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
         logsMap.put("handlerId",user.getUserId());
         logsMap.put("handlerName",user.getTrueName());
         logsMap.put("state","6");
         logsMap.put("tache","总部审核");
         logsMap.put("changeValue","总部审核拒绝");
-        orderService.addOrderLogs(logsMap);
+        orderService.addOrderLogs(logsMap);*/
         Response response = new Response();
         response.setMsg("审核拒绝");
-        PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-        String url =prop.get("appHGUrl")+"/orderMessage/orderPushMessage?state=6&orderId="+map.get("id");
-        HttpClientUtil.getInstance().sendHttpGet(url);
         return response;
     }
 
     @PostMapping("approvalRefusedSP")
     @ResponseBody
-    @WebLogger("总部审核拒绝")
+    @WebLogger("风控审核拒绝")
     public Response approvalRefusedSP(@RequestBody String str)throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
-        map.put("state","6");
+        map.put("orderState","8");//申请失败
         orderService.updateOrderState(map);
         map.put("result","0");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
+        map.put("approType","refuse");
         map.put("type","1");
-        map.put("nodeId","5");//5是总部审核
+        map.put("nodeId","5");//5是风控审核
         orderService.addApproveRecord(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
         logsMap.put("handlerId",user.getUserId());
         logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","6");
-        logsMap.put("tache","总部审核");
-        logsMap.put("changeValue","总部审核拒绝");
+        logsMap.put("state","8");
+        logsMap.put("tache","风控审核");
+        logsMap.put("changeValue","风控审核拒绝");
         orderService.addOrderLogs(logsMap);
         Response response = new Response();
         response.setMsg("审核拒绝");
-        PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-        String url =prop.get("appHGUrl")+"/orderMessage/orderPushMessage?state=9&orderId="+map.get("id");
-        HttpClientUtil.getInstance().sendHttpGet(url);
         return response;
     }
     @GetMapping("listPagePast")

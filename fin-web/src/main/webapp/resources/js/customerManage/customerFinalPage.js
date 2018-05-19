@@ -34,6 +34,7 @@ $().ready(function(){
         var data = result.data;
         if(data){
             var linkmanList=data.linkmanList;//联系人信息
+            console.log(linkmanList);
             var host = data.hostUrl;//url
             var customer = data.customer;//客户信息
             var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
@@ -53,6 +54,9 @@ $().ready(function(){
 
 
         }
+
+        //数据写入隐藏域
+        $("#orderId").val(orderId);
 
         //联系人信息
         var html = '';

@@ -33,7 +33,7 @@
                         <input name="customerName" type="text" class="text_add"/>
                     </label>
                 </li>
-                <li><label class="lf">身份证号</label>
+               <%-- <li><label class="lf">身份证号</label>
                     <label>
                         <input name="card" type="text" class="text_add"/>
                     </label>
@@ -42,8 +42,8 @@
                     <label>
                         <input name="tel" type="text" class="text_add"/>
                     </label>
-                </li>
-                <li >
+                </li>--%>
+               <%-- <li >
                     <label class="lf">审核状态</label>
                     <label>
                         <select name="condition" size="1" id="isLock" style="width:163px;margin-left: 10px;height: 28px" >
@@ -51,7 +51,7 @@
                             <option value="2">已审核</option>
                         </select>
                     </label>
-                </li>
+                </li>--%>
                 <li><label class="lf">创建时间</label>
                     <label>
                         <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
@@ -83,16 +83,10 @@
                         <th>客户名称</th>
                         <th>身份证号</th>
                         <th>手机号码</th>
-                        <th>申请时间</th>
-                        <%--<th id = 'alterTime'>进入审核池时间</th>--%>
-                        <%--<th>省份</th>--%>
-                        <%--<th>城市</th>--%>
-                        <th>产品类型</th>
                         <th>产品名称</th>
-                        <th>商品金额</th>
-                        <th>首付金额</th>
                         <th>申请金额</th>
                         <th>申请期限</th>
+                        <th>申请时间</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>

@@ -7,6 +7,7 @@ import com.zw.base.util.DateUtils;
 import com.zw.base.util.TraceLoggerUtil;
 import com.zw.jiguang.JiGuangUtils;
 import com.zw.rule.SendMessage.service.SendMessageFactory;
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.customer.po.*;
 import com.zw.rule.customer.service.OrderService;
@@ -29,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -153,22 +155,23 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Boolean addApproveRecord(Map map) {
-        ProcessApproveRecord processApproveRecord = new ProcessApproveRecord();
+        OrderOperationRecord orderOperationRecord = new OrderOperationRecord();
         String uuid = UUID.randomUUID().toString();
-        processApproveRecord.setId(uuid);
-        processApproveRecord.setCreateTime(DateUtils.getDateString(new Date()));
-        processApproveRecord.setCommitTime(DateUtils.getDateString(new Date()));
-        processApproveRecord.setOrderId(map.get("id").toString());
-        processApproveRecord.setRelId(map.get("customerId").toString());
-        processApproveRecord.setType(map.get("type").toString());//1客户id，2商户id
-        processApproveRecord.setState(map.get("state").toString());
-        processApproveRecord.setResult(map.get("result").toString());//结果 1通过  0拒绝
-        processApproveRecord.setNodeId(map.get("nodeId").toString());//节点id
-        processApproveRecord.setApproveSuggestion(map.get("approveSuggestion").toString());//审批意见
-        processApproveRecord.setHandlerId(map.get("handlerId").toString());//处理人id
-        processApproveRecord.setHandlerName(map.get("handlerName").toString());//处理人姓名
-        int num = processApproveRecordMapper.insertSelective(processApproveRecord);
-        if (num > 0 && map.get("result").toString() == "0")
+        orderOperationRecord.setId(uuid);
+        orderOperationRecord.setDescription(map.get("approveSuggestion").toString());//备注
+        orderOperationRecord.setOperationTime(DateUtils.getDateString(new Date()));
+        orderOperationRecord.setOperationNode(3);//人工审核
+        orderOperationRecord.setOperationResult(3);//拒绝
+        if(map.get("approType").toString().equals("pass")) {
+            orderOperationRecord.setOperationResult(2);//通过
+            orderOperationRecord.setAmount(new BigDecimal(map.get("predictPrice").toString()));//审批额度
+        }
+        orderOperationRecord.setEmpId(map.get("handlerId").toString());
+        orderOperationRecord.setEmpName(map.get("handlerName").toString());
+        orderOperationRecord.setOrderId(map.get("id").toString());//订单id
+        orderOperationRecord.setStatus(1);//1有效，0无效
+        int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
+        if (num > 0)
         {
             Order order = orderMapper.selectByPrimaryKey(map.get("id").toString());
             AppUser user = new AppUser();
@@ -214,17 +217,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List getOrderListSP(Map map) {
-//        if ("admin".equals(map.get("account"))){
-//            map.put("admin",map.get("account"));
-//        }else {
-//            SysDepartment sysDepartment=sysDepartmentMapper.findById((Long) map.get("orgid"));
-//            //Pid=0是总公司
-//            if (sysDepartment.getPid()==0){
-//                map.put("headquarters",sysDepartment.getId());
-//            }else {
-//                map.put("branch",sysDepartment.getId());
-//            }
-//        }
         return orderMapper.getOrderListSP(map);
     }
 
@@ -906,5 +898,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Map getOrderAndBank(String orderId) {
         return orderMapper.getOrderAndBank(orderId);
+    }
+
+    @Override
+    public List findWindControlAuditList(Map map) {
+        return orderMapper.findWindControlAuditList(map);
     }
 }

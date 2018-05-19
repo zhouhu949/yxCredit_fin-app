@@ -47,17 +47,20 @@ public class ContractorServiceImpl implements ContractorService {
         //获取根目录
         String root = request.getSession().getServletContext().getRealPath("/");
         //捕获前台传来的图片，并用uuid命名，防止重复
-        Map<String, Object> allMap = UploadFile.getFile(request,root+ File.separator + "firstAudit", id);
+        Map<String, Object> allMap = UploadFile.getFile(request,root+ File.separator + "contractor", id);
         List<Map<String, Object>> list = (List<Map<String, Object>>) allMap.get("fileList");
         //当前台有文件时，给图片名称变量赋值
         if (!list.isEmpty()) {
             Map<String, Object> fileMap = list.get(0);
-            fileName = "/firstAudit/"+(String) fileMap.get("Name");
+            fileName = "/contractor/"+(String) fileMap.get("Name");
         }
         List imageList = new ArrayList();
         imageList.add(fileName);
         return imageList;
     }
+
+
+
 
     @Override
     public List<Contractor> findContractorList(ParamFilter paramFilter){

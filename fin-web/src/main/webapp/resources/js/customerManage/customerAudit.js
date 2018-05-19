@@ -33,53 +33,23 @@ var g_userManage = {
 $(function (){
     var table;
         table = [
-            {"data": null ,"searchable":false,"orderable" : false},
-            {"data": "orderNo","orderable" : false},
-            {"data": "customerName","orderable" : false},
-            {"data": "card","orderable" : false},
-            {"data": "tel","orderable" : false},
-            {"data": "creatTime","orderable" : false,
+            {"data": null ,"searchable":false,"orderable" : false},//序号
+            {"data": "orderNo","orderable" : false},//订单编号
+            {"data": "customerName","orderable" : false},//客户姓名
+            {"data": "card","orderable" : false},//身份证号码
+            {"data": "tel","orderable" : false},//电话号码
+            {"data": "productName","orderable" : false},//产品名称
+            {"data": "applayMoney","orderable" : false},//申请金额
+            {"data": "periods","orderable" : false},//申请期限
+            {"data": "applayTime","orderable" : false },//申请时间
+            //订单状态
+            {"data": "orderState","orderable" : false,
                 "render": function (data, type, row, meta) {
-                    return  formatTime(data);
-                }
-            },
-            // { "data": "orderSubmissionTime","orderable" : false,
-            //     "render": function (data, type, row, meta) {
-            //         return  formatTime(data);
-            //     }
-            // },
-            // {"data": "provinces","orderable" : false},
-            // {"data": "city","orderable" : false},
-            {"data": "productTypeName","orderable" : false},
-            {"data": "productNameName","orderable" : false},
-            {"data": "amount","orderable" : false},
-            {"data": "predictPrice","orderable" : false},
-            {"data": "applayMoney","orderable" : false},
-            {"data": "periods","orderable" : false},
-            {"data": "state","orderable" : false,
-                "render": function (data, type, row, meta) {
-                    if(data.toString()=="0"){
-                        return "未提交";
-                    }else if(data.toString()=="1"){
-                        return "借款申请";
-                    }else if(data.toString()=="2"){
-                        return "自动化审批通过";
-                    }else if(data.toString()=="3"){
-                        return "自动化审批拒绝";
-                    }else if(data.toString()=="4"){
-                        return "自动化审批异常";
-                    }else if(data.toString()=="5"){
-                        return "人工审批通过";
-                    }else if(data.toString()=="6"){
-                        return "人工审批拒绝";
-                    }else if(data.toString()=="7"){
-                        return "合同确认";
-                    }else if(data.toString()=="8"){
-                        return "放款成功";
-                    }else if(data.toString()=="9"){
-                        return "结清";
-                    }else if(data.toString()=="10"){
-                        return "关闭";
+                console.log(data);
+                    if(data==2){
+                        return "待审核";
+                    }else {
+                        return "";
                     }
                 }
             },
@@ -145,30 +115,9 @@ $(function (){
             "order": [],
             "columns": table,
             "createdRow": function ( row, data, index,settings,json ) {
-                var backbtn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="backOrder(\''+data.id+'\')">退回 </a>');
-                var btn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="auditOrder(\''+data.id+'\',\''+data.customerId+'\')">审核 </a>');
-                var seeBtn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="orderSee(\''+data.id+'\',\''+data.customerId+'\')"> 查看 </a>');
-                var btnAnswer;
-                if (data.answerState=="2"){
-                    btnAnswer=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="seeAnswer(\''+data.id+'\',\''+data.customerId+'\')">信用问卷查看 </a>');
-                }else {
-                    btnAnswer=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="loadAnswer(\''+data.id+'\',\''+data.customerId+'\')">信用问卷 </a>');
-                }
-                    // var btn=$('<a   class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="Lingqu(\''+data.id+'\')">领取</a>');
-                var btnAutomation =$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="automation(\''+data.id+'\',\''+data.customerId+'\')"> 发起自动化审核 </a>');
-                if ($("#isLock").val()=="1"){
-                    if(data.state.toString()=="4"){
-                            return $("td", row).eq(13).append(btn).append(btnAutomation);
-                    }else {
-                        return $("td", row).eq(13).append(btn).append(backbtn);
-                    }
-                }else {
-                    if (data.answerState=="2"){
-                        return $("td", row).eq(13).append(seeBtn);
-                    }else {
-                        return $("td", row).eq(13).append(seeBtn);
-                    }
-                }
+                var btn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="auditOrder(\''+data.orderId+'\',\''+data.customerId+'\')">审核 </a>');
+                var seeBtn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="orderSee(\''+data.orderId+'\',\''+data.customerId+'\')"> 查看 </a>');
+                $('td', row).eq(10).append(btn).append(seeBtn);
             },
             "initComplete" : function(settings,json) {
                 //全选

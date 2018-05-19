@@ -83,7 +83,12 @@ public interface OrderMapper {
     //修改对应订单信息
     int updateOrderStatus(Map map);
 
-    List<Order> getWithdrawalsList(Map map);
+    /**
+     * 获取放款审核列表
+     * @param map
+     * @return
+     */
+    List<Order> findLoanSincereList(Map map);
 
     List<Order> getGoldPayment(Map map);
 
@@ -118,4 +123,12 @@ public interface OrderMapper {
      * @return
      */
     Map getOrderAndBank (String orderId);
+
+    /**
+     * 分控审核订单列表
+     * @author luochaofang
+     * @param map
+     * @return
+     */
+    List<Order> findWindControlAuditList(Map map);
 }

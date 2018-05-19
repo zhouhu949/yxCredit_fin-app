@@ -14,8 +14,9 @@ var g_userManage = {
         }
         if (g_userManage.fuzzySearch) {
             param.customerName = $("input[name='customerName']").val();//客户名称
-            param.card = $("input[name='card']").val();//身份证号
-            param.tel = $("input[name='tel']").val();//手机号码
+            param.condition=$('#isLock').val(); //获取订单状态
+           /* param.card = $("input[name='card']").val();//身份证号
+            param.tel = $("input[name='tel']").val();//手机号码*/
             var beginTime = $("#beginTime").val();
             if(beginTime != null && beginTime != ''){
                 param.beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
@@ -33,55 +34,25 @@ var g_userManage = {
     }
 };
 $(function (){
-
+    alert();
     var table;
-        debugger;
         table = [
-            {"data": null ,"searchable":false,"orderable" : false},
-            {"data": "id","orderable" : false},
-            {"data": "customerName","orderable" : false},
-            {"data": "card","orderable" : false},
-            {"data": "tel","orderable" : false},
-            {"data": "creatTime","orderable" : false,
+            {"data": null ,"searchable":false,"orderable" : false},//序号
+            {"data": "orderNo","orderable" : false},//订单编号
+            {"data": "customerName","orderable" : false},//客户姓名
+            {"data": "card","orderable" : false},//身份证号码
+            {"data": "tel","orderable" : false},//电话号码
+            {"data": "productName","orderable" : false},//产品名称
+            {"data": "applayMoney","orderable" : false},//申请金额
+            {"data": "periods","orderable" : false},//申请期限
+            {"data": "applayTime","orderable" : false },//申请时间
+            //订单状态
+            {"data": "orderState","orderable" : false,
                 "render": function (data, type, row, meta) {
-                    return  formatTime(data);
-                }
-            },
-            // { "data": "orderSubmissionTime","orderable" : false,
-            //     "render": function (data, type, row, meta) {
-            //         return  formatTime(data);
-            //     }
-            // },
-            // {"data": "provinces","orderable" : false},
-            // {"data": "city","orderable" : false},
-            {"data": "productTypeName","orderable" : false},
-            {"data": "productNameName","orderable" : false},
-            {"data": "amount","orderable" : false},
-            {"data": "periods","orderable" : false},
-            {"data": "state","orderable" : false,
-                "render": function (data, type, row, meta) {
-                    if(data.toString()=="0"){
-                        return "未提交";
-                    }else if(data.toString()=="1"){
-                        return "借款申请";
-                    }else if(data.toString()=="2"){
-                        return "自动化审批通过";
-                    }else if(data.toString()=="3"){
-                        return "自动化审批拒绝";
-                    }else if(data.toString()=="4"){
-                        return "自动化审批异常";
-                    }else if(data.toString()=="5"){
-                        return "人工审批通过";
-                    }else if(data.toString()=="6"){
-                        return "人工审批拒绝";
-                    }else if(data.toString()=="7"){
-                        return "合同确认";
-                    }else if(data.toString()=="8"){
-                        return "放款成功";
-                    }else if(data.toString()=="9"){
-                        return "结清";
-                    }else if(data.toString()=="10"){
-                        return "关闭";
+                    if(data==2){
+                        return "待审核";
+                    }else {
+                        return "";
                     }
                 }
             },
@@ -150,13 +121,7 @@ $(function (){
             "columns": table,
             "createdRow": function ( row, data, index,settings,json ) {
                 var btn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="auditOrder(\''+data.id+'\',\''+data.customerId+'\')">审核 </a>');
-                    // var btn=$('<a   class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="Lingqu(\''+data.id+'\')">领取</a>');
-                var btnAutomation =$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="automation(\''+data.id+'\',\''+data.customerId+'\')"> 发起自动化审核</a>');
-                if(data.state.toString()=="4"){
-                    return $("td", row).eq(11).append(btn).append(btnAutomation);
-                }else {
-                    return $("td", row).eq(11).append(btn);
-                }
+                return $("td", row).eq(11).append(btn);
             },
             "initComplete" : function(settings,json) {
                 //全选

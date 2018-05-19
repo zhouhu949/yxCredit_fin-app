@@ -228,7 +228,7 @@ public class ContractorController {
     }
 
     /**
-     * 上传总包商附件
+     * 上传附件
      * @param request
      * @return
      * @throws Exception
