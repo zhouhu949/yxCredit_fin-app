@@ -28,6 +28,9 @@ $().ready(function(){
     if(orderState == 3){
         artificial.style.display="block";
     };
+    if(orderState == 4){
+        artificial.style.display="block";
+    };
     if(orderState == 5){
         artificial.style.display="block";
         Loan.style.display="block";
