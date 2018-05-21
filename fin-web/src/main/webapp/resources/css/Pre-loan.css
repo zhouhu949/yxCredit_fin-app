@@ -1,0 +1,93 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+    font-size: 14px;
+    
+}
+
+
+ .Pre{
+    display: inline-block;
+  border-bottom: 1px solid #ccc;
+    width: 42%;
+    height: 30px;
+    line-height: 30px;
+}
+.loan{
+    display: inline-block;
+  border-bottom: 1px solid #ccc;
+    width: 49%;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 59px;
+}
+.ant-row{
+    border-bottom: 1px solid #ccc;
+    height: 30px;
+    line-height: 30px;
+}
+ span{
+    display: inline-block;
+    width: 48.2%;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 20px;
+    
+}
+.ant-row .tableRow .ant-col-3{
+    font-size: 14px;    
+    font-weight: normal;
+     text-align: left; 
+     background-color: rgb(255, 255, 255);
+}
+.tableRow1{
+    width:300px;
+    text-align:left;
+    font-weight:normal;
+}
+.tableRow2{
+    border-right:1px solid #ccc;
+}
+.ant-col-5{
+    font-weight:normal;
+    border-bottom:1px solid #ccc;
+    text-align:center;
+}
+.ant-col-3{
+    font-weight:normal;
+    border-bottom:1px solid #ccc;
+    text-align:center;
+}
+h3{
+    margin:10px 0;
+    padding-left: 36px;
+}
+h4{
+    padding-left: 36px;
+    margin: 0 auto;
+}
+.firstRow-Court th{
+    text-align: left;
+    border-bottom:1px solid #ccc;
+    font-weight:normal;
+   
+}
+.firstRow-Court td{
+    text-align: left;
+    border-bottom:1px solid #ccc;
+    padding-left: 10px;
+    /* width: 630px; */
+   
+}
+.name{
+    width: 630px;
+}
+th{
+    padding-left: 20px;
+}
+td{
+    width: 311px;
+}
+.form-detail th{
+    width: 26%;
+}

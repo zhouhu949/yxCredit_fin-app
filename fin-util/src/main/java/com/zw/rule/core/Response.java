@@ -1,6 +1,7 @@
 package com.zw.rule.core;
 
 
+import com.zw.constants.CommonConstants;
 import com.zw.rule.mybatis.page.Page;
 
 public class Response implements ResponseCode {
@@ -14,9 +15,42 @@ public class Response implements ResponseCode {
     private Page page;
 
     //默认为0表示响应正常
-    private int code = 0;
+    private int code = CommonConstants.SUCCESS;
 
     private String msg;
+    /**
+     * 扩展异常方法===============================================================
+     * create by 陈清玉
+     */
+    public static Response error() {
+        return error(CommonConstants.FAIL, "未知异常，请联系管理员");
+    }
+
+    public static Response error(String msg) {
+        return error(CommonConstants.FAIL, msg);
+    }
+
+    public static Response error(Integer code, String msg) {
+        Response r = new Response();
+        r.setCode(code);
+        r.setMsg(msg);
+        return r;
+    }
+
+    public static Response ok(Object data) {
+        Response r = new Response();
+        r.setData(data);
+        return r;
+    }
+
+    public static Response ok(String msg ,Object  data) {
+        Response r = new Response();
+        r.setData(data);
+        r.setMsg(msg);
+        return r;
+    }
+
+
 
     public Response() {
     }

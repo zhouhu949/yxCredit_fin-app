@@ -132,7 +132,7 @@ $().ready(function(){
                 '<td width="10%" >审核结果：</td>'+
                 '<td width="23%">'+apiResultList[i].message+'</td>'+
                 '<td width="10%" >报告浏览：</td>'+
-                '<td width="23%"> <a href="#">查看报告</a></td>'+
+                '<td width="23%"> <a href="./tongDunView">查看报告1</a></td>'+
                 '</tr>';
 
         }

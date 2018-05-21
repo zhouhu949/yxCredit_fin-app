@@ -3,6 +3,7 @@ package com.zw.rule.ApiResult.service.impl;
 
 import com.zw.rule.ApiResult.service.ApiResultService;
 
+import com.zw.rule.apiresult.ApiResult;
 import com.zw.rule.mapper.apiResultMapper.ApiResultMapper;
 
 import com.zw.rule.mybatis.ParamFilter;
@@ -32,6 +33,11 @@ public class ApiResultServiceImpl implements ApiResultService {
     @Override
     public List getApiResultByOrderId(String orderId) {
         return apiResultMapper.getApiResultByOrderId(orderId);
+    }
+
+    @Override
+    public ApiResult getByOrderIdAndSourceCode(String orderId, String sourceCode) {
+        return apiResultMapper.getByOrderIdAndSourceCode(orderId,sourceCode);
     }
 }
 

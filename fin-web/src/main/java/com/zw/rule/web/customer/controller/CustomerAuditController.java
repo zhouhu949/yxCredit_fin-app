@@ -663,4 +663,10 @@ public class CustomerAuditController {
         return new Response(pageInfo);
     }
 
+
+    @GetMapping("/tongDunView")
+    public String tongDunView(){
+        return "common/tongDunView";
+    }
+
 }
