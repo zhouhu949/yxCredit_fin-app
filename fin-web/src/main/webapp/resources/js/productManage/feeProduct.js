@@ -172,11 +172,18 @@ function  editDetail(type,productId,productPeriods,id) {
                 // var fengxian_fee=$("#fengxian_fee").val();
                 // var zhina_fee=$("#zhina_fee").val();
                 var yuqi_fee=$("#yuqi_fee").val();
-                debugger
                 var zbs_jujian_fee = "";
-                $("input[name='zbs_jujian_fee']").each(function(){
+                var flag=false;
+                $("*[name='zbs_jujian_fee']").each(function(){
                     zbs_jujian_fee += $(this).val()+",";
+                    if($(this).val()==""){
+                        flag = true;
+                    }
                 });
+                if(flag){
+                    layer.alert("总包商或居间服务费不能为空！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 // var zongheri_fee=$("#zongheri_fee").val();
                 if($("#productAmount").val()==""){
                     layer.alert("产品名称未选择！",{icon: 2, title:'操作提示'});
@@ -363,9 +370,18 @@ function  editDetail(type,productId,productPeriods,id) {
                 var li_xi=$("#li_xi").val();
                 var yuqi_fee=$("#yuqi_fee").val();
                 var zbs_jujian_fee_new = "";
+                var flag=false;
                 $("*[name='zbs_jujian_fee']").each(function(){
                     zbs_jujian_fee_new += $(this).val()+",";
+                    if($(this).val()==""){
+                        flag = true;
+                    }
                 });
+                if(flag){
+                    layer.alert("总包商或居间服务费不能为空！",{icon: 2, title:'操作提示'});
+                    return
+                }
+
                 // var zhina_fee=$("#zhina_fee").val();
                 // var zongheri_fee=$("#zongheri_fee").val();
                 if($("#productAmount").val()==""){
