@@ -598,10 +598,10 @@ function getZbsSelect(type) {
     debugger
     Comm.ajaxPost('product/getZbs', null, function (result) {
         var resData = result.data;
-        if(type==='1'){
-            $(".zbs").empty();
-            $(".zbs").append("<option value=''>请选择</option>");
-        }
+        //if(type==='1'){
+            //$(".zbs").empty();
+            //$(".zbs").append("<option value=''>请选择</option>");
+        //}
         for (var i=0;i<resData.length;i++){
             var value=resData[i].id;
             var contractor_name = resData[i].contractor_name;
