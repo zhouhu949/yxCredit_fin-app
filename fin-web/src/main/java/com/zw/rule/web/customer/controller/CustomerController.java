@@ -488,14 +488,14 @@ public class CustomerController {
         String customerId = param.get("customerId").toString();
         String orderId = (String) param.get("orderId");
         Map map = new HashMap();
+        //获取订单信息
+        Map order = orderService.getOrderAndBank(orderId);
 
         //获取风控审核信息列表
         List apiResultList = apiResultService.getApiResultByOrderId(orderId);
 
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
-
-
 
         //获取审核信息
         Map orderOperationRecord = orderOperationRecordService.getOrderOperationRecordByOrderId(orderId);
@@ -506,6 +506,7 @@ public class CustomerController {
         map.put("linkmanList",linkmanList);
         map.put("orderOperationRecord",orderOperationRecord);
         map.put("loanRecord",loanRecord);
+        map.put("order",order);
 
         return new Response(map);
 

@@ -20,10 +20,18 @@ function getTime1(inputTime) {
 }
 $().ready(function(){
     var orderId = $('#orderId').val();
+    var orderState = $('#orderState').val();
     $("#tdTotal").text(parseFloat($("#tdFee").text())+parseFloat($("#proSum").text()));
     $("#YHJE").text(parseFloat($("#tdFee").text())+parseFloat($("#proSum").text()));
-
-
+    var artificial = document.getElementById("artificial");
+    var Loan = document.getElementById("Loan");
+    if(orderState == 3){
+        artificial.style.display="block";
+    };
+    if(orderState == 5){
+        artificial.style.display="block";
+        Loan.style.display="block";
+    };
 
     var paramMap = {};
     paramMap.customerId = $('#customerId').val();
@@ -35,6 +43,7 @@ $().ready(function(){
         if(data){
             var linkmanList=data.linkmanList;//联系人信息
             var host = data.hostUrl;//url
+            var order = data.order;//订单信息
             var customer = data.customer;//客户信息
             var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
             var apiResultList= data.apiResultList;//风控审核信息
@@ -42,6 +51,11 @@ $().ready(function(){
             var loanRecord= data.loanRecord;//订单操作记录放款信息
 
         }
+
+        if(order){
+            $("#applayTime").text(formatTime(order.applayTime));//审核时间
+        }
+
 
         //订单操作记录信息
         if(orderOperationRecord){
@@ -66,7 +80,7 @@ $().ready(function(){
             $("#amount").html(orderOperationRecord.amount);//金额
             $("#operationResult").html(operationResult);//审核结果
             $("#empName").text(orderOperationRecord.empName);//审核人员
-            $("#operationTime").text(orderOperationRecord.operationTime);//审核时间
+            $("#operationTime").text(formatTime(orderOperationRecord.operationTime));//审核时间
             $("#description").text(orderOperationRecord.description);//审核意见
 
         }
@@ -92,7 +106,7 @@ $().ready(function(){
             }
 
             $("#loanAmount").html(loanRecord.amount);//放款金额
-            $("#loanTime").text(loanRecord.operationTime);//放款时间
+            $("#loanTime").text(formatTime(loanRecord.operationTime));//放款时间
             $("#loanState").html(loanState);//放款状态
 
 
@@ -132,7 +146,7 @@ $().ready(function(){
                 '<td width="10%" >审核结果：</td>'+
                 '<td width="23%">'+apiResultList[i].message+'</td>'+
                 '<td width="10%" >报告浏览：</td>'+
-                '<td width="23%"> <a href="./tongDunView">查看报告1</a></td>'+
+                '<td width="23%"> <a href="#" style="color: #f1a02f">点击查看报告</a></td>'+
                 '</tr>';
 
         }

@@ -6,6 +6,7 @@ import com.mysql.jdbc.StringUtils;
 import com.zw.UploadFile;
 import com.zw.base.util.Base64Utils;
 import com.zw.base.util.DateUtils;
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.*;
 import com.zw.rule.customer.service.CustomerService;
@@ -368,7 +369,33 @@ public class SettleCustomerController {
     public Response orderLogList(@RequestBody ParamFilter queryFilter){
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List list = orderOperationRecordService.getOrderOperationRecordByOrderIdList(queryFilter);
+        Integer number =0;
+        String result ="";
+        String des="";
+        List<OrderOperationRecord> list = orderOperationRecordService.getOrderOperationRecordByOrderIdList(queryFilter);
+        for(int i = 0 ; i < list.size() ; i++) {
+            number = list.get(i).getOperationResult();
+            if (number ==1){
+                result="提交申请";
+            }else if (number ==2){
+                result="通过";
+            }else if (number ==3){
+                result="拒绝";
+            }else if (number ==4){
+                result="回退";
+            }else if (number ==5){
+                result="同意";
+            }else if (number ==6){
+                result="签约放弃";
+            }else if (number ==7){
+                result="放款成功";
+            }else {
+                result=" ";
+            }
+
+            des=" 结果："+result+" | 备注："+list.get(i).getDescription();
+            list.get(i).setAmountOperationResultDescription(des);
+        }
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
     }
