@@ -105,6 +105,7 @@
 <body>
 <div class="page-content">
     <input type="hidden" name="orderId" id="orderId" value="${order.orderId}"/>
+    <input type="hidden" name="orderState" id="orderState" value="${order.orderState}"/>
     <input type="hidden" name="customerId" id="customerId" value="${order.customerId}"/>
 
     <input type="hidden" name="userId" id="userId" value="${order.userId}"/>
@@ -139,7 +140,7 @@
                                 <td class="align">申请期限:</td>
                                 <td id="periods">${order.periods}</td>
                                 <td class="align">申请时间:</td>
-                                <td id="applayTime">${order.applayTime}</td>
+                                <td id="applayTime"></td>
                             </tr>
                             <tr>
                                 <td class="align">开户银行:</td>
@@ -222,9 +223,9 @@
 
                         </div>
 
-                        <c:if test="${order.orderState==3}">
+                      <%--  <c:if test="${order.orderState==3}">--%>
                             <%--  人工审核信息--%>
-                            <div class="paperBlockfree">
+                            <div class="paperBlockfree" id="artificial" style="display: none">
                                 <div class="block_hd" style="float:left;">
                                     <s class="ico icon-file-text-alt"></s><span class="bl_tit">人工审核信息</span>
                                 </div>
@@ -249,11 +250,12 @@
                                 </table>
                             </div>
 
-                        </c:if>
+                        <%--</c:if>--%>
 
-                        <c:if test="${order.orderState==5}">
+                       <%-- <c:if test="${order.orderState==5}">--%>
+
                             <%--放款审核信息--%>
-                            <div class="paperBlockfree">
+                            <div class="paperBlockfree" id="Loan" style="display: none">
                                 <div class="block_hd" style="float:left;">
                                     <s class="ico icon-file-text-alt"></s><span class="bl_tit">放款审核信息</span>
                                 </div>
@@ -274,7 +276,7 @@
                                     </tr>
                                 </table>
                             </div>
-                        </c:if>
+                        <%--</c:if>--%>
 
 
 

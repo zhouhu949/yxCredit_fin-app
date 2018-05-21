@@ -1528,14 +1528,14 @@
             </if>
 
             <if test="beginTime != null and beginTime != ''">
-                and CREAT_TIME &gt;= #{beginTime}
+                and applay_time &gt;= #{beginTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and CREAT_TIME &lt;= #{endTime}
+                and applay_time &lt;= #{endTime}
             </if>
 
         </where>
-        order by CREAT_TIME desc
+        order by applay_time desc
     </select>
 
 

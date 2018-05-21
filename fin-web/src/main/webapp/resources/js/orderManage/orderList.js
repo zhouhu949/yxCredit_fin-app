@@ -97,7 +97,14 @@ $(function (){
                 {"data": "productName","orderable" : false},//产品名称
                 {"data": "applayMoney","orderable" : false},//申请金额
                 {"data": "periods","orderable" : false},//申请期限
-                {"data": "applayTime","orderable" : false },//申请时间
+                {"data": "applayTime","orderable" : false,
+                    "render":function (data, type, row, meta) {
+                        if(data !=null && data !=''){
+                            return formatTime(data);
+                        }else {
+                            return '';
+                        }
+                }},//创建时间
                 //订单状态
                 {"data": "orderState","orderable" : false,
                     "render": function (data, type, row, meta) {
@@ -565,7 +572,8 @@ function orderOperationRecord(orderId){
                         /*   {"data": "operatorId","orderable" : false},//操作人*/
                         {"data": "empName","orderable" : false},//操作人
                         /*  {"data": "operatorType", "orderable": false},//操作人类型*/
-                        {"data": "operationTime","orderable" : false,"render":function (data, type, row, meta) {
+                        {"data": "operationTime","orderable" : false,
+                            "render":function (data, type, row, meta) {
                                 if(data !=null && data !=''){
                                     return formatTime(data);
                                 }else {
@@ -591,40 +599,8 @@ function orderOperationRecord(orderId){
                         },//操作环节
                         {"data": "amountOperationResultDescription","orderable" : false},//操作具体描述
 
-                        /*  {"data": "state","orderable" : false,"render":function (data, type, row, meta) {
-                              if(data=="1"){
-                                  return "借款申请";
-                              }
-                              if(data=="2"){
-                                  return "自动化审批通过";
-                              }
-                              if(data=="3"){
-                                  return "自动化审批拒绝";
-                              }
-                              if(data=="4"){
-                                  return "自动化审批异常转人工";
-                              }
-                              if(data=="5"){
-                                  return "人工审批通过";
-                              }
-                              if(data=="6"){
-                                  return "人工审批拒绝";
-                              }
-                              if(data=="7"){
-                                  return "合同确认";
-                              }
-                              if(data=="8"){
-                                  return "放款成功";
-                              }
-                              if(data=="9"){
-                                  return "结清";
-                              }
-                          }},*/
                     ],
-                    /* "createdRow": function ( row, data, index,settings,json ) {
-                         var btn_xiangxixinxi=$('<a class="tabel_btn_style" onclick="alert(12138)"> 详细信息 </a>');
-                         $("td", row).eq(8).append(btn_xiangxixinxi);
-                     },*/
+
                     "initComplete" : function(settings,json) {
                         //绑定函数在此处
                         //查询按钮触发
