@@ -126,25 +126,30 @@ public class OrderFinalAuditController {
     @ResponseBody
     @WebLogger("确认放款")
     public Response confirmationMerchant(@RequestBody Map param) throws Exception {
-        String orderId=param.get("orderId").toString();
-        String fangkuanStyle=param.get("fangkuanStyle").toString();
+        String orderId =param.get("orderId").toString();
         User user = (User) UserContextUtil.getAttribute("currentUser");
-        Response response=new Response();
         Map<String,Object> map= new HashedMap();
+        map.put("id",orderId);
+        map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
+        map.put("orderState","5");//待还款
+        orderService.updateOrderState(map);
+
+        map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
-
-
-        map.put("orderId",orderId);
-        String responseMsg;
-        if("xianxia".equals(fangkuanStyle)){
-            responseMsg=finalOrderAuditService.confirmationMerchantXianXia(map);
-        }else if("xianshang".equals(fangkuanStyle)){
-            responseMsg=finalOrderAuditService.confirmationMerchant(map);
-        }else{
-            responseMsg="系统异常";
-        }
-        response.setMsg(responseMsg);
+        map.put("type","1");
+        map.put("nodeId","5");//5是风控审核
+        finalOrderAuditService.confirmationFinal(map);
+        Map<String,Object> logsMap=new HashedMap();
+        logsMap.put("orderId",map.get("id"));
+        logsMap.put("handlerId",user.getUserId());
+        logsMap.put("handlerName",user.getTrueName());
+        logsMap.put("state","2");
+        logsMap.put("tache","放款审核");
+        logsMap.put("changeValue","放款审核通过");
+        orderService.addOrderLogs(logsMap);
+        Response response = new Response();
+        response.setMsg("放款审核通过");
         return  response;
     }
 

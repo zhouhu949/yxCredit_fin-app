@@ -7,6 +7,8 @@ import com.zw.base.util.HttpClientUtil;
 import com.zw.base.util.TraceLoggerUtil;
 import com.zw.rule.api.BaoFuApi;
 import com.zw.rule.api.WithdrawalsApi;
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
+import com.zw.rule.customer.po.AppUser;
 import com.zw.rule.customer.po.CustomerImage;
 import com.zw.rule.customer.po.Order;
 import com.zw.rule.customer.po.Withdrawals;
@@ -52,6 +54,9 @@ public class FinalOrderAuditServiceImpl implements IFinalOrderAuditService {
 
     @Resource
     private OrderMapper orderMapper;
+
+    @Resource
+    private AppUserMapper userMapper;
 
     @Resource
     private CustomerInvestigationMapper customerInvestigationMapper;
@@ -713,6 +718,34 @@ public class FinalOrderAuditServiceImpl implements IFinalOrderAuditService {
 //            }
 //        }
         return returnMsg;
+    }
+
+
+    @Override
+    @Transactional
+    public Boolean confirmationFinal(Map map) throws Exception {
+        OrderOperationRecord orderOperationRecord = new OrderOperationRecord();
+        String uuid = UUID.randomUUID().toString();
+        orderOperationRecord.setId(uuid);
+        orderOperationRecord.setOperationTime(DateUtils.getDateString(new Date()));
+        orderOperationRecord.setDescription("已放款");
+        orderOperationRecord.setOperationNode(5);//放款审核
+        orderOperationRecord.setOperationResult(7);//放款
+        orderOperationRecord.setEmpId(map.get("handlerId").toString());
+        orderOperationRecord.setEmpName(map.get("handlerName").toString());
+        orderOperationRecord.setOrderId(map.get("id").toString());//订单id
+        orderOperationRecord.setStatus(1);//1有效，0无效
+        int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
+        if (num > 0)
+        {
+            Order order = orderMapper.selectByPrimaryKey(map.get("id").toString());
+            AppUser user = new AppUser();
+            user.setId(order.getUserId());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+            user.setOrderRefusedTime(sdf.format(new Date()));
+            userMapper.updateByPrimaryKeySelective(user);
+        }
+        return true;
     }
 
     //商品贷给商户放款(线下放款)
