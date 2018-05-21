@@ -561,7 +561,7 @@ function orderOperationRecord(orderId){
                             "orderable" : false,
                             "width" : "30px"
                         },
-                        {"data": "orderId","orderable" : false},//订单编号
+                       /* {"data": "orderId","orderable" : false},//订单编号*/
                         /*   {"data": "operatorId","orderable" : false},//操作人*/
                         {"data": "empName","orderable" : false},//操作人
                         /*  {"data": "operatorType", "orderable": false},//操作人类型*/
@@ -589,7 +589,7 @@ function orderOperationRecord(orderId){
                                 }
                             }
                         },//操作环节
-                        {"data": "description","orderable" : false},//操作具体描述
+                        {"data": "amountOperationResultDescription","orderable" : false},//操作具体描述
 
                         /*  {"data": "state","orderable" : false,"render":function (data, type, row, meta) {
                               if(data=="1"){

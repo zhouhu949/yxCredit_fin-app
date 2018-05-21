@@ -1,5 +1,6 @@
 package com.zw.rule.orderOperationRecord.service;
 
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.mybatis.ParamFilter;
 
 import java.util.List;
@@ -32,5 +33,5 @@ public interface OrderOperationRecordService {
      * @param queryFilter
      * @return
      */
-    List<Map> getOrderOperationRecordByOrderIdList(ParamFilter queryFilter);
+    List<OrderOperationRecord> getOrderOperationRecordByOrderIdList(ParamFilter queryFilter);
 }

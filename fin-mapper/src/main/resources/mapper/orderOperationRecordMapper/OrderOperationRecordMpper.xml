@@ -24,7 +24,7 @@
         where order_id= #{orderId,jdbcType=VARCHAR} and operation_node = 5
     </select>
 
-    <select id="getOrderOperationRecordByOrderIdList" resultType="java.util.Map" parameterType="java.util.Map" >
+    <select id="getOrderOperationRecordByOrderIdList" resultType="com.zw.rule.approveRecord.po.OrderOperationRecord" parameterType="java.util.Map" >
         SELECT
         <include refid="Base_Column_List"/>
         FROM order_operation_record

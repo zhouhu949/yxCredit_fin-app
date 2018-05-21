@@ -222,54 +222,61 @@
 
                         </div>
 
-                      <%--  人工审核信息--%>
-                        <div class="paperBlockfree">
-                            <div class="block_hd" style="float:left;">
-                                <s class="ico icon-file-text-alt"></s><span class="bl_tit">人工审核信息</span>
-                            </div>
-                            <table class="tb_info" id="riskManagement" style="font-size:12px;">
-                                <tr>
-                                    <td class="align" width="10%">审批金额:</td>
-                                    <td id="amount" width="23%"></td>
-                                    <td class="align" width="10%">审核结果:</td>
-                                    <td id="operationResult" width="23%"></td>
+                        <c:if test="${order.orderState==3}">
+                            <%--  人工审核信息--%>
+                            <div class="paperBlockfree">
+                                <div class="block_hd" style="float:left;">
+                                    <s class="ico icon-file-text-alt"></s><span class="bl_tit">人工审核信息</span>
+                                </div>
+                                <table class="tb_info" id="riskManagement" style="font-size:12px;">
+                                    <tr>
+                                        <td class="align" width="10%">审批金额:</td>
+                                        <td id="amount" width="23%"></td>
+                                        <td class="align" width="10%">审核结果:</td>
+                                        <td id="operationResult" width="23%"></td>
 
-                                </tr>
-                                <tr>
-                                    <td class="align" width="10%">审核人员:</td>
-                                    <td id="empName" width="23%"></td>
-                                    <td class="align" width="10%">审核时间:</td>
-                                    <td id="operationTime" width="23%"></td>
-                                </tr>
-                                <tr>
-                                    <td class="align" width="10%">审核意见:</td>
-                                    <td id="description" width="23%" colspan="3"></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <%--放款审核信息--%>
-                        <div class="paperBlockfree">
-                            <div class="block_hd" style="float:left;">
-                                <s class="ico icon-file-text-alt"></s><span class="bl_tit">放款审核信息</span>
+                                    </tr>
+                                    <tr>
+                                        <td class="align" width="10%">审核人员:</td>
+                                        <td id="empName" width="23%"></td>
+                                        <td class="align" width="10%">审核时间:</td>
+                                        <td id="operationTime" width="23%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align" width="10%">审核意见:</td>
+                                        <td id="description" width="23%" colspan="3"></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <table class="tb_info" id="loanAudit" style="font-size:12px;">
-                                <tr>
-                                    <td class="align" width="10%">银行名称:</td>
-                                    <td id="loanBankName" width="23%">${order.bankName}</td>
-                                    <td class="align" width="10%">银行卡号:</td>
-                                    <td id="loanCardNumber" width="23%">${order.cardNumber}</td>
-                                    <td class="align" width="10%">放款金额:</td>
-                                    <td id="loanAmount" width="23%"></td>
-                                </tr>
-                                <tr>
-                                    <td class="align" width="10%">放款时间:</td>
-                                    <td id="loanTime" width="23%" colspan="2"></td>
-                                    <td class="align" width="10%">放款状态:</td>
-                                    <td id="loanState" width="23%" colspan="2"></td>
-                                </tr>
-                            </table>
-                        </div>
+
+                        </c:if>
+
+                        <c:if test="${order.orderState==5}">
+                            <%--放款审核信息--%>
+                            <div class="paperBlockfree">
+                                <div class="block_hd" style="float:left;">
+                                    <s class="ico icon-file-text-alt"></s><span class="bl_tit">放款审核信息</span>
+                                </div>
+                                <table class="tb_info" id="loanAudit" style="font-size:12px;">
+                                    <tr>
+                                        <td class="align" width="10%">银行名称:</td>
+                                        <td id="loanBankName" width="23%">${order.bankName}</td>
+                                        <td class="align" width="10%">银行卡号:</td>
+                                        <td id="loanCardNumber" width="23%">${order.cardNumber}</td>
+                                        <td class="align" width="10%">放款金额:</td>
+                                        <td id="loanAmount" width="23%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align" width="10%">放款时间:</td>
+                                        <td id="loanTime" width="23%" colspan="2"></td>
+                                        <td class="align" width="10%">放款状态:</td>
+                                        <td id="loanState" width="23%" colspan="2"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </c:if>
+
+
 
                 </div>
             </div>

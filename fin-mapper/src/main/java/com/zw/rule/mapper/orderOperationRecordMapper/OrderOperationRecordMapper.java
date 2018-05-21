@@ -1,5 +1,7 @@
 package com.zw.rule.mapper.orderOperationRecordMapper;
 
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
+
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public interface OrderOperationRecordMapper {
      * @param map
      * @return
      */
-    List<Map> getOrderOperationRecordByOrderIdList(Map map);
+    List<OrderOperationRecord> getOrderOperationRecordByOrderIdList(Map map);
 
 
 }
