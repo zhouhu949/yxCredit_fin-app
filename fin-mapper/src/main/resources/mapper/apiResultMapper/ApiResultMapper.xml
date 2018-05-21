@@ -17,6 +17,7 @@
           <include refid="Base_Column_List"/>
         from zw_api_result
         where only_key= #{orderId,jdbcType=VARCHAR}
+        and state = 1
     </select>
 
 
