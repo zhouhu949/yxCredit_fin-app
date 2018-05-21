@@ -180,9 +180,6 @@
                     <button id="btn_search" type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset" type="button" class="btn btn-primary queryBtn">查询重置</button>
                 </li>
-                <%-- <li style="width:155px;padding-top: 10px;">
-                     <span class="onlyMe"><input type="checkbox" id="onlyMe"/>只看自己的客户</span>
-                 </li>--%>
             </ul>
         </div>
         <div class="Manager_style">
@@ -208,30 +205,6 @@
                 </table>
             </div>
         </div>
-
-       <%-- &lt;%&ndash;//对应的贷款订单&ndash;%&gt;
-        <div class="Manager_style" id="cus_order" style="display: none">
-            <div class="order_list">
-                <table style="cursor:pointer;" id="withdrawal_list" cellpadding="0" cellspacing="0" class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>放款时间</th>
-                        <th>放款流水</th>
-                        <th>银行名称</th>
-                        <th>银行卡号</th>
-                        <th>放款金额</th>
-                        <th>放款状态码</th>
-                        <th>放款状态</th>
-                        <th>放款方式</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>--%>
 </div>
 <div style="display: none;" id="imgDisplay">
     <img src="" alt="">

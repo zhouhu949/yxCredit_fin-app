@@ -253,32 +253,14 @@ function  orderDebit(orderId) {
 }
 
 function  confirmationLoan(orderId) {
-    //弹出选择放款方式弹框checkConfirmationLoanStyle
-        layer.open({
-            type : 1,
-            title : '确认放款方式',
-            maxmin : true,
-            shadeClose : false,
-            area : [ '350px', '180px'  ],
-            content : $('#checkConfirmationLoanStyle'),
-            btn : [ '确认', '取消' ],
-            success : function(index, layero) {
-            },
-            yes:function(index,layero){
-                var param={};
-                param.orderId = orderId;
-                param.fangkuanStyle=fangkuanStyle=$("#fangkuanStyle").val();
-                if(param.fangkuanStyle == '' || param.fangkuanStyle == null ){
-                    layer.msg("选择不能为空！",{time:2000});return
-                }
-                Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
-                    layer.msg(data.msg,{time:2000},function(){
-                        layer.closeAll();
-                        g_userManage.tableOrder.ajax.reload();
-                    })
-                },"application/json");
-            }
-        });
+    var param={};
+    param.orderId = orderId;
+    Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
+        layer.msg(data.msg,{time:2000},function(){
+            layer.closeAll();
+            g_userManage.tableOrder.ajax.reload();
+        })
+    },"application/json");
 }
 
 
