@@ -521,7 +521,8 @@ var g_salesmanOrders = {
 
 //查看订单日志
 function orderOperationRecord(orderId){
-    //alert("訂單編號："+orderId)
+   // alert("订单号："+orderId)
+    $("#orderId").val(orderId);
     layer.open({
         type : 1,
         title : false,
@@ -544,8 +545,8 @@ function orderOperationRecord(orderId){
                     "dom": 'rt<"bottom"i><"bottom"flp><"clear">',
                     "ajax" : function(data, callback, settings) {//ajax配置为function,手动调用异步查询
                         var queryFilter = g_salesmanOrders.getQueryCondition(data);
-
-                        queryFilter.param.orderId=orderId;
+                        var order_id = $("#orderId").val();
+                        queryFilter.param.orderId=order_id;
                         Comm.ajaxPost('settleCustomer/orderLogList', JSON.stringify(queryFilter), function (result) {
                             console.log(result);
                             //封装返回数据
