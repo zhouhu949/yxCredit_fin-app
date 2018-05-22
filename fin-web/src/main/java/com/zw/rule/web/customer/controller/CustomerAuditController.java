@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
+import com.zw.enums.EApiSourceEnum;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
@@ -665,8 +666,20 @@ public class CustomerAuditController {
 
 
     @GetMapping("/tongDunView")
-    public String tongDunView(){
-        return "common/tongDunView";
+    public String tongDunView(@RequestParam String sourceCode){
+        final EApiSourceEnum sourceEnum = EApiSourceEnum.getByCode(sourceCode);
+        if(sourceEnum != null){
+            switch (sourceEnum){
+                case  MOHE:
+                    return  "common/moHeView";
+                case  TODONG:
+                    return  "common/tongDunView";
+                case CREDIT :
+                    return  "common/tongDunView";
+                    default:
+            }
+        }
+        return null;
     }
 
 }

@@ -1,3 +1,9 @@
+<%--
+  同盾报告数据展示
+  User: 陈清玉
+  Date: 2018/5/20
+  Time: 14:09
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
@@ -70,7 +76,8 @@
     </div>
 </body>
 </html>
-<script src="${ctx}/resources/js/lib/jquery/jquery-1.8.3.min.js${version}"></script><script>
+<script src="${ctx}/resources/js/lib/jquery/jquery-1.8.3.min.js${version}"></script>
+<script>
     $(function () {
         preLoanObject.methods.loadTongDunData();
     })
@@ -119,10 +126,10 @@
                     $('.custMobile').text(result['custMobile']);
                     $('.email').text(result['email']);
 
-                    var tongDunInfo = result['tongDunInfo'];
-                    if(tongDunInfo != null ){
-                        $('.checkResult').text(preLoanObject.methods.finalDecision(tongDunInfo));
-                        var  riskItems = result['tongDunInfo']['risk_items'];
+                    var apiResult = result['apiResult'];
+                    if(apiResult != null ){
+                        $('.checkResult').text(preLoanObject.methods.finalDecision(apiResult));
+                        var  riskItems = result['apiResult']['risk_items'];
                         if(riskItems && riskItems.length > 0){
                             $('.tongdunInfo').removeAttr('style');
                         }

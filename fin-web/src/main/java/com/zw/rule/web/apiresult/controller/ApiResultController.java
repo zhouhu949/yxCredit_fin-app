@@ -50,7 +50,7 @@ public class ApiResultController {
             resultMap.put("custIc",customer.getCard());
             resultMap.put("custMobile", customer.getTel());
         }
-        resultMap.put("tongDunInfo",JSONObject.parseObject(result.getResultData().toString()));
+        resultMap.put("apiResult",JSONObject.parseObject(result.getResultData().toString()));
         return   Response.ok(resultMap);
     }
 

@@ -14,7 +14,7 @@ public enum EApiSourceEnum {
         this.code = code;
         this.name = name;
     }
-    public EApiSourceEnum getByCode(String code){
+    public static EApiSourceEnum getByCode(String code){
         for (EApiSourceEnum sourceEnum : EApiSourceEnum.values()) {
             if(sourceEnum.code.equals(code)){
                 return sourceEnum;
