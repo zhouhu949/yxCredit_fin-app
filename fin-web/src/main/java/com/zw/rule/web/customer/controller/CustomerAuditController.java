@@ -624,6 +624,7 @@ public class CustomerAuditController {
     @ResponseBody
     @WebLogger("获取信用问答")
     public Response getAnswer(@RequestBody Map param){
+
         PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
         String url =prop.get("ruleUrlSP")+"/szt/jxlQuestion/getQuestion";
         param.put("url",url);
@@ -676,7 +677,7 @@ public class CustomerAuditController {
                 case  TODONG:
                     return  "common/tongDunView";
                 case CREDIT :
-                    return  "common/tongDunView";
+                    return  "common/creditView";
                     default:
             }
         }
