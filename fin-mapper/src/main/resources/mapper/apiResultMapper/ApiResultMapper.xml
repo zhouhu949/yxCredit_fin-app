@@ -27,6 +27,7 @@
         from zw_api_result
         where only_key= #{orderId}
         and source_code = #{sourceCode}
+        and state = 1
     </select>
 
     <select id="getResultById" resultType="com.zw.rule.apiresult.ApiResult">
