@@ -17,10 +17,17 @@
           <include refid="Base_Column_List"/>
         from zw_api_result
         where only_key= #{orderId,jdbcType=VARCHAR}
+        and state = 1
     </select>
 
 
-
+    <select id="getByOrderIdAndSourceCode" resultType="com.zw.rule.apiresult.ApiResult">
+        select
+        <include refid="Base_Column_List" />
+        from zw_api_result
+        where only_key= #{orderId}
+        and source_code = #{sourceCode}
+    </select>
 
 
 </mapper>

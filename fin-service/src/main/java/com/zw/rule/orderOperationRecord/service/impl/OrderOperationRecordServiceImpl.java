@@ -1,5 +1,6 @@
 package com.zw.rule.orderOperationRecord.service.impl;
 
+import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.mapper.orderOperationRecordMapper.OrderOperationRecordMapper;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.orderOperationRecord.service.OrderOperationRecordService;
@@ -53,7 +54,7 @@ public class OrderOperationRecordServiceImpl implements OrderOperationRecordServ
      * @return
      */
     @Override
-    public List<Map> getOrderOperationRecordByOrderIdList(ParamFilter queryFilter) {
+    public List<OrderOperationRecord> getOrderOperationRecordByOrderIdList(ParamFilter queryFilter) {
         return orderOperationRecordMapper.getOrderOperationRecordByOrderIdList(queryFilter.getParam());
     }
 }

@@ -3,25 +3,27 @@ package com.zw.rule.approveRecord.po;
 import java.math.BigDecimal;
 
 public class OrderOperationRecord {
-    private String id;
+    private String id;//操作记录ID
 
-    private Integer operationNode;
+    private Integer operationNode;//操作节点【订单申请（申请提交）、自动化审核（通过、拒绝）、人工审核（通过、拒绝、回退）、签约（同意、放弃）、放款审批（放款）、还款】
 
-    private Integer operationResult;
-    private Integer status;
+    private Integer operationResult;//操作结果【 1提交 2通过 3 拒绝 4 回退 5 同意  6放弃 7放款】
+    private Integer status;//当前状态:(1有效 0无效）
 
 
-    private BigDecimal amount;
+    private BigDecimal amount;//金额（元）
 
-    private String orderId;
+    private String orderId;//关联订单ID
 
-    private String operationTime;
+    private String operationTime;//操作时间
 
-    private String empId;
+    private String empId;//操作人ID
 
-    private String empName;
+    private String empName;//操作人姓名
 
-    private String description;
+    private String description;//操作描述
+
+    private String amountOperationResultDescription;//金额+操作结果+操作描述
 
     public String getId() {
         return id;
@@ -101,5 +103,13 @@ public class OrderOperationRecord {
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public String getAmountOperationResultDescription() {
+        return amountOperationResultDescription;
+    }
+
+    public void setAmountOperationResultDescription(String amountOperationResultDescription) {
+        this.amountOperationResultDescription = amountOperationResultDescription;
     }
 }

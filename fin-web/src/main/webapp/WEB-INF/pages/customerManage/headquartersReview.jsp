@@ -287,7 +287,7 @@
                         <tr>
                             <td>建议额度：</td>
                             <td>
-                                <span id="preQuotaDialog_contractRate">${order.applayMoney}</span>
+                                <span id="preQuotaDialog_contractRate">${order.amountAdvice}</span>
                             </td>
                         </tr>
                         <tr>

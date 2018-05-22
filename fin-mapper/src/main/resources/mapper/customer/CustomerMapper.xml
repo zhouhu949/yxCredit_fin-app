@@ -527,11 +527,15 @@
             cu.TEL as tel , cu.marital_status as maritalStatus , cu.children_status as childrenStatus,
             cu.card_register_address as cardRegisterAddress, cu.residence_address as residenceAddress,
             cu.birth as birth ,
-            contractorWL.contractorName as contractorName, au.creat_time AS registrationTime
+            contractorWL.contractorName as contractorName, au.creat_time AS registrationTime,
+            cl.nowaddress AS nowaddress , cj.company_address AS companyAddress
         from  mag_customer cu   LEFT JOIN
         (SELECT wl.card AS card,contractor.contractor_name AS contractorName
           FROM byx_white_list wl LEFT JOIN byx_contractor contractor ON contractor.id = wl.contractor_id)
-          contractorWL ON cu.card = contractorWL.card LEFT JOIN app_user au ON cu.USER_ID=au.id
+          contractorWL ON cu.card = contractorWL.card
+          LEFT JOIN app_user au ON cu.USER_ID=au.id
+          LEFT JOIN mag_customer_live cl ON cl.customer_id=cu.id
+          LEFT JOIN mag_customer_job cj ON cj.customer_id=cu.id
         where cu.ID = #{id,jdbcType=VARCHAR}
     </select>
 

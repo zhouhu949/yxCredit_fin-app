@@ -304,23 +304,11 @@ function showDetail(id,card,tel,occupationType){
                     debugger
                     $("#personName").html(person.personName);//姓名
                     $("#sex").html(person.sexName);//姓别
-                    if(person.maritalStatus =="1"){
-                        marry = "已婚";
-                    }else if(person.maritalStatus =="2"){
-                        marry = "未婚";
-                    }else if(person.maritalStatus =="3"){
-                        marry = "离异";
-                    }else if(person.maritalStatus =="4"){
-                        marry = "丧偶";
-                    }
-                    $("#marry").html(marry);//婚姻状况
 
-                    if(person.childrenStatus =="1"){
-                        childrenStatus = "已有子女";
-                    }else if(person.childrenStatus =="2"){
-                        childrenStatus = "未有子女";
-                    }
-                    $("#childrenStatus").html(childrenStatus);//子女状况
+                    $("#marry").html(person.maritalStatus);//婚姻状况
+
+
+                    $("#childrenStatus").html(person.childrenStatus);//子女状况
                    // $("#education").html(person.educational_name);
 
                     $("#cusCard").html(card);//身份证号码
@@ -330,8 +318,8 @@ function showDetail(id,card,tel,occupationType){
                     var cardYear = card.substr(6,4);
                     $("#age").html(year-cardYear);//年龄
                     $("#cusTel").html(person.tel);//电话号码
-                    $("#cardRegisterAddress").text(person.cardRegisterAddress);//户籍居住地址
-                    $("#residenceAddress").text(person.residenceAddress);//工作居住地址
+                    $("#companyAddress").text(person.companyAddress);//户籍居住地址
+                    $("#nowaddress").text(person.nowaddress);//工作居住地址
                     $("#contractor").text(person.contractorName);//所属总包商
 
 

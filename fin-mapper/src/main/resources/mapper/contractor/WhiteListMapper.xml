@@ -34,6 +34,8 @@
     whitelist.card AS card,
     whitelist.telphone AS telPhone,
     whitelist.job AS job,
+    whitelist.latest_pay AS latestPay,
+    whitelist.local_monthly_min_wage AS localMonthlyMinWage,
     contractor.contractor_name as contractorName
 
     FROM
@@ -42,6 +44,12 @@
     <where>
      <if test="param.userId != null and param.userId != ''">
         and contractor.user_id like '%${param.userId}%'
+      </if>
+      <if test="param.card != null and param.card != ''">
+        and whitelist.card = #{param.card,jdbcType=VARCHAR}
+      </if>
+      <if test="param.realName != null and param.realName != ''">
+        and whitelist.real_name = #{param.realName,jdbcType=VARCHAR}
       </if>
     </where>
     /*order by CREAT_TIME desc*/
