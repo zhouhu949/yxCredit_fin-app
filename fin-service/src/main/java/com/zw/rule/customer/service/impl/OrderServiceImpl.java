@@ -164,7 +164,7 @@ public class OrderServiceImpl implements OrderService {
         orderOperationRecord.setOperationResult(3);//拒绝
         if(map.get("approType").toString().equals("pass")) {
             orderOperationRecord.setOperationResult(2);//通过
-            orderOperationRecord.setAmount(new BigDecimal(map.get("predictPrice").toString()));//审批额度
+            orderOperationRecord.setAmount(new BigDecimal(map.get("loanAmount").toString()));//审批额度
         }
         orderOperationRecord.setEmpId(map.get("handlerId").toString());
         orderOperationRecord.setEmpName(map.get("handlerName").toString());

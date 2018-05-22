@@ -151,7 +151,7 @@ public class CustomerAuditController {
     public Response approved(@RequestBody String str) throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
-        map.put("state","5");
+        map.put("examineTime", DateUtils.getDateString(new Date()));
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
@@ -197,6 +197,7 @@ public class CustomerAuditController {
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","3");//待签约
+        map.put("examineTime", DateUtils.getDateString(new Date()));
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());

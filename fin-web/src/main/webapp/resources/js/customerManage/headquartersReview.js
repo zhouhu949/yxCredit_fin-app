@@ -112,7 +112,7 @@ function clickNextButton(){
             var orderId = $("#orderId").val();
             var approveSuggestion = $("#approveSuggestion").val();
             var customerId = $("#newCustomerId").val();
-            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,predictPrice:predictPrice}) , function (result) {
+            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,loanAmount:predictPrice}) , function (result) {
                 layer.msg(result.msg,{time:2000},function(){
                     // layer.closeAll();
                     var index = parent.layer.getFrameIndex(window.name);

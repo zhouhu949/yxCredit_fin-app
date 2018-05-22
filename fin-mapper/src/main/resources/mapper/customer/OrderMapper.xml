@@ -1174,6 +1174,12 @@
             <if test="alterTime!=null and alterTime!=''">
                 alter_time=#{alterTime},
             </if>
+            <if test="loanAmount != null and loanAmount != ''">
+                loan_amount=#{loanAmount},
+            </if>
+            <if test="examineTime != null and examineTime != ''">
+                Examine_time=#{examineTime},
+            </if>
         </set>
         where id = #{id}
     </update>
