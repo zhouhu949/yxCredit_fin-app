@@ -38,11 +38,11 @@ public class ApiResultController {
      * 获取风控结果数据
      * @return 同盾报告
      */
-    @GetMapping("/tongDun/{orderId}/{sourceCode}/{customerId}")
-    public Response getByOrderIdAndSourceCode(@PathVariable String orderId
-            ,@PathVariable String sourceCode,@PathVariable String customerId ){
-        LOGGER.info("获取风控结果数据orderId：{},sourceCode:{}",orderId,sourceCode);
-        final ApiResult result = resultService.getByOrderIdAndSourceCode(orderId, sourceCode);
+    @GetMapping("/tongDun/{resultId}/{customerId}")
+    public Response getByOrderIdAndSourceCode(@PathVariable String resultId
+            ,@PathVariable String customerId ){
+        LOGGER.info("获取风控结果数据id：{},resultId:{}",resultId);
+        final ApiResult result = resultService.getResultById(resultId);
         final Customer customer = customerService.getCustomer(customerId);
         Map<String, Object> resultMap = new HashMap<>(3);
         if(customer != null) {
@@ -50,7 +50,7 @@ public class ApiResultController {
             resultMap.put("custIc",customer.getCard());
             resultMap.put("custMobile", customer.getTel());
         }
-        resultMap.put("apiResult",JSONObject.parseObject(result.getResultData().toString()));
+        resultMap.put("apiResult", result == null ? null : JSONObject.parseObject(result.getResultData().toString()));
         return   Response.ok(resultMap);
     }
 

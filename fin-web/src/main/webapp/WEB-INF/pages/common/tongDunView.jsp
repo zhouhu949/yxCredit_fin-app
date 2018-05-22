@@ -87,11 +87,8 @@
     var preLoanObject = {
         tableEl: '.result',
         requestParameter: {
-            orderId:'${param.orderId}',
-            customerId:'${param.customerId}',
-            sourceCode:'${param.sourceCode}'
-
-
+            resultId:'${param.resultId}',
+            customerId:'${param.customerId}'
         },
         template: {
             remarksHtml: '',
@@ -100,7 +97,7 @@
         },
         urls: {
             //数据加载url
-            loadTongDunUrl: '../apiResult/tongDun/${param.orderId}/${param.sourceCode}/${param.customerId}'
+            loadTongDunUrl: '../apiResult/tongDun/${param.resultId}/${param.customerId}'
         },
         data: {
             risk_level: {

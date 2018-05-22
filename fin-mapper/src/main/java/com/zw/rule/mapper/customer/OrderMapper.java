@@ -131,4 +131,12 @@ public interface OrderMapper {
      * @return
      */
     List<Order> findWindControlAuditList(Map map);
+
+
+    /**
+     * 根据订单id查询订单号
+     * @param id
+     * @return
+     */
+    String getOrderNoById(@Param("id") String id);
 }

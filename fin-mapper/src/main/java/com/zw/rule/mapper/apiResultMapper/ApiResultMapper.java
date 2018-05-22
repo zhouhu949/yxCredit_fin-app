@@ -27,4 +27,11 @@ public interface ApiResultMapper {
      */
     ApiResult getByOrderIdAndSourceCode(@Param("orderId") String orderId , @Param("sourceCode") String sourceCode);
 
+    /**
+     * 根据ID获取数据
+     * @param id 数据主键
+     * @return
+     */
+
+    ApiResult getResultById(@Param("id") String id);
 }

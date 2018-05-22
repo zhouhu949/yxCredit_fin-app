@@ -6,6 +6,7 @@ import com.zw.rule.ApiResult.service.ApiResultService;
 import com.zw.rule.apiresult.ApiResult;
 import com.zw.rule.mapper.apiResultMapper.ApiResultMapper;
 
+import com.zw.rule.mapper.customer.OrderMapper;
 import com.zw.rule.mybatis.ParamFilter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class ApiResultServiceImpl implements ApiResultService {
     @Autowired
     private ApiResultMapper apiResultMapper;
 
+    @Autowired
+    private OrderMapper orderMapper;
 
     /**
      * 根据订单ID获取风控信息列表
@@ -32,12 +35,17 @@ public class ApiResultServiceImpl implements ApiResultService {
      */
     @Override
     public List getApiResultByOrderId(String orderId) {
-        return apiResultMapper.getApiResultByOrderId(orderId);
+        return apiResultMapper.getApiResultByOrderId(orderMapper.getOrderNoById(orderId));
     }
 
     @Override
     public ApiResult getByOrderIdAndSourceCode(String orderId, String sourceCode) {
         return apiResultMapper.getByOrderIdAndSourceCode(orderId,sourceCode);
+    }
+
+    @Override
+    public ApiResult getResultById(String id) {
+        return apiResultMapper.getResultById(id);
     }
 }
 

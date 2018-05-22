@@ -215,7 +215,7 @@
 
         $.ajax({
             type: "GET",
-            url: "../apiResult/tongDun/${param.orderId}/${param.sourceCode}/${param.customerId}",
+            url: "../apiResult/tongDun/${param.resultId}/${param.customerId}",
             dataType:"json",
             success: function (data) {
                 //基本信息

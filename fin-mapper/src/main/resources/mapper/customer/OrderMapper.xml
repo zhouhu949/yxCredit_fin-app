@@ -1610,4 +1610,9 @@
       WHERE o.ID=#{orderId}
     </select>
 
+    <select id="getOrderNoById" resultType="java.lang.String">
+        select order_no from mag_order where id = #{id}
+    </select>
+
+
 </mapper>
