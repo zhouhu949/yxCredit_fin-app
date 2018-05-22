@@ -537,7 +537,7 @@
                             <td>
                                 <select class="info-selW1" id="parentInfo" style="line-height:11px;float: left; padding-right: 6px;margin-left:24px;width:160px;" name="payment">
                                     <option style="text-align: center;" value="">请选择</option>
-                                    <option style="text-align: center;" value="0">一次性还本付息</option>
+                                    <option style="text-align: center;" value="2">一次性还本付息</option>
                                 </select>
                             </td>
 
