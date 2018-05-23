@@ -29,4 +29,11 @@ public interface ApiResultService {
      */
     ApiResult getByOrderIdAndSourceCode(String orderId , String sourceCode);
 
+    /**
+     * 根据id获取数据
+     * @param Id  id
+     * @return
+     */
+    ApiResult getResultById(String Id);
+
 }

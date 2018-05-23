@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
+import com.zw.enums.EApiSourceEnum;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
@@ -150,7 +151,7 @@ public class CustomerAuditController {
     public Response approved(@RequestBody String str) throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
-        map.put("state","5");
+        map.put("examineTime", DateUtils.getDateString(new Date()));
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
@@ -196,6 +197,7 @@ public class CustomerAuditController {
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","3");//待签约
+        map.put("examineTime", DateUtils.getDateString(new Date()));
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
@@ -622,6 +624,7 @@ public class CustomerAuditController {
     @ResponseBody
     @WebLogger("获取信用问答")
     public Response getAnswer(@RequestBody Map param){
+
         PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
         String url =prop.get("ruleUrlSP")+"/szt/jxlQuestion/getQuestion";
         param.put("url",url);
@@ -665,8 +668,20 @@ public class CustomerAuditController {
 
 
     @GetMapping("/tongDunView")
-    public String tongDunView(){
-        return "common/tongDunView";
+    public String tongDunView(@RequestParam String sourceCode){
+        final EApiSourceEnum sourceEnum = EApiSourceEnum.getByCode(sourceCode);
+        if(sourceEnum != null){
+            switch (sourceEnum){
+                case  MOHE:
+                    return  "common/moHeView";
+                case  TODONG:
+                    return  "common/tongDunView";
+                case CREDIT :
+                    return  "common/creditView";
+                    default:
+            }
+        }
+        return null;
     }
 
 }

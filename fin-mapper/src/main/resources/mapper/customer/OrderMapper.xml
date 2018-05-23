@@ -1174,6 +1174,12 @@
             <if test="alterTime!=null and alterTime!=''">
                 alter_time=#{alterTime},
             </if>
+            <if test="loanAmount != null and loanAmount != ''">
+                loan_amount=#{loanAmount},
+            </if>
+            <if test="examineTime != null and examineTime != ''">
+                Examine_time=#{examineTime},
+            </if>
         </set>
         where id = #{id}
     </update>
@@ -1603,5 +1609,10 @@
       FROM mag_order o  LEFT JOIN sys_bank_card bc ON o.CUSTOMER_ID=bc.cust_id
       WHERE o.ID=#{orderId}
     </select>
+
+    <select id="getOrderNoById" resultType="java.lang.String">
+        select order_no from mag_order where id = #{id}
+    </select>
+
 
 </mapper>

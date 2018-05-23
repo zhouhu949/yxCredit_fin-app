@@ -82,10 +82,12 @@ public class UploadFile {
             // 迭代表单数据
             for (int i=0;i<formItems.size();i++){
                 FileItem item = formItems.get(i);
+                String originalName = item.getName();//获取文件名+后缀
+                String originalType = originalName.substring(originalName.indexOf("."));//文件后缀
                 // 处理不在表单中的字段
                 if (!item.isFormField()) {
                     Map<String, Object> fileModel = new HashMap<String, Object>();
-                    String path = saveDir + File.separator + fileName+i;
+                    String path = saveDir + File.separator + fileName+ i + originalType;
                     File file = new File(path);
                     if (file.exists()) {
                         file.delete();
@@ -93,7 +95,7 @@ public class UploadFile {
                     item.write(file);
                     fileModel.put("originalName", item.getName());
                     fileModel.put("file", file);
-                    fileModel.put("Name", fileName+i);
+                    fileModel.put("Name", fileName+i+originalType);
                     fileList.add(fileModel);
                 } else {
                     String name = item.getFieldName(); // 获取name属性的值

@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.ant-row .ant-col-3{
+    font-size: 14px;
+    display: inline-block;
+    width: 10%;
+    border-bottom: 1px solid #ccc;
+}
+.ant-row .ant-col-5{
+    display: inline-block;
+    width: 18%;
+    font-size: 14px;
+    border-bottom: 1px solid #ccc;
+}
+/* .ant-row {
+    border-bottom: 1px solid #eee;
+} */
+.tableRow{
+    vertical-align:bottom;
+    min-height: 30px;
+    line-height: 30px;
+    /*float: left;*/
+}
+.tableTitle{
+
+    border-bottom: none;
+}
+.ant-tabs-tab{
+    float: left;
+    margin-left: 24px;
+    padding: 8px 20px;
+
+
+}
+/* .ant-tabs-tab:hover{
+    border-bottom: 1px solid red;
+} */
+.ant-pagination-prev a::after {
+
+    display: block;
+    zoom: 1;
+    height: 26px;
+    line-height: 26px;
+    font-family: anticon;
+    text-align: center;
+}
+.ant-pagination-prev{
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    outline: 0;
+    font-family: Arial;
+    cursor: pointer;
+    color: rgba(0,0,0,.65);
+    border-radius: 4px;
+    list-style: none;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ant-pagination-disabled  {
+    cursor: not-allowed
+}
+.ant-pagination-item{
+    display: inline-block;
+    vertical-align: middle;
+    height: 28px;
+    line-height: 28px;
+    margin-right: 8px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    outline: 0;
+    font-family: Arial;
+    cursor: pointer;
+    color: rgba(0,0,0,.65);
+    border-radius: 4px;
+    list-style: none;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ant-pagination-item a{
+    color: #108ee9;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: color .3s ease;
+    transition: color .3s ease;
+    text-decoration: none;
+    color: rgba(0,0,0,.65);
+    -webkit-transition: none;
+    transition: none;
+    margin: 0 6px;
+
+}
+.ant-pagination-next {
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    outline: 0;
+    font-family: Arial;
+    cursor: pointer;
+    color: rgba(0,0,0,.65);
+    border-radius: 4px;
+    list-style: none;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ant-pagination-next a{
+    color: rgba(0,0,0,.65);
+    outline: none;
+
+    color: #108ee9;
+    background: transparent;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    -webkit-transition: color .3s ease;
+    transition: color .3s ease;
+}
+.ant-pagination-next a::after{
+    -webkit-filter: none;
+    filter: none;
+    /* font-size: 12px; */
+
+    display: block;
+    display: inline-block;
+    font-size: 12px;
+    font-size: 8px\9;
+    -webkit-transform: scale(.66666667) rotate(0deg);
+    -ms-transform: scale(.66666667) rotate(0deg);
+    transform: scale(.66666667) rotate(0deg);
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+    zoom: 1;
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    font-family: anticon;
+    text-align: center;
+}
+.ant-pagination{
+    float: right;
+    margin-top: 30px;
+}
+.mailResult{
+    height: 100px;
+}
+.ant-tabs-tab:first-child{
+    color: #108ee9;
+
+}
+.ant-tabs-tab:hover{
+    color: #108ee9;
+}
+#tabCon_4{
+    display: none;
+}
+#tabCon_1{
+    display: none;
+}
+#tabCon_2{
+    display: none;
+}
+#tabCon_3{
+    display: none;
+}
+#tabCon_5{
+    display: none;
+}

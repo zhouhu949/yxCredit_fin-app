@@ -4,12 +4,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="${ctx}/resources/assets/select-mutiple/css/select-multiple.css${version}"/>
-   <%-- <link rel="stylesheet" href="${ctx}/resources/assets/zTree/css/zTreeStyle/zTreeStyle.css" />--%>
     <%@include file ="../common/taglibs.jsp"%>
     <%@ include file="../common/importDate.jsp"%>
     <script src="${ctx}/resources/js/contractorManage/whiteList.js${version}"></script>
     <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
-    <%--<script type="text/javascript" src="${ctx}/resources/assets/treeTable/js/jquery.treetable.js"></script>--%>
+    <script type="text/javascript" src="${ctx}/resources/assets/js/jquery.form.min.js"></script>
     <title>白名单信息</title>
     <style>
         #organ{outline: none!important;appearance:none; -moz-appearance:none; -webkit-appearance:none;height:28px;line-height:19px;}
@@ -20,7 +19,6 @@
 <body>
 <div class="page-content">
     <div class="commonManager">
-        <form id="form1" name="form1" method="post" action="">
             <div class="Manager_style add_user_info search_style">
                 <ul class="search_content clearfix">
                     <li>
@@ -154,15 +152,13 @@
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
-
-
-                            <%--<li style="width:524px;">
-                                <label class="label_name">发薪证明（图片）</label>
-                                <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
-                                <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
-
-                                &lt;%&ndash; <textarea name="licenceAttachment"  type="text" style="width:428px;margin-top:10px;margin-left:-4px;" id="licenceAttachment" rows="4" cols="25" maxlength="150"></textarea>&ndash;%&gt;
-                            </li>--%>
+                            <li style="width:524px;">
+                                <form id="whiteListImgForm" method="post" enctype="multipart/form-data" >
+                                    <label class="label_name">发薪证明（图片）</label>
+                                    <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
+                                    <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
+                                </form>
+                            </li>
                             <li>
                                 <label class="label_name">最低工资</label>
                                 <label for="localMonthlyMinWage">
@@ -195,7 +191,6 @@
                 </div>
 
             </div>
-        </form>
         </div>
         <div class="Manager_style">
             <div class="User_list">

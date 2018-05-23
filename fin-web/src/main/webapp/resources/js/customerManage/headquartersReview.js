@@ -43,7 +43,7 @@ $().ready(function(){
                 '<td width="10%" >审核结果：</td>'+
                 '<td width="23%">'+apiResultList[i].message+'</td>'+
                 '<td width="10%" >报告浏览：</td>'+
-                '<td width="23%"> <a href="./tongDunView?orderId=${orderId}" target="_blank">查看报告</a></td>'+
+                '<td width="23%"> <a href="./tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank">查看报告</a></td>'+
                 '</tr>';
 
         }
@@ -112,7 +112,7 @@ function clickNextButton(){
             var orderId = $("#orderId").val();
             var approveSuggestion = $("#approveSuggestion").val();
             var customerId = $("#newCustomerId").val();
-            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,predictPrice:predictPrice}) , function (result) {
+            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,loanAmount:predictPrice}) , function (result) {
                 layer.msg(result.msg,{time:2000},function(){
                     // layer.closeAll();
                     var index = parent.layer.getFrameIndex(window.name);
@@ -151,23 +151,6 @@ function reasonClick(){
             },"application/json");
         }
     })
-}
-//获取当前时间
-function getFirstTime() {
-    var time;
-    var newData=new Date();
-    var N=newData.getFullYear();
-    var s=newData.getMonth()+1;
-    var Y=s<=9?"0"+s:s;
-    var r=newData.getDate();
-    var D=r<=9?"0"+r:r;
-    var h=newData.getHours();
-    var H=h<=9?"0"+h:h;
-    var m=newData.getMinutes();
-    var M=m<=9?"0"+m:m;
-    var a=newData.getSeconds();
-    var S=a<=9?"0"+a:a;
-    return time=N+"-"+Y+"-"+D+" "+H+":"+M+":"+S;
 }
 
 //收缩目录

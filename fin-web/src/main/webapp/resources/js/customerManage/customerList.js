@@ -139,19 +139,6 @@ $(function (){
             ],
             "createdRow": function ( row, data, index,settings,json ) {
                 var btnDel = $('<a class="tabel_btn_style" onclick="showDetail(\''+data.customerId+'\',\''+data.card+'\',\''+data.tel+'\',\''+data.occupationType+'\')">查看 </a>');
-               // var resetPwd=$('<a class="tabel_btn_style" onclick="resetPwd(\''+data.customerId+'\')"> 重置密码 </a>');
-               // var changeTel=$('<a class="tabel_btn_style" onclick="changeTel(\''+data.customerId+'\',\''+data.tel+'\')"> 更改手机号 </a>');
-                //var changeBankCard=$('<a class="tabel_btn_style" onclick="changeBankCard(\''+data.userId+'\',\''+data.personName+'\')"> 更改银行卡 </a>');
-                //var quotaSee = $('<a class="tabel_btn_style" onclick="quotaSee(\''+data.customerId+'\')">  提额明细</a>');
-               // var pro_quota_proportion= parseInt(data.pro_quota_proportion)+100;
-             /*   if (data.pro_quota_proportion==""){
-                    pro_quota_proportion="0";
-                }*/
-                //var spanQuota = $('<span >'+pro_quota_proportion+'</span>');
-                // if(data.current_quota_ratio||data.current_quota_ratio==""){
-                //     $('td', row).eq(6).append(spanQuota);
-                // }
-                //$('td', row).eq(8).append(btnDel).append(resetPwd).append(changeTel).append(changeBankCard);
                 $('td', row).eq(8).append(btnDel);
             },
             "initComplete" : function(settings,json) {

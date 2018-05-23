@@ -16,13 +16,13 @@
     <result column="latest_payday" property="latestPayday" jdbcType="VARCHAR" />
     <result column="latest_pay" property="latestPay" jdbcType="VARCHAR" />
     <result column="pay_type" property="payType" jdbcType="VARCHAR" />
-    <result column="pay_ proof" property="payProof" jdbcType="VARCHAR" />
+    <result column="pay_proof" property="payProof" jdbcType="VARCHAR" />
     <result column="local_monthly_min_wage" property="localMonthlyMinWage" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
     id, contractor_id, real_name, card, telphone, contract_status, contract_start_date, 
-    contract_end_date, job, job_type, latest_payday, latest_pay, pay_type, "pay_ proof", 
+    contract_end_date, job, job_type, latest_payday, latest_pay, pay_type, pay_proof,
     local_monthly_min_wage,white_status
   </sql>
 
@@ -113,7 +113,7 @@
         pay_type,
       </if>
       <if test="payProof != null" >
-        "pay_ proof",
+        pay_proof,
       </if>
       <if test="localMonthlyMinWage != null" >
         local_monthly_min_wage,
@@ -214,7 +214,7 @@
         pay_type = #{payType,jdbcType=VARCHAR},
       </if>
       <if test="payProof != null" >
-        "pay_ proof" = #{payProof,jdbcType=VARCHAR},
+        pay_proof = #{payProof,jdbcType=VARCHAR},
       </if>
       <if test="localMonthlyMinWage != null" >
         local_monthly_min_wage = #{localMonthlyMinWage,jdbcType=VARCHAR},
