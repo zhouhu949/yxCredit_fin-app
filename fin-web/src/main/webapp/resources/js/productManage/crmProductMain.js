@@ -670,11 +670,11 @@ function showFormView(id,parentId,flag,add,me,type){
                         var repayment = dataList.repayment;
                         $("#repayment").attr("value",repayment).attr("disabled",true).css("border","none");
 
-                        if(repayment == '1'){//该选择为提前还款
+                        if(repayment == '0'){//该选择为提前还款
                             $(".repayment").css({"display":"table-cell"});
                             //提前还款时间
                             $("#repayment_days").val(dataList.repaymentDays).attr("readOnly","readOnly").css("border","none");
-                        }else if(repayment == '0'){
+                        }else if(repayment == '1'){
                             $(".repayment").css({"display":"none"});
                             $("#repayment_days").val('');
                         }
@@ -737,12 +737,12 @@ function showFormView(id,parentId,flag,add,me,type){
                         var repayment = dataList.repayment;
                         $("#repayment").attr("value",repayment).attr("disabled",false).css("border","1px solid #ccc");
 
-                        if(repayment == '1'){//该选择为提前还款
+                        if(repayment == '0'){//该选择为提前还款
                             $(".repayment").css({"display":"table-cell"});
                             //提前还款
                             $("#repayment_days").val(dataList.repaymentDays).attr("readOnly",false).css("border","1px solid #ccc");
 
-                        }else if(repayment == '0'){
+                        }else if(repayment == '1'){
                             $(".repayment").css({"display":"none"});
                             $("#repayment_days").val('');
                         }
@@ -925,7 +925,7 @@ function showFormView(id,parentId,flag,add,me,type){
              * @create 韩梅生
              * 还款时限
              */
-            if($("repayment").val() === "1"){
+            if($("repayment").val() === "0"){
                 if($("#repayment_days").val() === ""){
                     layer.msg("请输入还款时限！",{time:2000});
                     return;
@@ -1284,9 +1284,9 @@ function sureDiyType(value){
 }
 
 function  sureRepayment(value) {
-    if(value === '1'){
+    if(value === '0'){
         $('.repayment').css('display','');
-    }else if(value === '0'){
+    }else if(value === '1'){
         $('.repayment').css('display','none');
     }
 }

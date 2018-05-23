@@ -537,7 +537,7 @@
                             <td>
                                 <select class="info-selW1" id="parentInfo" style="line-height:11px;float: left; padding-right: 6px;margin-left:24px;width:160px;" name="payment">
                                     <option style="text-align: center;" value="">请选择</option>
-                                    <option style="text-align: center;" value="2">一次性还本付息</option>
+                                    <option style="text-align: center;" value="1">一次性还本付息</option>
                                 </select>
                             </td>
 
@@ -602,8 +602,8 @@
                             <td style="text-align: center;">
                                 <select id="repayment" style='height: 28px; margin-left: -13px; width: 163px;' name="repayment" onchange="sureRepayment(this.options[this.options.selectedIndex].value)">
                                     <option style="text-align: center;" value="">请选择</option>
-                                    <option style="text-align: center;" value="1">是</option>
-                                    <option style="text-align: center;" value="0">否</option>
+                                    <option style="text-align: center;" value="0">是</option>
+                                    <option style="text-align: center;" value="1">否</option>
                                 </select>
                             </td>
 
