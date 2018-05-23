@@ -114,8 +114,7 @@ $().ready(function(){
 
 
         }
-
-        if(linkmanList.length!=0){
+        if("undefined" != typeof(linkmanList)){
             //联系人信息
             var html = '';
             $("#relation").empty();
@@ -140,7 +139,7 @@ $().ready(function(){
         $("#orderId").val(orderId);
 
 
-        if (apiResultList.length !=0){
+        if ("undefined" != typeof(apiResultList)){
             //风控信息审核列表
             var html = '';
             $("#apiResult").empty();
