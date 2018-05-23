@@ -7,6 +7,7 @@ import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.core.Response;
+import com.zw.rule.customer.po.Customer;
 import com.zw.rule.customer.po.Order;
 import com.zw.rule.customer.service.CustomerService;
 import com.zw.rule.customer.service.OrderService;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -126,14 +128,20 @@ public class OrderFinalAuditController {
     @ResponseBody
     @WebLogger("确认放款")
     public Response confirmationMerchant(@RequestBody Map param) throws Exception {
-        String orderId =param.get("orderId").toString();
+        String orderId = param.get("orderId").toString();
+        String customerId = param.get("customerId").toString();
+        String contractAmount = param.get("contractAmount").toString();//订单合同金额
+        String surplusContractAmount = param.get("surplusContractAmount").toString();//客户剩余合同金额
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map<String,Object> map= new HashedMap();
         map.put("id",orderId);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","5");//待还款
         orderService.updateOrderState(map);
-
+        Customer customer = new Customer();
+        customer.setId(customerId);
+        customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
+        customerService.updateByPrimaryKey(customer);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());

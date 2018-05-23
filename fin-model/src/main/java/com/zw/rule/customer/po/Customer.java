@@ -1,5 +1,7 @@
 package com.zw.rule.customer.po;
 
+import java.math.BigDecimal;
+
 public class Customer {
 
     /****************************碧友信************************************/
@@ -109,6 +111,17 @@ public class Customer {
 
     private String isOpenAccount;
 
+    /** 剩余合同金额 */
+
+    private BigDecimal surplusContractAmount;
+
+    public BigDecimal getSurplusContractAmount() {
+        return surplusContractAmount;
+    }
+
+    public void setSurplusContractAmount(BigDecimal surplusContractAmount) {
+        this.surplusContractAmount = surplusContractAmount;
+    }
 
     public String getPhoneBookList() {
         return phoneBookList;

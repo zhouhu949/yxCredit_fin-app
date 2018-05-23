@@ -146,7 +146,7 @@ public class Order {
 
     private String remark;//备注
 
-    private String feeState;//费用状态
+    private String feeState;//费用状态contractAmount
 
     private String manageFee;//平台管理费
 

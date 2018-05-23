@@ -115,7 +115,8 @@ $(function (){
             "columns": table,
             "createdRow": function ( row, data, index,settings,json ) {
                 var seeBtn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="orderSee(\''+data.orderId+'\',\''+data.customerId+'\')"> 查看 </a>');
-                var loanBtn = $('<a class="tabel_btn_style" onclick="confirmationLoan(\''+data.orderId+'\')">确认放款 </a>');
+                var loanBtn = $('<a class="tabel_btn_style" onclick="confirmationLoan(\''+data.orderId+'\',\''+data.customerId+'\',\''+
+                    data.contractAmount+'\',\''+data.surplusContractAmount+'\')">确认放款 </a>');
                 return $("td", row).eq(10).append(loanBtn).append(seeBtn);
             },
             "initComplete" : function(settings,json) {
@@ -252,15 +253,22 @@ function  orderDebit(orderId) {
     });
 }
 
-function  confirmationLoan(orderId) {
-    var param={};
-    param.orderId = orderId;
-    Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
-        layer.msg(data.msg,{time:2000},function(){
-            layer.closeAll();
-            g_userManage.tableOrder.ajax.reload();
-        })
-    },"application/json");
+function  confirmationLoan(orderId, customerId, contractAmount, surplusContractAmount) {
+    layer.confirm('确认放款?', function(index) {
+        layer.close(index);
+        var param={};
+        param.orderId = orderId;
+        param.surplusContractAmount = surplusContractAmount;
+        param.contractAmount = contractAmount;
+        param.customerId = customerId;
+        Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
+            layer.msg(data.msg,{time:2000},function(){
+                layer.closeAll();
+                g_userManage.tableOrder.ajax.reload();
+            })
+        },"application/json");
+    });
+
 }
 
 

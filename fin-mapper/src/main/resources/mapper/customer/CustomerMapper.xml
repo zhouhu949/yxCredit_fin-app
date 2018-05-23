@@ -246,6 +246,9 @@
             <if test="creditPreAmount != null">
                 #{creditPreAmount,jdbcType=VARCHAR},
             </if>
+            <if test="surplusContractAmount != null">
+                #{surplusContractAmount},
+            </if>
         </set>
         where ID = #{id,jdbcType=VARCHAR}
     </update>
