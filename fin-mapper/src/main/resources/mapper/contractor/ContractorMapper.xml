@@ -29,7 +29,7 @@
         and contractor_name like '%${param.contractorName}%'
       </if>
     </where>
-    /*order by CREAT_TIME desc*/
+    order by admission_date desc
   </select>
 
   <select id="findContractorOrderList" resultType="com.zw.rule.contractor.po.ContractorOrder" parameterType="java.util.Map">

@@ -39,15 +39,6 @@ $(function (){
                 if(data[i] =="/contractorManage/updateContractor"){
                     $("#updateBtn").show();
                 }
-               /* if(data[i] =="/user/contractorDetail"){
-                    $("#deleteBtn").show();
-                }
-                if(data[i] =="/user/resetPwd"){
-                    $("#resetBtn").show();
-                }
-                if(data[i] =="/userRole/add"){
-                    $("#assignBtn").show();
-                }*/
             }
 
         },"application/json"
@@ -119,10 +110,9 @@ $(function (){
         "initComplete" : function(settings,json) {
             //搜索
             $("#btn_search").click(function() {
+                //搜索
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
             //全选
             $("#userCheckBox_All").click(function(J) {
@@ -134,13 +124,9 @@ $(function (){
             });
             //重置
             $("#btn_search_reset").click(function() {
-                $('input[name="account"]').val("");
-                $('input[name="trueName"]').val("");
-                $('input[name="mobile"]').val("");
+                $('input[name="contractorName"]').val("");
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
             //单选行
             $("#User_list tbody").delegate( 'tr','click',function(e){
@@ -296,11 +282,12 @@ function updateContractor(sign,id) {
                         return;
                     }
                     uploadFile();//上传资料
-                    if("" == licenceAttachment) {
-                        layer.msg("图片上传失败",{time:2000});
-                        return ;
-                    }
                     var credit=$('input[name="contractor_credit"]').val();
+                    var creditReg = /^[0-9]*$/;
+                    if(!creditReg.test(credit)){
+                        layer.msg("授信额度不合法",{time:2000});
+                        return;
+                    }
                     var state=$("#state").val();
                     var userId=$("#userId").val();
                     var user={
@@ -345,11 +332,15 @@ function updateContractor(sign,id) {
             yes : function(index, layero) {
                 uploadFile();//上传资料
                 if ($('input[name="contractor_name"]').val() == "") {
-                    layer.msg("总包商不能为空",{time:2000});
+                    layer.msg("总包商名不能为空",{time:2000});
+                    return;
+                }
+                if ($('input[name="contractor_linkman"]').val() == "") {
+                    layer.msg("联系人不能为空",{time:2000});
                     return;
                 }
                 if ($('input[name="contractor_mobile"]').val() == "") {
-                    layer.msg("手机号码不能为空",{time:2000});
+                    layer.msg("联系方式不能为空",{time:2000});
                     return;
                 }
                 var contractorName=$('input[name="contractor_name"]').val();

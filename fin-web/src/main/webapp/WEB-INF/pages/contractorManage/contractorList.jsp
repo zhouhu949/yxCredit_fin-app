@@ -27,7 +27,7 @@
                 <ul class="search_content clearfix">
                     <li><label class="lf">总包商名称</label>
                         <label>
-                            <input name="trueName" type="text" class="text_add"/>
+                            <input name="contractorName" type="text" class="text_add"/>
                         </label>
                     </li>
                     <button id="btn_search"  type="button" class="btn btn-primary queryBtn">查询</button>
