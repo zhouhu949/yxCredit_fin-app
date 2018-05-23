@@ -146,13 +146,13 @@
                             </tr>
                             <tr>
                                 <td >户籍居住地址：</td>
-                                <td id="companyAddress" colspan="5"></td>
+                                <td id="nowaddress" colspan="5"></td>
 
                             </tr>
                             <tr>
 
                                 <td >工作居住地址：</td>
-                                <td id="nowaddress" colspan="5"></td>
+                                <td id="companyAddress" colspan="5"></td>
                             </tr>
                            <%-- <tr>
                                 <td  width="10%">姓名</td>
