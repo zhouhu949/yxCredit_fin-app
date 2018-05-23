@@ -152,23 +152,6 @@ function reasonClick(){
         }
     })
 }
-//获取当前时间
-function getFirstTime() {
-    var time;
-    var newData=new Date();
-    var N=newData.getFullYear();
-    var s=newData.getMonth()+1;
-    var Y=s<=9?"0"+s:s;
-    var r=newData.getDate();
-    var D=r<=9?"0"+r:r;
-    var h=newData.getHours();
-    var H=h<=9?"0"+h:h;
-    var m=newData.getMinutes();
-    var M=m<=9?"0"+m:m;
-    var a=newData.getSeconds();
-    var S=a<=9?"0"+a:a;
-    return time=N+"-"+Y+"-"+D+" "+H+":"+M+":"+S;
-}
 
 //收缩目录
 function shrink(me){

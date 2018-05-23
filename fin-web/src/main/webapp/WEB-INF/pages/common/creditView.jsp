@@ -121,32 +121,307 @@
     </tr>
     <tr>
         <td>姓&nbsp;名：</td>
-        <td></td>
+        <td id="name"></td>
         <td>报告编号：</td>
-        <td></td>
+        <td id="reportCode"></td>
     </tr>
     <tr>
         <td>证件类型：</td>
-        <td></td>
+        <td id="cardType"></td>
         <td>查询时间</td>
-        <td></td>
+        <td id="applyTime"></td>
     </tr>
     <tr>
         <td>证件号码</td>
-        <td></td>
+        <td id="cardNo"></td>
         <td>报告时间</td>
-        <td></td>
+        <td id="reportTime"></td>
     </tr>
     <tr>
         <td>婚姻状况</td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td id="marriedStatus"></td>
+        <td>手机号码</td>
+        <td id="custMobile"></td>
     </tr>
     </thead>
 </table>
 
+<table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+    <thead class="table_footer table_header" >
+    <tr>
+        <th colspan="4" style="text-align:left;">信用卡详情</th>
+    </tr>
+    <tr class="table_math" style="text-align: center;">
+        <td>流水号</td>
+        <td>卡片类型</td>
+        <td>发放时间</td>
+        <td>发放银行</td>
+        <td>账户类型</td>
+        <td>信用卡账单/销毁日期</td>
+        <td>额度</td>
+        <td>已用额度</td>
+        <td>信用卡状态 (销户、未激活、使用中、呆账)</td>
+        <td>是否逾期</td>
+        <td>是否逾期90天</td>
+        <td>最近5年内逾期月数</td>
+        <td>最近5年内逾期90天的月数</td>
+        <td>创建时间</td>
+        <td>最后更新日期</td>
+    </tr>
+    </thead>
+    <tbody id="creditDetails">
+    </tbody>
+</table>
 
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">购房贷款详情</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>贷款类型</td>
+            <td>贷款时间</td>
+            <td>贷款银行</td>
+            <td>贷款金额</td>
+            <td>到期时间</td>
+            <td>还款时间</td>
+            <td>贷款余额</td>
+            <td>是否逾期</td>
+            <td>是否逾期90天</td>
+            <td>最近5年内逾期月数</td>
+            <td>最近5年内逾期90天的月数</td>
+            <td>逾期金额</td>
+            <td>房贷状态(结清，未结清)</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="houseloanDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">查询记录</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>查询人员</td>
+            <td>查询原因</td>
+            <td>查询时间</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="queryInfos">
+        </tbody>
+    </table>
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">行政处罚</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>处罚机构</td>
+            <td>文书编号</td>
+            <td>处罚内容</td>
+            <td>是否行政复议</td>
+            <td>处罚金额</td>
+            <td>行政复议结果</td>
+            <td>处罚生效时间</td>
+            <td>处罚截止时间</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="punishDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">欠税记录</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>主管税务机关</td>
+            <td>欠税统计时间</td>
+            <td>欠税金额</td>
+            <td>纳税人识别号</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="taxUnpaidDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">电信欠费记录</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>电信运营商</td>
+            <td>业务类型</td>
+            <td>记账年月</td>
+            <td>业务开通时间</td>
+            <td>欠费金额</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="teleArrearsDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">强制执行记录</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>执行法院</td>
+            <td>案号</td>
+            <td>执行案由</td>
+            <td>结案方式</td>
+            <td>立案时间</td>
+            <td>案件状态</td>
+            <td>申请执行标的</td>
+            <td>申请执行标的</td>
+            <td>申请执行标的金额</td>
+            <td>已执行标的金额</td>
+            <td>结案时间</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="enforceDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">民事判决记录</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>执行法院</td>
+            <td>案号</td>
+            <td>执行案由</td>
+            <td>结案方式</td>
+            <td>立案时间</td>
+            <td>判决/调解结果</td>
+            <td>诉讼标的</td>
+            <td>判决/调解生效时间</td>
+            <td>诉讼标的金额</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="civilJudgementDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">资产处置信息</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>处置时间</td>
+            <td>接收单位</td>
+            <td>接收单位</td>
+            <td>债权金额</td>
+            <td>最近一次还款日期</td>
+            <td>余额</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="disposalDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">保证人代偿信息</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>代偿日期</td>
+            <td>代偿单位</td>
+            <td>累计代偿金额</td>
+            <td>余额</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="compensationDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">担保详情</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>担保日期</td>
+            <td>被担保人姓名</td>
+            <td>被担保人证件类型</td>
+            <td>被担保人证件号</td>
+            <td>单位</td>
+            <td>担保类型</td>
+            <td>担保合同金额</td>
+            <td>担保合同金额</td>
+            <td>统计截止日期</td>
+            <td>担保余额</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="guaranteedDetails">
+        </tbody>
+    </table>
+
+    <table data-toggle="table" style="width:1340px;border:1px solid #eee;">
+        <thead class="table_footer table_header" >
+        <tr>
+            <th colspan="4" style="text-align:left;">其他贷款详情</th>
+        </tr>
+        <tr class="table_math" style="text-align: center;">
+            <td>流水号</td>
+            <td>贷款类型</td>
+            <td>贷款时间</td>
+            <td>贷款银行</td>
+            <td>贷款金额</td>
+            <td>到期时间</td>
+            <td>还款时间</td>
+            <td>贷款余额</td>
+            <td>是否逾期</td>
+            <td>是否逾期90天</td>
+            <td>最近5年逾期月数</td>
+            <td>最近5年内逾期90天的月数</td>
+            <td>逾期金额</td>
+            <td>贷款状态(结清，未结清)</td>
+            <td>创建时间</td>
+            <td>最后更新日期</td>
+        </tr>
+        </thead>
+        <tbody id="otherloanDetails">
+        </tbody>
+    </table>
 
 </body>
 </html>
@@ -156,7 +431,7 @@
         preLoanObject.methods.loadTongDunData();
     })
     /**
-     * 同盾报告模块对象
+     * 征信报告模块对象
      */
     var preLoanObject = {
         tableEl: '.result',
@@ -174,7 +449,7 @@
         },
         urls: {
             //数据加载url
-            loadTongDunUrl: '../apiResult/tongDun/${param.orderId}/${param.sourceCode}/${param.customerId}'
+            loadTongDunUrl: '../apiResult/tongDun/${param.resultId}/${param.customerId}'
         },
         data: {
             risk_level: {
@@ -196,200 +471,119 @@
                     }
                     var result = data.data;
                     debugger
-                    $('.custName').text(result['custName']);
-                    $('.custIc').text(result['custIc']);
-                    $('.custMobile').text(result['custMobile']);
-                    $('.email').text(result['email']);
+                    $('#name').text(result['custName']);
+                   // $('#custIc').text(result['custIc']);
+                    $('#custMobile').text(result['custMobile']);
 
-                    var apiResult = result['apiResult'];
-                    if(apiResult != null ){
-                        $('.checkResult').text(preLoanObject.methods.finalDecision(apiResult));
-                        var  riskItems = result['apiResult']['risk_items'];
-                        if(riskItems && riskItems.length > 0){
-                            $('.tongdunInfo').removeAttr('style');
-                        }
+                    var apiResult = result['apiResult'];//获取结果集合
+                    var reportInfo = apiResult.reportInfo;//获取报告信息
+                    var creditDetails = apiResult.creditDetails;//获取信用卡详情
+                    var houseloanDetails = apiResult.houseloanDetails;//购房贷款详情
+                    var queryInfos = apiResult.queryInfos;//查询记录
+                    var punishDetails = apiResult.punishDetails;//行政处罚
+                    var taxUnpaidDetails = apiResult.taxUnpaidDetails;//欠税记录
+                    $('#reportCode').text(apiResult.reportCode == null? "":apiResult.reportCode);
+                    $('#cardType').text(reportInfo.cardType);
+                    $('#cardNo').text(reportInfo.cardNo);
+                    $('#reportTime').text(reportInfo.reportTime);
+                    $('#marriedStatus').text(reportInfo.marriedStatus);
+
+                    var creditDetailHtml="";
+                    for(var i in creditDetails){
+                        var creditBean = creditDetails[i];
+                        creditDetailHtml +='<tr class="table_math" style="text-align: center;">';
+                        creditDetailHtml +='<td>'+ (creditBean.reportCode == null ?"":creditBean.reportCode)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.cardType == null ?"":creditBean.cardType)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditDate == null ?"":creditBean.creditDate)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditBank == null ?"":creditBean.creditBank)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditType == null ?"":creditBean.creditType)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditMonth == null ?"":creditBean.creditMonth)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditLimit == null ?"":creditBean.creditLimit)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditUsedLimit == null ?"":creditBean.creditUsedLimit)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.creditStatus == null ?"":creditBean.creditStatus)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.isOd == false ?"否":"是")+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.isOd90 == false ?"否":"是")+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.odMonth == null ?"":creditBean.odMonth)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.od90Month == null ?"":creditBean.od90Month)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.odLimit == null ?"":creditBean.odLimit)+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.createTime == null ?"":formatDateTime(creditBean.createTime))+'</td>';
+                        creditDetailHtml +='<td>'+ (creditBean.updateTime == null ?"":formatDateTime(creditBean.updateTime))+'</td>';
+                        creditDetailHtml +='</tr>';
                     }
-                    for (var i in riskItems) {
-                        var riskItem = riskItems[i];
-                        preLoanObject.template.remarksHtml = '';
-                        preLoanObject.data.itemDetail = riskItem['item_detail'];
-                        var riskLevel = preLoanObject.data.risk_level[riskItem.risk_level];
-                        if (preLoanObject.data.itemDetail !== undefined) {
-                            preLoanObject.methods.frequencyHandle();
-                            preLoanObject.methods.platformHandle();
-                            preLoanObject.methods.overdueHandle();
-                            preLoanObject.methods.nameListHandle();
-                        }
-                        //生成同盾报告数据
-                        preLoanObject.template.tableContentHtml += '<tr class="firstRow-Court">' +
-                            '<th class=" tableRow2 ant-col-3">' + riskItem["item_name"] + '</th>' +
-                            '<td class="ant-row tableRow2 ant-col-3" style="text-align: center;">' + riskLevel + '</td>' +
-                            '<th class="ant-row tableRow ant-col-5">' + preLoanObject.template.remarksHtml +
-                            '</th>' +
-                            '</tr>';
+                    $("#creditDetails").html(creditDetailHtml);
+
+                    var houseloanDetailsHtml="";
+                    for(var i in houseloanDetails){
+                        var houseloanBean = houseloanDetails[i];
+                        houseloanDetailsHtml +='<tr class="table_math" style="text-align: center;">';
+                        houseloanDetailsHtml +='<td>'+ houseloanBean.reportCode+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanType == null ?"":houseloanBean.houseloanType)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanDate == null ?"":houseloanBean.houseloanDate)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanBank == null ?"":houseloanBean.houseloanBank)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanMoney == null ?"":houseloanBean.houseloanMoney)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanEndDate == null ?"":houseloanBean.houseloanEndDate)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanMonth == null ?"":houseloanBean.houseloanMonth)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanBalance == null ?"":houseloanBean.houseloanBalance)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.isOd == false ?"否":"是")+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.isOd90 == false ?"否":"是")+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.odMonth == null ?"":houseloanBean.odMonth)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.od90Month == null ?"":houseloanBean.od90Month)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.odLimit == null ?"":houseloanBean.odLimit)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.houseloanStatus == null ?"":houseloanBean.houseloanStatus)+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.createTime == null ?"": formatDateTime(houseloanBean.createTime))+'</td>';
+                        houseloanDetailsHtml +='<td>'+ (houseloanBean.updateTime == null ?"":formatDateTime(houseloanBean.updateTime))+'</td>';
+                        houseloanDetailsHtml +='</tr>';
                     }
-                    $(preLoanObject.tableEl).append(preLoanObject.template.tableContentHtml);
-                    preLoanObject.methods.courtHandle( preLoanObject.data.courtDetails);
+                    $("#houseloanDetails").html(houseloanDetailsHtml);
+
+                    var queryInfosDetailsHtml="";
+                    for(var i in queryInfos){
+                        var queryInfosDetail = queryInfos[i];
+                        queryInfosDetailsHtml +='<tr class="table_math" style="text-align: center;">';
+                        queryInfosDetailsHtml +='<td>'+ queryInfosDetail.reportCode+'</td>';
+                        queryInfosDetailsHtml +='<td>'+ (queryInfosDetail.queryer == null ?"":queryInfosDetail.queryer)+'</td>';
+                        queryInfosDetailsHtml +='<td>'+ (queryInfosDetail.queryReason == null ?"":queryInfosDetail.queryReason)+'</td>';
+                        queryInfosDetailsHtml +='<td>'+ (queryInfosDetail.queryTime == null ?"":queryInfosDetail.queryTime)+'</td>';
+                        queryInfosDetailsHtml +='<td>'+ (queryInfosDetail.createTime == null ?"": formatDateTime(queryInfosDetail.createTime))+'</td>';
+                        queryInfosDetailsHtml +='<td>'+ (queryInfosDetail.updateTime == null ?"":formatDateTime(queryInfosDetail.updateTime))+'</td>';
+                        queryInfosDetailsHtml +='</tr>';
+                    }
+                    $("#queryInfos").html(queryInfosDetailsHtml);
+
+
+                    var punishDetailsHtml="";
+                    for(var i in punishDetails){
+                        var punishDetailsBean = punishDetails[i];
+                        punishDetailsHtml +='<tr class="table_math" style="text-align: center;">';
+                        punishDetailsHtml +='<td>'+ punishDetailsBean.reportCode+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.institution == null ?"": punishDetailsBean.institution)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.docNum == null ?"": punishDetailsBean.docNum)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.punishContent == null ?"": punishDetailsBean.punishContent)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.isReview == null ?"": punishDetailsBean.isReview)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.punishSum == null ?"": punishDetailsBean.punishSum)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.reviewResult == null ?"": punishDetailsBean.reviewResult)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.effectiveTime == null ?"": punishDetailsBean.effectiveTime)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.endTime == null ?"":punishDetailsBean.endTime)+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.createTime == null ?"": formatDateTime(punishDetailsBean.createTime))+'</td>';
+                        punishDetailsHtml +='<td>'+ (punishDetailsBean.updateTime == null ?"":formatDateTime(punishDetailsBean.updateTime))+'</td>';
+                        punishDetailsHtml +='</tr>';
+                    }
+                    $("#punishDetails").html(punishDetailsHtml);
                 })
 
             },
-            /**
-             * 客户行为检测
-             */
-            frequencyHandle: function () {
-                if (preLoanObject.data.itemDetail.hasOwnProperty('frequency_detail_list')) {
-                    var frequencyDetail = preLoanObject.data.itemDetail['frequency_detail_list'];
-                    for (var frequency in frequencyDetail) {
-                        preLoanObject.template.remarksHtml += '<span style="display:block;font-weight:normal;width:100%">' + frequencyDetail[frequency]["detail"] + '</span>';
-                    }
-                }
-            },
-            /**
-             * 多平台借贷申请检测
-             */
-            platformHandle: function () {
-                if (preLoanObject.data.itemDetail.hasOwnProperty('platform_detail')) {
-                    for (var platform in preLoanObject.data.itemDetail['platform_detail']) {
-                        preLoanObject.template.remarksHtml += '<span style="display:block;font-weight:normal;width:100%">' + preLoanObject.data.itemDetail['platform_detail'][platform] + '</span>';
-                    }
-                }
-            },
-            /**
-             * 关联人信息扫描
-             */
-            overdueHandle: function () {
-                if (preLoanObject.data.itemDetail.hasOwnProperty('overdue_details')) {
-                    var overdueDetails = preLoanObject.data.itemDetail['overdue_details'];
-                    for (var overdue in overdueDetails) {
-                        var overdueDetail = overdueDetails[overdue];
-                        var text = '于' + overdueDetail['overdue_time'] + '有' + overdueDetail['overdue_count'] + '笔,逾期金额为（范围）' +
-                            overdueDetail['overdue_amount_range'] + '逾期天数（范围）' + overdueDetail['overdue_day_range'];
-                        preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
-                    }
-                }
-            },
-            /**
-             * 模糊名单
-             */
-            nameListHandle: function () {
-                if (preLoanObject.data.itemDetail.hasOwnProperty('namelist_hit_details')) {
-                    var nameList = preLoanObject.data.itemDetail['namelist_hit_details'];
-                    for (var mameItem in nameList) {
-                        var name = nameList[mameItem];
-                        //如果是模糊模块类型
-                        if (name.type === 'fuzzy_list') {
-                            var fuzzs = name['fuzzy_detail_hits'];
-                            for (var fuzz in fuzzs) {
-                                var fuzzitem = fuzzs[fuzz];
-                                var text = '模糊名单 :' + fuzzitem['fraud_type'] + ' 身份证号:' + fuzzitem['fuzzy_id_number']
-                                    + ' 姓名:' + fuzzitem['fuzzy_name'];
-                                preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
-                            }
-                         //如果是灰名单
-                        } else if (name.type === 'grey_list') {
-                            var text = name['fraud_type'] + ':' + name['hit_type_displayname']
-                                + ' 描述:' + name['description'];
-                            preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
-
-                         //如果是黑名单
-                        } else if (name.type === 'black_list') {
-                            var courts = name['court_details'];
-                            for (var courtItem in courts) {
-                                preLoanObject.data.courtDetails.push(courts[courtItem]);
-                            }
-                        }
-
-                    }
-                }
-            },
-            /**
-             * 法院数据处理
-             */
-            courtHandle: function (obj) {
-                for (var courtItem in obj) {
-                    var courtDetail = obj[courtItem];
-                    var styleName = '';
-                    if(courtItem !== 0 ) {
-                        styleName ='margin-top:20px';
-                    }
-                    preLoanObject.template.courtHtml += '<table cellspacing="1"style="border: 1px solid #ccc;'+ styleName +'" cellpadding="0" class="form-detail column-two transparent">'+
-                    '<tbody>' +
-                    '<tr class="firstRow-Court">' +
-                    '<td class=" tableRow2 ant-col-3"  >被执行人姓名</td>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["name"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >性别</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["gender"] +'</td>' +
-                    '</tr>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >年龄</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["age"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >身份证号码</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["id_number"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行法院</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["court_name"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >省份</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["province"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行依据文号</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["case_number"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >立案时间</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["filing_time"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行依据文号</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["execution_base"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >做出执行依据单位</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["execution_department"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >生效法律文书确定的义务</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["duty"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >被执行人的履行情况</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["situation"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3" style="border-bottom: none;">失信被执行人行为具体情形</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5" style="border-bottom: none;border-right:none;">'+ courtDetail["discredit_detail"] +'</td>' +
-                    '</tr>' +
-                    '</tbody>' +
-                    '</table>';
-                }
-                $('.court').append(preLoanObject.template.courtHtml);
-            },
-            /**
-             * 检查结果
-             */
-            finalDecision:function (data) {
-                var finalScore = data['final_score'];
-                var finalDecision = data['final_decision'];
-                var length = data['risk_items'] ? data['risk_items'].length : 0;
-                switch (finalDecision){
-                    case 'Accept':
-                        return '扫描建议:'+ finalScore +'分, 申请用户检测出低风险，建议通过，共发现'+length +'条异常信息';
-                    case 'Review':
-                      return  '扫描建议:'+finalScore +'分, 申请用户检测出中风险，建议审核，共发现'+length +'条异常信息';
-                    case 'Reject':
-                        return  '扫描建议:'+finalScore +'分, 申请用户检测出高风险，建议拒绝，共发现1'+length +'条异常信息';
-                }
-            }
-
         }
     }
 
+
+    function formatDateTime(timeStamp) {
+        var date = new Date();
+        date.setTime(timeStamp * 1000);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + m + '-' + d+' ';
+    };
 </script>
