@@ -10,6 +10,7 @@
     <script src="${ctx}/resources/js/contractorManage/contractor.js${version}"></script>
     <script type="text/javascript" src="${ctx}/resources/assets/treeTable/js/jquery.treetable.js"></script>
     <script type="text/javascript" src="${ctx}/resources/assets/zTree/js/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript" src="${ctx}/resources/assets/js/jquery.form.min.js"></script>
     <script type="text/javascript" src="${ctx}/resources/assets/zTree/tree.js"></script>
     <title>总包商信息</title>
     <style>
@@ -21,7 +22,7 @@
 <body>
 <div class="page-content">
     <div class="commonManager">
-        <form id="form1" name="form1" method="post" action="">
+        <%--<form id="form1" name="form1" method="post" action="">--%>
             <div class="Manager_style add_user_info search_style">
                 <ul class="search_content clearfix">
                     <li><label class="lf">总包商名称</label>
@@ -79,18 +80,11 @@
                                 <i style="color: #F60;">*</i>
                             </li>
                             <li style="width:524px;">
-
-                                <label class="label_name">营业执照附件</label>
-                                <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
-                                <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
-
-                                <%--<form method="post" enctype="multipart/form-data" id="myForm">
-                                    <input onchange="UpImg()" type="file" name="uploadImg" class="uploadImg" value="" accept="image/png,image/gif,image/jpeg"/>
-                                    <input type="submit" value="上传图片"/>
-                                </form>--%>
-
-
-                            <%-- <textarea name="licenceAttachment"  type="text" style="width:428px;margin-top:10px;margin-left:-4px;" id="licenceAttachment" rows="4" cols="25" maxlength="150"></textarea>--%>
+                                <form id="contractorImgForm" method="post" enctype="multipart/form-data" >
+                                    <label class="label_name">营业执照附件</label>
+                                    <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
+                                    <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -116,7 +110,7 @@
                 </div>
 
             </div>
-        </form>
+       <%-- </form>--%>
         <!-- 弹框部门tree-->
         <div id="jstree" style="height: 463px;overflow:auto;display: none;" class="ztree">
         </div>

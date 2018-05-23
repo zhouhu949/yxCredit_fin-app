@@ -177,25 +177,26 @@ $(function (){
     }).draw()
 });
 
+var licenceAttachment;
 function uploadFile() {
-    $.ajax({
-        type : "POST",
-        url : "findContractorByRoleId",
-        data : {
-            Name : $("#file").val(),
-        },
-        async : false,
-        dataType : 'json',
-        success : function(data) {
-            var html="";
-            html+="<option value=''>请选择</option>";
-            $.each(data.data,function(index,result) {
-                html+="<option value="+result.id+">"+result.contractorName+"</option>"
-            });
-            $("select[name='contractorList']").html(html);
-
-        }
-    });
+    licenceAttachment = "";
+    if('' != $("#preview").attr("src")) {
+        $("#contractorImgForm").ajaxSubmit({
+            url : "uploadFile",
+            type : "POST",
+            async: false,
+            dataType : "JSON",
+            success:function(data){
+                if (data != null) {
+                    //上传成功
+                    licenceAttachment = data.data;
+                } else {
+                    layer.msg(data.message,{time:2000});
+                    return;
+                }
+            }
+        });
+    }
 }
 
 
@@ -239,14 +240,15 @@ function setImagePreview1() {
         document.selection.empty();
     }
     return true;
-    /*if($("#preview").attr("src")!=""){
-     var html="<span>fdfasdf</span>";
-     $("#pictureLoad").append(html);
-     }*/
 }
 
-//添加、编辑用户信息
+//添加、编辑总包商信息
 function updateContractor(sign,id) {
+    $("#preview").attr("src",'');
+    $("#contractorName").val('');
+    $("#linkman").val('');
+    $("#linkmanPhone").val('');
+    $("#credit").val('');
     if(sign==0){
         $('#organ').html("");
         Comm.ajaxPost('contractorManage/contractorDetail',id,function(data){
@@ -256,6 +258,7 @@ function updateContractor(sign,id) {
             $("#linkman").val(contractor.linkman);
             $("#linkmanPhone").val(contractor.linkmanPhone);
             $("#credit").val(contractor.credit);
+            $("#preview").attr("src",contractor.licenceAttachment);
           //  $("#organ").attr('disabled',true);
             if(contractor.state==1){
                 $("#qiyong").attr('selected','selected');
@@ -283,6 +286,7 @@ function updateContractor(sign,id) {
                         layer.msg("联系方式不能为空",{time:2000});
                         return;
                     }
+                    $("#preview").attr("src");
                     var contractorName=$('input[name="contractor_name"]').val();
                     var linkman=$('input[name="contractor_linkman"]').val();
                     var linkmanPhone=$('input[name="contractor_mobile"]').val();
@@ -291,11 +295,14 @@ function updateContractor(sign,id) {
                         layer.msg("手机号码格式不正确",{time:2000});
                         return;
                     }
+                    uploadFile();//上传资料
+                    if("" == licenceAttachment) {
+                        layer.msg("图片上传失败",{time:2000});
+                        return ;
+                    }
                     var credit=$('input[name="contractor_credit"]').val();
                     var state=$("#state").val();
                     var userId=$("#userId").val();
-                    alert($("#preview").attr("src"));
-                    console.log(state);
                     var user={
                         id : id,
                         contractorName:contractorName,
@@ -303,7 +310,7 @@ function updateContractor(sign,id) {
                         linkmanPhone:linkmanPhone,
                         credit:credit,
                         userId:userId,
-                        licenceAttachment : $("#file").val(),
+                        licenceAttachment : licenceAttachment,
                         state:parseInt(state)
                     };
                     Comm.ajaxPost(
@@ -311,7 +318,8 @@ function updateContractor(sign,id) {
                         function(data){
                             layer.closeAll();
                             layer.msg(data.msg,{time:2000},function () {
-                                $('#Contractor_list').dataTable().fnDraw(false);
+                                g_contractorManage.tableUser.ajax.reload(function(){
+                                });
                             });
                         }, "application/json"
                     );
@@ -335,6 +343,7 @@ function updateContractor(sign,id) {
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
+                uploadFile();//上传资料
                 if ($('input[name="contractor_name"]').val() == "") {
                     layer.msg("总包商不能为空",{time:2000});
                     return;
@@ -357,6 +366,7 @@ function updateContractor(sign,id) {
                 var contractor={
                     contractorName:contractorName,
                     linkmanPhone:linkmanPhone,
+                    licenceAttachment : licenceAttachment,
                     linkman:linkman,
                     credit:credit,
                     userId:userId,
@@ -377,41 +387,7 @@ function updateContractor(sign,id) {
     }
 
 }
-//启用或停止
-/*function updateState(state) {
-    var selectArray = $("#Data_list tbody input:checked");
-    if (!selectArray || (selectArray.length <= 0)) {
-        layer.msg("请选择一个用户", {time: 2000});
-        return;
-    }
-    var param = {
-        Ids: null,
-        status: null
-    }
-    var roleIds = new Array();
-    $.each(selectArray, function (i, e) {
-        var val = $(this).val();
-        roleIds.push(val);
-    });
-    if (roleIds.length == 0) {
-        return;
-    }
 
-    param.Ids = roleIds;
-    param.status = state;
-    Comm.ajaxPost(
-        'datamanage/listmanage/updateStatus', JSON.stringify(param),
-        function (data) {
-            layer.msg(data.msg, {time: 1000}, function () {
-                g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    contentChange();//点击东西过长显示省略号
-                });
-            });
-        }, "application/json"
-    );
-
-}*/
 //删除用户信息
 function deleteUser(userId){
     var userIds = new Array();
@@ -508,54 +484,3 @@ function selectAll(allSelectName, allSelectId, childCheckBoxName) {
         $("[name='" + childCheckBoxName + "']").removeAttr("checked");
     }
 }
-
-
-
-//角色-单个按钮功能
-function rightAll(){
-    var options=$("#multiselect option");
-    $("#multiselect_to").prepend(options);
-}
-function rightSelected(){
-    var options=$("#multiselect option:selected");
-    $("#multiselect_to").append(options);
-    $("#multiselect_to option:selected").attr('selected',false);
-}
-function leftSelected(){
-    var options=$("#multiselect_to option:selected");
-    $("#multiselect").append(options);
-    $("#multiselect option:selected").attr('selected',false);
-}
-function leftAll(){
-    var options=$("#multiselect_to option");
-    $("#multiselect").prepend(options);
-}
-
-//点击所属部门，加载树
-var showDeptZtree = function(){
-    //打开部门ztree弹框
-    var deptTree = layer.open({
-        title:"部门",
-        type: 1,
-        maxWidth:'auto',
-        area:['300px','300px'],
-        skin: 'layer_normal',
-        shift: 5,
-        offset:'150px',
-        btn : [ '保存', '取消' ],
-        shadeClose:false,
-        content: $("#jstree").show(),
-        success: function(layero, index){
-            getDepartmentZtree();
-            $('#jstree').delegate('span.text', 'click', function () {
-                var id = $(this).attr('title');
-                var deptName = $(this).text();
-                $('#deptPname').val(deptName);
-                $('#deptPid').val(id);
-            })
-        },
-        yes: function () {
-            layer.close(deptTree);
-        }
-    });
-};

@@ -2,6 +2,7 @@ package com.zw.rule.contractor.service.impl;
 
 import com.google.common.base.Strings;
 import com.zw.UploadFile;
+import com.zw.base.util.GeneratePrimaryKeyUtils;
 import com.zw.rule.contractor.po.Contractor;
 import com.zw.rule.contractor.po.ContractorOrder;
 import com.zw.rule.contractor.po.UserVo;
@@ -43,7 +44,7 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public List uploadContractorImage(HttpServletRequest request) throws Exception {
         String fileName="";
-        String id = UUID.randomUUID().toString();
+        String id = GeneratePrimaryKeyUtils.getUUIDKey();
         //获取根目录
         String root = request.getSession().getServletContext().getRealPath("/");
         //捕获前台传来的图片，并用uuid命名，防止重复
@@ -108,7 +109,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public int addWhiteList(WhiteList whiteList){
-        String uuid = UUID.randomUUID().toString();
+        String uuid = GeneratePrimaryKeyUtils.getUUIDKey();
         whiteList.setId(uuid);
         return  whiteListMapper.insertSelective(whiteList);
     }

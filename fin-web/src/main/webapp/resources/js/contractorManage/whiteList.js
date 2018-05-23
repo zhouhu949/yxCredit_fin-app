@@ -187,7 +187,72 @@ $(function (){
     }).draw()
 });
 
+//下面用于图片上传预览功能
+function setImagePreview1() {
+    var docObj=document.getElementById("file");
 
+    var imgObjPreview=document.getElementById("preview");
+    if(docObj.files &&docObj.files[0])
+    {
+        //火狐下，直接设img属性
+        imgObjPreview.style.display = 'block';
+        imgObjPreview.style.width = '272px';
+        imgObjPreview.style.height = '180px';
+        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+    }
+    else
+    {
+        //IE下，使用滤镜
+        docObj.select();
+        var imgSrc = document.selection.createRange().text;
+        var localImagId = document.getElementById("localImag");
+        //必须设置初始大小
+        localImagId.style.width = "272px";
+        localImagId.style.height = "180px";
+        //图片异常的捕捉，防止用户修改后缀来伪造图片
+        try{
+            localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+        }
+        catch(e)
+        {
+            alert("您上传的图片格式不正确，请重新选择!");
+            return false;
+        }
+        imgObjPreview.style.display = 'none';
+        document.selection.empty();
+    }
+    return true;
+    /*if($("#preview").attr("src")!=""){
+     var html="<span>fdfasdf</span>";
+     $("#pictureLoad").append(html);
+     }*/
+}
+
+var payProof;
+function uploadFile() {
+    payProof = "";
+    if('' != $("#preview").attr("src")) {
+        $("#whiteListImgForm").ajaxSubmit({
+            url : "uploadFile",
+            type : "POST",
+            async: false,
+            dataType : "JSON",
+            success:function(data){
+                if (data != null) {
+                    //上传成功
+                    payProof = data.data;
+                } else {
+                    layer.msg(data.message,{time:2000});
+                    return;
+                }
+            }
+        });
+    }
+}
 
 //当前用户下总包商下拉框
 function loadContractorType(){
@@ -206,7 +271,6 @@ function loadContractorType(){
                 html+="<option value="+result.id+">"+result.contractorName+"</option>"
             });
             $("select[name='contractorList']").html(html);
-
         }
     });
 }
@@ -290,19 +354,24 @@ function setImagePreview1() {
         document.selection.empty();
     }
     return true;
-    /*if($("#preview").attr("src")!=""){
-     var html="<span>fdfasdf</span>";
-     $("#pictureLoad").append(html);
-     }*/
 }
 
 //添加、编辑白名单信息
 function updateWhite(sign,id) {
+    $("#realName").val("");
+    $("#card").val("");
+    $("#latestPayday").val('');
+    $("#localMonthlyMinWage").val('');
+    $("#telphone").val('');
+    $("#jobType").val('');
+    $("#latestPay").val('');
+    $("#beginTime").val('');
+    $("#endTime").val('');
+    $("#preview").attr("src",'');
     loadContractorType();
     if(sign==0){
         Comm.ajaxPost('contractorManage/whiteListDetail',id,function(data){
             layer.closeAll();
-            debugger
             var whiteList = data.data;
             $("#realName").val(whiteList.realName);
             $("#card").val(whiteList.card);
@@ -316,13 +385,7 @@ function updateWhite(sign,id) {
             $("#endTime").val(whiteList.contractEndDate);
             $("#latestPayday").val(whiteList.latestPayday);
             $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
-          //  $("#organ").attr('disabled',true);
-            /*if(whiteList.state==1){
-                $("#qiyong").attr('selected','selected');
-            }else{
-                $("#jinyong").attr('selected','selected');
-            }*/
-           // $("#remark").val(user.remark);
+            $("#preview").attr("src",whiteList.payProof);
             layer.open({
                 type : 1,
                 title : '修改白名单',
@@ -372,7 +435,7 @@ function updateWhite(sign,id) {
                         layer.msg("发薪日只能在0-32之间",{time:2000});
                         return;
                     }
-
+                    uploadFile();
                     var user={
                         id : id,
                         realName:realName,
@@ -385,8 +448,9 @@ function updateWhite(sign,id) {
                         payType:payType,
                         latestPay:latestPay,
                         contractStartDate:beginTime,
-                        contractEndDate:endTime,
-                        latestPayday:latestPayday,
+                        contractEndDate: endTime,
+                        latestPayday: latestPayday,
+                        payProof: payProof,
                         localMonthlyMinWage:localMonthlyMinWage
                     };
                     Comm.ajaxPost(
@@ -475,6 +539,7 @@ function updateWhite(sign,id) {
                     contractStartDate:beginTime,
                     contractEndDate:endTime,
                     latestPayday:latestPayday,
+                    payProof: payProof,
                     localMonthlyMinWage:localMonthlyMinWage
 
                 };
