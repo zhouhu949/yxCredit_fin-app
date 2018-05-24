@@ -116,8 +116,15 @@ $(function (){
     }).draw()
 });
 
-function getContractorOrder(id){
-
+function getContractorOrder(orderId, customerId){
+    var url = "/finalAudit/examineDetails?orderId="+orderId+"&customerId="+customerId;
+    layer.open({
+        type : 2,
+        title : '订单汇总及客户资料',
+        area : [ '100%', '100%' ],
+        btn : [ '取消' ],
+        content:_ctx+url
+    });
 }
 
 /**
