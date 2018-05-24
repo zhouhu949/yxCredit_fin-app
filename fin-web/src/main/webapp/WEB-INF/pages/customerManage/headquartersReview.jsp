@@ -179,7 +179,7 @@
                                 <td class="align">申请期限:</td>
                                 <td id="periods">${order.periods}</td>
                                 <td class="align">申请时间:</td>
-                                <td id="applayTime">${order.applayTime}</td>
+                                <td id="applayTime"></td>
                             </tr>
                             <tr>
                                 <td class="align">开户银行:</td>
@@ -229,13 +229,13 @@
                             </tr>
                             <tr>
                                 <td>户籍居住地址：</td>
-                                <td id="cardRegisterAddress" colspan="5">${customer.cardRegisterAddress}</td>
+                                <td id="cardRegisterAddress" colspan="5">${customer.nowaddress}</td>
 
                             </tr>
                             <tr>
 
                                 <td>工作居住地址：</td>
-                                <td id="residenceAddress" colspan="5">${customer.residenceAddress}</td>
+                                <td id="residenceAddress" colspan="5">${customer.companyAddress}</td>
                             </tr>
                             </tbody>
                         </table>

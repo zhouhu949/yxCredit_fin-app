@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zw.base.util.DateUtils;
 import com.zw.rule.ApiResult.service.ApiResultService;
 import com.zw.rule.SendMessage.service.SendMessageFactory;
 import com.zw.rule.answer.po.Answer;
@@ -451,6 +452,8 @@ public class CustomerController {
         String type = param.get("type").toString();
         String orderId = (String) param.get("orderId");
         Map map = new HashMap();
+        //获取订单信息
+        Map order = orderService.getOrderAndBank(orderId);
 
         //根据客户ID获取客户信息
         Map customer= customerService.getCustomerById(customerId);
@@ -464,10 +467,25 @@ public class CustomerController {
         //获取客户绑定银行卡信息
         Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
 
+        if(customer !=null){
+            //获取身份证号码
+            String card =customer.get("card").toString();
+            //截取出生年月
+            card = card.substring(6,14);
+            //转化成时间格式
+            Date date = DateUtils.strConvertToDate2(DateUtils.STYLE_3, card);
+            //算出年龄
+            long age = (System.currentTimeMillis()-date.getTime())/(1000*60*60*24*365L);
+
+            customer.put("age",age);
+
+        }
+
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
         map.put("bankCard",bankCard);
         map.put("apiResultList",apiResultList);
+        map.put("order",order);
         return new Response(map);
 
 
