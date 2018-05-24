@@ -189,13 +189,13 @@
                             </tr>
                             <tr>
                                 <td>户籍居住地址：</td>
-                                <td id="cardRegisterAddress" colspan="5">${customer.companyAddress}</td>
+                                <td id="cardRegisterAddress" colspan="5">${customer.nowaddress}</td>
 
                             </tr>
                             <tr>
 
                                 <td>工作居住地址：</td>
-                                <td id="residenceAddress" colspan="5">${customer.nowaddress}</td>
+                                <td id="residenceAddress" colspan="5">${customer.companyAddress}</td>
                             </tr>
                             </tbody>
                         </table>

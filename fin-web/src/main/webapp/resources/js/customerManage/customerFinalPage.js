@@ -25,13 +25,13 @@ $().ready(function(){
     $("#YHJE").text(parseFloat($("#tdFee").text())+parseFloat($("#proSum").text()));
     var artificial = document.getElementById("artificial");
     var Loan = document.getElementById("Loan");
-    if(orderState == 3){
+    if(orderState == 3 ){
         artificial.style.display="block";
     };
     if(orderState == 4){
         artificial.style.display="block";
     };
-    if(orderState == 5){
+    if(orderState == 5 || orderState == 6){
         artificial.style.display="block";
         Loan.style.display="block";
     };

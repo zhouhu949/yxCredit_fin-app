@@ -305,8 +305,8 @@ function showDetail(id,card,tel,occupationType){
                     var cardYear = card.substr(6,4);
                     $("#age").html(year-cardYear);//年龄
                     $("#cusTel").html(person.tel);//电话号码
-                    $("#companyAddress").text(person.companyAddress);//户籍居住地址
-                    $("#nowaddress").text(person.nowaddress);//工作居住地址
+                    $("#companyAddress").text(person.companyAddress);//工作居住地址
+                    $("#nowaddress").text(person.nowaddress);//户籍居住地址
                     $("#contractor").text(person.contractorName);//所属总包商
 
 
