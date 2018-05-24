@@ -24,14 +24,14 @@
                     <li>
                         <label class="label_name">总包商名</label>
                         <label>
-                            <select name="proSeriesName" style="height: 30px;" id="userId">
+                            <select name="proSeriesName" style="height: 30px;" id="searchContractor">
                                 <option value="">请选择</option>
                             </select>
                         </label>
                     </li>
                     <li><label class="lf">姓名</label>
                         <label>
-                            <input name="trueName" type="text" class="text_add"/>
+                            <input name="trueName" type="text" class="text_add" id="searchName"/>
                         </label>
                     </li>
                     <li><label class="lf">手机号码</label>
@@ -43,11 +43,6 @@
                     <button id="btn_search_reset"  type="button" class="btn btn-primary queryBtn">查询重置</button>
                     <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateWhite(1)" id="Add_user_btn">添加白名单</button>
                 </ul>
-                <%--<ul class="search_content clearfix">--%>
-                    <%----%>
-                    <%--<button type="button" class="btn btn-primary deleteBtn" id="deleteBtn" onclick="deleteUser()">删除</button>--%>
-                    <%--<button type="button" class="btn btn-primary resetBtn" id="resetBtn" onclick="resetPwd()">重置密码</button>--%>
-                <%--</ul>--%>
                 <div id="Add_user_style" style="display: none">
                     <div class="addCommon clearfix">
                         <ul class="clearfix">
@@ -77,7 +72,7 @@
                             <li>
                                 <label class="label_name">手机号</label>
                                 <label for="telphone">
-                                    <input name="tel_phone"  type="text" id="telphone" maxlength="11"/>
+                                    <input name="tel_phone"  type="number" id="telphone" maxlength="11"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
@@ -140,7 +135,7 @@
                             <li>
                                 <label class="label_name">发薪日</label>
                                 <label for="latestPayday">
-                                    <input name="latest_payday"  type="text"  id="latestPayday"/>
+                                    <input name="latest_payday"  type="number"  id="latestPayday"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
@@ -148,7 +143,7 @@
                             <li>
                                 <label class="label_name">应发工资</label>
                                 <label for="latestPay">
-                                    <input name="latest_pay"  type="text"  id="latestPay"/>
+                                    <input name="latest_pay"  type="number"  id="latestPay"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
@@ -162,7 +157,7 @@
                             <li>
                                 <label class="label_name">最低工资</label>
                                 <label for="localMonthlyMinWage">
-                                    <input name="local_monthly_min_wage"  type="text"  id="localMonthlyMinWage"/>
+                                    <input name="local_monthly_min_wage"  type="number"  id="localMonthlyMinWage"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>

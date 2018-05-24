@@ -251,7 +251,6 @@ function updateContractor(sign,id) {
             }else{
                 $("#jinyong").attr('selected','selected');
             }
-           // $("#remark").val(user.remark);
             $("#isEdit").hide();
             layer.open({
                 type : 1,
@@ -260,36 +259,37 @@ function updateContractor(sign,id) {
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
-                    if ($('input[name="contractor_name"]').val() == "") {
-                        layer.msg("总包商名不能为空",{time:2000});
-                        return;
-                    }
-                    if ($('input[name="contractor_linkman"]').val() == "") {
-                        layer.msg("联系人不能为空",{time:2000});
-                        return;
-                    }
-                    if ($('input[name="contractor_mobile"]').val() == "") {
-                        layer.msg("联系方式不能为空",{time:2000});
-                        return;
-                    }
-                    $("#preview").attr("src");
                     var contractorName=$('input[name="contractor_name"]').val();
                     var linkman=$('input[name="contractor_linkman"]').val();
                     var linkmanPhone=$('input[name="contractor_mobile"]').val();
                     var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                    var credit=$('input[name="contractor_credit"]').val();
+                    var creditReg = /^[0-9]*$/;
+                    var state=$("#state").val();
+                    var userId=$("#userId").val();
+                    $("#preview").attr("src");
+
+                    if (!contractorName) {
+                        layer.msg("总包商名不能为空",{time:2000});
+                        return;
+                    }
+                    if (!linkman) {
+                        layer.msg("联系人不能为空",{time:2000});
+                        return;
+                    }
+                    if (!linkmanPhone) {
+                        layer.msg("联系方式不能为空",{time:2000});
+                        return;
+                    }
                     if(!mobileReg.test(linkmanPhone)){
                         layer.msg("手机号码格式不正确",{time:2000});
                         return;
                     }
-                    uploadFile();//上传资料
-                    var credit=$('input[name="contractor_credit"]').val();
-                    var creditReg = /^[0-9]*$/;
                     if(!creditReg.test(credit)){
                         layer.msg("授信额度不合法",{time:2000});
                         return;
                     }
-                    var state=$("#state").val();
-                    var userId=$("#userId").val();
+                    uploadFile();//上传资料
                     var user={
                         id : id,
                         contractorName:contractorName,
@@ -330,30 +330,36 @@ function updateContractor(sign,id) {
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
-                uploadFile();//上传资料
-                if ($('input[name="contractor_name"]').val() == "") {
-                    layer.msg("总包商名不能为空",{time:2000});
-                    return;
-                }
-                if ($('input[name="contractor_linkman"]').val() == "") {
-                    layer.msg("联系人不能为空",{time:2000});
-                    return;
-                }
-                if ($('input[name="contractor_mobile"]').val() == "") {
-                    layer.msg("联系方式不能为空",{time:2000});
-                    return;
-                }
+                var creditReg = /^[0-9]*$/;
                 var contractorName=$('input[name="contractor_name"]').val();
                 var linkman=$('input[name="contractor_linkman"]').val();
                 var linkmanPhone=$('input[name="contractor_mobile"]').val();
-                var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
+                var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                var state = $("#state option:selected").val();
+                var credit=$('input[name="contractor_credit"]').val();
+                var userId=$("#userId").val();
+                if (!contractorName) {
+                    layer.msg("总包商名不能为空",{time:2000});
+                    return;
+                }
+                if (!linkman) {
+                    layer.msg("联系人不能为空",{time:2000});
+                    return;
+                }
+                if (!linkmanPhone) {
+                    layer.msg("联系方式不能为空",{time:2000});
+                    return;
+                }
                 if(!mobileReg.test(linkmanPhone)){
                     layer.msg("手机号码格式不正确~",{time:2000});
                     return;
                 }
-                var credit=$('input[name="contractor_credit"]').val();
-                var state = $("#state option:selected").val();
-                var userId=$("#userId").val();
+
+                if(!creditReg.test(credit)){
+                    layer.msg("授信额度不合法",{time:2000});
+                    return;
+                }
+                uploadFile();//上传资料
                 var contractor={
                     contractorName:contractorName,
                     linkmanPhone:linkmanPhone,

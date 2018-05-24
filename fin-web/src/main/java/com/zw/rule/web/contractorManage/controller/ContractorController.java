@@ -79,7 +79,7 @@ public class ContractorController {
     @PostMapping("findContractorByRoleId")
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
         String roleName = (String) UserContextUtil.getAttribute("roleName");
-        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+       // String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor> contractorList = contractorService.selectContractorList();
         if("总包商".equals(roleName)) {
             List<Contractor> newContractorList = new ArrayList<Contractor>();

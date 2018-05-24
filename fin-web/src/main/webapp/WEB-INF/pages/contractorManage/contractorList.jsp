@@ -59,14 +59,14 @@
                             <li>
                                 <label class="label_name">联系方式</label>
                                 <label for="linkmanPhone">
-                                    <input name="contractor_mobile"  type="text" id="linkmanPhone" maxlength="11"/>
+                                    <input name="contractor_mobile"  type="number" id="linkmanPhone" maxlength="11"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
                             <li>
                                 <label class="label_name">授信额度</label>
                                 <label for="credit">
-                                    <input name="contractor_credit"  type="text" id="credit" maxlength="10"/>
+                                    <input name="contractor_credit"  type="number" id="credit" maxlength="10"/>
                                 </label>
                             </li>
                             <li>

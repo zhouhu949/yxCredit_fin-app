@@ -13,7 +13,13 @@ var g_whiteListManage = {
         //自行处理查询参数
         param.fuzzySearch = g_whiteListManage.fuzzySearch;
         if (g_whiteListManage.fuzzySearch) {
-            param.trueName = $("[name='trueName']").val();
+            param.realName = $("#searchName").val();
+        }
+        if (g_whiteListManage.fuzzySearch) {
+            param.mobile = $("[name='mobile']").val();
+        }
+        if (g_whiteListManage.fuzzySearch) {
+            param.contractorId = $("#searchContractor option:selected").val();
         }
         paramFilter.param = param;
 
@@ -151,9 +157,7 @@ $(function (){
             //搜索
             $("#btn_search").click(function() {
                 g_whiteListManage.fuzzySearch = true;
-                g_whiteListManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_whiteListManage.tableUser.ajax.reload();
             });
             loadContractorType1();
             //全选
@@ -166,13 +170,11 @@ $(function (){
             });
             //重置
             $("#btn_search_reset").click(function() {
-                $('input[name="account"]').val("");
-                $('input[name="trueName"]').val("");
-                $('input[name="mobile"]').val("");
+                $("#searchName").val("");
+                $("[name='mobile']").val("");
+                $('#searchContractor option[value=""]').attr('selected','selected');
                 g_whiteListManage.fuzzySearch = true;
-                g_whiteListManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_whiteListManage.tableUser.ajax.reload();
             });
 
         }
@@ -393,54 +395,94 @@ function updateWhite(sign,id) {
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
-                    if ($('input[name="real_name"]').val() == "") {
+                    var numReg1 = /^[0-9]*$/;
+                    var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+                    var latestPayday=$('input[name="latest_payday"]').val();//最近一期发薪日
+                    var realName=$('input[name="real_name"]').val();
+                    var card=$('input[name="card"]').val();
+                    var latestPay=$('input[name="latest_pay"]').val();//最近一期发薪日应发工资
+                    var jobType=$('input[name="job_type"]').val();//工种
+                    var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                    var contractStatus=$("#contractStatus").val();
+                    var localMonthlyMinWage=$("#localMonthlyMinWage").val();//当地月最低工资
+                    var contractorId = $("#contractorId option:selected").val();
+                    var telPhone = $('input[name="tel_phone"]').val();
+                    var job = $("#job option:selected").val();
+                    var payType = $("#payType option:selected").val();
+                    var beginTime = $("#beginTime").val();
+                    var endTime = $("#endTime").val();
+
+                    if (!realName) {
                         layer.msg("姓名不能为空",{time:2000});
                         return;
                     }
-                    if ($('input[name="tel_phone"]').val() == "") {
+                    if (!telPhone) {
                         layer.msg("手机号码不能为空",{time:2000});
                         return;
                     }
-                    if (latestPayday == "") {
-                        layer.msg("发薪日不能为空",{time:2000});
-                        return;
-                    }
-                    var realName=$('input[name="real_name"]').val();
-                    var card=$('input[name="card"]').val();
-                    var latestPay=$('input[name="latest_pay"]').val();
-                    var telphone=$('input[name="tel_phone"]').val();
-                    var jobType=$('input[name="job_type"]').val();
-                    var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
-                    if(!mobileReg.test(telphone)){
+                    if(!mobileReg.test(telPhone)){
                         layer.msg("手机号码格式不正确",{time:2000});
                         return;
                     }
-                    var contractStatus=$("#contractStatus").val();
-                    var localMonthlyMinWage=$("#localMonthlyMinWage").val();
-                    var contractorId = $("#contractorId option:selected").val();
-                    var job = $("#job option:selected").val();
-                    var payType = $("#payType option:selected").val();
-
-                    var beginTime = $("#beginTime").val();
-                    if(beginTime != null && beginTime != ''){
-                        beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                    }
-                    var endTime = $("#endTime").val();
-                    if(endTime != null && endTime != ''){
-                        endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                    }
-                    var latestPayday=$('input[name="latest_payday"]').val();
-                    var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
-                    if(!latestPaydayReg.test(latestPayday)) {
-                        layer.msg("发薪日只能在0-32之间",{time:2000});
+                    if(!contractorId) {
+                        layer.msg("请选择总包商",{time:2000});
                         return;
+                    }
+                    if(!latestPayday){
+                        layer.msg("发薪日不能为空",{time:2000});
+                        return;
+                    }
+                    if(!numReg1.test(latestPayday)) {
+                        layer.msg("发薪日只能为数字",{time:2000});
+                        return;
+                    }
+
+                    if(!latestPaydayReg.test(latestPayday)) {
+                        layer.msg("发薪日只能在0-31之间",{time:2000});
+                        return;
+                    }
+                    if(!latestPay){
+                        layer.msg("发薪日应发工资不能为空",{time:2000});
+                        return;
+                    }
+                    if(!numReg1.test(latestPay)){
+                        layer.msg("发薪日应发工资只能为数字",{time:2000});
+                        return;
+                    }
+                    if(!jobType){
+                        layer.msg("工种不能为空",{time:2000});
+                        return;
+                    }
+                    if(!localMonthlyMinWage){
+                        layer.msg("当地月最低工资不能为空",{time:2000});
+                        return;
+                    }
+                    if(!numReg1.test(localMonthlyMinWage)){
+                        layer.msg("当地月最低工资只能为数字",{time:2000});
+                        return;
+                    }
+                    if(beginTime){
+                        beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    } else {
+                        if(1 === contractStatus) {
+                            layer.msg("请选择合同开始时间",{time:2000});
+                            return;
+                        }
+                    }
+                    if(endTime){
+                        endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    } else {
+                        if(1 === contractStatus) {
+                            layer.msg("请选择合同结束时间",{time:2000});
+                            return;
+                        }
                     }
                     uploadFile();
                     var user={
                         id : id,
                         realName:realName,
                         card:card,
-                        telphone :telphone,
+                        telphone :telPhone,
                         jobType :jobType,
                         contractStatus:contractStatus,
                         contractorId:contractorId,
@@ -483,53 +525,92 @@ function updateWhite(sign,id) {
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
+                var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
                 var latestPayday = $('input[name="latest_payday"]').val();
-                if ($('input[name="real_name"]').val() == "") {
-                    layer.msg("姓名不能为空",{time:2000});
-                    return;
-                }
-                if ($('input[name="tel_phone"]').val() == "") {
-                    layer.msg("手机号码不能为空",{time:2000});
-                    return;
-                }
-                if (latestPayday == "") {
-                    layer.msg("发薪日不能为空",{time:2000});
-                    return;
-                }
-                var realName=$('input[name="real_name"]').val();
+                var telPhone = $('input[name="tel_phone"]').val();
+                var realName = $('input[name="real_name"]').val();
+                var numReg1 = /^[0-9]*$/;//校验是否为整数
+                var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
                 var card=$('input[name="card"]').val();
                 var jobType=$('input[name="job_type"]').val();
-                var telphone=$('input[name="tel_phone"]').val();
-                var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
-                if(!mobileReg.test(telphone)){
-                    layer.msg("手机号码格式不正确~",{time:2000});
-                    return;
-                }
-                var beginTime = $("#beginTime").val();
-                if(beginTime != null && beginTime != ''){
-                    beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                }
-                var endTime = $("#endTime").val();
-                if(endTime != null && endTime != ''){
-                    endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                }
-                var latestPayday=$('input[name="latest_payday"]').val();
-                var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
-                if(!latestPaydayReg.test(latestPayday)) {
-                    layer.msg("发薪日只能在0-32之间",{time:2000});
-                    return;
-                }
                 var contractStatus=$("#contractStatus").val();
                 var localMonthlyMinWage=$("#localMonthlyMinWage").val();
                 var contractorId = $("#contractorId option:selected").val();
                 var latestPay=$('input[name="latest_pay"]').val();
                 var job = $("#job option:selected").val();
                 var payType = $("#payType option:selected").val();
+                var beginTime = $("#beginTime").val();
+                var endTime = $("#endTime").val();
 
+                if (!realName) {
+                    layer.msg("姓名不能为空",{time:2000});
+                    return;
+                }
+                if (!telPhone) {
+                    layer.msg("手机号码不能为空",{time:2000});
+                    return;
+                }
+                if(!mobileReg.test(telPhone)){
+                    layer.msg("手机号码格式不正确",{time:2000});
+                    return;
+                }
+                if(!contractorId) {
+                    layer.msg("请选择总包商",{time:2000});
+                    return;
+                }
+                if(!latestPayday){
+                    layer.msg("发薪日不能为空",{time:2000});
+                    return;
+                }
+                if(!numReg1.test(latestPayday)) {
+                    layer.msg("发薪日只能为数字",{time:2000});
+                    return;
+                }
+                if(!latestPaydayReg.test(latestPayday)) {
+                    layer.msg("发薪日只能在0-31之间",{time:2000});
+                    return;
+                }
+                if(!latestPay){
+                    layer.msg("发薪日应发工资不能为空",{time:2000});
+                    return;
+                }
+                if(!numReg1.test(latestPay)){
+                    layer.msg("发薪日应发工资只能为数字",{time:2000});
+                    return;
+                }
+                if(!jobType){
+                    layer.msg("工种不能为空",{time:2000});
+                    return;
+                }
+                if(!localMonthlyMinWage){
+                    layer.msg("当地月最低工资不能为空",{time:2000});
+                    return;
+                }
+                if(!numReg1.test(localMonthlyMinWage)){
+                    layer.msg("当地月最低工资只能为数字",{time:2000});
+                    return;
+                }
+
+                if(beginTime){
+                    beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                } else {
+                    if(1 === contractStatus) {
+                        layer.msg("请选择合同开始时间",{time:2000});
+                        return;
+                    }
+                }
+                if(endTime){
+                    endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                } else {
+                    if(1 === contractStatus) {
+                        layer.msg("请选择合同结束时间",{time:2000});
+                        return;
+                    }
+                }
                 var contractor={
                     realName: realName,
                     card:card,
-                    telphone:telphone,
+                    telphone:telPhone,
                     jobType:jobType,
                     contractStatus:contractStatus,
                     contractorId:contractorId,
