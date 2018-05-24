@@ -8,9 +8,6 @@
     <%@include file ="../common/taglibs.jsp"%>
     <%@ include file="../common/importDate.jsp"%>
     <script src="${ctx}/resources/js/contractorManage/contractorOrder.js${version}"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/treeTable/js/jquery.treetable.js"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/zTree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript" src="${ctx}/resources/assets/zTree/tree.js"></script>
     <title>订单汇总</title>
     <style>
         #organ{outline: none!important;appearance:none; -moz-appearance:none; -webkit-appearance:none;height:28px;line-height:19px;}

@@ -274,7 +274,6 @@ function loadContractorType(){
                     html+="<option value="+result.id+">"+result.contractorName+"</option>"
                 });
             }
-
             $("select[name='contractorList']").html(html);
         }
     });

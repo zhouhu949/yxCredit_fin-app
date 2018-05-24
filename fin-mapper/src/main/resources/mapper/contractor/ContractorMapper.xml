@@ -35,10 +35,11 @@
   <select id="findContractorOrderList" resultType="com.zw.rule.contractor.po.ContractorOrder" parameterType="java.util.Map">
       SELECT
           magorder.id AS id,
+          magorder.CUSTOMER_ID AS customerId,
           magorder.order_no AS orderNo,
           magorder.USER_ID AS userId,
           magorder.PERIODS AS periods,
-          magorder.state AS orderState,
+          magorder.order_state AS orderState,
           magorder.applay_money AS applayMoney,
           magorder.Examine_time AS examineTime,
           magorder.loan_amount AS loanAmount,
@@ -80,16 +81,17 @@
           ) userwhite ON magorder.user_id = userwhite.id
 
     <where>
-      <if test="param.realname != null and param.realname != ''">
-        and appuser.realname like '%${param.realname}%'
+          <if test="param.realName != null and param.realName != ''">
+          and userwhite.realName like '%${param.realName}%'
       </if>
       <if test="param.contractorName != null and param.contractorName != ''">
         and userwhite.contractorName like '%${param.contractorName}%'
       </if>
       <if test="param.tel != null and param.tel != ''">
-        and appuser.tel like '%${param.tel}%'
+        and userWhite.tel like '%${param.tel}%'
       </if>
     </where>
+      order by magorder.applay_time desc
   </select>
 
   <select id="selectContractorList" resultMap="BaseResultMap" >

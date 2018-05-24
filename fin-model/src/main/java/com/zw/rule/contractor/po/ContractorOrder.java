@@ -9,6 +9,8 @@ public class ContractorOrder{
 
     private String userId;
 
+    private String customerId;
+
     private String periods;
 
     private String orderState;
@@ -31,6 +33,10 @@ public class ContractorOrder{
 
     private String serviceFee;
 
+    public String getId() {
+
+        return id;
+    }
     public String getLoanAmount() {
         return loanAmount;
     }
@@ -47,9 +53,12 @@ public class ContractorOrder{
         this.serviceFee = serviceFee;
     }
 
-    public String getId() {
+    public String getCustomerId() {
+        return customerId;
+    }
 
-        return id;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public void setId(String id) {
