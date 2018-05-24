@@ -13,7 +13,7 @@ $().ready(function(){
             var linkmanList=data.linkmanList;//联系人信息
             //var customer = data.customer;//客户信息
             var apiResultList= data.apiResultList;//风控审核信息
-            var orderAndbank= data.orderAndbank;//订单信息和银行卡信息
+            var orderAndbank= data.order;//订单信息和银行卡信息
         }
 
         //订单信息和银行卡信息
@@ -25,7 +25,7 @@ $().ready(function(){
             $("#rate").text(orderAndbank.rate);//利率
             $("#applayMoney").text(orderAndbank.applayMoney);//申请金额
             $("#periods").text(orderAndbank.periods);//申请期限
-            $("#applayTime").text(orderAndbank.applayTime);//申请时间
+            $("#applayTime").text(formatTime(orderAndbank.applayTime));//申请时间
             $("#bankName").text(orderAndbank.applayTime);//开户行
             $("#bankSubbranch").text(orderAndbank.applayTime);//支行
             $("#cardNumber").text(orderAndbank.cardNumber);//银行卡号
@@ -43,7 +43,7 @@ $().ready(function(){
                 '<td width="10%" >审核结果：</td>'+
                 '<td width="23%">'+apiResultList[i].message+'</td>'+
                 '<td width="10%" >报告浏览：</td>'+
-                '<td width="23%"> <a href="./tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank">查看报告</a></td>'+
+                '<td width="23%"> <a href="./tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank" style="color: #f1a02f">查看报告</a></td>'+
                 '</tr>';
 
         }
