@@ -104,7 +104,7 @@ $(function (){
             }
         ],
         "createdRow": function ( row, data, index,settings,json ) {
-            var btnDel = $('<a class="tabel_btn_style" onclick="updateContractor(0,\''+data.id+'\')">修改</a>&nbsp;<a class="tabel_btn_style" onclick="asignRole(\''+data.id+'\')">绑定用户</a>');
+            var btnDel = $('<a class="tabel_btn_style" onclick="updateContractor(0,\''+data.id+'\')">修改</a>&nbsp;<a class="tabel_btn_style" onclick="asignRole(\''+data.id+'\',\''+data.userId+'\')">绑定用户</a>');
             $('td', row).eq(7).append(btnDel);
         },
         "initComplete" : function(settings,json) {
@@ -406,16 +406,29 @@ function deleteUser(userId){
 }
 
 //绑定用户
-function asignRole(contractorId) {
+function asignRole(contractorId, userIdStr) {
     Comm.ajaxPost('contractorManage/findUserByMenuUrl',"",function(data){
         var html="";
         $.each(data.data,function(index,result){
-            html+="<tr>"
-                +"<td><input name=\"userCheckBox\" id=\"userCheckBox\" type=\"checkbox\"  class=\"ace\" value=\""+result.userId+"\" onclick='checkSelect(\"userCheckBox\", \"allSelectCheckBox\", \"allSelectId\")'>" +
-                "<span class=\"lbl\" style=\"cursor:pointer;\"></span></td>"
-                +"<td>"+result.account+"</td>"
-                +"<td>"+result.tel+"</td>"
-                +"</tr>";
+            html+="<tr>";
+            var isCheck = false;
+            if(userIdStr) {
+                var userStr = userIdStr.split(",");
+                for(var i in userIdStr.split(",")){
+                    if(userStr[i] && userStr[i] === result.userId) {
+                        isCheck = true;
+                    }
+                }
+            }
+            if(isCheck) {
+                html+="<td><input name=\"userCheckBox\" id=\"userCheckBox\" type=\"checkbox\" class=\"ace\" checked= 'checked' value=\""+result.userId+"\" onclick='checkSelect(\"userCheckBox\", \"allSelectCheckBox\", \"allSelectId\")'>";
+            } else {
+                html+="<td><input name=\"userCheckBox\" id=\"userCheckBox\" type=\"checkbox\" class=\"ace\" value=\""+result.userId+"\" onclick='checkSelect(\"userCheckBox\", \"allSelectCheckBox\", \"allSelectId\")'>";
+            }
+            html+="<span class=\"lbl\" style=\"cursor:pointer;\"></span></td>";
+            html+="<td>"+result.account+"</td>";
+            html+="<td>"+result.tel+"</td>";
+            html+="</tr>";
         });
         $("#User_list").html(html);
 

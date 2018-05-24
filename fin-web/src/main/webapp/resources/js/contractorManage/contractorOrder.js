@@ -85,9 +85,7 @@ $(function (){
             //搜索
             $("#btn_search").click(function() {
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
             //全选
             $("#userCheckBox_All").click(function(J) {
@@ -99,13 +97,10 @@ $(function (){
             });
             //重置
             $("#btn_search_reset").click(function() {
-                $('input[name="account"]').val("");
-                $('input[name="trueName"]').val("");
-                $('input[name="mobile"]').val("");
+                $("[name='contractorName']").val("");
+
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
         }
     }, CONSTANT.DATA_TABLES.DEFAULT_OPTION)).api();
