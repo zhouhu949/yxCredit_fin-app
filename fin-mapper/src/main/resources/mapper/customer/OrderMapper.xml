@@ -1585,10 +1585,10 @@
         magorder.CARD AS card,
         magorder.TEL AS tel,
         product_name_name AS productName,
-        applay_money AS applayMoney,
+        loan_amount AS loanAmount,
         magcu.surplus_contract_amount AS surplusContractAmount,
         PERIODS AS periods,
-        applay_time AS applayTime,
+        Examine_time AS examineTime,
         Order_state AS orderState,
         contract_amount AS contractAmount
         FROM

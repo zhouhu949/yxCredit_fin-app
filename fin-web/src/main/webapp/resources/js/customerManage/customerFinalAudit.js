@@ -38,9 +38,9 @@ $(function (){
             {"data": "card","orderable" : false},//身份证号码
             {"data": "tel","orderable" : false},//电话号码
             {"data": "productName","orderable" : false},//产品名称
-            {"data": "applayMoney","orderable" : false},//申请金额
+            {"data": "loanAmount","orderable" : false},//批复金额
             {"data": "periods","orderable" : false},//申请期限
-            {"data": "applayTime","orderable" : false ,
+            {"data": "examineTime","orderable" : false ,//审批时间
                 "render":function (data, type, row, meta) {
                     if(data !=null && data !=''){
                         return formatTime(data);

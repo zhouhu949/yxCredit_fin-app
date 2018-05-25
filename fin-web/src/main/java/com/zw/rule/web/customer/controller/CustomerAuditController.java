@@ -213,8 +213,8 @@ public class CustomerAuditController {
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","3");//待签约
-        map.put("examineTime", DateUtils.getDateString(new Date()));
-        map.put("contractAmount",map.get("loanAmount"));
+        map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
+        map.put("contractAmount",map.get("loanAmount"));//合同金额
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
