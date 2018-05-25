@@ -467,19 +467,7 @@ public class CustomerController {
         //获取客户绑定银行卡信息
         Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
 
-        if(customer !=null){
-            //获取身份证号码
-            String card =customer.get("card").toString();
-            //截取出生年月
-            card = card.substring(6,14);
-            //转化成时间格式
-            Date date = DateUtils.strConvertToDate2(DateUtils.STYLE_3, card);
-            //算出年龄
-            long age = (System.currentTimeMillis()-date.getTime())/(1000*60*60*24*365L);
 
-            customer.put("age",age);
-
-        }
 
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);

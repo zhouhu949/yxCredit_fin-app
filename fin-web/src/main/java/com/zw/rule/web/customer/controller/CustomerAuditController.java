@@ -98,6 +98,21 @@ public class CustomerAuditController {
         ModelAndView modelAndView = new ModelAndView("customerManage/headquartersReview");
         Map order = orderService.getOrderAndBank(orderId);
         Map customer = customerService.getCustomerById(customerId);
+
+        if(customer !=null){
+            //获取身份证号码
+            String card =customer.get("card").toString();
+            //截取出生年月
+            card = card.substring(6,14);
+            //转化成时间格式
+            Date date = DateUtils.strConvertToDate2(DateUtils.STYLE_3, card);
+            //算出年龄
+            long age = (System.currentTimeMillis()-date.getTime())/(1000*60*60*24*365L);
+
+            customer.put("age",age);
+
+        }
+
         int amountAdvice = 0;
         if(null != customer && null != order) {
             ParamFilter  paramFilter = new ParamFilter();
@@ -120,6 +135,7 @@ public class CustomerAuditController {
         //TODO 需要获取建议额度［应发工资－最低日工资标准＊期数（日）］＊80%
         modelAndView.addObject("order",order);
         modelAndView.addObject("customer",customer);
+        modelAndView.addObject("linkmanList",linkmanList);
 
 
         return  modelAndView;
