@@ -8,10 +8,10 @@ public interface CommonConstants {
     /**
      * 成功
      */
-    Integer SUCCESS = 1;
+    Integer SUCCESS = 0;
     /**
      * 失败
      */
-    Integer FAIL = 0;
+    Integer FAIL = 1;
 
 }

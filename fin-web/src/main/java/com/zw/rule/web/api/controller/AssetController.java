@@ -31,7 +31,7 @@ public class AssetController {
             String  assetDataStr = assetService.syncAssetData(request);
             if (StringUtils.isNotEmpty(assetDataStr)) {
                 JSONObject resultStr = JSONObject.parseObject(assetDataStr);
-                String resCode = resultStr.get("resCode").toString();
+                String resCode = resultStr.get("retCode").toString();
                 if ((Consts.API_SUCCESS).equals(resCode)) {
                     return Response.ok("同步成功！", null);
                 }

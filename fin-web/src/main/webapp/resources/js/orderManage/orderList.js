@@ -156,9 +156,11 @@ $(function (){
                 var btnDel = $('<a class="tabel_btn_style" onclick="orderDetail(\''+data.orderId+'\',\''+data.customerId+'\')">查看订单</a>');
                 var btnDAuditing = $('<a class="tabel_btn_style" onclick="orderOperationRecord(\''+data.orderId+'\',\''+data.customerId+'\')">审核日志</a>');
                 var btnAsset = $('<a class="tabel_btn_style" onclick="assetSynchronization(\''+data.orderId+'\',\''+data.customerId+'\')">资产同步</a>');
-                if(data.assetState==0 || data.assetState==2){
-                    $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
-                }else {
+               if(data.orderState==4){
+                   if(data.assetState==0 || data.assetState==2 ){
+                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
+                   }
+               }else{
                     $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
                 }
 
@@ -268,9 +270,16 @@ function assetSynchronization(orderId,customerId) {
         param.orderId = orderId;
         param.customerId = customerId;
         Comm.ajaxPost('asset/syncAssetData',JSON.stringify(param), function (data) {
-                 console.log(data);
-                 alert(data);
-            },"application/json")
+            if(data){
+                if (parseInt(data.code) !== 0) {
+                    alert(data.msg);
+                    //layer.msg(data.msg);
+                }else {
+                    alert(data.msg);
+                }
+                location.reload();
+            }
+        },"application/json")
     }else{
         //alert("取消");
     }
