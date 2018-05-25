@@ -1524,7 +1524,7 @@
     <select id="getAllOrderList" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT ID AS orderId , order_no AS orderNo ,  CUSTOMER_ID AS customerId , CUSTOMER_NAME AS customerName , CARD AS card ,
               TEL AS tel , product_name_name AS productName , applay_money AS applayMoney ,
-          PERIODS AS periods , applay_time AS applayTime , Order_state AS orderState
+          PERIODS AS periods , applay_time AS applayTime , Order_state AS orderState, asset_state AS assetState
         FROM mag_order
         <where>
             1=1

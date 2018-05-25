@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.zw.base.util.DigestUtil;
 import com.zw.base.util.RegexUtil;
+import com.zw.rule.mapper.customer.AppUserMapper;
 import com.zw.rule.mapper.system.UserDao;
 import com.zw.rule.mapper.system.UserRoleDao;
 import com.zw.rule.mybatis.ParamFilter;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRoleDao userRoleDao;
 
+    @Resource
+    private AppUserMapper appUserMapper;
     @Override
     public List getList(ParamFilter param) {
         return userDao.findMap("getList", param.getParam(), param.getPage());
@@ -141,4 +144,15 @@ public class UserServiceImpl implements UserService {
         return userDao.findColumn("getAllPermission", String.class, "");
     }
 
+/************************************碧友信********************************************/
+    /**
+     * 根据客户ID 获取TokenId
+     * @author 仙海峰
+     * @param customerId 客户ID
+     * @return TokenId
+     */
+    @Override
+    public String getTokenById(String customerId) {
+        return appUserMapper.getTokenById(customerId);
+    }
 }
