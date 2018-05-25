@@ -54,4 +54,12 @@ public interface AppUserMapper{
 	 **/
 	int updateByPrimaryKey(AppUser record);
 
+	/**
+	 * 根据客户ID 获取TokenId
+	 * @author 仙海峰
+	 * @param customerId 客户ID
+	 * @return TokenId
+	 */
+	String getTokenById(@Param("customerId") String customerId);
+
 }

@@ -8,7 +8,7 @@ public interface CommonConstants {
     /**
      * 成功
      */
-    Integer SUCCESS = 0;
+    Integer SUCCESS = 1;
     /**
      * 失败
      */
