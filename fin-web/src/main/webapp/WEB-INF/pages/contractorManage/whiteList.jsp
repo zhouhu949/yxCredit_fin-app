@@ -65,7 +65,7 @@
                             <li>
                                 <label class="label_name">身份证号<i style="color: #F60;">*</i></label>
                                 <label for="card">
-                                    <input name="card"  type="text" id="card" maxlength="11"/>
+                                    <input name="card"  type="text" id="card" maxlength="18"/>
 
                                 </label>
                             </li>

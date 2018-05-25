@@ -389,7 +389,7 @@ function updateWhite(sign,id) {
             $("#endTime").val(whiteList.contractEndDate);
             $("#latestPayday").val(whiteList.latestPayday);
             $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
-            $("#preview").attr("src",whiteList.payProof);
+            $("#preview").attr("src",_ctx + whiteList.payProof);
             layer.open({
                 type : 1,
                 title : '修改白名单',
@@ -398,6 +398,7 @@ function updateWhite(sign,id) {
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
                     var numReg1 = /^[0-9]*$/;
+                    var cardReg = /^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/;
                     var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
                     var latestPayday=$('input[name="latest_payday"]').val();//最近一期发薪日
                     var realName=$('input[name="real_name"]').val();
@@ -416,6 +417,10 @@ function updateWhite(sign,id) {
 
                     if (!realName) {
                         layer.msg("姓名不能为空",{time:2000});
+                        return;
+                    }
+                    if(!cardReg.test(card)) {
+                        layer.msg("身份证号码格式不正确",{time:2000});
                         return;
                     }
                     if (!telPhone) {
@@ -465,16 +470,16 @@ function updateWhite(sign,id) {
                     }
                     if(beginTime){
                         beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                    } else {
-                        if(1 === contractStatus) {
-                            layer.msg("请选择合同开始时间",{time:2000});
-                            return;
-                        }
                     }
                     if(endTime){
                         endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                    } else {
-                        if(1 === contractStatus) {
+                    }
+                    if("1" === contractStatus ) {
+                        if(!beginTime){
+                            layer.msg("请选择合同开始时间",{time:2000});
+                            return;
+                        }
+                        if(!endTime){
                             layer.msg("请选择合同结束时间",{time:2000});
                             return;
                         }
@@ -528,6 +533,7 @@ function updateWhite(sign,id) {
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
                 var latestPaydayReg = /^((0?[1-9])|((1|2)[0-9])|30|31)$/;
+                var cardReg = /^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/;
                 var latestPayday = $('input[name="latest_payday"]').val();
                 var telPhone = $('input[name="tel_phone"]').val();
                 var realName = $('input[name="real_name"]').val();
@@ -546,6 +552,14 @@ function updateWhite(sign,id) {
 
                 if (!realName) {
                     layer.msg("姓名不能为空",{time:2000});
+                    return;
+                }
+                if (!card) {
+                    layer.msg("身份证号码不能为空",{time:2000});
+                    return;
+                }
+                if(!cardReg.test(card)) {
+                    layer.msg("身份证号码格式不正确",{time:2000});
                     return;
                 }
                 if (!telPhone) {
@@ -595,16 +609,16 @@ function updateWhite(sign,id) {
 
                 if(beginTime){
                     beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                } else {
-                    if(1 === contractStatus) {
-                        layer.msg("请选择合同开始时间",{time:2000});
-                        return;
-                    }
                 }
                 if(endTime){
                     endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                } else {
-                    if(1 === contractStatus) {
+                }
+                if("1" === contractStatus ) {
+                    if(!beginTime){
+                        layer.msg("请选择合同开始时间",{time:2000});
+                        return;
+                    }
+                    if(!endTime){
                         layer.msg("请选择合同结束时间",{time:2000});
                         return;
                     }
