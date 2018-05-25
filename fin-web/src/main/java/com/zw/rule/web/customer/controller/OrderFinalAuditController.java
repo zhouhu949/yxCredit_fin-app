@@ -147,6 +147,7 @@ public class OrderFinalAuditController {
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
+        map.put("contractAmount",param.get("contractAmount"));
         finalOrderAuditService.confirmationFinal(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
@@ -317,10 +318,8 @@ public class OrderFinalAuditController {
         Map customer = customerService.getCustomerById(customerId);
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 
-
-        //获取身份证号码
-
         if(customer !=null){
+            //获取身份证号码
             String card =customer.get("card").toString();
             //截取出生年月
             card = card.substring(6,14);
@@ -330,9 +329,8 @@ public class OrderFinalAuditController {
             long age = (System.currentTimeMillis()-date.getTime())/(1000*60*60*24*365L);
 
             customer.put("age",age);
-            //获取审核人意见等信息
-        }
 
+        }
 
         modelAndView.addObject("order",order);
         modelAndView.addObject("customer",customer);

@@ -41,7 +41,14 @@ $(function (){
             {"data": "productName","orderable" : false},//产品名称
             {"data": "applayMoney","orderable" : false},//申请金额
             {"data": "periods","orderable" : false},//申请期限
-            {"data": "applayTime","orderable" : false },//申请时间
+            {"data": "applayTime","orderable" : false ,
+                "render":function (data, type, row, meta) {
+                    if(data !=null && data !=''){
+                        return formatTime(data);
+                    }else {
+                        return '';
+                    }
+                }},//申请时间
             //订单状态
             {"data": "orderState","orderable" : false,
                 "render": function (data, type, row, meta) {

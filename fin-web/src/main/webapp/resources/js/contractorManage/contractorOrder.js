@@ -14,6 +14,8 @@ var g_contractorManage = {
         param.fuzzySearch = g_contractorManage.fuzzySearch;
         if (g_contractorManage.fuzzySearch) {
             param.contractorName = $("[name='contractorName']").val();
+            param.realName = $("[name='trueName']").val();
+            param.tel = $("[name='mobile']").val();
         }
         paramFilter.param = param;
 
@@ -78,16 +80,14 @@ $(function (){
             }
         ],
         "createdRow": function ( row, data, index,settings,json ) {
-            var btnDel = $('<a class="tabel_btn_style" onclick="getContractorOrder(\''+data.id+'\')">查看</a>');
+            var btnDel = $('<a class="tabel_btn_style" onclick="getContractorOrder(\''+data.id+'\',\''+data.customerId+'\')">查看</a>');
             $('td', row).eq(9).append(btnDel);
         },
         "initComplete" : function(settings,json) {
             //搜索
             $("#btn_search").click(function() {
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
             //全选
             $("#userCheckBox_All").click(function(J) {
@@ -99,13 +99,10 @@ $(function (){
             });
             //重置
             $("#btn_search_reset").click(function() {
-                $('input[name="account"]').val("");
-                $('input[name="trueName"]').val("");
-                $('input[name="mobile"]').val("");
+                $("[name='contractorName']").val("");
+
                 g_contractorManage.fuzzySearch = true;
-                g_contractorManage.tableUser.ajax.reload(function(){
-                    $("#userCheckBox_All").attr("checked",false);
-                });
+                g_contractorManage.tableUser.ajax.reload();
             });
         }
     }, CONSTANT.DATA_TABLES.DEFAULT_OPTION)).api();
@@ -119,47 +116,48 @@ $(function (){
     }).draw()
 });
 
-function getContractorOrder(id){
-
+function getContractorOrder(orderId, customerId){
+    var url = "/finalAudit/examineDetails?orderId="+orderId+"&customerId="+customerId;
+    layer.open({
+        type : 2,
+        title : '订单汇总及客户资料',
+        area : [ '100%', '100%' ],
+        btn : [ '取消' ],
+        content:_ctx+url
+    });
 }
 
 /**
- * 0未提交;1借款申请;2自动化审批通过;3自动化审批拒绝;4自动化审批异常转人工;
- * 5人工审批通过;6人工审批拒绝;7合同确认;8放款成功;9结清;10关闭
+ * 订单状态【1.待申请、2.审核中、3.待签约、4.待放款、5.待还款、6.已结清、7.已取消、8.申请失败（拒绝）】
+ *
  */
 function getOrderState(paramValue){
     var param=Number(paramValue);
     var paramStr;
     switch (param) {
         case 1:
-            paramStr="借款申请";
+            paramStr="待申请";
             break;
         case 2:
-            paramStr="自动化审批通过";
+            paramStr="审核中";
             break;
         case 3:
-            paramStr="自动化审批拒绝";
+            paramStr="待签约";
             break;
         case 4:
-            paramStr="自动化审批异常转人工";
+            paramStr="待放款";
             break;
         case 5:
-            paramStr="人工审批通过";
+            paramStr="待还款";
             break;
         case 6:
-            paramStr="人工审批拒绝";
+            paramStr="已结清";
             break;
         case 7:
-            paramStr="合同确认";
+            paramStr="已取消";
             break;
         case 8:
-            paramStr="放款成功";
-            break;
-        case 9:
-            paramStr="结清";
-            break;
-        case 10:
-            paramStr="关闭";
+            paramStr="申请失败（拒绝）";
             break;
         default:
             paramStr=param;

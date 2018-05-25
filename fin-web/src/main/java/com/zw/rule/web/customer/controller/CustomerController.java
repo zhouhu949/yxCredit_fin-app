@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zw.base.util.DateUtils;
 import com.zw.rule.ApiResult.service.ApiResultService;
 import com.zw.rule.SendMessage.service.SendMessageFactory;
 import com.zw.rule.answer.po.Answer;
@@ -451,6 +452,8 @@ public class CustomerController {
         String type = param.get("type").toString();
         String orderId = (String) param.get("orderId");
         Map map = new HashMap();
+        //获取订单信息
+        Map order = orderService.getOrderAndBank(orderId);
 
         //根据客户ID获取客户信息
         Map customer= customerService.getCustomerById(customerId);
@@ -464,10 +467,13 @@ public class CustomerController {
         //获取客户绑定银行卡信息
         Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
 
+
+
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
         map.put("bankCard",bankCard);
         map.put("apiResultList",apiResultList);
+        map.put("order",order);
         return new Response(map);
 
 

@@ -269,9 +269,11 @@ function loadContractorType(){
         success : function(data) {
             var html="";
             html+="<option value=''>请选择</option>";
-            $.each(data.data,function(index,result) {
-                html+="<option value="+result.id+">"+result.contractorName+"</option>"
-            });
+            if(data.data) {
+                $.each(data.data,function(index,result) {
+                    html+="<option value="+result.id+">"+result.contractorName+"</option>"
+                });
+            }
             $("select[name='contractorList']").html(html);
         }
     });

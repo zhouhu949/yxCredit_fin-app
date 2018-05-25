@@ -1180,6 +1180,9 @@
             <if test="examineTime != null and examineTime != ''">
                 Examine_time=#{examineTime},
             </if>
+            <if test="contractAmount != null and contractAmount != ''">
+                contract_amount=#{contractAmount},
+            </if>
         </set>
         where id = #{id}
     </update>

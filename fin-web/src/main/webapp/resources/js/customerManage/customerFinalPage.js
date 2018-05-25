@@ -150,7 +150,7 @@ $().ready(function(){
                     '<td width="10%" >审核结果：</td>'+
                     '<td width="23%">'+apiResultList[i].message+'</td>'+
                     '<td width="10%" >报告浏览：</td>'+
-                    '<td width="23%"> <a href="#" style="color: #f1a02f">点击查看报告</a></td>'+
+                    '<td width="23%"> <a href="/customerAudit/tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank" style="color: #f1a02f">查看报告</a></td>'+
                     '</tr>';
 
             }
