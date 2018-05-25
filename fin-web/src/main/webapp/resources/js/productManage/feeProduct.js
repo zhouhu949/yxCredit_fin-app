@@ -614,16 +614,18 @@ function getZbsSelect(type) {
     debugger
     Comm.ajaxPost('product/getZbs', null, function (result) {
         var resData = result.data;
-        //if(type==='1'){
+        //if(type === '1'){
             //$(".zbs").empty();
             //$(".zbs").append("<option value=''>请选择</option>");
         //}
+        var length = $("#detailInfo li").length;
         for (var i=0;i<resData.length;i++){
-            var value=resData[i].id;
+            var value = resData[i].id;
             var contractor_name = resData[i].contractor_name;
-
             var text = contractor_name;
-            $(".zbs").append("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
+            //console.dir($("#detailInfo li").eq(-2)+"haha");
+           // $(".zbs")[length-1].appendChild("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
+            $(".zbs:last").append("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
         }
     },"application/json",null,null,null,false);
 
