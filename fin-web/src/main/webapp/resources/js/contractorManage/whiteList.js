@@ -150,7 +150,7 @@ $(function (){
             if(data.whiteStatus==1) {
                 whiteStatusStr = "注销";
             }
-            var btnDel = $('<a class="tabel_btn_style" onclick="updateWhite(0,\''+data.id+'\')">修改</a><a class="tabel_btn_style" onclick="updateWhiteStatue('+data.whiteStatus+' ,\''+data.id+'\')">'+whiteStatusStr+'</a>');
+            var btnDel = $('<a class="tabel_btn_style" onclick="updateWhite(0,\''+data.id+'\')">修改</a>&nbsp;<a class="tabel_btn_style" onclick="updateWhiteStatue('+data.whiteStatus+' ,\''+data.id+'\')">'+whiteStatusStr+'</a>');
             $('td', row).eq(7).append(btnDel);
         },
         "initComplete" : function(settings,json) {
