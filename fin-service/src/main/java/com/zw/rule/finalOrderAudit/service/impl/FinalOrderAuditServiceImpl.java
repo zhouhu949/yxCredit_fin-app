@@ -734,6 +734,7 @@ public class FinalOrderAuditServiceImpl implements IFinalOrderAuditService {
         orderOperationRecord.setEmpId(map.get("handlerId").toString());
         orderOperationRecord.setEmpName(map.get("handlerName").toString());
         orderOperationRecord.setOrderId(map.get("id").toString());//订单id
+        orderOperationRecord.setAmount(new BigDecimal(map.get("contractAmount").toString()));
         orderOperationRecord.setStatus(1);//1有效，0无效
         int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
         if (num > 0)

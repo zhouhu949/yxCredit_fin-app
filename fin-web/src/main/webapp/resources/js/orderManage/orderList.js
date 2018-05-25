@@ -105,7 +105,21 @@ $(function (){
                             return '';
                         }
                 }},//创建时间
-                //订单状态
+
+                {"data": "assetState","orderable" : false,
+                    "render": function (data, type, row, meta) {
+                        if(data==0){
+                            return "未同步";
+                        }else if(data==1){
+                            return "同步成功";
+                        }else if(data==2){
+                            return "同步失败";
+                        }else {
+                            return "未知状态";
+                        }
+                    }
+                },//资产状态
+
                 {"data": "orderState","orderable" : false,
                     "render": function (data, type, row, meta) {
                         if(data==1){
@@ -130,27 +144,7 @@ $(function (){
                             return "未知状态";
                         }
                     }
-                },
-                // { "data": "orderSubmissionTime","orderable" : false,
-                //     "render": function (data, type, row, meta) {
-                //         return  formatTime(data);
-                //     }
-                // },
-                // {"data": "provinces","orderable" : false},
-                // {"data": "city","orderable" : false},
-
-             /*   {"data": null, "searchable": false, "orderable": false,
-                    "render": function (data, type, row, meta) {
-                        return data.merchandiseBrand+data.merchandiseModel;
-                    }
-                },*/
-
-               /* {"data": "applayTime","orderable" : false},*/
-               /* {"data": "applayMoney","orderable" : false,
-                    "render": function (data, type, row, meta) {
-                        return data ? parseFloat(data).toFixed(2) : "";
-                    }},
-                {"data": "periods","orderable" : false},*/
+                },//订单状态
 
 
                 {
@@ -161,7 +155,15 @@ $(function (){
             "createdRow": function ( row, data, index,settings,json ) {
                 var btnDel = $('<a class="tabel_btn_style" onclick="orderDetail(\''+data.orderId+'\',\''+data.customerId+'\')">查看订单</a>');
                 var btnDAuditing = $('<a class="tabel_btn_style" onclick="orderOperationRecord(\''+data.orderId+'\',\''+data.customerId+'\')">审核日志</a>');
-                $('td', row).eq(10).append(btnDel).append("  ").append(btnDAuditing)
+                var btnAsset = $('<a class="tabel_btn_style" onclick="assetSynchronization(\''+data.orderId+'\',\''+data.customerId+'\')">资产同步</a>');
+               if(data.orderState==4){
+                   if(data.assetState==0 || data.assetState==2 ){
+                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
+                   }
+               }else{
+                    $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
+                }
+
             },
             "initComplete" : function(settings,json) {
                 //全选
@@ -259,6 +261,31 @@ function apendSelect() {
             }
         }, "application/json"
     );
+}
+
+//资产同步
+function assetSynchronization(orderId,customerId) {
+    if(confirm("您确定同步吗？")){
+        var param = {};
+        param.orderId = orderId;
+        param.customerId = customerId;
+        Comm.ajaxPost('asset/syncAssetData',JSON.stringify(param), function (data) {
+            if(data){
+                if (parseInt(data.code) !== 0) {
+                    alert(data.msg);
+                    //layer.msg(data.msg);
+                }else {
+                    alert(data.msg);
+                }
+                location.reload();
+            }
+        },"application/json")
+    }else{
+        //alert("取消");
+    }
+
+
+
 }
 
 $(function (){

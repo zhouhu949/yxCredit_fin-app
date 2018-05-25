@@ -27,4 +27,14 @@ public interface UserService {
     List<String> getPermission(String account);
     //获取数据库中所有在使用的菜单的url
     List<String> getAllPermission();
+
+    /************************************碧友信********************************************/
+
+    /**
+     * 根据客户ID 获取TokenId
+     * @author 仙海峰
+     * @param customerId 客户ID
+     * @return TokenId
+     */
+    String getTokenById( String customerId);
 }

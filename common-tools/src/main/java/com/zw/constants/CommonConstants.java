@@ -12,6 +12,6 @@ public interface CommonConstants {
     /**
      * 失败
      */
-    Integer FAIL = 0;
+    Integer FAIL = 1;
 
 }

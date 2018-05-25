@@ -37,6 +37,7 @@
 		 WHERE id = #{id}
 	</select>
 
+
 	<!--删除：根据主键ID删除-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		 DELETE FROM app_user
@@ -273,4 +274,10 @@
 		 WHERE id = #{id}
 	</update>
 
+	<select id="getTokenById" resultType="java.lang.String">
+		 SELECT app_user.`token`
+		  FROM  mag_customer
+		  INNER JOIN app_user  ON  mag_customer.user_id = app_user.id
+		  WHERE mag_customer.id = #{customerId}
+	</select>
 </mapper>

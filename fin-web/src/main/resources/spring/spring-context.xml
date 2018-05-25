@@ -22,6 +22,12 @@
             file-encoding="UTF-8"
             location="classpath*:/properties/*.properties"/>
 
+    <!--资产同步配置 create by 仙海峰-->
+    <bean id="assetSettings" class="com.zw.rule.api.asset.AssetSettings">
+        <property name="requestUrl" value="${asset.url}"/>
+        <property name="requestType" value="${asset.type}"/>
+    </bean>
+
     <import resource="spring-mybatis.xml"/>
 
     <import resource="spring-shiro.xml"/>

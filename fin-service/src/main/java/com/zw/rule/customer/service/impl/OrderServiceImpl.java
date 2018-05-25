@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
         String uuid = UUID.randomUUID().toString();
         orderOperationRecord.setId(uuid);
         orderOperationRecord.setDescription(map.get("approveSuggestion").toString());//备注
-        orderOperationRecord.setOperationTime(DateUtils.getDateString(new Date()));
+        orderOperationRecord.setOperationTime(map.get("examineTime").toString());
         orderOperationRecord.setOperationNode(3);//人工审核
         orderOperationRecord.setOperationResult(3);//拒绝
         if(map.get("approType").toString().equals("pass")) {
@@ -171,15 +171,6 @@ public class OrderServiceImpl implements OrderService {
         orderOperationRecord.setOrderId(map.get("id").toString());//订单id
         orderOperationRecord.setStatus(1);//1有效，0无效
         int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
-        if (num > 0)
-        {
-            Order order = orderMapper.selectByPrimaryKey(map.get("id").toString());
-            AppUser user = new AppUser();
-            user.setId(order.getUserId());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            user.setOrderRefusedTime(sdf.format(new Date()));
-            userMapper.updateByPrimaryKeySelective(user);
-        }
         return true;
     }
     @Override

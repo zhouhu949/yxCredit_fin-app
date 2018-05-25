@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
 import com.zw.base.util.HttpClientUtil;
 import com.zw.enums.EApiSourceEnum;
+import com.zw.rule.api.service.IAssetService;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
@@ -77,6 +78,9 @@ public class CustomerAuditController {
 
     @Resource
     private RuleResultService ruleResultService;
+
+    @Resource
+    private IAssetService assetService;
 
     /**
      * 订单列表（只是查看）
@@ -213,7 +217,8 @@ public class CustomerAuditController {
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","3");//待签约
-        map.put("examineTime", DateUtils.getDateString(new Date()));
+        map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
+        map.put("contractAmount",map.get("loanAmount"));//合同金额
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
@@ -658,6 +663,23 @@ public class CustomerAuditController {
         return  customerAuditService.addAnswer(list,url);
     }
 
+    @GetMapping("/tongDunView")
+    public String tongDunView(@RequestParam String sourceCode){
+        final EApiSourceEnum sourceEnum = EApiSourceEnum.getByCode(sourceCode);
+        if(sourceEnum != null){
+            switch (sourceEnum){
+                case  MOHE:
+                    return  "common/moHeView";
+                case  TODONG:
+                    return  "common/tongDunView";
+                case CREDIT :
+                    return  "common/creditView";
+                default:
+            }
+        }
+        return null;
+    }
+
     /*****************************************碧友信***********************************************************/
 
 
@@ -673,31 +695,16 @@ public class CustomerAuditController {
         Map map=queryFilter.getParam();
         map.put("orgid", UserContextUtil.getOrganId());
         map.put("account", UserContextUtil.getAccount());
-        //获取订单访问权限
-        //map=orderService.getJurisdiction(map);
+
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
+
         List list = orderService.getAllOrderList(map);
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
     }
 
 
-    @GetMapping("/tongDunView")
-    public String tongDunView(@RequestParam String sourceCode){
-        final EApiSourceEnum sourceEnum = EApiSourceEnum.getByCode(sourceCode);
-        if(sourceEnum != null){
-            switch (sourceEnum){
-                case  MOHE:
-                    return  "common/moHeView";
-                case  TODONG:
-                    return  "common/tongDunView";
-                case CREDIT :
-                    return  "common/creditView";
-                    default:
-            }
-        }
-        return null;
-    }
+
 
 }

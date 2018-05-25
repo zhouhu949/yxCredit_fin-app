@@ -133,10 +133,13 @@ public class OrderFinalAuditController {
         String contractAmount = param.get("contractAmount").toString();//订单合同金额
         String surplusContractAmount = param.get("surplusContractAmount").toString();//客户剩余合同金额
         User user = (User) UserContextUtil.getAttribute("currentUser");
+        //获取日利息和居间服务费率
+
         Map<String,Object> map= new HashedMap();
         map.put("id",orderId);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","5");//待还款
+       // map.put("repayMoney", );//还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
         orderService.updateOrderState(map);
         Customer customer = new Customer();
         customer.setId(customerId);
@@ -147,6 +150,7 @@ public class OrderFinalAuditController {
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
+        map.put("contractAmount",param.get("contractAmount"));
         finalOrderAuditService.confirmationFinal(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
