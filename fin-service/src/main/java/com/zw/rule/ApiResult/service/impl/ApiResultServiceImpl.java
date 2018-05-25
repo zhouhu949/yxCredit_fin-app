@@ -35,7 +35,7 @@ public class ApiResultServiceImpl implements ApiResultService {
      */
     @Override
     public List getApiResultByOrderId(String orderId) {
-        return apiResultMapper.getApiResultByOrderId(orderMapper.getOrderNoById(orderId));
+        return apiResultMapper.getApiResultByOrderId(orderId);
     }
 
     @Override
