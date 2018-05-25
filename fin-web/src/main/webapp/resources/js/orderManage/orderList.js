@@ -135,7 +135,7 @@ $(function (){
                         }else if(data==6){
                             return "已结清";
                         }else if(data==7){
-                            return "已结清";
+                            return "已取消";
                         }else if(data==8){
                             return "申请失败";
                         }else if(data==9){
