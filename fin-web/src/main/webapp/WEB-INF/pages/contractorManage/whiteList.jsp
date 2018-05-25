@@ -56,39 +56,39 @@
                             </li>
 
                             <li>
-                                <label class="label_name">姓名</label>
+                                <label class="label_name">姓名 <i style="color: #F60;">*</i></label>
                                 <label for="realName">
                                     <input name="real_name"  type="text"  id="realName"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">身份证号</label>
+                                <label class="label_name">身份证号<i style="color: #F60;">*</i></label>
                                 <label for="card">
                                     <input name="card"  type="text" id="card" maxlength="11"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">手机号</label>
+                                <label class="label_name">手机号 <i style="color: #F60;">*</i></label>
                                 <label for="telphone">
                                     <input name="tel_phone"  type="number" id="telphone" maxlength="11"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">合同状态</label>
+                                <label class="label_name">合同状态 <i style="color: #F60;">*</i></label>
                                 <label>
                                     <select name="contract_status" size="1" id="contractStatus">
                                         <option value=1 id="you">有</option>
                                         <option value=0 id="wu">无</option>
                                     </select>
                                 </label>
-                                <i style="color: #F60;">*</i>
+
                             </li>
 
                             <li>
-                                <label class="label_name">工资发放</label>
+                                <label class="label_name">工资发放<i style="color: #F60;">*</i></label>
                                 <label>
                                     <select name="pay_type" size="1" id="payType">
                                         <option value=1 id="xj">现金</option>
@@ -96,7 +96,7 @@
                                         <option value=3 id="sy">均有</option>
                                     </select>
                                 </label>
-                                <i style="color: #F60;">*</i>
+
                             </li>
 
                             <li><label class="lf">合同时间</label>
@@ -115,7 +115,7 @@
 
 
                             <li>
-                                <label class="label_name">职务</label>
+                                <label class="label_name">职务 <i style="color: #F60;">*</i></label>
                                 <label>
                                     <select name="job" size="1" id="job">
                                         <option value=1 id="bgt">包工头</option>
@@ -123,28 +123,28 @@
                                         <option value=3 id="lsg">临时工</option>
                                     </select>
                                 </label>
-                                <i style="color: #F60;">*</i>
+
                             </li>
                             <li>
-                                <label class="label_name">工种</label>
+                                <label class="label_name">工种 <i style="color: #F60;">*</i></label>
                                 <label for="jobType">
                                     <input name="job_type"  type="text"  id="jobType"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">发薪日</label>
+                                <label class="label_name">发薪日 <i style="color: #F60;">*</i></label>
                                 <label for="latestPayday">
                                     <input name="latest_payday"  type="number"  id="latestPayday"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
 
                             <li>
-                                <label class="label_name">应发工资</label>
+                                <label class="label_name">应发工资<i style="color: #F60;">*</i></label>
                                 <label for="latestPay">
                                     <input name="latest_pay"  type="number"  id="latestPay"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
                             <li style="width:524px;">
@@ -155,10 +155,10 @@
                                 </form>
                             </li>
                             <li>
-                                <label class="label_name">最低工资</label>
+                                <label class="label_name">最低工资 <i style="color: #F60;">*</i></label>
                                 <label for="localMonthlyMinWage">
                                     <input name="local_monthly_min_wage"  type="number"  id="localMonthlyMinWage"/>
-                                    <i style="color: #F60;">*</i>
+
                                 </label>
                             </li>
 

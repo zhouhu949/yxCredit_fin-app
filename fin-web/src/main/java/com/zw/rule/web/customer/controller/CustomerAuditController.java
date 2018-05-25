@@ -198,6 +198,7 @@ public class CustomerAuditController {
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
         map.put("orderState","3");//待签约
         map.put("examineTime", DateUtils.getDateString(new Date()));
+        map.put("contractAmount",map.get("loanAmount"));
         orderService.updateOrderState(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
