@@ -662,7 +662,7 @@ function isRepeat(arr) {
     }
     return false;
 }
-
+//删除总包商居间服务费
 function  deleteJujianfei(item) {
     $(item).parent('li').prev().remove();
     $(item).parent('li').prev().remove();
