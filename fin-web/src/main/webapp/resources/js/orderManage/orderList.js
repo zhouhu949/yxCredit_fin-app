@@ -159,10 +159,12 @@ $(function (){
                if(data.orderState==4){
                    if(data.assetState==0 || data.assetState==2 ){
                        $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
+                   }else {
+                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
                    }
                }else{
-                    $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
-                }
+                   $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
+               }
 
             },
             "initComplete" : function(settings,json) {
