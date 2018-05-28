@@ -38,7 +38,7 @@
                     </li>
                     <button id="btn_search"  type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset"  type="button" class="btn btn-primary queryBtn">查询重置</button>
-                    <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateUser(1)" id="Add_user_btn">导出</button>
+                   <%-- <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateUser(1)" id="Add_user_btn">导出</button>--%>
                 </ul>
             </div>
         </form>
