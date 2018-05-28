@@ -599,7 +599,32 @@ public class OrderServiceImpl implements OrderService {
         }
     }
     public void updateOrderState(Map map){
-        orderMapper.updateOrderStatus(map);
+        Map<String, Object> orderMap = new HashMap<String, Object>();
+        String orderId = map.get("id").toString();
+        orderMap.put("id", orderId);
+        orderMap.put("orderState",map.get("orderState"));
+        String contractAmountStr = map.get("contractAmount").toString();//合同金额
+        BigDecimal contractAmount = new BigDecimal(contractAmountStr);
+        Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
+        Map contractorMap = orderMapper.getContractorList(orderId);
+        if(null != serviceFeeMap && null != contractorMap) {
+            String serviceFeeStr = serviceFeeMap.get("serviceFee").toString();
+            BigDecimal dateRate = new BigDecimal(serviceFeeMap.get("dateRate").toString());//日利率
+            BigDecimal serviceFeeRate;
+            String serviceFeeArray [] = serviceFeeStr.split(",");
+            if(null != serviceFeeArray && serviceFeeArray.length > 0) {
+                for (int i = 0; i< serviceFeeArray.length; i++){
+                    if(serviceFeeArray[i].equals(contractorMap.get("contractorName").toString())) {
+                        serviceFeeRate = new BigDecimal(serviceFeeArray[i+1]).divide(new BigDecimal(100));
+                        String periods = contractorMap.get("periods").toString();//期限（日）
+                        //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
+                        String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+                        orderMap.put("repayMoney",repayMoney);//还款金额
+                    }
+                }
+            }
+        }
+        orderMapper.updateOrderStatus(orderMap);
     }
 
     public Map<String, Object> backOrder(String orderId, User user){

@@ -244,10 +244,10 @@
                 emp_number = #{empNumber,jdbcType=VARCHAR},
             </if>
             <if test="creditPreAmount != null">
-                #{creditPreAmount,jdbcType=VARCHAR},
+                credit_pre_amount = #{creditPreAmount,jdbcType=VARCHAR},
             </if>
             <if test="surplusContractAmount != null">
-                #{surplusContractAmount},
+                surplus_contract_amount = #{surplusContractAmount},
             </if>
         </set>
         where ID = #{id,jdbcType=VARCHAR}
@@ -273,7 +273,6 @@
       credit_pre_amount = #{creditPreAmount,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
-
     <update id="updateCallRecordUrl" parameterType="com.zw.rule.customer.po.Customer">
     update mag_customer
     SET  call_record_url= #{callRecordUrl,jdbcType=VARCHAR}
