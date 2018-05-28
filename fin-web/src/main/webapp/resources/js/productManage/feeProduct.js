@@ -138,7 +138,7 @@ function  editDetail(type,productId,productPeriods,id) {
             title : "新增费率",
             maxmin : true,
             shadeClose : false, //点击遮罩关闭层
-            area : [ '600px', '280px'  ],
+            area : [ '630px', '280px'  ],
             content : $('#editDetail'),
             btn : [ '提交', '取消' ],
             success: function () {
@@ -311,7 +311,7 @@ function  editDetail(type,productId,productPeriods,id) {
             title : "编辑费率",
             maxmin : true,
             shadeClose : false, //点击遮罩关闭层
-            area : [ '600px', '280px'  ],
+            area : [ '630px', '280px'  ],
             content : $('#editDetail'),
             btn : [ '提交', '取消' ],
             success: function () {
@@ -352,7 +352,10 @@ function  editDetail(type,productId,productPeriods,id) {
                                 "                        <label >\n" +
                                 "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
                                 "                        </label>\n" +
-                                "                    </li>");
+                                "                    </li>" +
+                                "                <li class='newField' style=\"width:22px;\">\n" +
+                                "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
+                                "                </li>");
                         }
                     });
                     getZbsSelect('2');
@@ -377,6 +380,17 @@ function  editDetail(type,productId,productPeriods,id) {
                         flag = true;
                     }
                 });
+                var zbsArray = zbs_jujian_fee_new.substring(0,zbs_jujian_fee_new.length-1).split(',');
+                var zbsObj = new Array();
+                $.each(zbsArray,function(index,value){
+                    if(index%2 === 0){
+                        zbsObj.push(value);
+                    }
+                });
+                if(isRepeat(zbsObj)){
+                    layer.alert("总包商不能重复！！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 if(flag){
                     layer.alert("总包商或居间服务费不能为空！",{icon: 2, title:'操作提示'});
                     return
@@ -522,7 +536,6 @@ function  deleteDetail(id) {
 }
 //获取产品分期列表e200601b-6fbe-42dc-99f7-2404a3a42a3e
 function getPeriods(crmProductId,productPeriods) {
-    debugger
     if(crmProductId==''||crmProductId==undefined){
         crmProductId = $("#productAmount").val();
     }
@@ -605,7 +618,10 @@ function addZBS() {
         "                        <label >\n" +
         "                            <input type=\"text\"  name=\"zbs_jujian_fee\" >\n" +
         "                        </label>\n" +
-        "                    </li>");
+        "                    </li> " +
+        "                   <li class='newField' style=\"width:22px;\">\n" +
+        "                       <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
+        "                   </li>");
     getZbsSelect('1');
 }
 
@@ -614,10 +630,6 @@ function getZbsSelect(type) {
     debugger
     Comm.ajaxPost('product/getZbs', null, function (result) {
         var resData = result.data;
-        //if(type === '1'){
-            //$(".zbs").empty();
-            //$(".zbs").append("<option value=''>请选择</option>");
-        //}
         var length = $("#detailInfo li").length;
         for (var i=0;i<resData.length;i++){
             var value = resData[i].id;
@@ -625,9 +637,34 @@ function getZbsSelect(type) {
             var text = contractor_name;
             //console.dir($("#detailInfo li").eq(-2)+"haha");
            // $(".zbs")[length-1].appendChild("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
-            $(".zbs:last").append("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
+            if(type === '2'){
+                $(".zbs").append("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
+            }else {
+                $(".zbs:last").append("<option name='"+text+"' value='"+contractor_name+"'>"+text+"</option>");
+            }
         }
     },"application/json",null,null,null,false);
 
 
+
+}
+
+// 验证重复元素，有重复返回true；否则返回false
+function isRepeat(arr) {
+    var hash = {};
+    for(var i in arr) {
+        if(hash[arr[i]])
+        {
+            return true;
+        }
+        // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+        hash[arr[i]] = true;
+    }
+    return false;
+}
+
+function  deleteJujianfei(item) {
+    $(item).parent('li').prev().remove();
+    $(item).parent('li').prev().remove();
+    $(item).parent('li').remove();
 }
