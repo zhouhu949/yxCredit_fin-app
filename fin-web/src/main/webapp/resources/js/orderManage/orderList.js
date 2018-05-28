@@ -135,7 +135,7 @@ $(function (){
                         }else if(data==6){
                             return "已结清";
                         }else if(data==7){
-                            return "已结清";
+                            return "已取消";
                         }else if(data==8){
                             return "申请失败";
                         }else if(data==9){
@@ -159,10 +159,12 @@ $(function (){
                if(data.orderState==4){
                    if(data.assetState==0 || data.assetState==2 ){
                        $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
+                   }else {
+                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
                    }
                }else{
-                    $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
-                }
+                   $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
+               }
 
             },
             "initComplete" : function(settings,json) {

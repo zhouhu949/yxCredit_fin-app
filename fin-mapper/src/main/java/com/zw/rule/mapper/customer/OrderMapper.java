@@ -45,6 +45,12 @@ public interface OrderMapper {
 
     Map getTaskId(String orderId);
 
+    /** 根据订单id获取服务费率*/
+    Map getServiceFeeList(String orderId);
+
+    /** 根据订单id获取总包商*/
+    Map getContractorList(String orderId);
+
     List getLoanCustomerList(Map map);
 
     int addCustomerRemark(Order order);

@@ -612,6 +612,54 @@
     from process_task_node where rel_id = #{orderId} and node_state = 0
   </select>
 
+
+    <select id="getContractorList" resultType="java.util.Map" parameterType="String">
+        SELECT
+        magcuWhite.contractorName as contractorName,
+        magorder.PERIODS as periods
+        FROM
+        mag_order magorder
+        LEFT JOIN (
+        SELECT
+        magcu.ID AS customerId,
+        whiteCon.contractorName AS contractorName
+        FROM
+        mag_customer magcu
+        INNER JOIN (
+        SELECT
+        bycon.contractor_name AS contractorName,
+        bywhli.card AS card
+        FROM
+        byx_white_list bywhli
+        LEFT JOIN byx_contractor bycon ON bycon.id = bywhli.contractor_id
+        ) whiteCon ON magcu.CARD = whiteCon.card
+        ) magcuWhite ON magorder.CUSTOMER_ID = magcuWhite.customerId
+        <where>
+            magorder.ID = #{orderId}
+        </where>
+
+  </select>
+
+    <select id="getServiceFeeList" resultType="java.util.Map" parameterType="String">
+        SELECT
+        productFee.id AS id,
+        productFee.zbs_jujian_fee AS serviceFee,
+        productFee.li_xi dateRate
+        FROM
+        mag_product_fee productFee
+        LEFT JOIN (
+        SELECT
+        productDetail.id AS id,
+        magorder.ID AS orderId
+        FROM
+        pro_working_product_detail productDetail
+        LEFT JOIN mag_order magorder ON magorder.product_detail = productDetail.id
+        ) proDetailOrder ON proDetailOrder.id = productFee.product_id
+    <where>
+        proDetailOrder.orderId = #{orderId}
+    </where>
+    </select>
+
     <select id="getLoanCustomerList" resultType="java.util.Map" parameterType="java.util.Map">
         SELECT
         mo.ID,mo.order_no,mo.USER_ID,mo.PERIODS,mo.MERCHANT_ID,mo.MERCHANT_NAME,mo.merchandise_id,mo.merchandise_type,
@@ -1182,6 +1230,9 @@
             </if>
             <if test="contractAmount != null and contractAmount != ''">
                 contract_amount=#{contractAmount},
+            </if>
+            <if test="repayMoney != null and repayMoney != ''">
+                repay_money=#{repayMoney},
             </if>
         </set>
         where id = #{id}
