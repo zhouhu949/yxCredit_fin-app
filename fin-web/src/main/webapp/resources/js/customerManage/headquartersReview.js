@@ -26,8 +26,8 @@ $().ready(function(){
             $("#applayMoney").text(orderAndbank.applayMoney);//申请金额
             $("#periods").text(orderAndbank.periods);//申请期限
             $("#applayTime").text(formatTime(orderAndbank.applayTime));//申请时间
-            $("#bankName").text(orderAndbank.applayTime);//开户行
-            $("#bankSubbranch").text(orderAndbank.applayTime);//支行
+            $("#bankName").text(orderAndbank.bankName);//开户行
+            $("#bankSubbranch").text(orderAndbank.bankSubbranch);//支行
             $("#cardNumber").text(orderAndbank.cardNumber);//银行卡号
 
 
