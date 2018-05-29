@@ -32,6 +32,9 @@ public class ContractorServiceImpl implements ContractorService {
     @Value("${byx.img.path}")
     private String imgPath;
 
+    @Value("${byx.img.contractor}")
+    private String contractorImg;
+
     @Override
     public List<UserVo> findUserByMenuUrl(String url) {
         return contractorMapper.findUserByMenuUrl(url);
@@ -48,17 +51,19 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public List uploadContractorImage(HttpServletRequest request) throws Exception {
         String fileName="";
-        String id = GeneratePrimaryKeyUtils.getUUIDKey();
+        String id = GeneratePrimaryKeyUtils.getUUIDKey();//新的文件名
         //获取根目录
-        String root = request.getSession().getServletContext().getRealPath("/");
-        //捕获前台传来的图片，并用uuid命名，防止重复
-        Map<String, Object> allMap = UploadFile.getFile(request,root+ File.separator + "contractor", id);
+        //String root = request.getSession().getServletContext().getRealPath("/");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        String currentDateStr = format.format(new Date());
+        String newFilePath = imgPath + File.separator + contractorImg + currentDateStr;//文件保存路径url
+        Map<String, Object> allMap = UploadFile.getFile(request, newFilePath, id);
         List<Map<String, Object>> list = (List<Map<String, Object>>) allMap.get("fileList");
         //当前台有文件时，给图片名称变量赋值
         if (!list.isEmpty()) {
             Map<String, Object> fileMap = list.get(0);
-            fileName = "/contractor/"+fileMap.get("Name").toString();
-        }
+            fileName = contractorImg + currentDateStr+"/"+ fileMap.get("Name").toString();
+    }
         List imageList = new ArrayList();
         imageList.add(fileName);
         return imageList;

@@ -14,10 +14,16 @@ import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.UserContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +33,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Controller
 @RequestMapping("contractorManage")
 public class ContractorController {
+
+    @Value("${byx.img.path}")
+    private String imgUrl;
 
     @Autowired
     private ContractorService contractorService;
@@ -246,5 +255,29 @@ public class ContractorController {
             response.setMsg("上传失败！");
         }
         return response;
+    }
+
+    @RequestMapping("/byx/imgUrl")
+    public void getUploadUrl(@RequestParam String licenceAttachment, HttpServletResponse response) throws IOException {
+        try{
+            String  imgPath = imgUrl + licenceAttachment;
+            FileInputStream hFile = new FileInputStream(imgPath);
+            int i=hFile.available(); //得到文件大小
+            byte data[]=new byte[i];
+            hFile.read(data); //读数据
+            hFile.close();
+            response.setContentType("image/*"); //设置返回的文件类型
+            OutputStream toClient=response.getOutputStream(); //得到向客户端输出二进制数据的对象
+            toClient.write(data); //输出数据
+            toClient.close();
+        }
+        catch(IOException e) //错误处理
+        {
+            e.printStackTrace();
+            PrintWriter toClient = response.getWriter(); //得到向客户端输出文本的对象
+            response.setContentType("text/html;charset=gb2312");
+            toClient.write("无法打开!");
+            toClient.close();
+        }
     }
 }

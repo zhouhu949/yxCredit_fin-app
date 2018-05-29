@@ -44,6 +44,7 @@
       magorder.Examine_time AS examineTime,
       magorder.loan_amount AS loanAmount,
       magorder.service_fee AS serviceFee,
+      magorder.contract_amount AS contractAmount,
       userwhite.card AS card,
       userwhite.job AS job,
       userwhite.realName AS realName,
