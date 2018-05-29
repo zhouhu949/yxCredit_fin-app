@@ -14,6 +14,14 @@
         #organ{outline: none!important;appearance:none; -moz-appearance:none; -webkit-appearance:none;height:28px;line-height:19px;}
         #email{margin-left:0px!important;}
         #isLock{height:28px;}
+
+        .commonManager .addCommon .content_ul li {
+            width: 46%;
+        }
+        .commonManager .addCommon .content_ul li .label_name{
+            width: 70px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +53,7 @@
                 </ul>
                 <div id="Add_user_style" style="display: none">
                     <div class="addCommon clearfix">
-                        <ul class="clearfix">
+                        <ul class="clearfix content_ul">
                             <li>
                                 <label class="label_name">所属总包商</label>
                                 <label>
@@ -99,14 +107,14 @@
 
                             </li>
 
-                            <li><label class="lf">合同时间</label>
-                                <label>
+                            <li style="width:59%;"><label class="lf" style="width:70px; text-align:left;">合同时间</label>
+                                <label style="margin-left: -12px;">
                                     <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
                                     <span class="date-icon"><i class="icon-calendar"></i></span>
                                 </label>
-                                <span class="line-cut">--</span>
+                                <span class="line-cut" style="margin-left:37px">--</span>
                             </li>
-                            <li style="width:200px;">
+                            <li style="width:200px;margin-left:10px;">
                                 <label>
                                     <input readonly="true" placeholder="结束" class="eg-date" id="endTime" type="text"/>
                                     <span class="date-icon"><i class="icon-calendar"></i></span>
@@ -147,19 +155,19 @@
 
                                 </label>
                             </li>
-                            <li style="width:524px;">
-                                <form id="whiteListImgForm" method="post" enctype="multipart/form-data" >
-                                    <label class="label_name">发薪证明（图片）</label>
-                                    <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
-                                    <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
-                                </form>
-                            </li>
                             <li>
                                 <label class="label_name">最低工资 <i style="color: #F60;">*</i></label>
                                 <label for="localMonthlyMinWage">
                                     <input name="local_monthly_min_wage"  type="number"  id="localMonthlyMinWage"/>
 
                                 </label>
+                            </li>
+                            <li style="width:524px; height:100%;">
+                                <form id="whiteListImgForm" method="post" enctype="multipart/form-data" >
+                                    <label class="label_name" style="width:120px;">发薪证明（图片）</label>
+                                    <div id="localImag" style="padding-left: 5px;"><img id="preview" src="" style="display: block; width: 162px; height: 110px;"></div>
+                                    <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left:120px;" onchange="javascript:setImagePreview1();" >
+                                </form>
                             </li>
 
                         </ul>

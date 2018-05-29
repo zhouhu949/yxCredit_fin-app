@@ -196,8 +196,8 @@ function setImagePreview1() {
     {
         //火狐下，直接设img属性
         imgObjPreview.style.display = 'block';
-        imgObjPreview.style.width = '272px';
-        imgObjPreview.style.height = '180px';
+        imgObjPreview.style.width = '162px';
+        imgObjPreview.style.height = '110px';
         //imgObjPreview.src = docObj.files[0].getAsDataURL();
 
         //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
@@ -210,8 +210,8 @@ function setImagePreview1() {
         var imgSrc = document.selection.createRange().text;
         var localImagId = document.getElementById("localImag");
         //必须设置初始大小
-        localImagId.style.width = "272px";
-        localImagId.style.height = "180px";
+        localImagId.style.width = "162px";
+        localImagId.style.height = "110px";
         //图片异常的捕捉，防止用户修改后缀来伪造图片
         try{
             localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
@@ -255,7 +255,7 @@ function updateContractor(sign,id) {
             layer.open({
                 type : 1,
                 title : '修改总包商',
-                area : [ '576px', '370px' ],
+                area : [ '650px', '370px' ],
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {
