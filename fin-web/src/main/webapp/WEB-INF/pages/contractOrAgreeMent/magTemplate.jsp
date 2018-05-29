@@ -240,7 +240,7 @@
                 <li style="width:300px;">
                     <button id="btn_search" type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset" type="button" class="btn btn-primary queryBtn">查询重置</button>
-                    <button id="btn_add" type="button" class="btn btn-primary queryBtn">添加</button>
+                    <%--<button id="btn_add" type="button" class="btn btn-primary queryBtn">添加</button>--%>
                 </li>
             </ul>
         </div>
@@ -288,13 +288,13 @@
                             </label>
                         </li>
                         <li style="margin: 0 auto;">
-                        <label class="lf">模板类型</label>
-                        <label>
-                            <select id="template_type" style="min-width:60px;height: 28px;">
-                                <option value="">请选择</option>
-                            </select>
-                        </label>
-                    </li>
+                            <label class="lf">模板类型</label>
+                            <label>
+                                <select id="template_type" style="min-width:60px;height: 28px;">
+                                    <option value="">请选择</option>
+                                </select>
+                            </label>
+                        </li>
                         <li style="margin: 0 auto;">
                             <label class="lf">平台类型</label>
                             <label>
