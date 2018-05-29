@@ -11,6 +11,7 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.contractor.WhiteListMapper;
 import com.zw.rule.mybatis.ParamFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +28,9 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Resource
     private ContractorMapper contractorMapper;
+
+    @Value("${byx.img.path}")
+    private String imgPath;
 
     @Override
     public List<UserVo> findUserByMenuUrl(String url) {
@@ -53,7 +57,7 @@ public class ContractorServiceImpl implements ContractorService {
         //当前台有文件时，给图片名称变量赋值
         if (!list.isEmpty()) {
             Map<String, Object> fileMap = list.get(0);
-            fileName = "/contractor/"+(String) fileMap.get("Name");
+            fileName = "/contractor/"+fileMap.get("Name").toString();
         }
         List imageList = new ArrayList();
         imageList.add(fileName);

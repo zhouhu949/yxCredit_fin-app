@@ -148,7 +148,6 @@ public class OrderFinalAuditController {
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
-        map.put("contractAmount",param.get("contractAmount"));
         finalOrderAuditService.confirmationFinal(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));

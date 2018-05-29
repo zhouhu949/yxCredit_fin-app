@@ -146,6 +146,10 @@ public class OrderServiceImpl implements OrderService {
 //        taskMsgMapper.updateTaskState(processTask);
     }
 
+    @Override
+    public void updateOrder(Map map) {
+        orderMapper.updateOrderStatus(map);
+    }
 
     @Override
     public List getLoanCustomerList(Map map) {
