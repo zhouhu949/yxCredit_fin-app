@@ -3,14 +3,17 @@ package com.zw.rule.web.activity.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
+import com.zw.base.util.GeneratePrimaryKeyUtils;
 import com.zw.rule.activity.Activity;
 import com.zw.rule.activity.service.ActivityService;
+import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.service.DictService;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.upload.service.UploadService;
 import com.zw.rule.web.util.PageConvert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,11 +40,21 @@ public class ActivityController {
     @Resource
     private UploadService uploadService;
 
+    @Autowired
+    private ContractorService contractorService;
+
     @GetMapping("index")
     public String list() {
         return "activity/activityPage";
     }
 
+
+    /**
+     * 获取Banner列表
+     * @author 仙海峰
+     * @param queryFilter
+     * @return
+     */
     @PostMapping("list")
     @ResponseBody
     @WebLogger("查询活动列表")
@@ -54,6 +67,14 @@ public class ActivityController {
     }
 
 
+    /**
+     * 修改Banner
+     * @author 仙海峰
+     * @param activity
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @PostMapping("update")
     @ResponseBody
     @WebLogger("修改活动")
@@ -69,6 +90,14 @@ public class ActivityController {
         return response;
     }
 
+    /**
+     * 添加Banner
+     * @author 仙海峰
+     * @param activity
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @PostMapping("add")
     @ResponseBody
     @WebLogger("添加活动")
@@ -84,6 +113,12 @@ public class ActivityController {
         return response;
     }
 
+    /**
+     * 删除Banner
+     * @author 仙海峰
+     * @param param
+     * @return
+     */
     @PostMapping("del")
     @ResponseBody
     @WebLogger("删除活动")
@@ -99,6 +134,12 @@ public class ActivityController {
         return response;
     }
 
+    /**
+     * 修改Banner 状态
+     * @author 仙海峰
+     * @param param
+     * @return
+     */
     @PostMapping("updateState")
     @ResponseBody
     @WebLogger("活动上下架")
@@ -113,6 +154,12 @@ public class ActivityController {
         return response;
     }
 
+    /**
+     * 查看Banner
+     * @author 仙海峰
+     * @param param
+     * @return
+     */
     @PostMapping("lookActivity")
     @ResponseBody
     @WebLogger("获取活动详细")
@@ -128,25 +175,25 @@ public class ActivityController {
     }
 
 
+    /**
+     * 上传Banner 图片
+     * @author 仙海峰
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @PostMapping("merUpload")
     public Response upload(HttpServletRequest request) throws Exception{
         Response response = new Response();
-        Map param = new HashMap();
-        String fileName="";
-        //String doc="";
-        String id = UUID.randomUUID().toString();
-        //获取根目录
-        String root = request.getSession().getServletContext().getRealPath("/fintecher_file");
-        //捕获前台传来的图片，并用uuid命名，防止重复
-        Map<String, Object> allMap = uploadService.uploadFileOSS(request,"activity");
-        List<Map<String, Object>> list = (List<Map<String, Object>>) allMap.get("fileList");
-        //当前台有文件时，给图片名称变量赋值
-        fileName = "fintecher_file/activity/"+(String) allMap.get("Name");
-        response.setMsg("上传成功！");
-        param.put("activity_img_id",id);
-        param.put("activity_img_fileName",(String) allMap.get("url"));
-        response.setData(param);
+        List list = activityService.uploadaCtivityImage(request);
+        if(!list.isEmpty()){
+            response.setMsg("上传成功！");
+            response.setData(list.get(0));
+        }else{
+            response.setCode(1);
+            response.setMsg("上传失败！");
+        }
         return response;
     }
 

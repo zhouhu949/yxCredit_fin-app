@@ -85,7 +85,6 @@ $(function (){
         "dom": 'rt<"bottom"i><"bottom"flp><"clear">',
         "ajax" : function(data, callback, settings) {
             var queryFilter = g_whiteListManage.getQueryCondition(data);
-            debugger
             Comm.ajaxPost('contractorManage/whiteListPage',JSON.stringify(queryFilter),function(result){
                 var returnData = {};
                 var resData = result.data.list;
@@ -271,7 +270,11 @@ function loadContractorType(){
             html+="<option value=''>请选择</option>";
             if(data.data) {
                 $.each(data.data,function(index,result) {
-                    html+="<option value="+result.id+">"+result.contractorName+"</option>"
+                    if(data.data.length === 1) {
+                        html+="<option value="+result.id+" selected ='selected'>"+result.contractorName+"</option>"
+                    }else {
+                        html+="<option value="+result.id+">"+result.contractorName+"</option>"
+                    }
                 });
             }
             $("select[name='contractorList']").html(html);
@@ -528,7 +531,7 @@ function updateWhite(sign,id) {
         layer.open({
             type : 1,
             title : '添加白名单',
-            area : [ '600px', '370px' ],
+            area : [ '650px', '370px' ],
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {

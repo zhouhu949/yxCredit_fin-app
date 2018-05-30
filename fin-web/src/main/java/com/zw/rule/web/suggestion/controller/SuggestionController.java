@@ -52,16 +52,6 @@ public class SuggestionController {
     }
 
 
-    @PostMapping("list")
-    @ResponseBody
-    @WebLogger("获取意见投诉列表")
-    public Response list(@RequestBody ParamFilter queryFilter){
-        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
-        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List<Suggestion> list = suggestionService.getSuggestionList(queryFilter);
-        PageInfo pageInfo = new PageInfo(list);
-        return new Response(pageInfo);
-    }
     @PostMapping("apendSelect")
     @ResponseBody
     @WebLogger("动态加载问题分类到下拉框")
@@ -74,6 +64,25 @@ public class SuggestionController {
             return null;
         }
         return response;
+    }
+
+    /*****************************************************碧友信***************************************************/
+
+    /**
+     *获取意见反馈列表
+     * @author 仙海峰
+     * @param queryFilter
+     * @return
+     */
+    @PostMapping("list")
+    @ResponseBody
+    @WebLogger("获取意见投诉列表")
+    public Response list(@RequestBody ParamFilter queryFilter){
+        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
+        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
+        List<Suggestion> list = suggestionService.getSuggestionList(queryFilter);
+        PageInfo pageInfo = new PageInfo(list);
+        return new Response(pageInfo);
     }
 
 }

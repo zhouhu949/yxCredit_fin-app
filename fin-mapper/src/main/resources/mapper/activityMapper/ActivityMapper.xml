@@ -15,10 +15,11 @@
     <result column="alter_time" property="alter_time" jdbcType="VARCHAR" />
     <result column="release_time" property="release_time" jdbcType="VARCHAR" />
     <result column="platform_type" property="platform_type" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, activity_title, activity_content,activity_img_addr, activity_type, activity_url, activity_img_url, activity_state,
-    activity_time, create_time, alter_time, release_time,platform_type
+    activity_time, create_time, alter_time, release_time,platform_type,priority
   </sql>
   <select id="getList" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
@@ -76,7 +77,10 @@
         create_time,
       </if>
       <if test="platform_type != null" >
-        platform_type
+        platform_type,
+      </if>
+      <if test="priority != null" >
+        priority
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -108,7 +112,10 @@
         #{create_time},
       </if>
       <if test="platform_type != null" >
-        #{platform_type}
+        #{platform_type},
+      </if>
+      <if test="priority != null" >
+        #{priority}
       </if>
     </trim>
   </insert>

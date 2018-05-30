@@ -1297,6 +1297,20 @@ input.btn_pad_s2 {
   position: relative;
   z-index: 1;
 }
+select {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  height: 26px;
+  /*
+  background: url(../images/chevron-down.svg) no-repeat right center #fff !important;
+   */
+  background-size: 20px 20px;
+  cursor: pointer;
+  padding-right: 24px;
+}
 .upLoadBtn_wrap .btn_face {
   position: absolute;
   width: 100%;
@@ -1331,18 +1345,6 @@ input[type="checkbox"] {
   border-radius: 2px;
   text-indent: 3px;
   width: 129px;
-}
-select {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  border-radius: 2px;
-  border: 1px solid #ccc;
-  height: 26px;
-  background: url(../images/chevron-down.svg) no-repeat right center #fff !important;
-  background-size: 20px 20px;
-  cursor: pointer;
-  padding-right: 24px;
 }
 select option {
   cursor: pointer;
@@ -1914,10 +1916,12 @@ ul.inputList-space li:first-child {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
+  /*
   src: url('fonts/fontawesome-webfont.eot?v=3.2.1');
   src: url('fonts/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('fonts/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('fonts/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
   font-weight: normal;
   font-style: normal;
+  */
 }
 /* FONT AWESOME CORE
  * -------------------------- */
@@ -4210,7 +4214,7 @@ body {
 /*产品*/
 .prtype {
   border-right: #ddd solid 1px;
-  background: url(../images/dddimg.gif) repeat-y 232px 0;
+  //background: url(../images/dddimg.gif) repeat-y 232px 0;
   position: relative;
   top: -15px;
   padding-top: 15px;
@@ -4225,7 +4229,7 @@ body {
   height: 18px;
   right: -9px;
   top: 50px;
-  background: url(../images/ico_kr.png) no-repeat -428px 0;
+  //background: url(../images/ico_kr.png) no-repeat -428px 0;
 }
 .prlist {
   margin-left: 20px;

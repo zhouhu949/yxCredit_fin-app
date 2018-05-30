@@ -29,6 +29,11 @@ import java.util.List;
 
 public interface SuggestionMapper {
 
-    //获取合规审查列表
+    /**
+     * 获取意见反馈列表
+     * @author 仙海峰
+     * @param queryFilter
+     * @return
+     */
     List<Suggestion> getSuggestionList(ParamFilter queryFilter) ;
 }

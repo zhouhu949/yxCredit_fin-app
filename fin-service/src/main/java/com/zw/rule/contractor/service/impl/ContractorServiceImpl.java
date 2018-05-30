@@ -11,6 +11,7 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.contractor.WhiteListMapper;
 import com.zw.rule.mybatis.ParamFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +37,27 @@ public class ContractorServiceImpl implements ContractorService {
     private String contractorImg;
 
     @Override
-    public List<UserVo> findUserByMenuUrl(String url) {
-        return contractorMapper.findUserByMenuUrl(url);
+    public List<UserVo> findUserByMenuUrl(String contractorId) {
+        List<Contractor> contractorList = contractorMapper.selectContractorList();
+        List<UserVo> userVolist = contractorMapper.findUserByMenuUrl();
+        if(null == contractorList || contractorList.size() == 0) {
+            return userVolist;
+        }
+        List<UserVo> newUserVolist = new ArrayList<>();
+        StringBuffer stringBuffer = new StringBuffer();
+        for(Contractor contractor : contractorList) {
+            if(StringUtils.isNotBlank(contractor.getUserId()) && !contractor.getId().equals(contractorId)) {
+                stringBuffer.append(contractor.getUserId());
+            }
+        }
+        if(null != userVolist && userVolist.size() > 0) {
+            for(UserVo userVo : userVolist) {
+                if(StringUtils.isNotBlank(userVo.getUserId()) && !stringBuffer.toString().contains(userVo.getUserId())) {
+                    newUserVolist.add(userVo);
+                }
+            }
+        }
+        return newUserVolist;
     }
 
     @Resource

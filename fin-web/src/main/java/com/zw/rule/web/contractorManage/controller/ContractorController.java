@@ -13,6 +13,7 @@ import com.zw.rule.util.StringUtil;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.UserContextUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,6 @@ public class ContractorController {
         Map<String, Object> Param = queryFilter.getParam();
         Param.put("userId", user.getUserId());
         queryFilter.setParam(Param);
-        System.out.println(queryFilter);
         List list = contractorService.findContractorList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
@@ -79,8 +79,8 @@ public class ContractorController {
 
     @ResponseBody
     @PostMapping("findUserByMenuUrl")
-    public Response findUserByMenuUrl(){
-        List<UserVo> userVoList = contractorService.findUserByMenuUrl("contractorManage/contractorList");
+    public Response findUserByContractorId(@RequestParam String contractorId){
+        List<UserVo> userVoList = contractorService.findUserByMenuUrl(contractorId);
         return new Response(userVoList);
     }
 
@@ -96,8 +96,10 @@ public class ContractorController {
             for(Contractor oldContractor : contractorList) {
                String userStr = oldContractor.getUserId();
                for(String userId : userStr.split(",")){
-                   if(user.getUserId() == Long.parseLong(userId)) {
-                       newContractorList.add(oldContractor);
+                   if(StringUtils.isNotBlank(userId)) {
+                       if(user.getUserId() == Long.parseLong(userId)) {
+                           newContractorList.add(oldContractor);
+                       }
                    }
                }
             }
