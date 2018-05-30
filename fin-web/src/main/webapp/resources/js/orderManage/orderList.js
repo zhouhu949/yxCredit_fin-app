@@ -558,7 +558,7 @@ function orderOperationRecord(orderId){
         maxmin : true,
         title : "订单审核记录信息",
         shadeClose : false,
-        area : [ '1100px', '800px' ],
+        area : [ '80%', '95%' ],
         content : $("#salesmanOrdersList"),
         success : function(index, layero) {
             if(!g_salesmanOrders.tableCusOrder) {

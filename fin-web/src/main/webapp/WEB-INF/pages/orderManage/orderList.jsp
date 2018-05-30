@@ -88,9 +88,8 @@
         </div>
     </div>
 
-    <%--查看--%>
-
-    <div class="Manager_style" style="display: none ;overflow: hidden;" id="salesmanOrdersList">
+    <%--审核日志--%>
+    <div class="Manager_style" style="display: none;overflow: hidden;" id="salesmanOrdersList">
         <input type="hidden" value="" id="orderId">
         <div class="Manager_style add_user_info search_style">
             <ul class="search_content clearfix" style="margin-left: 2px;">

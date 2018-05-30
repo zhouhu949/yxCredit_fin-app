@@ -88,20 +88,36 @@
                         <input  id="activity_id" type="hidden" />
                         <input  id="activity_img_id" type="hidden" />
                         <input  id="activity_img_fileName" type="hidden" />
-                        <ul>
-                            <li>
-                                <label class="lf">活动标题</label>
-                                <label>
-                                    <input  id="activity_titled" type="text" class="text_add"/>
+                        <ul >
+                            <li style="width: 80%">
+                                <label class="lf">Banner标题</label>
+                                <label  style="width:83%;margin: 0%;padding: 0;">
+                                    <input  id="activity_titled" type="text" class="text_add"style="width: 100%;height:28px;padding: 0;margin-left: 13px;"/>
                                 </label>
                             </li>
-                            <li>
-                                <label class="lf">活动链接</label>
+                            <li><label class="lf">图 片 位 置 </label>
                                 <label>
-                                    <input id="activity_url" type="text" class="text_add"/>
+                                    <select id="activity_img_addr" style="min-width:60px;height: 28px;">
+                                        <option value="">请选择</option>
+                                        <option value="1">弹框</option>
+                                        <option value="2">轮播图</option>
+                                        <option value="3">启动图</option>
+                                    </select>
                                 </label>
                             </li>
-                            <li><label class="lf">活动状态</label>
+                            <li><label class="lf">显示优先级 </label>
+                                <label>
+                                    <select id="priority" style="min-width:60px;height: 28px;">
+                                        <option value="">请选择</option>
+                                        <option value="1">位置1</option>
+                                        <option value="2">位置2</option>
+                                        <option value="3">位置3</option>
+                                        <option value="4">位置4</option>
+                                        <option value="4">位置5</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li><label class="lf">Banner状态</label>
                                 <label>
                                     <select id="activity_stated" style="min-width:60px;height: 28px;">
                                         <option value="">请选择</option>
@@ -111,56 +127,33 @@
                                 </label>
                             </li>
                             <li>
-                                <label class="lf">活动描述</label>
+                                <label class="lf">Banner描述</label>
                                 <label>
                                     <input id="activity_content"  type="text">
                                 </label>
                             </li>
                             <li style="width: auto">
-                                <label class="lf">活动期限</label>
+                                <label class="lf">显示期限</label>
                                 <label class="lf">
-                                    <input readonly="true" placeholder="开始"  style="width: 162px; margin-left: 20px;" id="beginTimed" type="text"/>
-                                    <span class="date-icon"><i class="icon-calendar"></i></span>    <span style="margin-left: 30px;">--</span>
-                                    <input readonly="true" placeholder="结束" style="width: 162px; margin-left: 40px;" id="endTimed" type="text"/>
+                                    <input readonly="true" placeholder="开始"  style="width: 165px; margin-left: 32px;" id="beginTimed" type="text"/>
+                                    <span class="date-icon"><i class="icon-calendar"></i></span>    <span style="margin-left: 20px;">--</span>
+                                    <input readonly="true" placeholder="结束" style="width: 165px; margin-left: 40px;" id="endTimed" type="text"/>
                                     <span class="date-icon"><i class="icon-calendar"></i></span>
                                 </label>
                             </li>
-                            <li><label class="lf">图片位置</label>
-                                <label>
-                                    <select id="activity_img_addr" style="min-width:60px;height: 28px;">
-                                        <option value="">请选择</option>
-                                    </select>
+                            <li style="width: 80%">
+                                <label class="lf">Banner链接</label>
+                                <label style="width:83%;margin: 0%;padding: 0;">
+                                    <input id="activity_url" type="text" class="text_add" style="width: 100%;height:28px;padding: 0;margin-left: 13px;"/>
                                 </label>
                             </li>
-                            <li><label class="lf">平台类型</label>
-                                <label>
-                                    <select id="platformType" style="min-width:60px;height: 28px;">
-                                    </select>
-                                </label>
-                            </li>
+
                             <li>
-                                <label class="lf">活动图片</label>
-                                <label readonly=“readonly”">
-                                    <div class="paperBlockfree" style="overflow: hidden;">
-                                        <div style="height:100px;margin:30px 0 20px 0;" id="houseotherpic">
-                                            <div class="getFanQiZha businessPic">
-                                                <input type="hidden" class="imgHidden"><%--删除的图片id及名称--%>
-                                                <form action="" enctype="multipart/form-data">
-                                                    <input type="hidden" id="id"/><%--活动id--%>
-                                                    <input type="hidden" name="type" value="18">
-                                                    <input type="hidden" name="businessType" value="2">
-                                                    <div class="imagediv">
-                                                        <input type="file"  name="pic" id="picShow" class="picShow"  onchange="setImagePreview(this,18)"/>
-                                                        <img class="addMaterial" src="../resources/images/photoadd.png" />
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label>
-                                    <input id='closeImg' type="button" style='margin-left: 20px;display:none' value="X" onclick='closeDelete(this)' >
-                                </label>
+                                <form id="activityImgForm" method="post" enctype="multipart/form-data">
+                                    <label class="label_name label_title">图片</label>
+                                    <div id="localImag" style="margin-left: 110px"><img id="preview" src="" style="display: block; width: 162px !important; height: 110px;"></div>
+                                    <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 110px" onchange="javascript:setImagePreview1();" >
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -175,11 +168,11 @@
                     <tr>
                         <th>序号</th>
                         <th></th>
-                        <th>活动标题</th>
+                        <th>Banner标题</th>
                         <th>图片位置</th>
-                        <th>活动描述</th>
-                        <th>活动链接</th>
-                        <th>活动时间</th>
+                        <th>Banner描述</th>
+                        <th>Banner链接</th>
+                        <th>显示期限</th>
                         <th>创建时间</th>
                         <th>活动状态</th>
                         <th>操作</th>
@@ -221,50 +214,12 @@
     laydate(beginTime);
     laydate(endTime);
 
-    //图片上传
-    function setImagePreview(me,sign){
-        $(me).parent().prev().prev().prev().val($('#activity_id').val());//活动id
-        var id = $('#activity_id').val();
-        var docObj=me;
-        var imgObjPreview=me.nextElementSibling;
-        if(docObj.files && docObj.files[0]){
-            //火狐下，直接设img属性
-            imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
-            $('#closeImg').show();
-            var html="";
-            html+='<div><input type="hidden" class="imgHidden" value="'+id+'">';
-            html+='<form action="" enctype="multipart/form-data">';
-            html+='<input type="hidden" name="id" value=""/>';
-            html+='<input type="hidden" name="type" value="12">';
-            html+='<input type="hidden" name="businessType" value="2">';
-            html+='<div class="imagediv">';
-            html+='<input type="file"  name="pic" class="picShow" onchange="setImagePreview(this,12)"/>';
-            html+='<img  class="addMaterial" src="../resources/images/photoadd.png" />';
-            html+='</div>';
-            //$(me).parent().parent().parent().parent().append(html);
-            $(me).parent().parent().ajaxSubmit({
-                type: "POST",
-                url: "merUpload",
-                success: function (data) {
-                    data = eval('('+data+')');
-                    debugger
-                    $(me).parent().parent().prev().val(data.data.activity_img_id);//图片id
-                    $(me).parent().parent().parent().addClass("getFanQiZha");
-                    $('#activity_img_id').val(data.data.activity_img_id);//图片id
-                    $('#activity_img_fileName').val(data.data.activity_img_fileName);//图片url
-                    layer.msg(data.msg,{time:1000});
-                },
-                error: function (XMLHttpRequest, textStatus, thrownError) {
-                }
-            });
-        }else{
 
-        }
-        return true;
-    }
     function closeDelete(me){
         $('.addMaterial').attr('src','../resources/images/photoadd.png');
     }
+
+
 </script>
 </body>
 </html>
