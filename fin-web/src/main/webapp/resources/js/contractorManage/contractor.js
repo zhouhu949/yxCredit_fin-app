@@ -326,7 +326,7 @@ function updateContractor(sign,id) {
         layer.open({
             type : 1,
             title : '添加总包商',
-            area : [ '576px', '370px' ],
+            area : [ '650px', '370px' ],
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
@@ -457,6 +457,7 @@ function asignRole(contractorId, userIdStr) {
                     });
                 });
             },"application/json")
+            location.reload();
         }});
 }
 

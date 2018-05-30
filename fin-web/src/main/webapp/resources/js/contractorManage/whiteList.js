@@ -85,7 +85,6 @@ $(function (){
         "dom": 'rt<"bottom"i><"bottom"flp><"clear">',
         "ajax" : function(data, callback, settings) {
             var queryFilter = g_whiteListManage.getQueryCondition(data);
-            debugger
             Comm.ajaxPost('contractorManage/whiteListPage',JSON.stringify(queryFilter),function(result){
                 var returnData = {};
                 var resData = result.data.list;
@@ -532,7 +531,7 @@ function updateWhite(sign,id) {
         layer.open({
             type : 1,
             title : '添加白名单',
-            area : [ '600px', '370px' ],
+            area : [ '650px', '370px' ],
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
