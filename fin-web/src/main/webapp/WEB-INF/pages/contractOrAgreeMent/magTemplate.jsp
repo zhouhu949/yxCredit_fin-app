@@ -281,29 +281,29 @@
             <div class="addCommon clearfix">
                 <div>
                     <ul>
-                        <li style="margin: 0 auto;">
-                            <label class="lf">模板名称</label>
-                            <label>
-                                <input  id="template_name" type="text" class="text_add"/>
-                            </label>
-                        </li>
-                        <li style="margin: 0 auto;">
-                            <label class="lf">模板类型</label>
-                            <label>
-                                <select id="template_type" style="min-width:60px;height: 28px;">
-                                    <option value="">请选择</option>
-                                </select>
-                            </label>
-                        </li>
-                        <li style="margin: 0 auto;">
-                            <label class="lf">平台类型</label>
-                            <label>
-                                <select id="platformType" style="min-width:60px;height: 28px;">
-                                    <%--<option value="0">金棒棒</option>--%>
-                                    <option value="1">商品贷</option>
-                                </select>
-                            </label>
-                        </li>
+                        <%--<li style="margin: 0 auto;">--%>
+                            <%--<label class="lf">模板名称</label>--%>
+                            <%--<label>--%>
+                                <%--<input  id="template_name" type="text" class="text_add"/>--%>
+                            <%--</label>--%>
+                        <%--</li>--%>
+                        <%--<li style="margin: 0 auto;">--%>
+                            <%--<label class="lf">模板类型</label>--%>
+                            <%--<label>--%>
+                                <%--<select id="template_type" style="min-width:60px;height: 28px;">--%>
+                                    <%--<option value="">请选择</option>--%>
+                                <%--</select>--%>
+                            <%--</label>--%>
+                        <%--</li>--%>
+                        <%--<li style="margin: 0 auto;">--%>
+                            <%--<label class="lf">平台类型</label>--%>
+                            <%--<label>--%>
+                                <%--<select id="platformType" style="min-width:60px;height: 28px;">--%>
+                                    <%--&lt;%&ndash;<option value="0">金棒棒</option>&ndash;%&gt;--%>
+                                    <%--<option value="1">商品贷</option>--%>
+                                <%--</select>--%>
+                            <%--</label>--%>
+                        <%--</li>--%>
                         <div>
                             <input  id="template_contented" type="hidden" class="text_add"/>
                             <input  id="template_contented1" type="hidden" class="text_add"/>
