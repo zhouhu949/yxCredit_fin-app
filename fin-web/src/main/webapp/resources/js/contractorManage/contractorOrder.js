@@ -113,7 +113,8 @@ $(function (){
             //重置
             $("#btn_search_reset").click(function() {
                 $("[name='contractorName']").val("");
-
+                $("[name='trueName']").val("");
+                $("[name='mobile']").val("");
                 g_contractorManage.fuzzySearch = true;
                 g_contractorManage.tableUser.ajax.reload();
             });

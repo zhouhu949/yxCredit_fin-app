@@ -19,7 +19,7 @@ public interface ContractorMapper{
 
     Contractor selectByPrimaryKey(String id);
 
-    List<UserVo> findUserByMenuUrl(String url);
+    List<UserVo> findUserByMenuUrl();
 
     List<Contractor> selectContractorList();
 
