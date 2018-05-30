@@ -17,6 +17,14 @@
         #organ{outline: none!important;appearance:none; -moz-appearance:none; -webkit-appearance:none;height:28px;line-height:19px;}
         #email{margin-left:0px!important;}
         #isLock{height:28px;}
+        .commonManager .addCommon li .label_title {
+            width: 100px;
+            text-align: left;
+        }
+        .commonManager .addCommon .content_ul li {
+            width: 46%;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -41,36 +49,36 @@
                 <%--</ul>--%>
                 <div id="Add_user_style" style="display: none">
                     <div class="addCommon clearfix">
-                        <ul class="clearfix">
+                        <ul class="clearfix content_ul">
                             <li>
-                                <label class="label_name">总包商名称</label>
+                                <label class="label_name label_title">总包商名称</label>
                                 <label for="contractorName">
                                     <input name="contractor_name"  type="text"  id="contractorName"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">联系人</label>
+                                <label class="label_name label_title">联系人</label>
                                 <label for="linkman">
                                     <input name="contractor_linkman"  type="text" id="linkman" maxlength="15"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">联系方式</label>
+                                <label class="label_name label_title">联系方式</label>
                                 <label for="linkmanPhone">
                                     <input name="contractor_mobile"  type="number" id="linkmanPhone" maxlength="11"/>
                                     <i style="color: #F60;">*</i>
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">授信额度</label>
+                                <label class="label_name label_title">授信额度</label>
                                 <label for="credit">
                                     <input name="contractor_credit"  type="number" id="credit" maxlength="10"/>
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">状态</label>
+                                <label class="label_name label_title">状态</label>
                                 <label>
                                     <select name="state" size="1" id="state">
                                         <option value=1 id="qiyong">启用</option>
@@ -80,10 +88,10 @@
                                 <i style="color: #F60;">*</i>
                             </li>
                             <li style="width:524px;">
-                                <form id="contractorImgForm" method="post" enctype="multipart/form-data" >
-                                    <label class="label_name">营业执照附件</label>
-                                    <div id="localImag" style="padding-left:3px;"><img id="preview" src="" width="100" height="20" style="display: block; width: 100px; height: 20px;"></div>
-                                    <input type="file" name="file" id="file" style="width:100px;" onchange="javascript:setImagePreview1();" >
+                                <form id="contractorImgForm" method="post" enctype="multipart/form-data">
+                                    <label class="label_name label_title">营业执照附件</label>
+                                    <div id="localImag" style="margin-left: 110px"><img id="preview" src="" style="display: block; width: 162px !important; height: 110px;"></div>
+                                    <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 110px" onchange="javascript:setImagePreview1();" >
                                 </form>
                             </li>
                         </ul>

@@ -64,8 +64,21 @@ $(function (){
             {"data":'card',"searchable":false,"orderable" : false},
             {"data":'applayMoney',"searchable":false,"orderable" : false},
             {"data":'loanAmount',"searchable":false,"orderable" : false},
-            {"data":'serviceFee',"searchable":false,"orderable" : false},
-
+            {
+                "data" : null,
+                "searchable":false,
+                "orderable" : false,
+                "render" : function(data, type, row, meta){
+                    var serviceFee = data.serviceFee;
+                    var contractAmount = data.contractAmount;
+                    var periods = data.periods;
+                    if(serviceFee && contractAmount && periods) {
+                        return parseFloat(serviceFee) * parseFloat(contractAmount)* parseFloat(periods);
+                    } else {
+                        return 0;
+                    }
+                }
+            },
             {
                 "data" : null,
                 "searchable":false,

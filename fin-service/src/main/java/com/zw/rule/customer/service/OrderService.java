@@ -69,6 +69,9 @@ public interface OrderService {
     //跟新订单状态
     void updateOrderState(Map map);
 
+    //跟新订单状态
+    void updateOrder(Map map);
+
     /**
      * 订单信息
      * @param orderId 订单id

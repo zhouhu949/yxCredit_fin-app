@@ -342,8 +342,8 @@ function setImagePreview1() {
         var imgSrc = document.selection.createRange().text;
         var localImagId = document.getElementById("localImag");
         //必须设置初始大小
-        localImagId.style.width = "272px";
-        localImagId.style.height = "180px";
+        localImagId.style.width = "162px";
+        localImagId.style.height = "110px";
         //图片异常的捕捉，防止用户修改后缀来伪造图片
         try{
             localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
@@ -389,11 +389,11 @@ function updateWhite(sign,id) {
             $("#endTime").val(whiteList.contractEndDate);
             $("#latestPayday").val(whiteList.latestPayday);
             $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
-            $("#preview").attr("src",_ctx + whiteList.payProof);
+            $("#preview").attr("src",_ctx +"/contractorManage/byx/imgUrl?licenceAttachment="+ whiteList.payProof);
             layer.open({
                 type : 1,
                 title : '修改白名单',
-                area : [ '576px', '370px' ],
+                area : [ '650px', '370px' ],
                 content : $('#Add_user_style'),
                 btn : [ '保存', '取消' ],
                 yes : function(index, layero) {

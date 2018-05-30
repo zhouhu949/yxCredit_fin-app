@@ -33,6 +33,8 @@ public class ContractorOrder{
 
     private String serviceFee;
 
+    private String contractAmount;
+
     public String getId() {
 
         return id;
@@ -151,5 +153,13 @@ public class ContractorOrder{
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public String getContractAmount() {
+        return contractAmount;
+    }
+
+    public void setContractAmount(String contractAmount) {
+        this.contractAmount = contractAmount;
     }
 }

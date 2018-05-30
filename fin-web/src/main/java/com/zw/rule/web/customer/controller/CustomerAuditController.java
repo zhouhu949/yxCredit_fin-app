@@ -219,7 +219,7 @@ public class CustomerAuditController {
         map.put("orderState","3");//待签约
         map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
         map.put("contractAmount",map.get("loanAmount"));//合同金额
-        orderService.updateOrderState(map);
+        orderService.updateOrder(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
@@ -280,13 +280,15 @@ public class CustomerAuditController {
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
         map.put("orderState","8");//申请失败
-        orderService.updateOrderState(map);
+        orderService.updateOrder(map);
+
         map.put("result","0");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
         map.put("approType","refuse");
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
+        map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
         orderService.addApproveRecord(map);
         Map<String,Object> logsMap=new HashedMap();
         logsMap.put("orderId",map.get("id"));
