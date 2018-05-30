@@ -20,7 +20,7 @@ var g_userManage = {
 $(function (){
     $("#nianlixi").blur(function(){  // 失去焦点
         var nianlilv=$("#nianlixi").val();
-        debugger
+        //debugger
         if(isNaN(nianlilv)){
             layer.alert("年利率格式有误！",{icon: 2, title:'操作提示'});
             return
@@ -51,7 +51,7 @@ $(function (){
                 var queryFilter = g_userManage.getQueryCondition(data);
                 Comm.ajaxPost('product/feeList', JSON.stringify(queryFilter), function (result) {
                     //封装返回数据
-                    debugger
+                    //debugger
                     var returnData = {};
                     var resData = result.data.list;
                     var resPage = result.data;
@@ -121,7 +121,7 @@ function getFirstTime(inputTime) {
 //打开查看页面
 function auditOrder(orderId,customerId){
     var url = "/financial/details?orderId="+orderId+"&customerId="+customerId;
-    debugger
+    //debugger
     layer.open({
         type : 2,
         title : '审核订单及客户资料',
@@ -138,7 +138,7 @@ function  editDetail(type,productId,productPeriods,id) {
             title : "新增费率",
             maxmin : true,
             shadeClose : false, //点击遮罩关闭层
-            area : [ '630px', '280px'  ],
+            area : [ '700px', '280px'  ],
             content : $('#editDetail'),
             btn : [ '提交', '取消' ],
             success: function () {
@@ -181,7 +181,7 @@ function  editDetail(type,productId,productPeriods,id) {
                     }
                 });
                 if(flag){
-                    layer.alert("总包商或居间服务费不能为空！",{icon: 2, title:'操作提示'});
+                    layer.alert("总包商或居间服务费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }
                 // var zongheri_fee=$("#zongheri_fee").val();
@@ -295,7 +295,7 @@ function  editDetail(type,productId,productPeriods,id) {
                 param.zbs_jujian_fee = zbs_jujian_fee;
                 // param.zongheri_fee=zongheri_fee;
                 Comm.ajaxPost('product/addFee', JSON.stringify(param), function (result) {
-                    debugger
+                    //debugger
                     layer.msg(result.msg,{time:1000},function () {
                         if (result.code=="0"){
                             layer.closeAll();
@@ -311,7 +311,7 @@ function  editDetail(type,productId,productPeriods,id) {
             title : "编辑费率",
             maxmin : true,
             shadeClose : false, //点击遮罩关闭层
-            area : [ '630px', '280px'  ],
+            area : [ '700px', '280px'  ],
             content : $('#editDetail'),
             btn : [ '提交', '取消' ],
             success: function () {
@@ -338,7 +338,7 @@ function  editDetail(type,productId,productPeriods,id) {
                     var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
                     $.each(zbsArray,function(index,value){
                         if(index%2 === 0){
-                            $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
+                            $("#detailInfo").append("<li class='liWidth newField' >\n" +
                                 "                        <label  class=\"lf licss\"  >总包商</label>\n" +
                                 "                        <label >\n" +
                                 "                            <select class=\"zbs\" name=\"zbs_jujian_fee\">\n" +
@@ -347,13 +347,13 @@ function  editDetail(type,productId,productPeriods,id) {
                                 "                        </label>\n" +
                                 "                    </li>");
                         }else{
-                            $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
-                                "                        <label  class=\"lf licss\"  >居间服务费</label>\n" +
+                            $("#detailInfo").append("<li class='liWidth newField'>\n" +
+                                "                        <label  class=\"lf licss\"  >居间服务费率(%)</label>\n" +
                                 "                        <label >\n" +
                                 "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
                                 "                        </label>\n" +
                                 "                    </li>" +
-                                "                <li class='newField' style=\"width:22px;\">\n" +
+                                "                <li class='liWidth newField' style=\"width:22px;\">\n" +
                                 "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
                                 "                </li>");
                         }
@@ -364,7 +364,7 @@ function  editDetail(type,productId,productPeriods,id) {
                 },"application/json");
             },
             yes:function(index, layero){
-                debugger;
+                //debugger;
                 var productComFee=$("#productComFee").val();
                 //var li_xi=$("#li_xi").val();
                 // var zhifu_fee=$("#zhifu_fee").val();
@@ -392,7 +392,7 @@ function  editDetail(type,productId,productPeriods,id) {
                     return
                 }
                 if(flag){
-                    layer.alert("总包商或居间服务费不能为空！",{icon: 2, title:'操作提示'});
+                    layer.alert("总包商或居间服务费率不能为空！",{icon: 2, title:'操作提示'});
                     return
                 }
 
@@ -605,7 +605,7 @@ function getPeriodsSelect() {
 //添加总包商
 function addZBS() {
     //var liIndex = $("#detailInfo li").length-7;
-    $("#detailInfo").append("<li class='newField' style=\"width:260px\">\n" +
+    $("#detailInfo").append("<li class='liWidth newField '>\n" +
         "                        <label  class=\"lf licss\"  >总包商</label>\n" +
         "                        <label >\n" +
         "                           <select class=\"zbs\"  name=\"zbs_jujian_fee\">\n" +
@@ -613,13 +613,13 @@ function addZBS() {
         "                            </select>" +
         "                        </label>\n" +
         "                    </li>" +
-        "                    <li class='newField' style=\"width:260px\">\n" +
-        "                        <label class=\"lf licss\"  >居间服务费</label>\n" +
+        "                    <li class='liWidth newField '>\n" +
+        "                        <label class=\"lf licss\"  >居间服务费率(%)</label>\n" +
         "                        <label >\n" +
         "                            <input type=\"text\"  name=\"zbs_jujian_fee\" >\n" +
         "                        </label>\n" +
         "                    </li> " +
-        "                   <li class='newField' style=\"width:22px;\">\n" +
+        "                   <li class='liWidth newField' style=\"width:22px;\">\n" +
         "                       <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
         "                   </li>");
     getZbsSelect('1');
@@ -627,7 +627,7 @@ function addZBS() {
 
 //获取总包商下拉
 function getZbsSelect(type) {
-    debugger
+    //debugger
     Comm.ajaxPost('product/getZbs', null, function (result) {
         var resData = result.data;
         var length = $("#detailInfo li").length;

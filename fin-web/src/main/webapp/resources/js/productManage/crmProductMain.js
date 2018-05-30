@@ -50,7 +50,7 @@ function loadPrdType(id,flag){
 //点击产品类型弹出产品名称
 function clickPrdType(id,flag,pro_series_type) {
     $("#pro_series_type").val(pro_series_type);
-    debugger
+    //debugger
     $("#v3ParentId").val(id);
     $("#prdQueueTmpl").html("");
     Comm.ajaxPost(
@@ -105,7 +105,7 @@ function clickPrdType(id,flag,pro_series_type) {
 }
 //显示详情页
 function renderPrd(id,flag,type){
-    debugger
+    //debugger
     $('#product_type').val(type);
     var c = $('#product_type').val();
     var addhtml="";
@@ -114,7 +114,7 @@ function renderPrd(id,flag,type){
     Comm.ajaxPost(
         'product/getProductDetail', "crmProductId="+id,
         function (data) {
-            debugger
+            //debugger
             var result=data.data.data;
             var productType=data.data.productType;
             if(productType!=null){
@@ -238,7 +238,7 @@ function showAddPrdTypeDiv(){
         shadeClose:false,
         content: $("#addProductTypeDiv"),
         yes: function(index, layerqw){
-            debugger
+            //debugger
             var prdTypeName = $("#prdTypeName").val();
             var prdTypeNumber = $("#prdTypeNumber").val();
             if(prdTypeNumber==''){
@@ -276,7 +276,7 @@ function showAddPrdTypeDiv1(id,me){
         content: $("#addProductTypeDiv1"),
         success:function(index, layerqw){
             Comm.ajaxPost("product/getPrdTypeInfo","prdTypeId="+id,function(data){
-                debugger
+                //debugger
                 $("#prdTypeNumber1").val(data.data.pro_number);
                 $("#prdTypeName1").val(data.data.pro_name);
                 $("#productType3").val(data.data.pro_series_type);
@@ -314,7 +314,7 @@ function showAddPrdTypeDiv1(id,me){
 }
 //新增产品
 function showAddPrdListDiv(){
-    debugger
+    //debugger
     $("#preview").attr("src","");
     $("#file").val("");
     $("#v3Name").val("");
@@ -339,7 +339,7 @@ function showAddPrdListDiv(){
         },
         yes: function(index, layerqw){
             //表单提交
-            debugger
+            //debugger
             $("#provinces").val($("#province option:selected").html());
             $("#cityHidden").val($("#city option:selected").html());
             $("#distric").val($("#district option:selected").html());
@@ -568,7 +568,7 @@ function updataProStatus(Id,flag,me,status){
 //产品详情的查看修改或者新增
 function showFormView(id,parentId,flag,add,me,type){
      console.log("flag:"+flag+"~~"+"add:"+add);
-    debugger
+    //debugger
     // var a = $('#product_type').val();
     // if(type=='undefined'){
     //     type = $('#product_type').val();
@@ -640,7 +640,7 @@ function showFormView(id,parentId,flag,add,me,type){
                     // }else {//商品贷
                     //     $('#diy_duoqi').css('display','table-row');
                     // }
-                    debugger
+                    //debugger
                     var productType=data.data.productType;
                     var dataList=data.data.data[0];
                     // console.log(dataList);
@@ -777,7 +777,7 @@ function showFormView(id,parentId,flag,add,me,type){
                     }
                 });
             }else if(flag==1){//新增
-                debugger;
+                //debugger;
                 Comm.ajaxPost("product/getProductInfo","id="+id+"&parentId="+parentId,function(data){
                     var productType=data.data.productType;
                     $("#productId").val(id);
@@ -810,12 +810,12 @@ function showFormView(id,parentId,flag,add,me,type){
             }
         },
         yes: function(index, layerqw){//新增
-            debugger;
+            //debugger;
             if(flag == '0'){
                 layer.closeAll();
                 return ;
             }
-            debugger
+            //debugger
             if($("#cpName").val()==""){
                 layer.msg("请输入产品名称！",{time:2000});
                 return;
