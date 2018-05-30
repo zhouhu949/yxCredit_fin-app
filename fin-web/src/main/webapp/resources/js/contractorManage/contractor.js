@@ -407,7 +407,8 @@ function deleteUser(userId){
 
 //绑定用户
 function asignRole(contractorId, userIdStr) {
-    Comm.ajaxPost('contractorManage/findUserByMenuUrl',"",function(data){
+    $("#allSelectId").attr("checked",false);
+    Comm.ajaxPost('contractorManage/findUserByMenuUrl?contractorId='+contractorId,"",function(data){
         var html="";
         $.each(data.data,function(index,result){
             html+="<tr>";

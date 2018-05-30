@@ -271,7 +271,11 @@ function loadContractorType(){
             html+="<option value=''>请选择</option>";
             if(data.data) {
                 $.each(data.data,function(index,result) {
-                    html+="<option value="+result.id+">"+result.contractorName+"</option>"
+                    if(data.data.length === 1) {
+                        html+="<option value="+result.id+" selected ='selected'>"+result.contractorName+"</option>"
+                    }else {
+                        html+="<option value="+result.id+">"+result.contractorName+"</option>"
+                    }
                 });
             }
             $("select[name='contractorList']").html(html);
