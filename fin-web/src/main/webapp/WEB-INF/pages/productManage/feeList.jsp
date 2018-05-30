@@ -34,7 +34,8 @@
         .imgDiv{width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto;}
         .tdleft{text-align : left; }
         .tdright {text-align :right; font-weight:900}
-        .licss{ width: 80px}
+        .commonManager .addCommon .liWidth {width: 294px;}
+        .licss{ width: 110px}
     </style>
 </head>
 <body>
@@ -84,7 +85,7 @@
         <div id="editDetail" style="display: none">
             <div class="addCommon clearfix">
                 <ul id="detailInfo" class="clearfix">
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss">产品名称</label>
                         <label>
                             <select id="productAmount" onchange="getPeriods()">
@@ -92,7 +93,7 @@
                             </select>
                         </label>
                     </li>
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss">产品期数</label>
                         <label >
                             <select id="productPeriods">
@@ -106,7 +107,7 @@
                            <%--<input type="text" name="productComFee" id="productComFee">--%>
                         <%--</label>--%>
                     <%--</li>--%>
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss"  >年利率(%)</label>
                         <label >
                             <input type="text" name="li_xi" id="nianlixi" >
@@ -118,13 +119,13 @@
                             <%--<input type="text" name="li_xi" id="yuelixi"  readonly="readonly">--%>
                         <%--</label>--%>
                     <%--</li>--%>
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss"  >日利率(%)</label>
                         <label >
                             <input type="text" name="li_xi" id="li_xi"  readonly="readonly">
                         </label>
                     </li>
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss"  >逾期费率(%)</label>
                         <label >
                             <input type="text" name="yuqi_fee" id="yuqi_fee">
@@ -154,7 +155,7 @@
                             <%--<input type="text" name="fengxian_fee" id="fengxian_fee">--%>
                         <%--</label>--%>
                     <%--</li>--%>
-                    <li style="width:260px">
+                    <li class="liWidth">
                         <label class="lf licss"  >担保费率(%)</label>
                         <label >
                             <input type="text" name="asuer_rate" id="asuer_rate">
