@@ -97,6 +97,13 @@ public class CustomerAuditController {
         return "customerManage/customerAudit";
     }
 
+    /**
+     * 获取风控审核详情
+     * @param orderId
+     * @param customerId
+     * @return
+     * @throws Exception
+     */
     @GetMapping("details")
     public ModelAndView details(String orderId, String customerId) throws  Exception{
         ModelAndView modelAndView = new ModelAndView("customerManage/headquartersReview");

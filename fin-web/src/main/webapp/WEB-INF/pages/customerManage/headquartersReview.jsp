@@ -292,7 +292,7 @@
                         </tr>
                         <tr>
                             <td>审批额度:</td>
-                            <td colspan="5" style="text-align: left;"> <input type="text" id="predictPrice"  />元</td>
+                            <td colspan="5" style="text-align: left;"> <input type="number" id="predictPrice"  />元</td>
                         </tr>
                         <tr style="height: 5px"></tr>
                         <tr>
