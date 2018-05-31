@@ -9,5 +9,7 @@ public class Constants {
     public static final int HASH_ITERATIONS = 2; // 加密次数
 
     public static final Set<Integer> STATUS_SET =Sets.newHashSet(0,1);
+
+    public static  final String  ENABLE_STATE = "1";
    
 }

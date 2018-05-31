@@ -104,12 +104,14 @@
       order by magorder.applay_time desc
   </select>
 
-  <select id="selectContractorList" resultMap="BaseResultMap" >
+  <select id="selectContractorList" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
     from byx_contractor
     <where>
-
+        <if test="state != null" >
+          state = #{state}
+        </if>
     </where>
     /*order by CREAT_TIME desc*/
   </select>

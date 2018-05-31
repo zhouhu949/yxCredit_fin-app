@@ -11,6 +11,7 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.contractor.WhiteListMapper;
 import com.zw.rule.mybatis.ParamFilter;
+import com.zw.rule.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<UserVo> findUserByMenuUrl(String contractorId) {
-        List<Contractor> contractorList = contractorMapper.selectContractorList();
+        List<Contractor> contractorList = contractorMapper.selectContractorList(null);
         List<UserVo> userVolist = contractorMapper.findUserByMenuUrl();
         if(null == contractorList || contractorList.size() == 0) {
             return userVolist;
@@ -65,7 +66,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<Contractor> selectContractorList() throws Exception {
-        return contractorMapper.selectContractorList();
+        return contractorMapper.selectContractorList(Constants.ENABLE_STATE);
     }
 
     @Override

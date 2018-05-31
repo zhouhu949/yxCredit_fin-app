@@ -21,7 +21,7 @@ public interface ContractorMapper{
 
     List<UserVo> findUserByMenuUrl();
 
-    List<Contractor> selectContractorList();
+    List<Contractor> selectContractorList(@Param("state") String state);
 
     /**
      * 添加 （匹配有值的字段）
