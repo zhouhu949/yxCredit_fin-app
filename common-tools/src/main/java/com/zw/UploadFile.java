@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -83,7 +84,10 @@ public class UploadFile {
             for (int i=0;i<formItems.size();i++){
                 FileItem item = formItems.get(i);
                 String originalName = item.getName();//获取文件名+后缀
-                String originalType = originalName.substring(originalName.indexOf("."));//文件后缀
+                String originalType = "";
+                if(StringUtils.isNotEmpty(originalName)){
+                    originalName.substring(originalName.indexOf("."));//文件后缀
+                }
                 // 处理不在表单中的字段
                 if (!item.isFormField()) {
                     Map<String, Object> fileModel = new HashMap<String, Object>();
