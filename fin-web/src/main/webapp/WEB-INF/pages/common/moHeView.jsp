@@ -297,15 +297,14 @@
 
                 //通话记录
                 operatorCallInfo = apiResult.call_info;
-                //最近六个月的通话记录
-                $("#operatorCallCycle0").html(operatorCallInfo[0].call_cycle);
-                $("#operatorCallCycle1").html(operatorCallInfo[1].call_cycle);
-                $("#operatorCallCycle2").html(operatorCallInfo[2].call_cycle);
-                $("#operatorCallCycle3").html(operatorCallInfo[3].call_cycle);
-                $("#operatorCallCycle4").html(operatorCallInfo[4].call_cycle);
-                $("#operatorCallCycle5").html(operatorCallInfo[5].call_cycle);
-
-                operatorCallInfoCallRecordIndex = 0;
+                for(var i = 0 ; i< 6 ;i++){
+                    var callInfo = operatorCallInfo[i];
+                    if(callInfo){
+                        //最近六个月的通话记录
+                        $("#operatorCallCycle" + i).html(callInfo.call_cycle);
+                    }
+                }
+                operatorCallInfoCallRecordIndex = 0
                 operatorCallInfoCallRecordIndexPage = 1;
                 operatorCallCycleTab(1,operatorCallInfoCallRecordIndex);
                 operatorUlPageFun(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,"operatorCallInfoRecordUl","CallInfoRecord");
