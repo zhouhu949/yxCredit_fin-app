@@ -408,7 +408,7 @@ function updateWhite(sign,id) {
                     var card=$('input[name="card"]').val();
                     var latestPay=$('input[name="latest_pay"]').val();//最近一期发薪日应发工资
                     var jobType=$('input[name="job_type"]').val();//工种
-                    var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                    var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
                     var contractStatus=$("#contractStatus").val();
                     var localMonthlyMinWage=$("#localMonthlyMinWage").val();//当地月最低工资
                     var contractorId = $("#contractorId option:selected").val();
