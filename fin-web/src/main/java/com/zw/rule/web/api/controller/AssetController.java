@@ -22,6 +22,12 @@ public class AssetController {
     @Autowired
     private IAssetService assetService;
 
+    /**
+     * 资产同步
+     * @author 仙海峰
+     * @param request
+     * @return
+     */
     @RequestMapping("syncAssetData")
     public Response syncAssetData(@RequestBody AssetRequest request) {
         if (request == null) {

@@ -26,8 +26,8 @@ public class ActivityServiceImpl implements ActivityService {
     @Value("${byx.img.path}")
     private String imgPath;
 
-    @Value("${byx.img.activity}")
-    private String activityImg;
+    @Value("${byx.img.banner}")
+    private String bannerImg;
     @Resource
     private ActivityMapper activityMapper;
 
@@ -108,20 +108,20 @@ public class ActivityServiceImpl implements ActivityService {
      * @throws Exception
      */
     @Override
-    public List uploadaCtivityImage(HttpServletRequest request) throws Exception {
+    public List uploadaBannerImage(HttpServletRequest request) throws Exception {
         String fileName="";
         String id = GeneratePrimaryKeyUtils.getUUIDKey();//新的文件名
         //获取根目录
         //String root = request.getSession().getServletContext().getRealPath("/");
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String currentDateStr = format.format(new Date());
-        String newFilePath = imgPath + File.separator + activityImg + currentDateStr;//文件保存路径url
+        String newFilePath = imgPath + File.separator + bannerImg + currentDateStr;//文件保存路径url
         Map<String, Object> allMap = UploadFile.getFile(request, newFilePath, id);
         List<Map<String, Object>> list = (List<Map<String, Object>>) allMap.get("fileList");
         //当前台有文件时，给图片名称变量赋值
         if (!list.isEmpty()) {
             Map<String, Object> fileMap = list.get(0);
-            fileName = activityImg + currentDateStr+"/"+ fileMap.get("Name").toString();
+            fileName = bannerImg + currentDateStr+"/"+ fileMap.get("Name").toString();
         }
         List imageList = new ArrayList();
         imageList.add(fileName);

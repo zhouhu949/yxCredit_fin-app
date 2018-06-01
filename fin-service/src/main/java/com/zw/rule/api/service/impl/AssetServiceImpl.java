@@ -1,7 +1,5 @@
 package com.zw.rule.api.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.zw.api.HttpClientUtil;
 import com.zw.base.util.HttpUtil;
 import com.zw.rule.api.asset.AssetRequest;
 import com.zw.rule.api.asset.AssetSettings;
