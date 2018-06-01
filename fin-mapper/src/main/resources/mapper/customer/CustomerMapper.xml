@@ -510,10 +510,10 @@
                 and cu.PERSON_NAME like '%${param.personName}%'
             </if>
             <if test="param.beginTime != null and param.beginTime != ''">
-                and au.creat_time &gt;= #{param.beginTime}
+                and substr(au.creat_time,1,8) &gt;= #{param.beginTime}
             </if>
             <if test="param.endTime != null and param.endTime != ''">
-                and au.creat_time &lt;= #{param.endTime}
+                and substr(au.creat_time,1,8) &lt;= #{param.endTime}
             </if>
             <if test="param.tel !=null and param.tel !='' ">
                 and cu.TEL like '%${param.tel}%'

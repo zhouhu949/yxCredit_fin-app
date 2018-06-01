@@ -33,10 +33,10 @@
       and activity_title like '%${activity_title}%'
     </if>
     <if test="beginTime != null and beginTime != ''">
-      and create_time &gt;= #{beginTime}
+      and substr(create_time,1,8) &gt;= #{beginTime}
     </if>
     <if test="endTime != null and endTime != ''">
-      and create_time &lt;= #{endTime}
+      and substr(create_time,1,8) &lt;= #{endTime}
     </if>
     <if test="activityType != null and activityType != ''">
       and activity_type = #{activityType}

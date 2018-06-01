@@ -301,7 +301,7 @@ function queryList(){
                                     $("#picShow").attr("disabled", true);
                                     $("#priority").attr("disabled", true);
 
-                                    $("#prompt").css("display"," none");
+                                    $("#prompt ").css("display"," none");
                                     $("#file").css("display"," none");
 
                                 },
