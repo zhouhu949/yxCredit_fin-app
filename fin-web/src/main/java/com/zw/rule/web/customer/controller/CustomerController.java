@@ -459,7 +459,7 @@ public class CustomerController {
         Map customer= customerService.getCustomerById(customerId);
 
         //获取风控审核信息列表
-        List apiResultList = apiResultService.getApiResultByOrderId(orderId);
+        List apiResultList = apiResultService.getApiResultByOrderId(customerId);
 
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
@@ -498,7 +498,7 @@ public class CustomerController {
         Map order = orderService.getOrderAndBank(orderId);
 
         //获取风控审核信息列表
-        List apiResultList = apiResultService.getApiResultByOrderId(orderId);
+        List apiResultList = apiResultService.getApiResultByOrderId(customerId);
 
         //客户联系人信息
         List linkmanList = customerService.getCustomerLinkMan(customerId);
