@@ -69,6 +69,10 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
+  <update id="updateStateByContractorId" parameterType="java.lang.String">
+    update byx_white_list SET white_status = 0 where contractor_id = #{contractorId,jdbcType=VARCHAR}
+  </update>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from byx_white_list
     where id = #{id,jdbcType=VARCHAR}

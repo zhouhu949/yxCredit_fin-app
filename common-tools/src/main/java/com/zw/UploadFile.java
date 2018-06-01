@@ -85,8 +85,8 @@ public class UploadFile {
                 FileItem item = formItems.get(i);
                 String originalName = item.getName();//获取文件名+后缀
                 String originalType = "";
-                if(StringUtils.isNotEmpty(originalName)){
-                    originalName.substring(originalName.indexOf("."));//文件后缀
+                if(StringUtils.isNotBlank(originalName)){
+                    originalType = originalName.substring(originalName.indexOf("."));//文件后缀
                 }
                 // 处理不在表单中的字段
                 if (!item.isFormField()) {

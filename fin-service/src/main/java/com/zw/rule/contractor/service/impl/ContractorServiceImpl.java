@@ -31,6 +31,9 @@ public class ContractorServiceImpl implements ContractorService {
     @Resource
     private ContractorMapper contractorMapper;
 
+    @Resource
+    private WhiteListMapper whiteListMapper;
+
     @Value("${byx.img.path}")
     private String imgPath;
 
@@ -60,9 +63,6 @@ public class ContractorServiceImpl implements ContractorService {
         }
         return newUserVolist;
     }
-
-    @Resource
-    private WhiteListMapper whiteListMapper;
 
     @Override
     public List<Contractor> selectContractorList() throws Exception {
@@ -99,6 +99,10 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public int updateContractor(Contractor contractor){
+        //更新白名单状态
+        if(Constants.DISENABLE_STATE.equals(contractor.getState())){
+            whiteListMapper.updateStateByContractorId(contractor.getId());
+        }
         return contractorMapper.updateByPrimaryKeySelective(contractor);
     }
 
