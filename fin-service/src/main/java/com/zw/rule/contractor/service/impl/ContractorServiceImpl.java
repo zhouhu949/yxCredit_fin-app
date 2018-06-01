@@ -74,7 +74,6 @@ public class ContractorServiceImpl implements ContractorService {
         String fileName="";
         String id = GeneratePrimaryKeyUtils.getUUIDKey();//新的文件名
         //获取根目录
-        //String root = request.getSession().getServletContext().getRealPath("/");
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String currentDateStr = format.format(new Date());
         String newFilePath = imgPath + File.separator + contractorImg + currentDateStr;//文件保存路径url
