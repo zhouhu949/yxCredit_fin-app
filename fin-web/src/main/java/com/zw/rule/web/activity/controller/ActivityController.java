@@ -14,11 +14,17 @@ import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.upload.service.UploadService;
 import com.zw.rule.web.util.PageConvert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +36,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("activity")
 public class ActivityController {
+
+    @Value("${byx.img.path}")
+    private String imgUrl;
     @Resource
     private ActivityService activityService;
 
@@ -167,9 +176,6 @@ public class ActivityController {
         Response response = new Response();
         String id = param.get("id").toString();
         Activity activity = activityService.lookActivity(id);
-        String name = dictService.getDetilNameByCode("ceshi",dictService.getListByCode("host").get(0).getId().toString());
-        activity.setActivity_img_url(activity.getActivity_img_url());
-        activity.setHost(name);
         response.setData(activity);
         return response;
     }
@@ -186,7 +192,7 @@ public class ActivityController {
     @PostMapping("merUpload")
     public Response upload(HttpServletRequest request) throws Exception{
         Response response = new Response();
-        List list = activityService.uploadaCtivityImage(request);
+        List list = activityService.uploadaBannerImage(request);
         if(!list.isEmpty()){
             response.setMsg("上传成功！");
             response.setData(list.get(0));
@@ -224,6 +230,37 @@ public class ActivityController {
             return null;
         }
         return response;
+    }
+
+
+    /**
+     * 获取图片URL
+     * @param bannerImg
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/byx/imgUrl")
+    public void getUploadUrl(@RequestParam String bannerImg, HttpServletResponse response) throws IOException {
+        try{
+            String  imgPath = imgUrl + bannerImg;
+            FileInputStream hFile = new FileInputStream(imgPath);
+            int i=hFile.available(); //得到文件大小
+            byte data[]=new byte[i];
+            hFile.read(data); //读数据
+            hFile.close();
+            response.setContentType("image/*"); //设置返回的文件类型
+            OutputStream toClient=response.getOutputStream(); //得到向客户端输出二进制数据的对象
+            toClient.write(data); //输出数据
+            toClient.close();
+        }
+        catch(IOException e) //错误处理
+        {
+            e.printStackTrace();
+            PrintWriter toClient = response.getWriter(); //得到向客户端输出文本的对象
+            response.setContentType("text/html;charset=gb2312");
+            toClient.write("无法打开!");
+            toClient.close();
+        }
     }
 
 }

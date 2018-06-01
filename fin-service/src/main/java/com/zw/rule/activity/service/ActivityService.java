@@ -67,6 +67,6 @@ public interface ActivityService {
      * @return
      * @throws Exception
      */
-    List uploadaCtivityImage(HttpServletRequest request) throws Exception ;
+    List uploadaBannerImage(HttpServletRequest request) throws Exception ;
 
 }

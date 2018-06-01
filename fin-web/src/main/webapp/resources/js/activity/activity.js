@@ -139,7 +139,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: '添加Banner',
-                    area: ['38%', '60%'],
+                    area : [ '650px', '410px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -160,51 +160,53 @@ function queryList(){
                         $('#activity_url').val('');
                         $('#activity_stated').val('');
                         $('#activity_content').val('');
-                        $('.addMaterial').attr('src','../resources/images/photoadd.png');
+
                         $('#beginTimed').val('');$('#endTimed').val('');
                     },
                     yes:function(index,layero){
-                        uploadFile();
+
                         var param={};
                         param.id=$('#activity_id').val();
                         param.activity_title = $('#activity_titled').val();
                         param.activity_url = $('#activity_url').val();
                         param.activity_state = $('#activity_stated').val();
                         param.activity_content = $('#activity_content').val();
-                        param.activity_img_url = activityImgUrl ;
+
                         param.activity_img_addr = $('#activity_img_addr').val();
                         param.priority=$('#priority').val();
                         var a = $('#beginTimed').val()+'~'+$('#endTimed').val();
                         param.activity_time = a;
                         if(param.activity_title==''){
-                            layer.msg("活动标题不可为空！",{time:2000});return
+                            layer.msg("Banner标题不可为空！",{time:2000});return
                         }
                         if(param.activity_url==''){
-                            layer.msg("活动链接不可为空！",{time:2000});return
+                            layer.msg("Banner链接不可为空！",{time:2000});return
                         }
                         var reg = /[\u4E00-\u9FA5]/g;
                         if(reg.test(param.activity_url)){
-                            layer.msg("活动链接不能为中文！",{time:2000});return
+                            layer.msg("Banner链接不能为中文！",{time:2000});return
                         }
 
-                        if(param.activity_state==''){
-                            layer.msg("活动状态不可为空！",{time:2000});return
-                        }
                         if(param.activity_content==''){
-                            layer.msg("活动描述不可为空！",{time:2000});return
+                            layer.msg("Banner描述不可为空！",{time:2000});return
                         }
                         if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
-                            layer.msg("活动期限选择有误！",{time:2000});return
+                            layer.msg("Banner期限选择有误！",{time:2000});return
                         }
                         if(param.activity_img_url==''){
-                            layer.msg("请上传活动图片！",{time:2000});return
+                            layer.msg("请上传Banner图片！",{time:2000});return
                         }
-                        if(param.activity_img_addr==''){
-                            layer.msg("请选择活动图片位置！",{time:2000});return
+                        if(param.activity_state=='-1'){
+                            layer.msg("Banner状态不可为空！",{time:2000});return
                         }
-                        if(param.priority==''){
+                        if(param.activity_img_addr=='-1'){
+                            layer.msg("请选择Banner图片位置！",{time:2000});return
+                        }
+                        if(param.priority=='-1'){
                             layer.msg("请选择显示优先级！",{time:2000});return
                         }
+                        uploadFile();
+                        param.activity_img_url = activityImgUrl ;
                         Comm.ajaxPost('activity/add',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
@@ -234,7 +236,7 @@ function queryList(){
                 var activity_state = $(target).parents("tr").children().eq(8).html();
                 var param = {}; param.id = id;
                 if(activity_state == '已上架'){
-                    layer.msg("上架活动不可删除！",{time:2000});
+                    layer.msg("上架Banner不可删除！",{time:2000});
                     return
                 }
                 Comm.ajaxPost('activity/del',JSON.stringify(param), function (data) {
@@ -257,7 +259,7 @@ function queryList(){
                             layer.open({
                                 type: 1,
                                 title: 'Banner详情',
-                                area: ['38%', '60%'],
+                                area : [ '650px', '410px' ],
                                 content: $('#Add_procedure_style'),
                                 success: function () {
                                     $('#activity_titled').val(data.activity_title);
@@ -266,6 +268,7 @@ function queryList(){
                                     $('#activity_content').val(data.activity_content);
                                     $('#activity_img_addr').val(data.activity_img_addr);
                                     $('#platformType').val(data.platform_type);
+                                    $('#priority').val(data.priority);
                                     var b = data.activity_time.substr(0,19);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
@@ -279,8 +282,8 @@ function queryList(){
                                         $('#endTimed').val('');
                                     }
 
-                                    //$('.addMaterial').attr('src',data.host+data.activity_img_url);
-                                    $('.addMaterial').attr('src',data.activity_img_url);
+                                    //alert("图片地址："+data.activity_img_url);
+                                    $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
                                     $('#platformType').attr("disabled",true);
                                     $('#activity_titled').attr("disabled",true);
                                     $('#activity_url').attr("disabled",true);
@@ -306,7 +309,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: 'Banner修改',
-                    area: ['38%', '60%'],
+                    area : [ '650px', '410px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -322,8 +325,10 @@ function queryList(){
                                     $('#endTimed').removeAttr("disabled");
                                     $('#activity_img_addr').removeAttr("disabled");
                                     $("#picShow").removeAttr("disabled");
+                                    $("#priority").removeAttr("disabled");
                                     debugger
                                     var data = data.data;
+                                    $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
                                     $('#activity_titled').val(data.activity_title);
                                     $('#activity_url').val(data.activity_url);
                                     $('#activity_img_addr').val(data.activity_img_addr);
@@ -331,8 +336,10 @@ function queryList(){
                                     $('#activity_stated').val(data.activity_state);
                                     $('#activity_content').val(data.activity_content);
                                     // $('.addMaterial').attr('src',data.host+data.activity_img_url);
-                                    $('.addMaterial').attr('src',data.activity_img_url);
-                                    $('#activity_img_fileName').val(data.activity_img_url);
+
+                                    //$('#activity_img_fileName').val(data.activity_img_url);
+
+                                    $('#priority').val(data.priority);
                                     var b = data.activity_time.substr(0,19);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
@@ -361,6 +368,8 @@ function queryList(){
                     yes:function(index,layero){
                         var param={};
                         debugger
+
+                        //alert("图片地址"+activityImgUrl);
                         //param.id=$('#update').val();
                         param.id=id;
                         param.activity_title = $('#activity_titled').val();
@@ -368,39 +377,43 @@ function queryList(){
                         param.activity_state = $('#activity_stated').val();
                         param.activity_content = $('#activity_content').val();
                         param.activity_img_addr = $('#activity_img_addr').val();
-                        debugger
+                        param.priority = $('#priority').val();
                         param.platform_type=$('#platformType').val();
-                        param.activity_img_url =$('.addMaterial').attr('src');
-                        if(param.activity_img_url!='../resources/images/photoadd.png'){
-                            param.activity_img_url = $('#activity_img_fileName').val();
-                        }
+
                         var a = $('#beginTimed').val()+'~'+$('#endTimed').val();
                         param.activity_time = a;
                         if(param.activity_title==''){
-                            layer.msg("活动标题不可为空！",{time:2000});return
+                            layer.msg("Banner标题不可为空！",{time:2000});return
                         }
                         if(param.activity_url==''){
-                            layer.msg("活动链接不可为空！",{time:2000});return
+                            layer.msg("Banner链接不可为空！",{time:2000});return
                         }
                         var reg = /[\u4E00-\u9FA5]/g;
                         if(reg.test(param.activity_url)){
-                            layer.msg("活动链接不能为中文！",{time:2000});return
+                            layer.msg("Bnner连接不能为中文！",{time:2000});return
                         }
-                        if(param.activity_state==''){
-                            layer.msg("活动状态不可为空！",{time:2000});return
-                        }
+
                         if(param.activity_content==''){
-                            layer.msg("活动描述不可为空！",{time:2000});return
+                            layer.msg("Banner描述不可为空！",{time:2000});return
                         }
                         if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
-                            layer.msg("活动期限选择有误！",{time:2000});return
+                            layer.msg("Banner期限选择有误！",{time:2000});return
                         }
                         if(param.activity_img_url=='../resources/images/photoadd.png'){
-                            layer.msg("请上传活动图片！",{time:2000});return
+                            layer.msg("请上传Banner图片！",{time:2000});return
                         }
-                        if(param.activity_img_addr==''){
-                            layer.msg("请选择活动图片位置！",{time:2000});return
+                        debugger
+                        if(param.activity_img_addr=="-1"){
+                            layer.msg("请选择Banner图片位置！",{time:2000});return
                         }
+                        if(param.activity_state=='-1'){
+                            layer.msg("Bnner状态不可为空！",{time:2000});return
+                        }
+                        if(param.priority=='-1'){
+                            layer.msg("请选择显示优先级！",{time:2000});return
+                        }
+                        uploadFile();
+                        param.activity_img_url = activityImgUrl;
                         Comm.ajaxPost('activity/update',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){

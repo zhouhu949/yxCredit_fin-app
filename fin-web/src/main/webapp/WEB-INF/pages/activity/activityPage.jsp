@@ -28,10 +28,9 @@
         .imgDiv{width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto;}
 
         .imagediv{position: relative}
-        img.addMaterial{
+        .addMaterial{
             width: 100px;
             height: 100px;
-            position: absolute;
             top: 0;
             left: 0;
             z-index: 10;
@@ -42,6 +41,11 @@
             width: 100px;
             height: 100px;
         }
+
+        .addBanner tr{
+           height: 40px;
+        }
+
     </style>
 </head>
 <body>
@@ -88,74 +92,103 @@
                         <input  id="activity_id" type="hidden" />
                         <input  id="activity_img_id" type="hidden" />
                         <input  id="activity_img_fileName" type="hidden" />
-                        <ul >
-                            <li style="width: 80%">
-                                <label class="lf">Banner标题</label>
-                                <label  style="width:83%;margin: 0%;padding: 0;">
-                                    <input  id="activity_titled" type="text" class="text_add"style="width: 100%;height:28px;padding: 0;margin-left: 13px;"/>
-                                </label>
-                            </li>
-                            <li><label class="lf">图 片 位 置 </label>
-                                <label>
-                                    <select id="activity_img_addr" style="min-width:60px;height: 28px;">
-                                        <option value="">请选择</option>
-                                        <option value="1">弹框</option>
-                                        <option value="2">轮播图</option>
-                                        <option value="3">启动图</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li><label class="lf">显示优先级 </label>
-                                <label>
-                                    <select id="priority" style="min-width:60px;height: 28px;">
-                                        <option value="">请选择</option>
-                                        <option value="1">位置1</option>
-                                        <option value="2">位置2</option>
-                                        <option value="3">位置3</option>
-                                        <option value="4">位置4</option>
-                                        <option value="4">位置5</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li><label class="lf">Banner状态</label>
-                                <label>
-                                    <select id="activity_stated" style="min-width:60px;height: 28px;">
-                                        <option value="">请选择</option>
-                                        <option value="1">已上架</option>
-                                        <option value="2">未上架</option>
-                                    </select>
-                                </label>
-                            </li>
-                            <li>
-                                <label class="lf">Banner描述</label>
-                                <label>
-                                    <input id="activity_content"  type="text">
-                                </label>
-                            </li>
-                            <li style="width: auto">
-                                <label class="lf">显示期限</label>
-                                <label class="lf">
-                                    <input readonly="true" placeholder="开始"  style="width: 165px; margin-left: 32px;" id="beginTimed" type="text"/>
-                                    <span class="date-icon"><i class="icon-calendar"></i></span>    <span style="margin-left: 20px;">--</span>
-                                    <input readonly="true" placeholder="结束" style="width: 165px; margin-left: 40px;" id="endTimed" type="text"/>
-                                    <span class="date-icon"><i class="icon-calendar"></i></span>
-                                </label>
-                            </li>
-                            <li style="width: 80%">
-                                <label class="lf">Banner链接</label>
-                                <label style="width:83%;margin: 0%;padding: 0;">
-                                    <input id="activity_url" type="text" class="text_add" style="width: 100%;height:28px;padding: 0;margin-left: 13px;"/>
-                                </label>
-                            </li>
-
-                            <li>
-                                <form id="activityImgForm" method="post" enctype="multipart/form-data">
+                        <table  class="addBanner">
+                            <tr>
+                                <td style="text-align: right">
+                                    <label >Banner标题</label>
+                                </td>
+                                <td colspan="3">
+                                    <label  style="width:100%;padding: 0;margin-left: 20px;">
+                                        <input  id="activity_titled" type="text" class="text_add"style="width:100%;height:28px;padding: 0;margin: 0px;"/>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right">
+                                    <label >图片位置</label>
+                                </td>
+                                <td width="30%">
+                                    <label  style="width:100%;padding: 0;margin-left: 15px;">
+                                        <select id="activity_img_addr" style="width:100%;height: 28px;margin-left:3px;">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">轮播图</option>
+                                        </select>
+                                    </label>
+                                </td>
+                                <td  style="text-align: right;padding-left: 50px" >
+                                    <label >显示优先级 </label>
+                                </td>
+                                <td >
+                                    <label style="width:100%;padding: 0;margin-left: 15px;">
+                                        <select id="priority" style="width:100%;height: 28px;">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">位置1</option>
+                                            <option value="2">位置2</option>
+                                            <option value="3">位置3</option>
+                                            <option value="4">位置4</option>
+                                            <option value="4">位置5</option>
+                                        </select>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">
+                                    <label >Banner状态</label>
+                                </td>
+                                <td>
+                                    <label style="width:100%;padding: 0;margin-left: 15px;">
+                                        <select id="activity_stated" style="width:100%;height: 28px;padding:0;margin-left: 2px">
+                                            <option value="-1">请选择</option>
+                                            <option value="1">已上架</option>
+                                            <option value="2">未上架</option>
+                                        </select>
+                                    </label>
+                                </td>
+                                <td  style="text-align: right">
+                                    <label >Banner描述</label>
+                                </td>
+                                <td>
+                                    <label style="width:100%;padding: 0;margin-left: 5px;">
+                                        <input id="activity_content"  type="text" style="width:100%;height: 28px;padding:0;">
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">
+                                    <label >显示期限</label>
+                                </td>
+                                <td colspan="3">
+                                    <label style="width:100%;padding: 0;margin: 0">
+                                        <input readonly="true" placeholder="开始"  style="width:35%;margin-left: 0px;" id="beginTimed" type="text"/>
+                                        <span class="date-icon"><i class="icon-calendar"></i></span>    <span style="margin-left: 20px;margin-right: 30px">至</span>
+                                        <input readonly="true" placeholder="结束" style="width: 35%; margin-left: 0px;" id="endTimed" type="text"/>
+                                        <span class="date-icon"><i class="icon-calendar"></i></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">
+                                    <label >Banner链接</label>
+                                </td>
+                                <td colspan="3">
+                                    <label style="width:100%;margin: 0%;padding: 0;">
+                                        <input id="activity_url" type="text" class="text_add" style="width: 100%;height:28px;padding: 0;margin-left: 20px;"/>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: right">
                                     <label class="label_name label_title">图片</label>
-                                    <div id="localImag" style="margin-left: 110px"><img id="preview" src="" style="display: block; width: 162px !important; height: 110px;"></div>
-                                    <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 110px" onchange="javascript:setImagePreview1();" >
-                                </form>
-                            </li>
-                        </ul>
+                                </td>
+                                <td colspan="3">
+                                    <form id="activityImgForm" method="post" enctype="multipart/form-data">
+                                        <div id="localImag" style="margin-left: 20px"><img id="preview"  src="" style="display: block; width: 162px !important; height: 110px;"></div>
+                                        <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 20px" onchange="javascript:setImagePreview1();" >
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -215,9 +248,9 @@
     laydate(endTime);
 
 
-    function closeDelete(me){
+   /* function closeDelete(me){
         $('.addMaterial').attr('src','../resources/images/photoadd.png');
-    }
+    }*/
 
 
 </script>
