@@ -29,8 +29,8 @@ var g_userManage = {
 $(function (){
     var beginTime = {
         elem: '#beginTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD',
+        min: '1999-01-01',
         max: laydate.now(),
         istime: true,
         istoday: false,
@@ -41,8 +41,8 @@ $(function (){
     };
     var endTime = {
         elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD',
+        min: '1999-01-01',
         max: laydate.now(),
         istime: true,
         istoday: false,

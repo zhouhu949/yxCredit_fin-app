@@ -493,7 +493,7 @@
     </select>
 
     <!--获取客户列表-->
-    <select id="getCustomerAndOrder" resultType="Map" parameterType="java.util.Map">
+    <select id="getCustomerAndOrder" resultType="java.util.Map" parameterType="java.util.Map">
         select cu.ID as customerId,cu.occupation_type as occupationType,cu.TEL as tel,cu.CARD as card,cu.user_id as
         userId,cu.PERSON_NAME as personName,cu.CREAT_TIME as creatTime, is_identity as isIdentity,applyCount.applyCount,
         au.creat_time AS registrationTime
@@ -510,10 +510,10 @@
                 and cu.PERSON_NAME like '%${param.personName}%'
             </if>
             <if test="param.beginTime != null and param.beginTime != ''">
-                and cu.CREAT_TIME &gt;= #{param.beginTime}
+                and au.creat_time &gt;= #{param.beginTime}
             </if>
             <if test="param.endTime != null and param.endTime != ''">
-                and cu.CREAT_TIME &lt;= #{param.endTime}
+                and au.creat_time &lt;= #{param.endTime}
             </if>
             <if test="param.tel !=null and param.tel !='' ">
                 and cu.TEL like '%${param.tel}%'

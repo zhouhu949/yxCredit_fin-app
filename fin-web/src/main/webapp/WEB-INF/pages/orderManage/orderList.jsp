@@ -42,7 +42,7 @@
                         </select>
                     </label>
                 </li>
-                <li><label class="lf">创建时间</label>
+                <li><label class="lf">申请时间</label>
                     <label>
                         <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
                         <span class="date-icon"><i class="icon-calendar"></i></span>
