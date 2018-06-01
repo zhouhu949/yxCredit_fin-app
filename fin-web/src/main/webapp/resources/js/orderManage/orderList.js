@@ -96,6 +96,7 @@ $(function (){
                 {"data": "tel","orderable" : false},//电话号码
                 {"data": "productName","orderable" : false},//产品名称
                 {"data": "applayMoney","orderable" : false},//申请金额
+                {"data": "loanAmount","orderable" : false},//批复金额
                 {"data": "periods","orderable" : false},//申请期限
                 {"data": "applayTime","orderable" : false,
                     "render":function (data, type, row, meta) {
@@ -158,12 +159,12 @@ $(function (){
                 var btnAsset = $('<a class="tabel_btn_style" onclick="assetSynchronization(\''+data.orderId+'\',\''+data.customerId+'\')">资产同步</a>');
                if(data.orderState==4){
                    if(data.assetState==0 || data.assetState==2 ){
-                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
+                       $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
                    }else {
-                       $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
+                       $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing)
                    }
                }else{
-                   $('td', row).eq(11).append(btnDel).append("  ").append(btnDAuditing)
+                   $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing)
                }
 
             },

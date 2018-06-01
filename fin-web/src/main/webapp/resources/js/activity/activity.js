@@ -171,7 +171,6 @@ function queryList(){
                         param.activity_url = $('#activity_url').val();
                         param.activity_state = $('#activity_stated').val();
                         param.activity_content = $('#activity_content').val();
-
                         param.activity_img_addr = $('#activity_img_addr').val();
                         param.priority=$('#priority').val();
                         var a = $('#beginTimed').val()+'~'+$('#endTimed').val();
