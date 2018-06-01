@@ -48,7 +48,7 @@
       userwhite.card AS card,
       userwhite.job AS job,
       userwhite.realName AS realName,
-      userWhite.tel AS tel,
+      userwhite.tel AS tel,
       userwhite.contractorName AS contractorName
       FROM
       mag_order magorder
@@ -71,7 +71,6 @@
       byx_white_list bwl
       LEFT JOIN byx_contractor bc ON bc.id = bwl.contractor_id
       <where>
-          /*bwl.white_status = 1 and bc.state = 1*/
           <if test="param.userId != null and param.userId != ''">
               and bc.user_id like '%${param.userId}%'
           </if>
