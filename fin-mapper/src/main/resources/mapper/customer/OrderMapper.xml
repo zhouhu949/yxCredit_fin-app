@@ -1234,6 +1234,9 @@
             <if test="repayMoney != null and repayMoney != ''">
                 repay_money=#{repayMoney},
             </if>
+            <if test="repayDate != null and repayDate != ''">
+                repay_date=#{repayDate},
+            </if>
         </set>
         where id = #{id}
     </update>

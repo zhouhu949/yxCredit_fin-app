@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -124,7 +126,16 @@ public class ActivityServiceImpl implements ActivityService {
             fileName = bannerImg + currentDateStr+"/"+ fileMap.get("Name").toString();
         }
         List imageList = new ArrayList();
-        imageList.add(fileName);
+
+        BufferedImage sourceImg= ImageIO.read(new File(imgPath+fileName));
+        Integer imgWidth= sourceImg.getWidth();//750px
+        Integer imgHeight=sourceImg.getHeight();//380px
+        if (imgWidth==750 && imgHeight ==380){
+            imageList.add(fileName);
+        }else {
+            //图片不符合要求
+            imageList.add("-1");
+        }
         return imageList;
     }
 

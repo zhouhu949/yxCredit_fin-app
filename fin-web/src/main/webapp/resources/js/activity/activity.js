@@ -5,8 +5,8 @@
 $(function () {
     var beginTime = {
         elem: '#beginTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD',
+        min: '1999-01-01',
         // max: laydate.now(),
         istime: true,
         istoday: false,
@@ -17,8 +17,8 @@ $(function () {
     };
     var endTime = {
         elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD',
+        min: '1999-01-01',
         //max: laydate.now(),
         istime: true,
         istoday: false,
@@ -139,7 +139,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: '添加Banner',
-                    area : [ '650px', '410px' ],
+                    area : [ '650px', '420px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -192,9 +192,7 @@ function queryList(){
                         if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
                             layer.msg("Banner期限选择有误！",{time:2000});return
                         }
-                        if(param.activity_img_url==''){
-                            layer.msg("请上传Banner图片！",{time:2000});return
-                        }
+
                         if(param.activity_state=='-1'){
                             layer.msg("Banner状态不可为空！",{time:2000});return
                         }
@@ -206,6 +204,15 @@ function queryList(){
                         }
                         uploadFile();
                         param.activity_img_url = activityImgUrl ;
+                        if(param.activity_img_url==''){
+                            layer.msg("请上传Banner图片！",{time:2000});return
+                        }
+                        if(param.activity_img_url=='-1'){
+                            layer.msg("请上传Banner图片大小不符合要求！",{time:2000});return
+                        }
+                        if(param.activity_img_url==''){
+                            layer.msg("请上传Banner图片！",{time:2000});return
+                        }
                         Comm.ajaxPost('activity/add',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
@@ -258,7 +265,7 @@ function queryList(){
                             layer.open({
                                 type: 1,
                                 title: 'Banner详情',
-                                area : [ '650px', '410px' ],
+                                area : [ '650px', '430px' ],
                                 content: $('#Add_procedure_style'),
                                 success: function () {
                                     $('#activity_titled').val(data.activity_title);
@@ -293,6 +300,10 @@ function queryList(){
                                     $('#activity_img_addr').attr("disabled",true);
                                     $("#picShow").attr("disabled", true);
                                     $("#priority").attr("disabled", true);
+
+                                    $("#prompt").css("display"," none");
+                                    $("#file").css("display"," none");
+
                                 },
                                 yes:function(index,layero){
                                 }
@@ -308,7 +319,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: 'Banner修改',
-                    area : [ '650px', '410px' ],
+                    area : [ '650px', '430px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -413,6 +424,12 @@ function queryList(){
                         }
                         uploadFile();
                         param.activity_img_url = activityImgUrl;
+                        if(param.activity_img_url==''){
+                            layer.msg("请上传Banner图片！",{time:2000});return
+                        }
+                        if(param.activity_img_url=='-1'){
+                            layer.msg("请上传Banner图片大小不符合要求！",{time:2000});return
+                        }
                         Comm.ajaxPost('activity/update',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){

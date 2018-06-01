@@ -183,6 +183,7 @@
                                 <td colspan="3">
                                     <form id="activityImgForm" method="post" enctype="multipart/form-data">
                                         <div id="localImag" style="margin-left: 20px"><img id="preview"  src="" style="display: block; width: 162px !important; height: 110px;"></div>
+                                        <label id="prompt" style="color: red; text-align: left;width: 100%;margin-left: 4%">*图片大小必须为：750像素*380像素</label>
                                         <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 20px" onchange="javascript:setImagePreview1();" >
                                     </form>
                                 </td>

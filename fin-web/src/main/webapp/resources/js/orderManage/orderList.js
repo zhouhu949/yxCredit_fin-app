@@ -35,9 +35,9 @@ $(function (){
     debugger;
     var beginTime = {
         elem: '#beginTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-        max: '2099-06-16 23:59:59',
+        format: 'YYYY-MM-DD',
+        min: '1999-01-01',
+        max: '2099-06-16',
         max: laydate.now(),
         istime: true,
         istoday: false,
@@ -48,8 +48,8 @@ $(function (){
     };
     var endTime = {
         elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD ',
+        min: '1999-01-01 ',
         max: laydate.now(),
         istime: true,
         istoday: false,
@@ -138,7 +138,7 @@ $(function (){
                         }else if(data==7){
                             return "已取消";
                         }else if(data==8){
-                            return "申请失败";
+                            return "审批拒绝";
                         }else if(data==9){
                             return "已放弃";
                         }else {

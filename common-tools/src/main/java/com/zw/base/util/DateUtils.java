@@ -115,6 +115,20 @@ public class DateUtils {
 		}
 		return date;
 	}
+
+	/**
+	 * 得到几天后的时间
+	 * @param d
+	 * @param day
+	 * @return
+	 */
+	public static Date getDateAfter(Date d, int day){
+		Calendar now =Calendar.getInstance();
+		now.setTime(d);
+		now.set(Calendar.DATE,now.get(Calendar.DATE)+day);
+		return now.getTime();
+	}
+
 	/**
 	 * 比较时间大小
 	 *

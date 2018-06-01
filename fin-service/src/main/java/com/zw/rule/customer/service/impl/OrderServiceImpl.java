@@ -624,6 +624,8 @@ public class OrderServiceImpl implements OrderService {
                         //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
                         String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
                         orderMap.put("repayMoney",repayMoney);//还款金额
+                        Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
+                        orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
                     }
                 }
             }
