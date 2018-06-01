@@ -42,7 +42,6 @@
     byx_white_list whitelist
     LEFT JOIN byx_contractor contractor ON whitelist.contractor_id = contractor.id
     <where>
-      contractor.state = 1
      <if test="param.userId != null and param.userId != ''">
         and contractor.user_id like '%${param.userId}%'
       </if>
