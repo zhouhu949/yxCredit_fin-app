@@ -139,7 +139,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: '添加Banner',
-                    area : [ '650px', '410px' ],
+                    area : [ '650px', '420px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -265,7 +265,7 @@ function queryList(){
                             layer.open({
                                 type: 1,
                                 title: 'Banner详情',
-                                area : [ '650px', '410px' ],
+                                area : [ '650px', '430px' ],
                                 content: $('#Add_procedure_style'),
                                 success: function () {
                                     $('#activity_titled').val(data.activity_title);
@@ -300,6 +300,10 @@ function queryList(){
                                     $('#activity_img_addr').attr("disabled",true);
                                     $("#picShow").attr("disabled", true);
                                     $("#priority").attr("disabled", true);
+
+                                    $("#prompt").css("display"," none");
+                                    $("#file").css("display"," none");
+
                                 },
                                 yes:function(index,layero){
                                 }
@@ -315,7 +319,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: 'Banner修改',
-                    area : [ '650px', '410px' ],
+                    area : [ '650px', '430px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
