@@ -9,7 +9,7 @@ var g_userManage = {
         if (g_userManage.fuzzySearch) {
             param.content = $("input[name='s_content']").val();
             param.type = $('#s_type').val();
-            param.personName=$('#s_personName').val();
+            param.customerName=$('#customerName').val();
             var beginTime = $("#beginTime").val();
             if(beginTime != null && beginTime != ''){
                 param.beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
@@ -82,7 +82,7 @@ $(function (){
             "order": [],
             "columns": [
                 {"data": null ,"searchable":false,"orderable" : false},
-                {"data": "personName","orderable" : false},
+                {"data": "customerName","orderable" : false},
                 {"data": "content","orderable" : false},
                 {"data": "tel","orderable" : false}
                 // ,
@@ -128,6 +128,7 @@ function formatTime(t){
 }
 
 
+/*
 //动态加载下拉框内容
 function apendSelect() {
     Comm.ajaxPost('suggestion/apendSelect',null, function (data) {
@@ -141,6 +142,7 @@ function apendSelect() {
         },"application/json"
     );
 }
+*/
 
 //获取当前时间
 function getFirstTime() {
@@ -161,6 +163,6 @@ function getFirstTime() {
 }
 $().ready(function () {
     var time=getFirstTime();
-    apendSelect();
+    //apendSelect();
 })
 

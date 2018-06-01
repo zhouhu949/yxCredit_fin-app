@@ -262,7 +262,7 @@ function updateContractor(sign,id) {
                     var contractorName=$('input[name="contractor_name"]').val();
                     var linkman=$('input[name="contractor_linkman"]').val();
                     var linkmanPhone=$('input[name="contractor_mobile"]').val();
-                    var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                    var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
                     var credit=$('input[name="contractor_credit"]').val();
                     var creditReg = /^[0-9]*$/;
                     var state=$("#state").val();
@@ -326,7 +326,7 @@ function updateContractor(sign,id) {
         layer.open({
             type : 1,
             title : '添加总包商',
-            area : [ '576px', '370px' ],
+            area : [ '650px', '370px' ],
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
@@ -334,7 +334,7 @@ function updateContractor(sign,id) {
                 var contractorName=$('input[name="contractor_name"]').val();
                 var linkman=$('input[name="contractor_linkman"]').val();
                 var linkmanPhone=$('input[name="contractor_mobile"]').val();
-                var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
                 var state = $("#state option:selected").val();
                 var credit=$('input[name="contractor_credit"]').val();
                 var userId=$("#userId").val();
@@ -457,6 +457,7 @@ function asignRole(contractorId, userIdStr) {
                     });
                 });
             },"application/json")
+            location.reload();
         }});
 }
 

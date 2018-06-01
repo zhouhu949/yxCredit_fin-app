@@ -7,24 +7,22 @@
         <result column="tel" property="tel" jdbcType="VARCHAR" />
         <result column="title" property="title" jdbcType="VARCHAR" />
         <result column="content" property="content" jdbcType="VARCHAR" />
-        <result column="person_id" property="personId" jdbcType="VARCHAR" />
-        <result column="person_name" property="personName" jdbcType="VARCHAR" />
+        <result column="customer_id" property="customerId" jdbcType="VARCHAR" />
+        <result column="customer_name" property="customerName" jdbcType="VARCHAR" />
         <result column="creat_time" property="creatTime" jdbcType="VARCHAR" />
         <result column="alter_time" property="alterTime" jdbcType="VARCHAR" />
         <result column="state" property="state" jdbcType="VARCHAR" />
-        <result column="apex1" property="apex1" jdbcType="VARCHAR" />
-        <result column="apex2" property="apex2" jdbcType="VARCHAR" />
-        <result column="apex3" property="apex3" jdbcType="VARCHAR" />
-        <result column="bak" property="bak" jdbcType="VARCHAR" />
         <result column="deal_time" property="dealtime" jdbcType="VARCHAR" />
         <result column="deal_person" property="dealPerson" jdbcType="VARCHAR" />
         <result column="deal_emp_id" property="dealEmpId" jdbcType="VARCHAR" />
-        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="s_type" property="type" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="getSuggestionList" resultMap="BaseResultMap" parameterType="java.util.Map" >
         select
-        id,user_id,tel,title,content,person_id,person_name,creat_time,alter_time,state,apex1,apex2,apex3,bak,deal_time,deal_person,deal_emp_id,(SELECT `name` from zw_sys_dict where parent_id =(select id from zw_sys_dict where name ='投诉建议类型') and code=s_type) as type
+            id AS suggestionId  ,user_id AS userId , customer_id AS customerId , customer_name AS customerName ,
+            tel AS tel , title AS title , content AS content , creat_time AS creatTime, alter_time AS alterTime ,
+            state AS state ,deal_time AS dealTime ,deal_person AS dealPerson,deal_emp_id AS dealEmpId,s_type AS sType
         from app_suggestion
         where 1=1
         <if test="param.beginTime != null and param.beginTime != ''">
@@ -39,8 +37,8 @@
         <if test="param.type != null and param.type != ''">
             and s_type = #{param.type}
         </if>
-        <if test="param.personName != null and param.personName != ''">
-            and person_name = #{param.personName}
+        <if test="param.customerName != null and param.customerName != ''">
+            and customer_name = #{param.customerName}
         </if>
         order by creat_time desc
     </select>

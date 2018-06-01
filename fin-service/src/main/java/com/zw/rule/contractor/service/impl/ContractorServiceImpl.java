@@ -11,6 +11,7 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.contractor.WhiteListMapper;
 import com.zw.rule.mybatis.ParamFilter;
+import com.zw.rule.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class ContractorServiceImpl implements ContractorService {
     @Resource
     private ContractorMapper contractorMapper;
 
+    @Resource
+    private WhiteListMapper whiteListMapper;
+
     @Value("${byx.img.path}")
     private String imgPath;
 
@@ -38,7 +42,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<UserVo> findUserByMenuUrl(String contractorId) {
-        List<Contractor> contractorList = contractorMapper.selectContractorList();
+        List<Contractor> contractorList = contractorMapper.selectContractorList(null);
         List<UserVo> userVolist = contractorMapper.findUserByMenuUrl();
         if(null == contractorList || contractorList.size() == 0) {
             return userVolist;
@@ -60,12 +64,9 @@ public class ContractorServiceImpl implements ContractorService {
         return newUserVolist;
     }
 
-    @Resource
-    private WhiteListMapper whiteListMapper;
-
     @Override
     public List<Contractor> selectContractorList() throws Exception {
-        return contractorMapper.selectContractorList();
+        return contractorMapper.selectContractorList(Constants.ENABLE_STATE);
     }
 
     @Override
@@ -73,7 +74,6 @@ public class ContractorServiceImpl implements ContractorService {
         String fileName="";
         String id = GeneratePrimaryKeyUtils.getUUIDKey();//新的文件名
         //获取根目录
-        //String root = request.getSession().getServletContext().getRealPath("/");
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String currentDateStr = format.format(new Date());
         String newFilePath = imgPath + File.separator + contractorImg + currentDateStr;//文件保存路径url
@@ -99,6 +99,10 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public int updateContractor(Contractor contractor){
+        //更新白名单状态
+        if(Constants.DISENABLE_STATE.equals(contractor.getState())){
+            whiteListMapper.updateStateByContractorId(contractor.getId());
+        }
         return contractorMapper.updateByPrimaryKeySelective(contractor);
     }
 

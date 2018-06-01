@@ -156,7 +156,7 @@
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">最低工资 <i style="color: #F60;">*</i></label>
+                                <label class="label_name">日最低工资<i style="color: #F60;">*</i></label>
                                 <label for="localMonthlyMinWage">
                                     <input name="local_monthly_min_wage"  type="number"  id="localMonthlyMinWage"/>
 

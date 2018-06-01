@@ -102,11 +102,16 @@ function clickNextButton(){
         yes:function(index, layero){
             var reguser = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
             var user = $("#predictPrice").val();
+            var applayMoney = $("#applayMoney").text();
             if (reguser.test(user) == false) {
                 if (user!='0'){
                     layer.alert("审批额度格式有误！", {icon: 2, title: '操作提示'});
                     return
                 }
+            }
+            if(parseFloat(applayMoney) < parseFloat(user)) {
+                layer.alert("审批金额不能超过申请金额！", {icon: 2, title: '操作提示'});
+                return
             }
             var predictPrice=parseFloat(user);
             var orderId = $("#orderId").val();

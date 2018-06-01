@@ -628,7 +628,7 @@ function showFormView(id,parentId,flag,add,me,type){
         title:"<s class='preLine'>信贷产品信息</s>",
         maxmin : true,
         shadeClose : false,
-        area : [ '57%', '40%' ],
+        area : [ '75%', '45%' ],
         btn:['确认','取消'],
         content: $("#container"),
         success:function(index, layerqw){

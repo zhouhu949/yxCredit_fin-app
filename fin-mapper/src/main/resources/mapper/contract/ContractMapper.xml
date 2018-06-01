@@ -117,7 +117,7 @@
     </update>
 
     <update id="updateContract"  parameterType="com.zw.rule.contract.po.Contract">
-        update mag_template SET name=#{name} ,template_type = #{template_type}, content = #{content},content_no_bq = #{content_no_bq},platform_type = #{platformType} WHERE  id = #{id}
+        update mag_template SET content = #{content},content_no_bq = #{content_no_bq} WHERE  id = #{id}
     </update>
 
     <select id="getById" parameterType="java.lang.String" resultMap="magOrderContract">

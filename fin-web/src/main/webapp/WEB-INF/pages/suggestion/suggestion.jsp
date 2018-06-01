@@ -189,7 +189,7 @@
                 <%--</li>--%>
                 <li><label class="lf">客户名称</label>
                     <label>
-                        <input name="s_personName" id="s_personName" type="text" class="text_add"/>
+                        <input name="customerName" id="customerName" type="text" class="text_add"/>
                     </label>
                 </li>
                 <li><label class="lf">创建时间</label>

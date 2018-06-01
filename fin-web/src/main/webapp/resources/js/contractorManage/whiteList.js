@@ -85,7 +85,6 @@ $(function (){
         "dom": 'rt<"bottom"i><"bottom"flp><"clear">',
         "ajax" : function(data, callback, settings) {
             var queryFilter = g_whiteListManage.getQueryCondition(data);
-            debugger
             Comm.ajaxPost('contractorManage/whiteListPage',JSON.stringify(queryFilter),function(result){
                 var returnData = {};
                 var resData = result.data.list;
@@ -409,7 +408,7 @@ function updateWhite(sign,id) {
                     var card=$('input[name="card"]').val();
                     var latestPay=$('input[name="latest_pay"]').val();//最近一期发薪日应发工资
                     var jobType=$('input[name="job_type"]').val();//工种
-                    var mobileReg=/^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+                    var mobileReg=/^1(3|4|5|7|8)\d{9}$/;//(1[34578])\\d{9}$
                     var contractStatus=$("#contractStatus").val();
                     var localMonthlyMinWage=$("#localMonthlyMinWage").val();//当地月最低工资
                     var contractorId = $("#contractorId option:selected").val();
@@ -465,13 +464,18 @@ function updateWhite(sign,id) {
                         return;
                     }
                     if(!localMonthlyMinWage){
-                        layer.msg("当地月最低工资不能为空",{time:2000});
+                        layer.msg("日最低工资不能为空",{time:2000});
                         return;
                     }
                     if(!numReg1.test(localMonthlyMinWage)){
-                        layer.msg("当地月最低工资只能为数字",{time:2000});
+                        layer.msg("日最低工资只能为数字",{time:2000});
                         return;
                     }
+                    if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
+                        layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
+                        return;
+                    }
+
                     if(beginTime){
                         beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                     }
@@ -532,7 +536,7 @@ function updateWhite(sign,id) {
         layer.open({
             type : 1,
             title : '添加白名单',
-            area : [ '600px', '370px' ],
+            area : [ '650px', '370px' ],
             content : $('#Add_user_style'),
             btn : [ '保存', '取消' ],
             yes : function(index, layero) {
@@ -603,11 +607,16 @@ function updateWhite(sign,id) {
                     return;
                 }
                 if(!localMonthlyMinWage){
-                    layer.msg("当地月最低工资不能为空",{time:2000});
+                    layer.msg("日最低工资不能为空",{time:2000});
                     return;
                 }
                 if(!numReg1.test(localMonthlyMinWage)){
-                    layer.msg("当地月最低工资只能为数字",{time:2000});
+                    layer.msg("日最低工资只能为数字",{time:2000});
+                    return;
+                }
+
+                if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
+                    layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
                     return;
                 }
 

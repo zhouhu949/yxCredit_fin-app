@@ -282,7 +282,7 @@
     <div id="preQuotaDialog" style="display: none" class="layui-layer-wrap">
         <form class="calculateQuotaDialogForm" action="">
             <div class="paddingBox" >
-                <table class="nobor">
+                <%--<table class="nobor">
                     <tbody>
                         <tr>
                             <td>建议额度：</td>
@@ -292,14 +292,35 @@
                         </tr>
                         <tr>
                             <td>审批额度:</td>
-                            <td colspan="5" style="text-align: left;"> <input type="text" id="predictPrice"  />元</td>
+                            <td colspan="5" style="text-align: left;"> <input type="number" id="predictPrice"  />元</td>
                         </tr>
                         <tr style="height: 5px"></tr>
                         <tr>
                             <td>审核备注:</td>
                             <td colspan="5" style="text-align: left;"><textarea id="approveSuggestion" style="width:380px"></textarea></td>
                         </tr>
+                    </tbody></table>--%>
+
+                <table class="nobor" style="margin-top: 10px;">
+                    <tbody>
+                    <tr style="height: 50px;">
+                        <td style="padding-left: 5px;">建议额度：</td>
+                        <td style="text-align: left;">
+                            <span id="preQuotaDialog_contractRate" style="padding-left: 10px;">${order.amountAdvice}</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 50px;">
+                        <td>审批额度:</td>
+                        <td colspan="5" style="text-align: left;"> <input type="text" id="predictPrice"  />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元</td>
+                    </tr>
+                    <tr style="height: 5px"></tr>
+                    <tr>
+                        <td>审核备注:</td>
+                        <td colspan="5" style="text-align: left;"><textarea id="approveSuggestion" style="width:230px;height: 80px;"></textarea></td>
+                    </tr>
                     </tbody></table>
+
+
             </div>
         </form>
     </div>

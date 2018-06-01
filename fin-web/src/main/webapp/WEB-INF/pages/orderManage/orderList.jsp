@@ -74,6 +74,7 @@
                         <th>手机号码</th>
                         <th>产品名称</th>
                         <th>申请金额</th>
+                        <th>批复金额</th>
                         <th>申请期限</th>
                         <th>申请时间</th>
                         <th>同步状态</th>
@@ -88,9 +89,8 @@
         </div>
     </div>
 
-    <%--查看--%>
-
-    <div class="Manager_style" style="display: none ;overflow: hidden;" id="salesmanOrdersList">
+    <%--审核日志--%>
+    <div class="Manager_style" style="display: none;overflow: hidden;" id="salesmanOrdersList">
         <input type="hidden" value="" id="orderId">
         <div class="Manager_style add_user_info search_style">
             <ul class="search_content clearfix" style="margin-left: 2px;">

@@ -10,11 +10,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.zw.base.util.DateUtils;
 import com.zw.rule.contract.ContractService;
 import com.zw.rule.contract.po.Contract;
+import com.zw.rule.contract.po.MagOrderContract;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.service.DictService;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,9 @@ import static com.github.pagehelper.PageHelper.startPage;
 @Controller
 @RequestMapping("contract")
 public class ContractController {
+
+    @Value("${contract.host}")
+    private String contractHost;
 
     @Resource
     private ContractService contractService;
@@ -86,7 +91,10 @@ public class ContractController {
     public Response getContractByOrderId(@RequestBody ParamFilter queryFilter) {
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(), queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        List list = contractService.getContractByOrderId(queryFilter.getParam());
+        List<MagOrderContract> list = contractService.getContractByOrderId(queryFilter.getParam());
+        for(MagOrderContract contract:list){
+            contract.setContract_src(contractHost+contract.getContract_src());
+        }
         PageInfo pageInfo = new PageInfo(list);
         return new Response(pageInfo);
     }

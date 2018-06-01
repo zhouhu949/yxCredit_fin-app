@@ -27,15 +27,11 @@ public class Suggestion {
     private String tel;//手机号
     private String title;//标题
     private String content;//内容
-    private String personId;
-    private String personName;
+    private String customerId;//客户ID
+    private String customerName;//客户名称
     private String creatTime;//创建时间
     private String alterTime;
     private String state;//'0 已处理  1 待处理 2 不处理';
-    private String apex1;
-    private String apex2;
-    private String apex3;
-    private String bak;
     private String dealtime;//处理时间
     private String dealPerson;//处理人
     private String dealEmpId;//处理人id
@@ -81,20 +77,20 @@ public class Suggestion {
         this.content = content;
     }
 
-    public String getPersonId() {
-        return personId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public String getPersonName() {
-        return personName;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setPersonName(String personName) {
-        this.personName = personName;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getCreatTime() {
@@ -119,38 +115,6 @@ public class Suggestion {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getApex1() {
-        return apex1;
-    }
-
-    public void setApex1(String apex1) {
-        this.apex1 = apex1;
-    }
-
-    public String getApex2() {
-        return apex2;
-    }
-
-    public void setApex2(String apex2) {
-        this.apex2 = apex2;
-    }
-
-    public String getApex3() {
-        return apex3;
-    }
-
-    public void setApex3(String apex3) {
-        this.apex3 = apex3;
-    }
-
-    public String getBak() {
-        return bak;
-    }
-
-    public void setBak(String bak) {
-        this.bak = bak;
     }
 
     public String getDealtime() {

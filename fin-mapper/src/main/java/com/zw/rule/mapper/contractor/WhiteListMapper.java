@@ -19,4 +19,11 @@ public interface WhiteListMapper extends BaseMapper<WhiteList> {
     List<WhiteList> findWhiteList(ParamFilter paramFilter);
 
     WhiteList selectByPrimaryKey(String id);
+
+    /**
+     * 更新白名单状态（匹配有值的字段）
+     * @param contractorId
+     * @return
+     */
+    int updateStateByContractorId(@Param("contractorId") String contractorId);
 }

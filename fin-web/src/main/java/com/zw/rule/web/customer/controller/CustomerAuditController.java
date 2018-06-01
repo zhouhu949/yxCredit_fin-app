@@ -31,6 +31,7 @@ import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.PropertiesUtil;
 import com.zw.rule.web.util.UserContextUtil;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -97,6 +98,13 @@ public class CustomerAuditController {
         return "customerManage/customerAudit";
     }
 
+    /**
+     * 获取风控审核详情
+     * @param orderId
+     * @param customerId
+     * @return
+     * @throws Exception
+     */
     @GetMapping("details")
     public ModelAndView details(String orderId, String customerId) throws  Exception{
         ModelAndView modelAndView = new ModelAndView("customerManage/headquartersReview");
@@ -129,8 +137,10 @@ public class CustomerAuditController {
                 WhiteList whitelist = (WhiteList)whiteList.get(0);
                 int periods = Integer.valueOf(order.get("periods").toString());//期数
                 int latesPay = Integer.valueOf(whitelist.getLatestPay());//应发工资
-                int localMonthlyMinWage = Integer.valueOf(whitelist.getLocalMonthlyMinWage());//最低工资标准
-                amountAdvice =  (new Double(((latesPay - localMonthlyMinWage * periods) * 0.8))).intValue();
+                if(StringUtils.isNotBlank(whitelist.getLocalMonthlyMinWage())) {
+                    int localMonthlyMinWage = Integer.valueOf(whitelist.getLocalMonthlyMinWage());//最低工资标准
+                    amountAdvice =  (new Double(((latesPay - localMonthlyMinWage * periods) * 0.8))).intValue();
+                }
             }
         }
 
