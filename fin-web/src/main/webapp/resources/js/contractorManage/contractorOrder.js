@@ -171,7 +171,10 @@ function getOrderState(paramValue){
             paramStr="已取消";
             break;
         case 8:
-            paramStr="申请失败（拒绝）";
+            paramStr="审批拒绝";
+            break;
+        case 9:
+            paramStr="已放弃";
             break;
         default:
             paramStr=param;

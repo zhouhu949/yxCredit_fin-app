@@ -513,6 +513,10 @@ function updateWhite(sign,id) {
                     Comm.ajaxPost(
                         'contractorManage/updateWhiteList',JSON.stringify(user),
                         function(data){
+                            if(1 === data.code) {
+                                layer.msg(data.msg,{time:2000});
+                                return;
+                            }
                             layer.closeAll();
                             layer.msg(data.msg,{time:2000},function () {
                                 g_whiteListManage.tableUser.ajax.reload(function(){
@@ -656,6 +660,10 @@ function updateWhite(sign,id) {
                 Comm.ajaxPost(
                     'contractorManage/addWhiteList',JSON.stringify(contractor),
                     function(data){
+                        if(1 === data.code) {
+                            layer.msg(data.msg,{time:2000});
+                            return;
+                        }
                         layer.closeAll();
                         layer.msg(data.msg,{time:2000},function () {
                             g_whiteListManage.tableUser.ajax.reload(function(){

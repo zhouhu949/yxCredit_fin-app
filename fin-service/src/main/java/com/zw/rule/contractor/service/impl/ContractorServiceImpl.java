@@ -106,6 +106,15 @@ public class ContractorServiceImpl implements ContractorService {
         return contractorMapper.updateByPrimaryKeySelective(contractor);
     }
 
+    /**
+     * 验证白名单唯一
+     * @return
+     */
+    @Override
+    public int vaildateOnly(Map map) {
+        return whiteListMapper.whiteListCountByMap(map);
+    }
+
     @Override
     public int addContractor(Contractor contractor){
         checkNotNull(contractor, "总包商信息不能为空");
@@ -136,12 +145,12 @@ public class ContractorServiceImpl implements ContractorService {
     }
 
     @Override
-    public int updateWhiteList(WhiteList whiteList) {
+    public int updateWhiteList(WhiteList whiteList) throws Exception {
        return whiteListMapper.updateByPrimaryKeySelective(whiteList);
     }
 
     @Override
-    public int addWhiteList(WhiteList whiteList){
+    public int addWhiteList(WhiteList whiteList) throws Exception {
         String uuid = GeneratePrimaryKeyUtils.getUUIDKey();
         whiteList.setId(uuid);
         return  whiteListMapper.insertSelective(whiteList);

@@ -612,23 +612,34 @@ public class OrderServiceImpl implements OrderService {
         Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
         Map contractorMap = orderMapper.getContractorList(orderId);
         if(null != serviceFeeMap && null != contractorMap) {
-            String serviceFeeStr = serviceFeeMap.get("serviceFee").toString();
+           // String serviceFeeStr = serviceFeeMap.get("serviceFee").toString();
             BigDecimal dateRate = new BigDecimal(serviceFeeMap.get("dateRate").toString());//日利率
-            BigDecimal serviceFeeRate;
-            String serviceFeeArray [] = serviceFeeStr.split(",");
+          //  BigDecimal serviceFeeRate;
+           /* String serviceFeeArray [] = serviceFeeStr.split(",");
             if(null != serviceFeeArray && serviceFeeArray.length > 0) {
                 for (int i = 0; i< serviceFeeArray.length; i++){
                     if(serviceFeeArray[i].equals(contractorMap.get("contractorName").toString())) {
-                        serviceFeeRate = new BigDecimal(serviceFeeArray[i+1]).divide(new BigDecimal(100));
+                       // serviceFeeRate = new BigDecimal(serviceFeeArray[i+1]).divide(new BigDecimal(100));
                         String periods = contractorMap.get("periods").toString();//期限（日）
                         //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
-                        String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+                        *//*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*//*
+                        //还款金额//应还金额＝放款金额＋日利息＊合同金额＊借款期限（日）
+                        String repayMoney = (((dateRate.divide(new BigDecimal(100))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
                         orderMap.put("repayMoney",repayMoney);//还款金额
                         Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
                         orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
                     }
                 }
-            }
+            }*/
+            String periods = contractorMap.get("periods").toString();//期限（日）
+            //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
+            /*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*/
+            //还款金额//应还金额＝放款金额＋日利息＊合同金额＊借款期限（日）
+            String repayMoney = (((dateRate.divide(new BigDecimal(100))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            orderMap.put("repayMoney",repayMoney);//还款金额
+            Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
+            orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
+
         }
         orderMapper.updateOrderStatus(orderMap);
     }
