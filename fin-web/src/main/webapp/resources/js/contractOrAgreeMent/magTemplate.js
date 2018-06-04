@@ -6,17 +6,17 @@ var g_userManage = {
         var paramFilter = {};
         var page = {};
         var param = {};
-        if (g_userManage.fuzzySearch) {
-            param.name = $("input[name='contractName']").val();
-            var beginTime = $("#beginTime").val();
-            if(beginTime != null && beginTime != ''){
-                param.beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-            }
-            var endTime = $("#endTime").val();
-            if(endTime != null && endTime != ''){
-                param.endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-            }
-        }
+        // if (g_userManage.fuzzySearch) {
+        //     param.name = $("input[name='contractName']").val();
+        //     var beginTime = $("#beginTime").val();
+        //     if(beginTime != null && beginTime != ''){
+        //         param.beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+        //     }
+        //     var endTime = $("#endTime").val();
+        //     if(endTime != null && endTime != ''){
+        //         param.endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+        //     }
+        // }
         paramFilter.param = param;
         page.firstIndex = data.start == null ? 0 : data.start;
         page.pageSize = data.length  == null ? 10 : data.length;
@@ -26,31 +26,31 @@ var g_userManage = {
 };
 $(function (){
     apendSelect();
-    var beginTime = {
-        elem: '#beginTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function(datas){
-            endTime.min = datas; //开始日选好后，重置结束日的最小日期
-            endTime.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var endTime = {
-        elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function(datas){
-            beginTime.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(beginTime);
-    laydate(endTime);
+    // var beginTime = {
+    //     elem: '#beginTime',
+    //     format: 'YYYY-MM-DD hh:mm:ss',
+    //     min: '1999-01-01 00:00:00',
+    //     max: laydate.now(),
+    //     istime: true,
+    //     istoday: false,
+    //     choose: function(datas){
+    //         endTime.min = datas; //开始日选好后，重置结束日的最小日期
+    //         endTime.start = datas //将结束日的初始值设定为开始日
+    //     }
+    // };
+    // var endTime = {
+    //     elem: '#endTime',
+    //     format: 'YYYY-MM-DD hh:mm:ss',
+    //     min: '1999-01-01 00:00:00',
+    //     max: laydate.now(),
+    //     istime: true,
+    //     istoday: false,
+    //     choose: function(datas){
+    //         beginTime.max = datas; //结束日选好后，重置开始日的最大日期
+    //     }
+    // };
+    // laydate(beginTime);
+    // laydate(endTime);
     if(g_userManage.tableOrder){
         g_userManage.tableOrder.ajax.reload();
     }else{

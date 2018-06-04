@@ -1591,10 +1591,10 @@
             </if>
 
             <if test="beginTime != null and beginTime != ''">
-                and applay_time &gt;= #{beginTime}
+                and substr(applay_time,1,8) &gt;= #{beginTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and applay_time &lt;= #{endTime}
+                and substr(applay_time,1,8) &lt;= #{endTime}
             </if>
 
         </where>
