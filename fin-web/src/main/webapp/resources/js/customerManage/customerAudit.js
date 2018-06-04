@@ -67,9 +67,9 @@ $(function (){
         ]
     var beginTime = {
          elem: '#beginTime',
-         format: 'YYYY-MM-DD hh:mm:ss',
-         min: '1999-01-01 00:00:00',
-        max: laydate.now(),
+         format: 'YYYY-MM-DD',
+         min: '1999-01-01',
+         max: laydate.now(),
          istime: true,
          istoday: false,
         choose: function(datas){
@@ -80,8 +80,8 @@ $(function (){
 
      var endTime = {
         elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
+        format: 'YYYY-MM-DD',
+         min: '1999-01-01',
          max: laydate.now(),
          istime: true,
         istoday: false,
@@ -89,6 +89,7 @@ $(function (){
              beginTime.max = datas; //结束日选好后，重置开始日的最大日期
         }
     };
+     debugger
     laydate(beginTime);
     laydate(endTime);
 

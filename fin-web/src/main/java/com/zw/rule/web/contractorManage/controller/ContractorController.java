@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -211,8 +212,17 @@ public class ContractorController {
     @WebLogger("添加白名单")
     public Response addContractor(@RequestBody WhiteList whiteList) throws Exception{
         checkNotNull(whiteList, "白名单不能为空");
-       int num = contractorService.addWhiteList(whiteList);
         Response response = new Response();
+        Map map = new HashMap(2);
+        map.put("name",whiteList.getRealName());
+        map.put("card",whiteList.getCard());
+        int num = contractorService.vaildateOnly(map);
+        if(num > 0){
+            response.setMsg("白名单重复");
+            response.setCode(1);
+            return response;
+        }
+       num = contractorService.addWhiteList(whiteList);
         if (num > 0){
             response.setMsg("添加成功");
             return response;
@@ -227,8 +237,16 @@ public class ContractorController {
     @PostMapping("updateWhiteList")
     @WebLogger("编辑白名单")
     public Response updateContractor(@RequestBody WhiteList whiteList) throws Exception{
-        int num = contractorService.updateWhiteList(whiteList);
         Response response = new Response();
+        Map map = new HashMap(2);
+        map.put("card",whiteList.getCard());
+        int num = contractorService.vaildateOnly(map);
+        if(num > 0){
+            response.setMsg("白名单重复");
+            response.setCode(1);
+            return response;
+        }
+        num = contractorService.updateWhiteList(whiteList);
         if (num > 0){
             response.setMsg("修改成功");
             return response;

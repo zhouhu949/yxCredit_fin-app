@@ -8,6 +8,7 @@ import com.zw.rule.mybatis.ParamFilter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface ContractorService {
     /**
@@ -47,6 +48,13 @@ public interface ContractorService {
      * @return
      */
     int addWhiteList(WhiteList whiteList) throws Exception;
+
+    /**
+     * 验证白名单唯一
+     * @param map
+     * @return
+     */
+    int vaildateOnly(Map map) throws Exception;
 
     /**
      * 删除白名单

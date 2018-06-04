@@ -26,4 +26,11 @@ public interface WhiteListMapper extends BaseMapper<WhiteList> {
      * @return
      */
     int updateStateByContractorId(@Param("contractorId") String contractorId);
+
+    /**
+     * 根据条件查询白名单唯一
+     * @param map
+     * @return
+     */
+    int whiteListCountByMap(Map map);
 }

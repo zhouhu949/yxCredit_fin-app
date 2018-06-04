@@ -139,7 +139,7 @@ function queryList(){
                 layer.open({
                     type: 1,
                     title: '添加Banner',
-                    area : [ '650px', '420px' ],
+                    area : [ '650px', '430px' ],
                     content: $('#Add_procedure_style'),
                     btn: ['保存', '取消'],
                     success: function () {
@@ -173,7 +173,7 @@ function queryList(){
                         param.activity_content = $('#activity_content').val();
                         param.activity_img_addr = $('#activity_img_addr').val();
                         param.priority=$('#priority').val();
-                        var a = $('#beginTimed').val()+'~'+$('#endTimed').val();
+                        var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);
                         param.activity_time = a;
                         if(param.activity_title==''){
                             layer.msg("Banner标题不可为空！",{time:2000});return
@@ -390,7 +390,8 @@ function queryList(){
                         param.priority = $('#priority').val();
                         param.platform_type=$('#platformType').val();
 
-                        var a = $('#beginTimed').val()+'~'+$('#endTimed').val();
+                        var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);
+
                         param.activity_time = a;
                         if(param.activity_title==''){
                             layer.msg("Banner标题不可为空！",{time:2000});return

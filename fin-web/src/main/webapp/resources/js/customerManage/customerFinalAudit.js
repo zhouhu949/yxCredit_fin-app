@@ -65,7 +65,7 @@ $(function (){
         ]
     var beginTime = {
          elem: '#beginTime',
-         format: 'YYYY-MM-DD hh:mm:ss',
+         format: 'YYYY-MM-DD',
          min: '1999-01-01 00:00:00',
         max: laydate.now(),
          istime: true,
@@ -78,7 +78,7 @@ $(function (){
 
      var endTime = {
         elem: '#endTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
+        format: 'YYYY-MM-DD',
         min: '1999-01-01 00:00:00',
          max: laydate.now(),
          istime: true,

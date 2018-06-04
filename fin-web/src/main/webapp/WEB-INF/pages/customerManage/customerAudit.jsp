@@ -52,7 +52,7 @@
                         </select>
                     </label>
                 </li>--%>
-                <li><label class="lf">创建时间</label>
+                <li><label class="lf">申请时间</label>
                     <label>
                         <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
                         <span class="date-icon"><i class="icon-calendar"></i></span>
@@ -111,21 +111,6 @@
 <div id="showImg" style="display: none">
     <img id="seeImg" style="height: 600px;width: 600px" src="">
 </div>
-<script>
-   var beginTime = {
-        elem: '#beginTime',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-//        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function(datas){
-            endTime.min = datas; //开始日选好后，重置结束日的最小日期
-            endTime.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    laydate(beginTime);
 
-</script>
 </body>
 </html>
