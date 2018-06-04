@@ -32,5 +32,5 @@ public interface WhiteListMapper extends BaseMapper<WhiteList> {
      * @param map
      * @return
      */
-    int whiteListCountByMap(Map map);
+    List<String> whiteListCountByMap(Map map);
 }

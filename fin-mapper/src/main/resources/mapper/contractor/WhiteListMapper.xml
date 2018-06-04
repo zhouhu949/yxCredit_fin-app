@@ -232,8 +232,8 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <select id="whiteListCountByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
-    SELECT COUNT(*)
+  <select id="whiteListCountByMap" parameterType="java.util.Map" resultType="java.lang.String">
+    SELECT byxWhite.id as id
     FROM byx_white_list byxWhite
     WHERE byxWhite.card=#{card}
 

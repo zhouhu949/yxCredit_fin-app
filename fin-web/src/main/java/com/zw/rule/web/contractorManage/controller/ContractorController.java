@@ -213,16 +213,15 @@ public class ContractorController {
     public Response addContractor(@RequestBody WhiteList whiteList) throws Exception{
         checkNotNull(whiteList, "白名单不能为空");
         Response response = new Response();
-        Map map = new HashMap(2);
-        map.put("name",whiteList.getRealName());
+        Map map = new HashMap(1);
         map.put("card",whiteList.getCard());
-        int num = contractorService.vaildateOnly(map);
-        if(num > 0){
-            response.setMsg("白名单重复");
+        List<String> idList = contractorService.vaildateOnly(map);
+        if(null != idList && idList.size() > 0){
+            response.setMsg("身份证号已存在");
             response.setCode(1);
             return response;
         }
-       num = contractorService.addWhiteList(whiteList);
+       int num = contractorService.addWhiteList(whiteList);
         if (num > 0){
             response.setMsg("添加成功");
             return response;
@@ -240,12 +239,12 @@ public class ContractorController {
         Response response = new Response();
         Map map = new HashMap(2);
         map.put("card",whiteList.getCard());
-        /*int num = contractorService.vaildateOnly(map);
-        if(num > 0){
-            response.setMsg("白名单重复");
+        List<String> idList = contractorService.vaildateOnly(map);
+        if(null != idList && idList.size() > 0 && !idList.get(0).equals(whiteList.getId())){
+            response.setMsg("身份证号已存在");
             response.setCode(1);
             return response;
-        }*/
+        }
         int num = contractorService.updateWhiteList(whiteList);
         if (num > 0){
             response.setMsg("修改成功");

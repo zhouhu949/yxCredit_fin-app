@@ -111,7 +111,7 @@ public class ContractorServiceImpl implements ContractorService {
      * @return
      */
     @Override
-    public int vaildateOnly(Map map) {
+    public List<String> vaildateOnly(Map map) {
         return whiteListMapper.whiteListCountByMap(map);
     }
 
