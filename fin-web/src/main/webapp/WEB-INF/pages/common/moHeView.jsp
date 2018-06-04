@@ -243,8 +243,8 @@
         if(operatorCallInfoCallRecordIndexPage == 1){
             return;
         }
-        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
         operatorCallInfoCallRecordIndexPage = operatorCallInfoCallRecordIndexPage - 1;
+        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
 
     }
     //通话记录跳转页
@@ -282,6 +282,8 @@
 
     //通话记录列表
     function operatorCallInfoTable(data,pageSize){
+        console.log(pageSize);
+        console.log(data);
         var index = (pageSize - 1) * 10;
         var row = data.length>10?pageSize * 10:data.length;
         $("#operatorCallCycleTabTable").html("");
