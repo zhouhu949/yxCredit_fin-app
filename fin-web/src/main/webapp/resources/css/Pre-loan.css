@@ -1,93 +1,170 @@
-*{
-    margin: 0 auto;
+html,body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+    margin: 0;
     padding: 0;
-    font-size: 14px;
-    
+    box-sizing: border-box;
+    font-family: "PingFang-SC-Medium";
+}
+html,body{
+    height: 100%;
+}
+fieldset, img, input, button, textarea {
+    border: none;
+    outline-style: none;
+}
+ul, ol {
+    list-style: none;
 }
 
-
- .Pre{
-    display: inline-block;
-  border-bottom: 1px solid #ccc;
-    width: 42%;
-    height: 30px;
-    line-height: 30px;
-}
-.loan{
-    display: inline-block;
-  border-bottom: 1px solid #ccc;
-    width: 49%;
-    height: 30px;
-    line-height: 30px;
-    padding-left: 59px;
-}
-.ant-row{
-    border-bottom: 1px solid #ccc;
-    height: 30px;
-    line-height: 30px;
-}
- span{
-    display: inline-block;
-    width: 48.2%;
-    height: 30px;
-    line-height: 30px;
-    padding-left: 20px;
-    
-}
-.ant-row .tableRow .ant-col-3{
-    font-size: 14px;    
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none;
     font-weight: normal;
-     text-align: left; 
-     background-color: rgb(255, 255, 255);
+
 }
-.tableRow1{
-    width:300px;
-    text-align:left;
-    font-weight:normal;
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
 }
-.tableRow2{
-    border-right:1px solid #ccc;
+.clearfix:after {
+    clear: both;
 }
-.ant-col-5{
-    font-weight:normal;
-    border-bottom:1px solid #ccc;
-    text-align:center;
+.fl {
+    float: left;
 }
-.ant-col-3{
-    font-weight:normal;
-    border-bottom:1px solid #ccc;
-    text-align:center;
+.fr {
+    float: right;
 }
-h3{
-    margin:10px 0;
-    padding-left: 36px;
-}
-h4{
-    padding-left: 36px;
+
+.main {
+    width: 1200px;
     margin: 0 auto;
+    padding-bottom: 30px;
+    background-color: #f3f3f3;
 }
-.firstRow-Court th{
-    text-align: left;
-    border-bottom:1px solid #ccc;
-    font-weight:normal;
-   
+.header h3 {
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
 }
-.firstRow-Court td{
+.advise {
+    font-weight: 700;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    line-height: 30px;
+}
+.container {
+    font-size: 14px;
+    color: #333;
+}
+.title {
+    color: #0d9bdc;
+    font-size: 16px;
+    background-color: #d1d1f3;
+    padding: 6px 20px;
+}
+.title h5 {
+    border-left: 4px solid #0d9bdc;
+    text-indent: 6px;
+    font-weight: 700;
+}
+.details {
+    padding: 10px 20px;
+}
+.content {
+    margin-bottom: 10px;
+}
+.content li {
+    width: 50%;
+}
+.content li span,
+.content li input {
+    display: block;
+    line-height: 30px;
+    text-indent: 6px;
+    float: left;
+}
+.content li span {
+    width: 40%;
+    background-color: #d1d1f3;
+    border-bottom: 1px solid #fff;
+}
+.content li input {
+    width: 60%;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.serialNumber {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.table {
+    background-color: #fff;
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+.table td {
+    border: 1px solid #eee;
+    line-height: 30px;
+    width: 33.33%;
+}
+.table .thead {
+    background-color: #d1d1f3;
+}
+.table .thead td {
+    border: 1px solid #fff;
+}
+.table .tLeft {
     text-align: left;
-    border-bottom:1px solid #ccc;
     padding-left: 10px;
-    /* width: 630px; */
-   
 }
-.name{
-    width: 630px;
+.btnPage {
+    position: relative;
+    height: 40px;
 }
-th{
-    padding-left: 20px;
+.btnPage .lastPage,
+.btnPage .nextPage {
+    position: absolute;
+    width: 60px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #fff;
+    right: 0px;
+    top: 10px;
 }
-td{
-    width: 311px;
+.btnPage .lastPage {
+    right: 70px;
 }
-.form-detail th{
-    width: 26%;
+.btnPage .btnOn {
+    background-color: #d1d1f3;
+}
+.listDetails {
+    padding: 10px 0;
+}
+.loseFaithList .listTitle {
+    color: #0d9bdc;
+    font-size: 16px;
+    background-color: #d1d1f3;
+    padding: 6px 10px;
+}
+.loseFaithList .listTitle h5 {
+    font-weight: 700;
+    border: none;
+}
+.content.detailsContent li {
+    width: 100%;
+}
+.content.detailsContent li span {
+    width: 30%;
+}
+.content.detailsContent li input {
+    width: 70%;
+}
+.noRecord {
+    line-height: 100px;
+    text-align: center;
+    color: #999;
+    padding: 10px 20px;
+    background-color: #fff;
 }

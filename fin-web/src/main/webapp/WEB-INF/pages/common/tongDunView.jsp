@@ -8,72 +8,80 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>同盾信息明细</title>
-    <link rel="stylesheet" href="${ctx}/resources/css/Pre-loan.css">
+    <link rel="stylesheet" href="${ctx}/resources/css/Pre-loan.css${version}">
 </head>
-<body style="padding-left:20px;">
-<h2 style="padding-left:35px;margin:30px 0;" class="checkResult">扫描建议:未扫描出建议</h2>
-    <div class="mainBox" data-reactid="42">
-        <div class="markdown"  data-reactid="43">
-            <h4 class="tableTitle" data-reactid="44" style="margin:10px 0;">账户基本信息</h4>
+<body>
+<div class="main">
+    <div class="header">
+        <h3>同盾贷前报告</h3>
+        <div class="advise checkResult">
+            <p>扫描建议: <span>100分，申请用户检测出高危风险，建议拒绝</span></p>
+            <p>共发现 <span>19</span> 条异常信息</p>
         </div>
-        <div class="shadowBox">
-            <table cellspacing="1" cellpadding="0" class="form-detail column-two transparent">
-                <tbody>
-                <tr class="firstRow">
-                    <th class="ant-row tableRow1 ant-col-3" style="text-align: left;">
-                        姓名
-                    </th>
-                    <td class="ant-row tableRow1 ant-col-5 custName"style="text-align: left;">
-                    </td>
-                    <th class="ant-row tableRow1 ant-col-3" style="text-align: left;">
-                        身份证
-                    </th>
-                    <td class="ant-row tableRow1 ant-col-5 custIc"style="text-align: left;">
-                    </td>
-                </tr>
-                <tr class="">
-                    <th class="ant-row tableRow1 ant-col-3"style="text-align: left;">
-                        手机号码
-                    </th>
-                    <td class="ant-row tableRow1 ant-col-5 custMobile"style="text-align: left;">
-                    </td>
-                    <th class="ant-row tableRow1 ant-col-3 "style="text-align: left;" >
-                    </th>
-                    <td class="ant-row tableRow1 ant-col-5 email"style="text-align: left;">
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-            <div class="markdown tongdunInfo"  data-reactid="43" style="display:none">
-                <h4 class="tableTitle" data-reactid="44" style="margin:10px 0;">个人基本信息核查</h4>
-                <table cellspacing="1"style="border: 1px solid #ccc;" cellpadding="0" class="form-detail column-two transparent">
-                    <tr class="firstRow">
-                        <th class="ant-row tableRow ant-col-3" style=" font-size: 14px;   font-weight: 600; text-align: center; background-color: rgb(255, 255, 255);">
-                            检查项目
-                        </th>
-                        <th class="ant-row tableRow ant-col-5"style="white-space: nowrap;font-size:14px;font-weight: 600;text-align: center;">
-                            风险等级
-                        </td>
-                        <th class="ant-row tableRow ant-col-3" style=" font-size: 14px;    font-weight: 600; text-align:center; background-color: rgb(255, 255, 255);">
-                            备注
-                        </th>
+    </div>
+    <div class="container">
+        <div class="accountInfo">
+            <div class="title"><h5>账户基本信息</h5></div>
+            <div class="details">
+                <ul class="content clearfix">
+                    <li class="fl clearfix">
+                        <span>姓名</span>
+                        <input type="text" readonly class="custName">
+                    </li>
+                    <li class="fl clearfix">
+                        <span>身份证号码</span>
+                        <input type="text" readonly class="custIc">
+                    </li>
+                    <li class="fl clearfix">
+                        <span>手机号码</span>
+                        <input type="text" readonly class="custMobile">
+                    </li>
+                    <li class="fl clearfix">
+                        <span>邮箱地址</span>
+                        <input type="text" readonly class="email">
+                    </li>
+                    <li class="fl clearfix">
+                        <span>报告编号</span>
+                        <input type="text" readonly class="applicationId">
+                    </li>
+                    <li class="fl clearfix">
+                        <span>报告时间</span>
+                        <input type="text" readonly class="reportTime">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="paymentRecords riskItems" style="display:none">
+            <div class="title"><h5>个人基本信息核查</h5></div>
+            <div class="details">
+                <table class="table">
+                    <tr class="thead">
+                        <td>检查项目</td>
+                        <td>风险等级</td>
+                        <td>备注</td>
                     </tr>
                     <tbody class="result">
                     </tbody>
                 </table>
             </div>
-            <h3 class="tongdunInfo" style="display:none">附件：法院详情</h3>
-            <div class="markdown court" data-reactid="43">
-
+        </div>
+        <div class="courtDetails" style="display:none">
+            <div class="title"><h5>附件:法院详情</h5></div>
+            <div class="details">
+                <div class="loseFaithList">
+                    <div class="listTitle"><h5>身份证命中法院失信名单</h5></div>
+                    <div class="listDetails court">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
 <script src="${ctx}/resources/js/lib/jquery/jquery-1.8.3.min.js${version}"></script>
@@ -87,8 +95,8 @@
     var preLoanObject = {
         tableEl: '.result',
         requestParameter: {
-            resultId:'${param.resultId}',
-            customerId:'${param.customerId}'
+            resultId: '${param.resultId}',
+            customerId: '${param.customerId}'
         },
         template: {
             remarksHtml: '',
@@ -114,21 +122,23 @@
              */
             loadTongDunData: function () {
                 $.getJSON(preLoanObject.urls.loadTongDunUrl, function (data) {
-                    if(!data || data.code !== 0){
+                    console.log(data);
+                    if (!data || data.code !== 0) {
                         return;
                     }
                     var result = data.data;
-                    $('.custName').text(result['custName']);
-                    $('.custIc').text(result['custIc']);
-                    $('.custMobile').text(result['custMobile']);
-                    $('.email').text(result['email']);
-
+                    $('.custName').val(result['custName']);
+                    $('.custIc').val(result['custIc']);
+                    $('.custMobile').val(result['custMobile']);
+                    $('.email').val(result['email']);
                     var apiResult = result['apiResult'];
-                    if(apiResult != null ){
-                        $('.checkResult').text(preLoanObject.methods.finalDecision(apiResult));
-                        var  riskItems = result['apiResult']['risk_items'];
-                        if(riskItems && riskItems.length > 0){
-                            $('.tongdunInfo').removeAttr('style');
+                    if (apiResult != null) {
+                        $('.applicationId').val(apiResult['application_id']);
+                        $('.reportTime').val(preLoanObject.methods.toDate(apiResult['report_time']));
+                        $('.checkResult').html(preLoanObject.methods.finalDecision(apiResult));
+                        var riskItems = result['apiResult']['risk_items'];
+                        if (riskItems && riskItems.length > 0) {
+                            $('.riskItems').removeAttr('style');
                         }
                     }
                     for (var i in riskItems) {
@@ -143,15 +153,18 @@
                             preLoanObject.methods.nameListHandle();
                         }
                         //生成同盾报告数据
-                        preLoanObject.template.tableContentHtml += '<tr class="firstRow-Court">' +
-                            '<th class=" tableRow2 ant-col-3">' + riskItem["item_name"] + '</th>' +
-                            '<td class="ant-row tableRow2 ant-col-3" style="text-align: center;">' + riskLevel + '</td>' +
-                            '<th class="ant-row tableRow ant-col-5">' + preLoanObject.template.remarksHtml +
-                            '</th>' +
+                        preLoanObject.template.tableContentHtml += '<tr>' +
+                            '<td class="tLeft">' + riskItem["item_name"] + '</td>' +
+                            '<td>' + riskLevel + '</td>' +
+                            '<td class="tLeft"><ul>' + preLoanObject.template.remarksHtml +
+                            '</ul></td>' +
                             '</tr>';
                     }
                     $(preLoanObject.tableEl).append(preLoanObject.template.tableContentHtml);
-                    preLoanObject.methods.courtHandle( preLoanObject.data.courtDetails);
+                    if (preLoanObject.data.courtDetails.length > 0) {
+                        $('.courtDetails').removeAttr('style');
+                        preLoanObject.methods.courtHandle(preLoanObject.data.courtDetails);
+                    }
                 })
 
             },
@@ -162,7 +175,7 @@
                 if (preLoanObject.data.itemDetail.hasOwnProperty('frequency_detail_list')) {
                     var frequencyDetail = preLoanObject.data.itemDetail['frequency_detail_list'];
                     for (var frequency in frequencyDetail) {
-                        preLoanObject.template.remarksHtml += '<span style="display:block;font-weight:normal;width:100%">' + frequencyDetail[frequency]["detail"] + '</span>';
+                        preLoanObject.template.remarksHtml += '<li style="display:block;font-weight:normal;width:100%">' + frequencyDetail[frequency]["detail"] + '</li>';
                     }
                 }
             },
@@ -172,7 +185,7 @@
             platformHandle: function () {
                 if (preLoanObject.data.itemDetail.hasOwnProperty('platform_detail')) {
                     for (var platform in preLoanObject.data.itemDetail['platform_detail']) {
-                        preLoanObject.template.remarksHtml += '<span style="display:block;font-weight:normal;width:100%">' + preLoanObject.data.itemDetail['platform_detail'][platform] + '</span>';
+                        preLoanObject.template.remarksHtml += '<li style="display:block;font-weight:normal;width:100%">' + preLoanObject.data.itemDetail['platform_detail'][platform] + '</li>';
                     }
                 }
             },
@@ -186,7 +199,7 @@
                         var overdueDetail = overdueDetails[overdue];
                         var text = '于' + overdueDetail['overdue_time'] + '有' + overdueDetail['overdue_count'] + '笔,逾期金额为（范围）' +
                             overdueDetail['overdue_amount_range'] + '逾期天数（范围）' + overdueDetail['overdue_day_range'];
-                        preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
+                        preLoanObject.template.remarksHtml += '<li >' + text + '</li>';
                     }
                 }
             },
@@ -205,15 +218,15 @@
                                 var fuzzitem = fuzzs[fuzz];
                                 var text = '模糊名单 :' + fuzzitem['fraud_type'] + ' 身份证号:' + fuzzitem['fuzzy_id_number']
                                     + ' 姓名:' + fuzzitem['fuzzy_name'];
-                                preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
+                                preLoanObject.template.remarksHtml += '<li >' + text + '</li>';
                             }
-                         //如果是灰名单
+                            //如果是灰名单
                         } else if (name.type === 'grey_list') {
                             var text = name['fraud_type'] + ':' + name['hit_type_displayname']
                                 + ' 描述:' + name['description'];
-                            preLoanObject.template.remarksHtml += '<span >' + text + '</span>';
+                            preLoanObject.template.remarksHtml += '<li >' + text + '</li>';
 
-                         //如果是黑名单
+                            //如果是黑名单
                         } else if (name.type === 'black_list') {
                             var courts = name['court_details'];
                             for (var courtItem in courts) {
@@ -231,86 +244,103 @@
                 for (var courtItem in obj) {
                     var courtDetail = obj[courtItem];
                     var styleName = '';
-                    if(courtItem !== 0 ) {
-                        styleName ='margin-top:20px';
+                    preLoanObject.template.courtHtml += '<ul class="content detailsContent">' +
+                        '<li class="clearfix">' +
+                        '<span>被执行人姓名</span>' +
+                        '<input type="text" value="' + courtDetail["name"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>性别</span>' +
+                        '<input type="text" value="' + courtDetail["gender"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>年龄</span>' +
+                        '<input type="text" value="' + courtDetail["age"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>身份证号码</span>' +
+                        '<input type="text" value="' + courtDetail["id_number"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>执行法院</span>' +
+                        '<input type="text" value="' + courtDetail["court_name"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>省份</span>' +
+                        '<input type="text" value="' + courtDetail["province"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>执行依据文号</span>' +
+                        '<input type="text" value="' + courtDetail["case_number"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>立案时间</span>' +
+                        '<input type="text" value="' + courtDetail["filing_time"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>执行依据文号</span>' +
+                        '<input type="text" value="' + courtDetail["execution_base"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>做出执行依据单位</span>' +
+                        '<input type="text" value="' + courtDetail["execution_department"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>生效法律文书确定的义务</span>' +
+                        '<input type="text" value="' + courtDetail["duty"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>被执行人的履行情况</span>' +
+                        '<input type="text" value="' + courtDetail["situation"] + '"/>' +
+                        '</li>' +
+                        '<li class="clearfix">' +
+                        '<span>失信被执行人行为具体情形</span>' +
+                        '<input type="text" value="' + courtDetail["discredit_detail"] + '"/>' +
+                        '</li>' +
+                        '</ul>';
+                    if (courtItem !== 0) {
+                        styleName = 'margin-top:20px';
                     }
-                    preLoanObject.template.courtHtml += '<table cellspacing="1"style="border: 1px solid #ccc;'+ styleName +'" cellpadding="0" class="form-detail column-two transparent">'+
-                    '<tbody>' +
-                    '<tr class="firstRow-Court">' +
-                    '<td class=" tableRow2 ant-col-3"  >被执行人姓名</td>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["name"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >性别</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["gender"] +'</td>' +
-                    '</tr>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >年龄</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["age"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >身份证号码</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["id_number"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行法院</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["court_name"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >省份</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["province"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行依据文号</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["case_number"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >立案时间</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["filing_time"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >执行依据文号</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["execution_base"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >做出执行依据单位</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["execution_department"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >生效法律文书确定的义务</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["duty"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3"  >被执行人的履行情况</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5 name"style="border-right:none;">'+ courtDetail["situation"] +'</td>' +
-                    '</tr>' +
-                    '<tr class="firstRow-Court">' +
-                    '<th class=" tableRow2 ant-col-3" style="border-bottom: none;">失信被执行人行为具体情形</th>' +
-                    '<td class="ant-row tableRow2 ant-col-5" style="border-bottom: none;border-right:none;">'+ courtDetail["discredit_detail"] +'</td>' +
-                    '</tr>' +
-                    '</tbody>' +
-                    '</table>';
                 }
                 $('.court').append(preLoanObject.template.courtHtml);
             },
             /**
              * 检查结果
              */
-            finalDecision:function (data) {
+            finalDecision: function (data) {
                 var finalScore = data['final_score'];
                 var finalDecision = data['final_decision'];
                 var length = data['risk_items'] ? data['risk_items'].length : 0;
-                switch (finalDecision){
+                switch (finalDecision) {
                     case 'Accept':
-                        return '扫描建议:'+ finalScore +'分, 申请用户检测出低风险，建议通过，共发现'+length +'条异常信息';
+                        return ' <p>扫描建议:<span>' + finalScore + '分, 申请用户检测出低风险，建议通过</span></p> <p>共发现 <span>' + length + '</span>条异常信息</p>';
                     case 'Review':
-                      return  '扫描建议:'+finalScore +'分, 申请用户检测出中风险，建议审核，共发现'+length +'条异常信息';
+                        return '<p>扫描建议:<span>' + finalScore + '分, 申请用户检测出中风险，建议审核</span></p> <p>共发现' + length + '</span>条异常信息</p>';
                     case 'Reject':
-                        return  '扫描建议:'+finalScore +'分, 申请用户检测出高风险，建议拒绝，共发现1'+length +'条异常信息';
+                        return '<p>扫描建议:<span>' + finalScore + '分, 申请用户检测出高风险，建议拒绝</span></p> <p>共发现' + length + '</span>条异常信息</p>';
+                }
+            },
+            //时间戳转换成日期
+            toDate: function (str) {
+                if(str) {
+                    //零填充
+                    var getZf = function (num) {
+                        if (parseInt(num) < 10) {
+                            num = '0' + num;
+                        }
+                        return num;
+                    };
+                    var oDate = new Date(str),
+                        oYear = oDate.getFullYear(),
+                        oMonth = oDate.getMonth() + 1,
+                        oDay = oDate.getDate(),
+                        oHour = oDate.getHours(),
+                        oMin = oDate.getMinutes(),
+                        oSen = oDate.getSeconds(),
+                        oTime = oYear + '-' + getZf(oMonth) + '-' + getZf(oDay) + ' ' + getZf(oHour) + ':' + getZf(oMin) + ':' + getZf(oSen);//最后拼接时间
+                    return oTime;
                 }
             }
-
         }
     }
 

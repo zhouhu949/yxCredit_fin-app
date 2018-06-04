@@ -1,186 +1,146 @@
-*{
+html,body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: "PingFang-SC-Medium";
 }
-.ant-row .ant-col-3{
-    font-size: 14px;
-    display: inline-block;
-    width: 10%;
-    border-bottom: 1px solid #ccc;
+html,body{
+    height: 100%;
 }
-.ant-row .ant-col-5{
-    display: inline-block;
-    width: 18%;
-    font-size: 14px;
-    border-bottom: 1px solid #ccc;
+fieldset, img, input, button, textarea {
+    border: none;
+    outline-style: none;
 }
-/* .ant-row {
-    border-bottom: 1px solid #eee;
-} */
-.tableRow{
-    vertical-align:bottom;
-    min-height: 30px;
-    line-height: 30px;
-    /*float: left;*/
+ul, ol {
+    list-style: none;
 }
-.tableTitle{
 
-    border-bottom: none;
+h1, h2, h3, h4, h5, h6 {
+    text-decoration: none;
+    font-weight: normal;
+
 }
-.ant-tabs-tab{
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.fl {
     float: left;
-    margin-left: 24px;
-    padding: 8px 20px;
-
-
 }
-/* .ant-tabs-tab:hover{
-    border-bottom: 1px solid red;
-} */
-.ant-pagination-prev a::after {
-
-    display: block;
-    zoom: 1;
-    height: 26px;
-    line-height: 26px;
-    font-family: anticon;
-    text-align: center;
-}
-.ant-pagination-prev{
-    border: 1px solid #d9d9d9;
-    background-color: #fff;
-    outline: 0;
-    font-family: Arial;
-    cursor: pointer;
-    color: rgba(0,0,0,.65);
-    border-radius: 4px;
-    list-style: none;
-    min-width: 28px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-    -webkit-transition: all .3s;
-    transition: all .3s;
-    display: inline-block;
-    vertical-align: middle;
-}
-.ant-pagination-disabled  {
-    cursor: not-allowed
-}
-.ant-pagination-item{
-    display: inline-block;
-    vertical-align: middle;
-    height: 28px;
-    line-height: 28px;
-    margin-right: 8px;
-    border: 1px solid #d9d9d9;
-    background-color: #fff;
-    outline: 0;
-    font-family: Arial;
-    cursor: pointer;
-    color: rgba(0,0,0,.65);
-    border-radius: 4px;
-    list-style: none;
-    min-width: 28px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-    -webkit-transition: all .3s;
-    transition: all .3s;
-    display: inline-block;
-    vertical-align: middle;
-}
-.ant-pagination-item a{
-    color: #108ee9;
-    background: transparent;
-    text-decoration: none;
-    outline: none;
-    cursor: pointer;
-    -webkit-transition: color .3s ease;
-    transition: color .3s ease;
-    text-decoration: none;
-    color: rgba(0,0,0,.65);
-    -webkit-transition: none;
-    transition: none;
-    margin: 0 6px;
-
-}
-.ant-pagination-next {
-    border: 1px solid #d9d9d9;
-    background-color: #fff;
-    outline: 0;
-    font-family: Arial;
-    cursor: pointer;
-    color: rgba(0,0,0,.65);
-    border-radius: 4px;
-    list-style: none;
-    min-width: 28px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
-    -webkit-transition: all .3s;
-    transition: all .3s;
-    display: inline-block;
-    vertical-align: middle;
-}
-.ant-pagination-next a{
-    color: rgba(0,0,0,.65);
-    outline: none;
-
-    color: #108ee9;
-    background: transparent;
-    text-decoration: none;
-    outline: none;
-    cursor: pointer;
-    -webkit-transition: color .3s ease;
-    transition: color .3s ease;
-}
-.ant-pagination-next a::after{
-    -webkit-filter: none;
-    filter: none;
-    /* font-size: 12px; */
-
-    display: block;
-    display: inline-block;
-    font-size: 12px;
-    font-size: 8px\9;
-    -webkit-transform: scale(.66666667) rotate(0deg);
-    -ms-transform: scale(.66666667) rotate(0deg);
-    transform: scale(.66666667) rotate(0deg);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
-    zoom: 1;
-    display: block;
-    height: 26px;
-    line-height: 26px;
-    font-family: anticon;
-    text-align: center;
-}
-.ant-pagination{
+.fr {
     float: right;
-    margin-top: 30px;
 }
-.mailResult{
-    height: 100px;
-}
-.ant-tabs-tab:first-child{
-    color: #108ee9;
 
+.main {
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    background-color: #f3f3f3;
 }
-.ant-tabs-tab:hover{
-    color: #108ee9;
+.header h3 {
+    font-size: 30px;
+    line-height: 50px;
+    text-align: center;
 }
-#tabCon_4{
-    display: none;
+.container {
+    font-size: 14px;
+    color: #333;
 }
-#tabCon_1{
-    display: none;
+.title {
+    color: #0d9bdc;
+    font-size: 16px;
+    background-color: #d1d1f3;
+    padding: 6px 20px;
 }
-#tabCon_2{
-    display: none;
+.title h5 {
+    border-left: 4px solid #0d9bdc;
+    text-indent: 6px;
+    font-weight: 700;
 }
-#tabCon_3{
-    display: none;
+.details {
+    padding: 10px 20px;
 }
-#tabCon_5{
-    display: none;
+.content li {
+    width: 50%;
+}
+.content li span,
+.content li input {
+    display: block;
+    line-height: 30px;
+    text-indent: 6px;
+    float: left;
+}
+.content li span {
+    width: 40%;
+    background-color: #d1d1f3;
+    border-bottom: 1px solid #fff;
+}
+.content li input {
+    width: 60%;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.serialNumber {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.table {
+    background-color: #fff;
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+.table td {
+    border: 1px solid #eee;
+    line-height: 30px;
+}
+.table .thead {
+    background-color: #d1d1f3;
+}
+.table .thead td {
+    border: 1px solid #fff;
+}
+.btnPage {
+    position: relative;
+    height: 40px;
+}
+.btnPage .lastPage,
+.btnPage .nextPage {
+    position: absolute;
+    width: 60px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #fff;
+    right: 0px;
+    top: 10px;
+}
+.btnPage .lastPage {
+    right: 70px;
+}
+.recordsTime {
+    margin-bottom: 10px;
+}
+.recordsTime li {
+    font-weight: 700;
+    margin-right: 30px;
+    line-height: 30px;
+}
+.recordsTime .now {
+    color: #0d9bdc;
+    border-bottom: 2px solid #0d9bdc;
+}
+.recordsTime li:hover {
+    color: #0d9bdc;
+    border-bottom: 2px solid #0d9bdc;
+}
+.noRecord {
+    line-height: 100px;
+    text-align: center;
+    color: #999;
+    padding: 10px 20px;
+    background-color: #fff;
 }
