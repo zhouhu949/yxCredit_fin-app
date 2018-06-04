@@ -145,7 +145,8 @@
                 operatorPaymentInfoRecordTable(1,paymentInfo);
                 operatorPaymentInfoRecord = 1;
                 operatorUlPageFun(paymentInfo,"operatorPaymentRecordUl","PaymentInfoRecord");
-
+                //记录每个tab的分页index
+                tabIndexs = [];
 
                 //通话记录
                 operatorCallInfo = apiResult.call_info;
@@ -154,10 +155,10 @@
                     if(callInfo){
                         //最近六个月的通话记录
                         $("#operatorCallCycle" + i).html(callInfo.call_cycle);
+                        tabIndexs[i] = 1 ;
                     }
                 }
                 operatorCallInfoCallRecordIndex = 0
-                operatorCallInfoCallRecordIndexPage = 1;
                 operatorCallCycleTab(1,operatorCallInfoCallRecordIndex);
                 operatorUlPageFun(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,"operatorCallInfoRecordUl","CallInfoRecord");
 
@@ -240,27 +241,27 @@
 
 //通话记录上一页
     function operatorCallInfoRecordPreviousPage(){
-        if(operatorCallInfoCallRecordIndexPage == 1){
+        if(tabIndexs[operatorCallInfoCallRecordIndex] == 1){
             return;
         }
-        operatorCallInfoCallRecordIndexPage = operatorCallInfoCallRecordIndexPage - 1;
-        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
+        tabIndexs[operatorCallInfoCallRecordIndex] = tabIndexs[operatorCallInfoCallRecordIndex] - 1;
+        operatorCallInfoRecordPage(tabIndexs[operatorCallInfoCallRecordIndex]);
 
     }
     //通话记录跳转页
     function operatorCallInfoRecordPage(page){
-        operatorCallInfoCallRecordIndexPage = page;
+        tabIndexs[operatorCallInfoCallRecordIndex] = page;
         operatorCallCycleTab(page,operatorCallInfoCallRecordIndex);
     }
 
 
     //通话记录下一页
     function operatorCallInfoRecordNextPage(){
-        if(operatorCallInfoCallRecordIndexPage == pageCount(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record)){
+        if(tabIndexs[operatorCallInfoCallRecordIndex] == pageCount(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record)){
             return;
         }
-        operatorCallInfoCallRecordIndexPage = operatorCallInfoCallRecordIndexPage + 1;
-        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
+        tabIndexs[operatorCallInfoCallRecordIndex] = tabIndexs[operatorCallInfoCallRecordIndex] + 1;
+        operatorCallInfoRecordPage(tabIndexs[operatorCallInfoCallRecordIndex]);
     }
 
     function operatorCallCycleColor(index){
@@ -276,14 +277,12 @@
         operatorCallInfoCallRecordIndex = arrIndex;
         $("#operatorCallInfoRecordUl").html("");
         operatorUlPageFun(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,"operatorCallInfoRecordUl","CallInfoRecord");
-        operatorCallInfoTable(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,pageSize);
+        operatorCallInfoTable(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,tabIndexs[operatorCallInfoCallRecordIndex]);
     }
 
 
     //通话记录列表
     function operatorCallInfoTable(data,pageSize){
-        console.log(pageSize);
-        console.log(data);
         var index = (pageSize - 1) * 10;
         var row = data.length>10?pageSize * 10:data.length;
         $("#operatorCallCycleTabTable").html("");
