@@ -355,28 +355,30 @@ function  editDetail(type,productId,productPeriods,id) {
                     //$("#yuelixi").val(resData.month_rate);
                     var zbs_jujian_fee = resData.zbs_jujian_fee;
                     var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
-                    $.each(zbsArray,function(index,value){
-                        if(index%2 === 0){
-                            $("#detailInfo").append("<li class='liWidth newField' >\n" +
-                                "                        <label  class=\"lf licss\"  >总包商</label>\n" +
-                                "                        <label >\n" +
-                                "                            <select class=\"zbs\" name=\"zbs_jujian_fee\">\n" +
-                                "                                <option value='"+zbsArray[index]+"'>"+zbsArray[index]+"</option>\n" +
-                                "                            </select>\n" +
-                                "                        </label>\n" +
-                                "                    </li>");
-                        }else{
-                            $("#detailInfo").append("<li class='liWidth newField'>\n" +
-                                "                        <label  class=\"lf licss\"  >居间服务费率(%)</label>\n" +
-                                "                        <label >\n" +
-                                "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
-                                "                        </label>\n" +
-                                "                    </li>" +
-                                "                <li class='liWidth newField' style=\"width:22px;\">\n" +
-                                "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
-                                "                </li>");
-                        }
-                    });
+                    if(zbsArray.length !== 1){
+                        $.each(zbsArray,function(index,value){
+                            if(index%2 === 0){
+                                $("#detailInfo").append("<li class='liWidth newField' >\n" +
+                                    "                        <label  class=\"lf licss\"  >总包商</label>\n" +
+                                    "                        <label >\n" +
+                                    "                            <select class=\"zbs\" name=\"zbs_jujian_fee\">\n" +
+                                    "                                <option value='"+zbsArray[index]+"'>"+zbsArray[index]+"</option>\n" +
+                                    "                            </select>\n" +
+                                    "                        </label>\n" +
+                                    "                    </li>");
+                            }else{
+                                $("#detailInfo").append("<li class='liWidth newField'>\n" +
+                                    "                        <label  class=\"lf licss\"  >居间服务费率(%)</label>\n" +
+                                    "                        <label >\n" +
+                                    "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
+                                    "                        </label>\n" +
+                                    "                    </li>" +
+                                    "                <li class='liWidth newField' style=\"width:22px;\">\n" +
+                                    "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
+                                    "                </li>");
+                            }
+                        });
+                    }
                     getZbsSelect('2');
                     // $("#zhina_fee").val(resData.zhina_fee);
                     // $("#zongheri_fee").val(resData.zongheri_fee);
