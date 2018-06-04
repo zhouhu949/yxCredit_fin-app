@@ -180,6 +180,25 @@ function  editDetail(type,productId,productPeriods,id) {
                         flag = true;
                     }
                 });
+                var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
+                var zbsObj = new Array();
+                var feeObj = new Array();
+                $.each(zbsArray,function(index,value){
+                    if(index%2 === 0){
+                        zbsObj.push(value);
+                    }else {
+                        feeObj.push(value);
+                    }
+                });
+                if(isNumber(feeObj)){
+                    layer.alert("居间服务费格式有误！！",{icon: 2, title:'操作提示'});
+                    return
+                }
+
+                if(isRepeat(zbsObj)){
+                    layer.alert("总包商不能重复！！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 if(flag){
                     layer.alert("总包商或居间服务费率不能为空！",{icon: 2, title:'操作提示'});
                     return
@@ -382,11 +401,18 @@ function  editDetail(type,productId,productPeriods,id) {
                 });
                 var zbsArray = zbs_jujian_fee_new.substring(0,zbs_jujian_fee_new.length-1).split(',');
                 var zbsObj = new Array();
+                var feeObj = new Array();
                 $.each(zbsArray,function(index,value){
                     if(index%2 === 0){
                         zbsObj.push(value);
+                    }else {
+                        feeObj.push(value);
                     }
                 });
+                if(isNumber(feeObj)){
+                    layer.alert("居间服务费格式有误！！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 if(isRepeat(zbsObj)){
                     layer.alert("总包商不能重复！！",{icon: 2, title:'操作提示'});
                     return
@@ -662,6 +688,17 @@ function isRepeat(arr) {
     }
     return false;
 }
+//居间服务费格式校验
+function isNumber(arr) {
+    for(var i in arr){
+        if(isNaN(arr[i])){
+            //layer.alert("居间服务费格式有误！",{icon: 2, title:'操作提示'});
+            return true
+        }
+    }
+    return false
+}
+
 //删除总包商居间服务费
 function  deleteJujianfei(item) {
     $(item).parent('li').prev().remove();
