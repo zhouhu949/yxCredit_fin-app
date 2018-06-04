@@ -38,21 +38,21 @@ $(function (){
         format: 'YYYY-MM-DD',
         max: laydate.now(),
         istime: true,
-        istoday: false
-       /* choose: function(datas){
+        istoday: false,
+       choose: function(datas){
             endTime.min = datas; //开始日选好后，重置结束日的最小日期
             endTime.start = datas //将结束日的初始值设定为开始日
-        }*/
+        }
     };
     var endTime = {
         elem: '#endTime',
         format: 'YYYY-MM-DD',
         min: laydate.now(),
         istime: true,
-        istoday: false
-       /* choose: function(datas){
+        istoday: false,
+       choose: function(datas){
             beginTime.max = datas; //结束日选好后，重置开始日的最大日期
-        }*/
+        }
     };
     laydate(beginTime);
     laydate(endTime);

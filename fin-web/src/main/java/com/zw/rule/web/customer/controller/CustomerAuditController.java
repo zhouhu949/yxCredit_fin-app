@@ -155,6 +155,11 @@ public class CustomerAuditController {
         return  modelAndView;
     }
 
+    /**
+     * 获取风控审核列表
+     * @param queryFilter
+     * @return
+     */
     @PostMapping("list")
     @ResponseBody
     public Response list(@RequestBody ParamFilter queryFilter){
