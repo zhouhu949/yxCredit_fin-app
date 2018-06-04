@@ -275,13 +275,13 @@ function queryList(){
                                     $('#activity_img_addr').val(data.activity_img_addr);
                                     $('#platformType').val(data.platform_type);
                                     $('#priority').val(data.priority);
-                                    var b = data.activity_time.substr(0,19);
+                                    var b = data.activity_time.substr(0,10);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
                                     }else {
                                         $('#beginTimed').val('');
                                     }
-                                    var a = data.activity_time.substr(20,38);
+                                    var a = data.activity_time.substr(11,21);
                                     if(a.length>6){
                                         $('#endTimed').val(a);
                                     }else {
@@ -350,13 +350,13 @@ function queryList(){
                                     //$('#activity_img_fileName').val(data.activity_img_url);
 
                                     $('#priority').val(data.priority);
-                                    var b = data.activity_time.substr(0,19);
+                                    var b = data.activity_time.substr(0,10);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
                                     }else {
                                         $('#beginTimed').val('');
                                     }
-                                    var a = data.activity_time.substr(20,38);
+                                    var a = data.activity_time.substr(11,21);
                                     if(a.length>6){
                                         $('#endTimed').val(a);
                                     }else {
