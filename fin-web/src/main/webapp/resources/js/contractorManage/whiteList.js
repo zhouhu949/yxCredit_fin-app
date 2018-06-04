@@ -471,10 +471,10 @@ function updateWhite(sign,id) {
                         layer.msg("日最低工资只能为数字",{time:2000});
                         return;
                     }
-                    if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
+                   /* if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
                         layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
                         return;
-                    }
+                    }*/
 
                     if(beginTime){
                         beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
@@ -619,10 +619,10 @@ function updateWhite(sign,id) {
                     return;
                 }
 
-                if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
+               /* if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
                     layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
                     return;
-                }
+                }*/
 
                 if(beginTime){
                     beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字

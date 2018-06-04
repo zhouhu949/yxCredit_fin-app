@@ -240,13 +240,13 @@ public class ContractorController {
         Response response = new Response();
         Map map = new HashMap(2);
         map.put("card",whiteList.getCard());
-        int num = contractorService.vaildateOnly(map);
+        /*int num = contractorService.vaildateOnly(map);
         if(num > 0){
             response.setMsg("白名单重复");
             response.setCode(1);
             return response;
-        }
-        num = contractorService.updateWhiteList(whiteList);
+        }*/
+        int num = contractorService.updateWhiteList(whiteList);
         if (num > 0){
             response.setMsg("修改成功");
             return response;
