@@ -138,7 +138,7 @@ $(function (){
                         }else if(data==7){
                             return "已取消";
                         }else if(data==8){
-                            return "申请失败";
+                            return "审批拒绝";
                         }else if(data==9){
                             return "已放弃";
                         }else {
