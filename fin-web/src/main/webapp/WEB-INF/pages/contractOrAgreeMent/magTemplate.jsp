@@ -218,32 +218,32 @@
 <body>
 <div class="page-content">
     <div class="commonManager">
-        <div class="Manager_style add_user_info search_style">
-            <ul class="search_content clearfix">
-                <li><label class="lf">模板名称</label>
-                    <label>
-                        <input name="contractName" type="text" class="text_add"/>
-                    </label>
-                </li>
-                <li style="width:300px;"><label class="lf">创建时间</label>
-                    <label>
-                        <input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>
-                        <span class="date-icon"><i class="icon-calendar"></i></span>
-                    </label>
-                </li><span class="line-cut">--</span>
-                <li style="width:200px;">
-                    <label>
-                        <input readonly="true" placeholder="结束" class="eg-date" id="endTime" type="text"/>
-                        <span class="date-icon"><i class="icon-calendar"></i></span>
-                    </label>
-                </li>
-                <li style="width:300px;">
-                    <button id="btn_search" type="button" class="btn btn-primary queryBtn">查询</button>
-                    <button id="btn_search_reset" type="button" class="btn btn-primary queryBtn">查询重置</button>
-                    <%--<button id="btn_add" type="button" class="btn btn-primary queryBtn">添加</button>--%>
-                </li>
-            </ul>
-        </div>
+        <%--<div class="Manager_style add_user_info search_style">--%>
+            <%--<ul class="search_content clearfix">--%>
+                <%--<li><label class="lf">模板名称</label>--%>
+                    <%--<label>--%>
+                        <%--<input name="contractName" type="text" class="text_add"/>--%>
+                    <%--</label>--%>
+                <%--</li>--%>
+                <%--<li style="width:300px;"><label class="lf">创建时间</label>--%>
+                    <%--<label>--%>
+                        <%--<input readonly="true" placeholder="开始" class="eg-date" id="beginTime" type="text"/>--%>
+                        <%--<span class="date-icon"><i class="icon-calendar"></i></span>--%>
+                    <%--</label>--%>
+                <%--</li><span class="line-cut">--</span>--%>
+                <%--<li style="width:200px;">--%>
+                    <%--<label>--%>
+                        <%--<input readonly="true" placeholder="结束" class="eg-date" id="endTime" type="text"/>--%>
+                        <%--<span class="date-icon"><i class="icon-calendar"></i></span>--%>
+                    <%--</label>--%>
+                <%--</li>--%>
+                <%--<li style="width:300px;">--%>
+                    <%--<button id="btn_search" type="button" class="btn btn-primary queryBtn">查询</button>--%>
+                    <%--<button id="btn_search_reset" type="button" class="btn btn-primary queryBtn">查询重置</button>--%>
+                    <%--&lt;%&ndash;<button id="btn_add" type="button" class="btn btn-primary queryBtn">添加</button>&ndash;%&gt;--%>
+                <%--</li>--%>
+            <%--</ul>--%>
+        <%--</div>--%>
         <div id="Add_procedure_style" style="display: none" >
             <div class="addCommon clearfix">
                 <div>
