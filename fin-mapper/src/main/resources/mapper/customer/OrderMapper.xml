@@ -1591,10 +1591,10 @@
             </if>
 
             <if test="beginTime != null and beginTime != ''">
-                and applay_time &gt;= #{beginTime}
+                and substr(applay_time,1,8) &gt;= #{beginTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and applay_time &lt;= #{endTime}
+                and substr(applay_time,1,8) &lt;= #{endTime}
             </if>
 
         </where>
@@ -1619,10 +1619,10 @@
             </if>
 
             <if test="beginTime != null and beginTime != ''">
-                and CREAT_TIME &gt;= #{beginTime}
+                and  substr(applay_time, 1, 8) >= #{beginTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and CREAT_TIME &lt;= #{endTime}
+                and substr(applay_time, 1, 8) &lt;= #{endTime}
             </if>
 
         </where>
@@ -1659,10 +1659,10 @@
             </if>
 
             <if test="beginTime != null and beginTime != ''">
-                and magorder.CREAT_TIME &gt;= #{beginTime}
+                and substr(magorder.Examine_time, 1, 8) &gt;= #{beginTime}
             </if>
             <if test="endTime != null and endTime != ''">
-                and magorder.CREAT_TIME &lt;= #{endTime}
+                and substr(magorder.Examine_time, 1, 8) &lt;= #{endTime}
             </if>
 
         </where>

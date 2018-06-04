@@ -13,156 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>运营商</title>
     <script src="${ctx}/resources/js/lib/jquery/jquery-1.8.3.min.js${version}"></script>
-    <%--<link rel="stylesheet" href="${ctx}/resources/css/moheyys.css">--%>
-    <script src="${ctx}/resources/js/Operator_jrl.js"></script>
-    <style>
-        html,body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, menu, nav, section {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "PingFang-SC-Medium";
-        }
-        html,body{
-            height: 100%;
-        }
-        fieldset, img, input, button, textarea {
-            border: none;
-            outline-style: none;
-        }
-        ul, ol {
-            list-style: none;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            text-decoration: none;
-            font-weight: normal;
-
-        }
-        .clearfix:before, .clearfix:after {
-            content: "";
-            display: table;
-        }
-        .clearfix:after {
-            clear: both;
-        }
-        .fl {
-            float: left;
-        }
-        .fr {
-            float: right;
-        }
-
-        .main {
-            width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 30px;
-            background-color: #f3f3f3;
-        }
-        .header h3 {
-            font-size: 30px;
-            line-height: 50px;
-            text-align: center;
-        }
-        .container {
-            font-size: 14px;
-            color: #333;
-        }
-        .title {
-            color: #0d9bdc;
-            font-size: 16px;
-            background-color: #d1d1f3;
-            padding: 6px 20px;
-        }
-        .title h5 {
-            border-left: 4px solid #0d9bdc;
-            text-indent: 6px;
-            font-weight: 700;
-        }
-        .details {
-            padding: 10px 20px;
-        }
-        .content li {
-            width: 50%;
-        }
-        .content li span,
-        .content li input {
-            display: block;
-            line-height: 30px;
-            text-indent: 6px;
-            float: left;
-        }
-        .content li span {
-            width: 40%;
-            background-color: #d1d1f3;
-            border-bottom: 1px solid #fff;
-        }
-        .content li input {
-            width: 60%;
-            background-color: #fff;
-            border-bottom: 1px solid #eee;
-        }
-        .serialNumber {
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .table {
-            background-color: #fff;
-            border-collapse: collapse;
-            text-align: center;
-            width: 100%;
-        }
-        .table td {
-            border: 1px solid #eee;
-            line-height: 30px;
-        }
-        .table .thead {
-            background-color: #d1d1f3;
-        }
-        .table .thead td {
-            border: 1px solid #fff;
-        }
-        .btnPage {
-            position: relative;
-            height: 40px;
-        }
-        .btnPage .lastPage,
-        .btnPage .nextPage {
-            position: absolute;
-            width: 60px;
-            line-height: 30px;
-            text-align: center;
-            border-radius: 5px;
-            background-color: #fff;
-            right: 0px;
-            top: 10px;
-        }
-        .btnPage .lastPage {
-            right: 70px;
-        }
-        .recordsTime {
-            margin-bottom: 10px;
-        }
-        .recordsTime li {
-            font-weight: 700;
-            margin-right: 30px;
-            line-height: 30px;
-        }
-        .recordsTime .now {
-            color: #0d9bdc;
-            border-bottom: 2px solid #0d9bdc;
-        }
-        .recordsTime li:hover {
-            color: #0d9bdc;
-            border-bottom: 2px solid #0d9bdc;
-        }
-        .noRecord {
-            line-height: 100px;
-            text-align: center;
-            color: #999;
-            padding: 10px 20px;
-            background-color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="${ctx}/resources/css/moheyys.css${version}">
+    <script src="${ctx}/resources/js/Operator_jrl.js${version}"></script>
 </head>
 <body>
 <div class="main">
@@ -293,7 +145,8 @@
                 operatorPaymentInfoRecordTable(1,paymentInfo);
                 operatorPaymentInfoRecord = 1;
                 operatorUlPageFun(paymentInfo,"operatorPaymentRecordUl","PaymentInfoRecord");
-
+                //记录每个tab的分页index
+                tabIndexs = [];
 
                 //通话记录
                 operatorCallInfo = apiResult.call_info;
@@ -302,10 +155,10 @@
                     if(callInfo){
                         //最近六个月的通话记录
                         $("#operatorCallCycle" + i).html(callInfo.call_cycle);
+                        tabIndexs[i] = 1 ;
                     }
                 }
                 operatorCallInfoCallRecordIndex = 0
-                operatorCallInfoCallRecordIndexPage = 1;
                 operatorCallCycleTab(1,operatorCallInfoCallRecordIndex);
                 operatorUlPageFun(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,"operatorCallInfoRecordUl","CallInfoRecord");
 
@@ -388,27 +241,27 @@
 
 //通话记录上一页
     function operatorCallInfoRecordPreviousPage(){
-        if(operatorCallInfoCallRecordIndexPage == 1){
+        if(tabIndexs[operatorCallInfoCallRecordIndex] == 1){
             return;
         }
-        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
-        operatorCallInfoCallRecordIndexPage = operatorCallInfoCallRecordIndexPage - 1;
+        tabIndexs[operatorCallInfoCallRecordIndex] = tabIndexs[operatorCallInfoCallRecordIndex] - 1;
+        operatorCallInfoRecordPage(tabIndexs[operatorCallInfoCallRecordIndex]);
 
     }
     //通话记录跳转页
     function operatorCallInfoRecordPage(page){
-        operatorCallInfoCallRecordIndexPage = page;
+        tabIndexs[operatorCallInfoCallRecordIndex] = page;
         operatorCallCycleTab(page,operatorCallInfoCallRecordIndex);
     }
 
 
     //通话记录下一页
     function operatorCallInfoRecordNextPage(){
-        if(operatorCallInfoCallRecordIndexPage == pageCount(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record)){
+        if(tabIndexs[operatorCallInfoCallRecordIndex] == pageCount(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record)){
             return;
         }
-        operatorCallInfoCallRecordIndexPage = operatorCallInfoCallRecordIndexPage + 1;
-        operatorCallInfoRecordPage(operatorCallInfoCallRecordIndexPage);
+        tabIndexs[operatorCallInfoCallRecordIndex] = tabIndexs[operatorCallInfoCallRecordIndex] + 1;
+        operatorCallInfoRecordPage(tabIndexs[operatorCallInfoCallRecordIndex]);
     }
 
     function operatorCallCycleColor(index){
@@ -424,7 +277,7 @@
         operatorCallInfoCallRecordIndex = arrIndex;
         $("#operatorCallInfoRecordUl").html("");
         operatorUlPageFun(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,"operatorCallInfoRecordUl","CallInfoRecord");
-        operatorCallInfoTable(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,pageSize);
+        operatorCallInfoTable(operatorCallInfo[operatorCallInfoCallRecordIndex].call_record,tabIndexs[operatorCallInfoCallRecordIndex]);
     }
 
 

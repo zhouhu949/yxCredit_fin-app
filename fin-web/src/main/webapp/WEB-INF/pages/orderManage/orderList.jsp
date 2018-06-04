@@ -37,7 +37,7 @@
                             <option value="5">待还款</option>
                             <option value="6">已结清</option>
                             <option value="7">已取消</option>
-                            <option value="8">申请失败</option>
+                            <option value="8">审批拒绝</option>
                             <option value="9">已放弃</option>
                         </select>
                     </label>

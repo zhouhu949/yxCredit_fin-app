@@ -26,10 +26,10 @@
         from app_suggestion
         where 1=1
         <if test="param.beginTime != null and param.beginTime != ''">
-            and creat_time >#{param.beginTime}
+            and substr(creat_time,1,8) >= #{param.beginTime}
         </if>
         <if test="param.endTime != null and param.endTime != ''">
-            and #{param.endTime}> creat_time
+            and #{param.endTime} >= substr(creat_time,1,8)
         </if>
         <if test="param.content != null and param.content != ''">
             and content like '%${param.content}%'
