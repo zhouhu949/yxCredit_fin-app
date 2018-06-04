@@ -73,7 +73,7 @@ $(function (){
                     var contractAmount = data.contractAmount;
                     var periods = data.periods;
                     if(serviceFee && contractAmount && periods) {
-                        return parseFloat(serviceFee) * parseFloat(contractAmount)* parseFloat(periods);
+                        return (parseFloat(serviceFee) * parseFloat(contractAmount)* parseFloat(periods)).toFixed(2);
                     } else {
                         return 0;
                     }

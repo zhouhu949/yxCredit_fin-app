@@ -54,7 +54,7 @@
     });
 </script>
 <div class="login_logo" style="margin-top: 68px;">
-    <img src="${ctx}/resources/images/logo.png" style="width: 100px;height: 100px"/>
+    <img src="${ctx}/resources/images/logo.png"/>
 </div>
 <div class="login_m">
     <form id="myform" action="${ctx}/login" method="post">
