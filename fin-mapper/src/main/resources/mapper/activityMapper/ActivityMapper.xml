@@ -149,6 +149,9 @@
       <if test="alter_time != null" >
         platform_type = #{platform_type,jdbcType=VARCHAR},
       </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>

@@ -426,7 +426,7 @@ function updateWhite(sign,id) {
                         layer.msg("身份证号码格式不正确",{time:2000});
                         return;
                     }
-                    if (!telPhone) {
+                    if(!telPhone) {
                         layer.msg("手机号码不能为空",{time:2000});
                         return;
                     }
@@ -434,11 +434,12 @@ function updateWhite(sign,id) {
                         layer.msg("手机号码格式不正确",{time:2000});
                         return;
                     }
+
                     if(!contractorId) {
                         layer.msg("请选择总包商",{time:2000});
                         return;
                     }
-                    if(!latestPayday){
+                    /*if(!latestPayday){
                         layer.msg("发薪日不能为空",{time:2000});
                         return;
                     }
@@ -450,7 +451,7 @@ function updateWhite(sign,id) {
                     if(!latestPaydayReg.test(latestPayday)) {
                         layer.msg("发薪日只能在0-31之间",{time:2000});
                         return;
-                    }
+                    }*/
                     if(!latestPay){
                         layer.msg("发薪日应发工资不能为空",{time:2000});
                         return;
@@ -459,7 +460,7 @@ function updateWhite(sign,id) {
                         layer.msg("发薪日应发工资只能为数字",{time:2000});
                         return;
                     }
-                    if(!jobType){
+                   /* if(!jobType){
                         layer.msg("工种不能为空",{time:2000});
                         return;
                     }
@@ -470,13 +471,19 @@ function updateWhite(sign,id) {
                     if(!numReg1.test(localMonthlyMinWage)){
                         layer.msg("日最低工资只能为数字",{time:2000});
                         return;
-                    }
+                    }*/
                    /* if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
                         layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
                         return;
                     }*/
-
                     if(beginTime){
+                        beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    }
+                    if(endTime){
+                        endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    }
+
+                   /* if(beginTime){
                         beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                     }
                     if(endTime){
@@ -491,7 +498,7 @@ function updateWhite(sign,id) {
                             layer.msg("请选择合同结束时间",{time:2000});
                             return;
                         }
-                    }
+                    }*/
                     uploadFile();
                     var user={
                         id : id,
@@ -535,8 +542,8 @@ function updateWhite(sign,id) {
         $('input[name="contractor_credit"]').val("");
         $('input[name="local_monthly_min_wage"]').val("");
         $("#wu").attr('selected','selected');
-        $("#bgt").attr('selected','selected');
-        $("#xj").attr('selected','selected');
+        $("#qxz").attr('selected','selected');
+        $("#qxzq").attr('selected','selected');
         layer.open({
             type : 1,
             title : '添加白名单',
@@ -574,7 +581,7 @@ function updateWhite(sign,id) {
                     layer.msg("身份证号码格式不正确",{time:2000});
                     return;
                 }
-                if (!telPhone) {
+                if(!telPhone) {
                     layer.msg("手机号码不能为空",{time:2000});
                     return;
                 }
@@ -586,7 +593,7 @@ function updateWhite(sign,id) {
                     layer.msg("请选择总包商",{time:2000});
                     return;
                 }
-                if(!latestPayday){
+                /*if(!latestPayday){
                     layer.msg("发薪日不能为空",{time:2000});
                     return;
                 }
@@ -597,7 +604,7 @@ function updateWhite(sign,id) {
                 if(!latestPaydayReg.test(latestPayday)) {
                     layer.msg("发薪日只能在0-31之间",{time:2000});
                     return;
-                }
+                }*/
                 if(!latestPay){
                     layer.msg("发薪日应发工资不能为空",{time:2000});
                     return;
@@ -606,7 +613,7 @@ function updateWhite(sign,id) {
                     layer.msg("发薪日应发工资只能为数字",{time:2000});
                     return;
                 }
-                if(!jobType){
+               /* if(!jobType){
                     layer.msg("工种不能为空",{time:2000});
                     return;
                 }
@@ -617,7 +624,7 @@ function updateWhite(sign,id) {
                 if(!numReg1.test(localMonthlyMinWage)){
                     layer.msg("日最低工资只能为数字",{time:2000});
                     return;
-                }
+                }*/
 
                /* if(parseFloat(latestPay) - parseFloat(localMonthlyMinWage) * 31 < 0) {
                     layer.msg("日最低工资不能大于发薪日应发工资",{time:2000});
@@ -630,7 +637,7 @@ function updateWhite(sign,id) {
                 if(endTime){
                     endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                 }
-                if("1" === contractStatus ) {
+                /*if("1" === contractStatus ) {
                     if(!beginTime){
                         layer.msg("请选择合同开始时间",{time:2000});
                         return;
@@ -639,7 +646,7 @@ function updateWhite(sign,id) {
                         layer.msg("请选择合同结束时间",{time:2000});
                         return;
                     }
-                }
+                }*/
                 var contractor={
                     realName: realName,
                     card:card,

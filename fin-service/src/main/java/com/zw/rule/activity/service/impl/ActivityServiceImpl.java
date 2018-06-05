@@ -2,6 +2,7 @@ package com.zw.rule.activity.service.impl;
 
 import com.zw.UploadFile;
 import com.zw.base.util.GeneratePrimaryKeyUtils;
+import com.zw.base.util.StringUtils;
 import com.zw.rule.activity.Activity;
 import com.zw.rule.activity.service.ActivityService;
 import com.zw.rule.mapper.activity.ActivityMapper;
@@ -126,16 +127,23 @@ public class ActivityServiceImpl implements ActivityService {
             fileName = bannerImg + currentDateStr+"/"+ fileMap.get("Name").toString();
         }
         List imageList = new ArrayList();
+        String fileFormat= fileName.substring(fileName.indexOf(".") + 1);
 
-        BufferedImage sourceImg= ImageIO.read(new File(imgPath+fileName));
-        Integer imgWidth= sourceImg.getWidth();//750px
-        Integer imgHeight=sourceImg.getHeight();//380px
-        if (imgWidth==750 && imgHeight ==380){
-            imageList.add(fileName);
+        if ("png".equals(fileFormat) || "jpg".equals(fileFormat) || "jpeg".equals(fileFormat) || "gif".equals(fileFormat)){
+            BufferedImage sourceImg= ImageIO.read(new File(imgPath+fileName));
+            Integer imgWidth= sourceImg.getWidth();//750px
+            Integer imgHeight=sourceImg.getHeight();//380px
+            if (imgWidth==750 && imgHeight ==380){
+                imageList.add(fileName);
+            }else {
+                //图片大小不符合要求
+                imageList.add("-1");
+            }
         }else {
-            //图片不符合要求
-            imageList.add("-1");
+            //图片格式不符合要求
+            imageList.add("-2");
         }
+
         return imageList;
     }
 

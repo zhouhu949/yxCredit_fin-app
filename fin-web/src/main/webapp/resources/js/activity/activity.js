@@ -3,6 +3,7 @@
  */
 //页面初始化
 $(function () {
+
     var beginTime = {
         elem: '#beginTime',
         format: 'YYYY-MM-DD',
@@ -68,19 +69,26 @@ function queryList(){
                 "width" : "30px"
             },
             {"data":'id',"orderable" : false,"class":"hidden"},
+            {"data":'id',"searchable":false,"orderable" : false,},//显示Banner缩略图
             {"data":'activity_title',"searchable":false,"orderable" : false},
-            {"data": "activity_img_addr","orderable" : false,
+          /*  {"data": "activity_img_addr","orderable" : false,
                 "render": function (data, type, row, meta) {
-                    if(data == "1") return "弹框";
-                    if(data == "2") return "轮播图";
-                    if(data == "3") return "启动页";
+                    if(data == "1") return "轮播图";
                     else return "";
                 }
+            },*/
+           /* {"data":'activity_content',"searchable":false,"orderable" : false},*/
+          /*  {"data":'activity_url',"searchable":false,"orderable" : false},*/
+           /* {"data":'activity_time',"searchable":false,"orderable" : false},*/
+            {"data":'create_time',"searchable":false,"orderable" : false,
+                "render":function (data, type, row, meta) {
+                    if(data !=null && data !=''){
+                        return formatTime(data);
+                    }else {
+                        return '';
+                    }
+                }
             },
-            {"data":'activity_content',"searchable":false,"orderable" : false},
-            {"data":'activity_url',"searchable":false,"orderable" : false},
-            {"data":'activity_time',"searchable":false,"orderable" : false},
-            {"data":'create_time',"searchable":false,"orderable" : false},
             {"data": "activity_state","orderable" : false,
                 "render": function (data, type, row, meta) {
                     if(data == "1") return "已上架";
@@ -112,13 +120,22 @@ function queryList(){
             var btnDel=$('<a href="##" id="btnDel" class="operate" style="color:#007eff">删除 </a><input type="hidden" id="del" value="'+data.id+'"/>');
             var btnUp=$('<a href="##" id="btnUp" class="operate" style="color:#007eff">上架 </a><input type="hidden" id="up" value="'+data.id+'"/>');
             var btnDown=$('<a href="##" id="btnDown" class="operate" style="color:#007eff">下架 </a><input type="hidden" id="down" value="'+data.id+'"/>');
+            var bannerImg=$('<img id="bannerImge" style="display: block;width: 90px;height: 40px;margin: 0 auto" src="">');
+            bannerImg.attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
             if(data.activity_state==1){
-                $('td', row).eq(9).append(btnUpdate).append(btnDel).append(btnDown).append(btnLook);
+                $('td', row).eq(6).append(btnUpdate).append(btnDel).append(btnDown).append(btnLook);
+                $('td', row).eq(2).html("");
+                $('td', row).eq(2).append(bannerImg);
+
             }
             else if (data.activity_state==2){
-                $('td', row).eq(9).append(btnUpdate).append(btnDel).append(btnUp).append(btnLook);
+                $('td', row).eq(6).append(btnUpdate).append(btnDel).append(btnUp).append(btnLook);
+                $('td', row).eq(2).html("");
+                $('td', row).eq(2).append(bannerImg);
             }else {
-                $('td', row).eq(9).append(btnUpdate).append(btnDel).append(btnLook);
+                $('td', row).eq(6).append(btnUpdate).append(btnDel).append(btnLook);
+                $('td', row).eq(2).html("");
+                $('td', row).eq(2).append(bannerImg);
             }
         },
 
@@ -148,8 +165,8 @@ function queryList(){
                         $('#activity_url').removeAttr("disabled");
                         $('#activity_stated').removeAttr("disabled");
                         $('#activity_content').removeAttr("disabled");
-                        $('#beginTimed').removeAttr("disabled");
-                        $('#endTimed').removeAttr("disabled");
+                      /*  $('#beginTimed').removeAttr("disabled");*/
+                        // $('#endTimed').removeAttr("disabled");
                         $('#activity_img_addr').removeAttr("disabled");
                         $('#priority').removeAttr("disabled");
                         $("#picShow").removeAttr("disabled");
@@ -160,8 +177,11 @@ function queryList(){
                         $('#activity_url').val('');
                         $('#activity_stated').val('');
                         $('#activity_content').val('');
+                        $("#preview").attr("src",'');
+                        $("#prompt ").css("display"," block");
+                        $("#file").css("display"," block");
 
-                        $('#beginTimed').val('');$('#endTimed').val('');
+                       /* $('#beginTimed').val('');$('#endTimed').val('');*/
                     },
                     yes:function(index,layero){
 
@@ -173,25 +193,25 @@ function queryList(){
                         param.activity_content = $('#activity_content').val();
                         param.activity_img_addr = $('#activity_img_addr').val();
                         param.priority=$('#priority').val();
-                        var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);
-                        param.activity_time = a;
+                       /* var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);
+                        param.activity_time = a;*/
                         if(param.activity_title==''){
                             layer.msg("Banner标题不可为空！",{time:2000});return
                         }
-                        if(param.activity_url==''){
+                      /*  if(param.activity_url==''){
                             layer.msg("Banner链接不可为空！",{time:2000});return
-                        }
+                        }*/
                         var reg = /[\u4E00-\u9FA5]/g;
                         if(reg.test(param.activity_url)){
                             layer.msg("Banner链接不能为中文！",{time:2000});return
                         }
 
-                        if(param.activity_content==''){
+                   /*     if(param.activity_content==''){
                             layer.msg("Banner描述不可为空！",{time:2000});return
-                        }
-                        if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
+                        }*/
+                      /*  if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
                             layer.msg("Banner期限选择有误！",{time:2000});return
-                        }
+                        }*/
 
                         if(param.activity_state=='-1'){
                             layer.msg("Banner状态不可为空！",{time:2000});return
@@ -203,16 +223,22 @@ function queryList(){
                             layer.msg("请选择显示优先级！",{time:2000});return
                         }
                         uploadFile();
-                        param.activity_img_url = activityImgUrl ;
+                        param.activity_img_url = activityImgUrl;
+                        //alert(activityImgUrl);
                         if(param.activity_img_url==''){
                             layer.msg("请上传Banner图片！",{time:2000});return
                         }
                         if(param.activity_img_url=='-1'){
-                            layer.msg("请上传Banner图片大小不符合要求！",{time:2000});return
+                            layer.msg("Banner图片大小不符合要求！",{time:2000});return
                         }
-                        if(param.activity_img_url==''){
-                            layer.msg("请上传Banner图片！",{time:2000});return
+                        if(param.activity_img_url=='-2'){
+                            layer.msg("Banner图片类型不符合要求！",{time:2000});return
                         }
+
+                        $("#prompt ").css("display"," block");
+                        $("#pictureFormat").css("display"," block");
+                        $("#file").css("display"," block");
+
                         Comm.ajaxPost('activity/add',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
@@ -275,7 +301,7 @@ function queryList(){
                                     $('#activity_img_addr').val(data.activity_img_addr);
                                     $('#platformType').val(data.platform_type);
                                     $('#priority').val(data.priority);
-                                    var b = data.activity_time.substr(0,10);
+                                  /*  var b = data.activity_time.substr(0,10);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
                                     }else {
@@ -286,7 +312,7 @@ function queryList(){
                                         $('#endTimed').val(a);
                                     }else {
                                         $('#endTimed').val('');
-                                    }
+                                    }*/
 
                                     //alert("图片地址："+data.activity_img_url);
                                     $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
@@ -295,13 +321,14 @@ function queryList(){
                                     $('#activity_url').attr("disabled",true);
                                     $('#activity_stated').attr("disabled",true);
                                     $('#activity_content').attr("disabled",true);
-                                    $('#beginTimed').attr("disabled",true);
-                                    $('#endTimed').attr("disabled",true);
+                                  /*  $('#beginTimed').attr("disabled",true);
+                                    $('#endTimed').attr("disabled",true);*/
                                     $('#activity_img_addr').attr("disabled",true);
                                     $("#picShow").attr("disabled", true);
                                     $("#priority").attr("disabled", true);
 
                                     $("#prompt ").css("display"," none");
+                                    $("#pictureFormat").css("display"," block");
                                     $("#file").css("display"," none");
 
                                 },
@@ -331,8 +358,8 @@ function queryList(){
                                     $('#activity_url').removeAttr("disabled");
                                     $('#activity_stated').removeAttr("disabled");
                                     $('#activity_content').removeAttr("disabled");
-                                    $('#beginTimed').removeAttr("disabled");
-                                    $('#endTimed').removeAttr("disabled");
+                                  /*  $('#beginTimed').removeAttr("disabled");
+                                    $('#endTimed').removeAttr("disabled");*/
                                     $('#activity_img_addr').removeAttr("disabled");
                                     $("#picShow").removeAttr("disabled");
                                     $("#priority").removeAttr("disabled");
@@ -350,7 +377,9 @@ function queryList(){
                                     //$('#activity_img_fileName').val(data.activity_img_url);
 
                                     $('#priority').val(data.priority);
-                                    var b = data.activity_time.substr(0,10);
+                                    $("#prompt ").css("display"," block");
+                                    $("#file").css("display"," block");
+                                   /* var b = data.activity_time.substr(0,10);
                                     if(b.length>6){
                                         $('#beginTimed').val(b);
                                     }else {
@@ -361,7 +390,7 @@ function queryList(){
                                         $('#endTimed').val(a);
                                     }else {
                                         $('#endTimed').val('');
-                                    }
+                                    }*/
                                 }
                             },"application/json"
                         );
@@ -370,8 +399,8 @@ function queryList(){
                         $('#activity_url').attr("disabled",false);
                         $('#activity_stated').attr("disabled",false);
                         $('#activity_content').attr("disabled",false);
-                        $('#beginTimed').attr("disabled",false);
-                        $('#endTimed').attr("disabled",false);
+                       /* $('#beginTimed').attr("disabled",false);
+                        $('#endTimed').attr("disabled",false);*/
 
 
                     },
@@ -390,29 +419,29 @@ function queryList(){
                         param.priority = $('#priority').val();
                         param.platform_type=$('#platformType').val();
 
-                        var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);
+                       /* var a = $('#beginTimed').val().substr(0,10)+'~'+$('#endTimed').val().substr(0,10);*/
 
-                        param.activity_time = a;
+                        /*param.activity_time = a;*/
                         if(param.activity_title==''){
                             layer.msg("Banner标题不可为空！",{time:2000});return
                         }
-                        if(param.activity_url==''){
+                  /*      if(param.activity_url==''){
                             layer.msg("Banner链接不可为空！",{time:2000});return
-                        }
+                        }*/
                         var reg = /[\u4E00-\u9FA5]/g;
                         if(reg.test(param.activity_url)){
                             layer.msg("Bnner连接不能为中文！",{time:2000});return
                         }
 
-                        if(param.activity_content==''){
+                       /* if(param.activity_content==''){
                             layer.msg("Banner描述不可为空！",{time:2000});return
-                        }
-                        if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
+                        }*/
+                      /*  if($('#beginTimed').val()=='' && $('#endTimed').val()!=''){
                             layer.msg("Banner期限选择有误！",{time:2000});return
-                        }
-                        if(param.activity_img_url=='../resources/images/photoadd.png'){
+                        }*/
+                     /*   if(param.activity_img_url=='../resources/images/photoadd.png'){
                             layer.msg("请上传Banner图片！",{time:2000});return
-                        }
+                        }*/
                         debugger
                         if(param.activity_img_addr=="-1"){
                             layer.msg("请选择Banner图片位置！",{time:2000});return
@@ -429,8 +458,12 @@ function queryList(){
                             layer.msg("请上传Banner图片！",{time:2000});return
                         }
                         if(param.activity_img_url=='-1'){
-                            layer.msg("请上传Banner图片大小不符合要求！",{time:2000});return
+                            layer.msg("Banner图片大小不符合要求！",{time:2000});return
                         }
+                        if(param.activity_img_url=='-2'){
+                            layer.msg("Banner图片类型不符合要求！",{time:2000});return
+                        }
+
                         Comm.ajaxPost('activity/update',JSON.stringify(param), function (data) {
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
@@ -609,7 +642,7 @@ function setImagePreview1() {
     {
         //IE下，使用滤镜
         docObj.select();
-        var imgSrc = document.selection.createRange().text;
+        /*var imgSrc = document.selection.createRange().text;*/
         var localImagId = document.getElementById("localImag");
         //必须设置初始大小
         localImagId.style.width = "162px";
@@ -617,7 +650,7 @@ function setImagePreview1() {
         //图片异常的捕捉，防止用户修改后缀来伪造图片
         try{
             localImagId.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+           /* localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;*/
         }
         catch(e)
         {

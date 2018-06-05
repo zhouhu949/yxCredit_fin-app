@@ -54,12 +54,12 @@
     <div class="commonManager">
         <div class="Manager_style add_user_info search_style">
             <ul class="search_content clearfix">
-                <li><label class="lf">活动标题</label>
+                <li><label class="lf">Banner标题</label>
                     <label>
                         <input name="activity_title" id="activity_title" type="text" class="text_add"/>
                     </label>
                 </li>
-                <li style="width:190px;"><label class="lf">活动状态 &nbsp;&nbsp;</label>
+                <li style="width:190px;"><label class="lf">Banner状态 &nbsp;&nbsp;</label>
                     <label>
                         <select id="activity_state" style="min-width:90px;height: 28px;">
                             <option value="">请选择</option>
@@ -83,7 +83,7 @@
                 <li style="width:300px;">
                     <button id="btn_search" type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset" type="button" class="btn btn-primary queryBtn">查询重置</button>
-                    <button id="btn_add" type="button" class="btn btn-primary queryBtn">添加活动</button>
+                    <button id="btn_add" type="button" class="btn btn-primary queryBtn">添加Banner</button>
                 </li>
             </ul>
             <div id="Add_procedure_style" style="display: none" >
@@ -110,7 +110,6 @@
                                 <td width="30%">
                                     <label  style="width:100%;padding: 0;margin-left: 15px;">
                                         <select id="activity_img_addr" style="width:100%;height: 28px;margin-left:3px;">
-                                            <option value="-1">请选择</option>
                                             <option value="1">轮播图</option>
                                         </select>
                                     </label>
@@ -122,11 +121,9 @@
                                     <label style="width:100%;padding: 0;margin-left: 15px;">
                                         <select id="priority" style="width:100%;height: 28px;">
                                             <option value="-1">请选择</option>
-                                            <option value="1">位置1</option>
-                                            <option value="2">位置2</option>
-                                            <option value="3">位置3</option>
-                                            <option value="4">位置4</option>
-                                            <option value="4">位置5</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
                                         </select>
                                     </label>
                                 </td>
@@ -138,7 +135,6 @@
                                 <td>
                                     <label style="width:100%;padding: 0;margin-left: 15px;">
                                         <select id="activity_stated" style="width:100%;height: 28px;padding:0;margin-left: 2px">
-                                            <option value="-1">请选择</option>
                                             <option value="1">已上架</option>
                                             <option value="2">未上架</option>
                                         </select>
@@ -153,7 +149,7 @@
                                     </label>
                                 </td>
                             </tr>
-                            <tr>
+                          <%--  <tr>
                                 <td  style="text-align: right">
                                     <label >显示期限</label>
                                 </td>
@@ -165,7 +161,7 @@
                                         <span class="date-icon"><i class="icon-calendar"></i></span>
                                     </label>
                                 </td>
-                            </tr>
+                            </tr>--%>
                             <tr>
                                 <td  style="text-align: right">
                                     <label >Banner链接</label>
@@ -184,6 +180,7 @@
                                     <form id="activityImgForm" method="post" enctype="multipart/form-data">
                                         <div id="localImag" style="margin-left: 20px"><img id="preview"  src="" style="display: block; width: 162px !important; height: 110px;"></div>
                                         <label id="prompt" style="color: red; text-align: left;width: 100%;margin-left: 4%">*图片大小必须为：750像素*380像素</label>
+                                        <label id="pictureFormat" style="color: red; text-align: left;width: 100%;margin-left: 4%">*图片类型必须为：png，gif，jpg，jpeg</label>
                                         <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 20px" onchange="javascript:setImagePreview1();" >
                                     </form>
                                 </td>
@@ -202,13 +199,14 @@
                     <tr>
                         <th>序号</th>
                         <th></th>
+                        <th>Banner图片</th>
                         <th>Banner标题</th>
-                        <th>图片位置</th>
+                       <%-- <th>图片位置</th>
                         <th>Banner描述</th>
-                        <th>Banner链接</th>
-                        <th>显示期限</th>
+                        <th>Banner链接</th>--%>
+                        <%--<th>显示期限</th>--%>
                         <th>创建时间</th>
-                        <th>活动状态</th>
+                        <th>Banner状态</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -221,39 +219,6 @@
 </div>
 </div>
 </div>
-<script>
-    var beginTime = {
-        elem: '#beginTimed',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-//        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function(datas){
-            endTime.min = datas; //开始日选好后，重置结束日的最小日期
-            endTime.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var endTime = {
-        elem: '#endTimed',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        min: '1999-01-01 00:00:00',
-//        max: laydate.now(),
-        istime: true,
-        istoday: false,
-        choose: function(datas){
-            beginTime.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(beginTime);
-    laydate(endTime);
 
-
-   /* function closeDelete(me){
-        $('.addMaterial').attr('src','../resources/images/photoadd.png');
-    }*/
-
-
-</script>
 </body>
 </html>
