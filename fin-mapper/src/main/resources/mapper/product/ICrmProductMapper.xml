@@ -474,9 +474,12 @@
     </where>
   </select>
 
-  <update id="delFee" parameterType="java.lang.String">
-    UPDATE mag_product_fee SET state = '-1' WHERE id=#{id}
-  </update>
+  <!--<update id="delFee" parameterType="java.lang.String">-->
+    <!--UPDATE mag_product_fee SET state = '-1' WHERE id=#{id}-->
+  <!--</update>-->
+  <delete id="delFee" parameterType="java.lang.String">
+    DELETE  from mag_product_fee where id=#{id}
+  </delete>
 
   <select id="isExist"  resultMap="feeMap" parameterType="com.zw.rule.product.Fee">
     select
