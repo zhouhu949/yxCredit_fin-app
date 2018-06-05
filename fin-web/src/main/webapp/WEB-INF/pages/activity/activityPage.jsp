@@ -124,8 +124,6 @@
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="4">5</option>
                                         </select>
                                     </label>
                                 </td>
@@ -182,6 +180,7 @@
                                     <form id="activityImgForm" method="post" enctype="multipart/form-data">
                                         <div id="localImag" style="margin-left: 20px"><img id="preview"  src="" style="display: block; width: 162px !important; height: 110px;"></div>
                                         <label id="prompt" style="color: red; text-align: left;width: 100%;margin-left: 4%">*图片大小必须为：750像素*380像素</label>
+                                        <label id="pictureFormat" style="color: red; text-align: left;width: 100%;margin-left: 4%">*图片类型必须为：png，gif，jpg，jpeg</label>
                                         <input type="file" name="file" id="file" style="width:64px; height:35px; margin-left: 20px" onchange="javascript:setImagePreview1();" >
                                     </form>
                                 </td>
