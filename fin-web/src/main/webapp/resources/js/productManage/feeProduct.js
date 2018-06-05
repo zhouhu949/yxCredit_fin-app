@@ -180,6 +180,25 @@ function  editDetail(type,productId,productPeriods,id) {
                         flag = true;
                     }
                 });
+                var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
+                var zbsObj = new Array();
+                var feeObj = new Array();
+                $.each(zbsArray,function(index,value){
+                    if(index%2 === 0){
+                        zbsObj.push(value);
+                    }else {
+                        feeObj.push(value);
+                    }
+                });
+                if(isNumber(feeObj)){
+                    layer.alert("居间服务费格式有误！！",{icon: 2, title:'操作提示'});
+                    return
+                }
+
+                if(isRepeat(zbsObj)){
+                    layer.alert("总包商不能重复！！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 if(flag){
                     layer.alert("总包商或居间服务费率不能为空！",{icon: 2, title:'操作提示'});
                     return
@@ -336,28 +355,30 @@ function  editDetail(type,productId,productPeriods,id) {
                     //$("#yuelixi").val(resData.month_rate);
                     var zbs_jujian_fee = resData.zbs_jujian_fee;
                     var zbsArray = zbs_jujian_fee.substring(0,zbs_jujian_fee.length-1).split(',');
-                    $.each(zbsArray,function(index,value){
-                        if(index%2 === 0){
-                            $("#detailInfo").append("<li class='liWidth newField' >\n" +
-                                "                        <label  class=\"lf licss\"  >总包商</label>\n" +
-                                "                        <label >\n" +
-                                "                            <select class=\"zbs\" name=\"zbs_jujian_fee\">\n" +
-                                "                                <option value='"+zbsArray[index]+"'>"+zbsArray[index]+"</option>\n" +
-                                "                            </select>\n" +
-                                "                        </label>\n" +
-                                "                    </li>");
-                        }else{
-                            $("#detailInfo").append("<li class='liWidth newField'>\n" +
-                                "                        <label  class=\"lf licss\"  >居间服务费率(%)</label>\n" +
-                                "                        <label >\n" +
-                                "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
-                                "                        </label>\n" +
-                                "                    </li>" +
-                                "                <li class='liWidth newField' style=\"width:22px;\">\n" +
-                                "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
-                                "                </li>");
-                        }
-                    });
+                    if(zbsArray.length !== 1){
+                        $.each(zbsArray,function(index,value){
+                            if(index%2 === 0){
+                                $("#detailInfo").append("<li class='liWidth newField' >\n" +
+                                    "                        <label  class=\"lf licss\"  >总包商</label>\n" +
+                                    "                        <label >\n" +
+                                    "                            <select class=\"zbs\" name=\"zbs_jujian_fee\">\n" +
+                                    "                                <option value='"+zbsArray[index]+"'>"+zbsArray[index]+"</option>\n" +
+                                    "                            </select>\n" +
+                                    "                        </label>\n" +
+                                    "                    </li>");
+                            }else{
+                                $("#detailInfo").append("<li class='liWidth newField'>\n" +
+                                    "                        <label  class=\"lf licss\"  >居间服务费率(%)</label>\n" +
+                                    "                        <label >\n" +
+                                    "                            <input type=\"text\"  name=\"zbs_jujian_fee\" value = '"+zbsArray[index]+"'>\n" +
+                                    "                        </label>\n" +
+                                    "                    </li>" +
+                                    "                <li class='liWidth newField' style=\"width:22px;\">\n" +
+                                    "                    <button  type=\"button\" class=\"btn btn-primary queryBtn\" onclick=\"deleteJujianfei(this)\">删除</button>\n" +
+                                    "                </li>");
+                            }
+                        });
+                    }
                     getZbsSelect('2');
                     // $("#zhina_fee").val(resData.zhina_fee);
                     // $("#zongheri_fee").val(resData.zongheri_fee);
@@ -382,11 +403,18 @@ function  editDetail(type,productId,productPeriods,id) {
                 });
                 var zbsArray = zbs_jujian_fee_new.substring(0,zbs_jujian_fee_new.length-1).split(',');
                 var zbsObj = new Array();
+                var feeObj = new Array();
                 $.each(zbsArray,function(index,value){
                     if(index%2 === 0){
                         zbsObj.push(value);
+                    }else {
+                        feeObj.push(value);
                     }
                 });
+                if(isNumber(feeObj)){
+                    layer.alert("居间服务费格式有误！！",{icon: 2, title:'操作提示'});
+                    return
+                }
                 if(isRepeat(zbsObj)){
                     layer.alert("总包商不能重复！！",{icon: 2, title:'操作提示'});
                     return
@@ -662,6 +690,17 @@ function isRepeat(arr) {
     }
     return false;
 }
+//居间服务费格式校验
+function isNumber(arr) {
+    for(var i in arr){
+        if(isNaN(arr[i])){
+            //layer.alert("居间服务费格式有误！",{icon: 2, title:'操作提示'});
+            return true
+        }
+    }
+    return false
+}
+
 //删除总包商居间服务费
 function  deleteJujianfei(item) {
     $(item).parent('li').prev().remove();

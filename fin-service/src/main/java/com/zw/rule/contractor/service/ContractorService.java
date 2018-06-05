@@ -54,7 +54,7 @@ public interface ContractorService {
      * @param map
      * @return
      */
-    int vaildateOnly(Map map) throws Exception;
+    List<String> vaildateOnly(Map map) throws Exception;
 
     /**
      * 删除白名单

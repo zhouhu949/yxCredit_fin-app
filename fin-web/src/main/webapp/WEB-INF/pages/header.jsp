@@ -7,8 +7,7 @@
         <div class="navbar-header pull-left">
             <a href="${ctx}/index" class="navbar-brand">
                 <span id="titleName">
-                    <!--<b>小窝金融消费管理系统</b>-->
-                    <img src="${ctx}/resources/images/logo1.png${version}" style="width: 140px;height: 45px">
+                    <img src="${ctx}/resources/images/logo1.png${version}" style="width: 100%;height: 45px">
                 </span>
             </a>
         </div>
