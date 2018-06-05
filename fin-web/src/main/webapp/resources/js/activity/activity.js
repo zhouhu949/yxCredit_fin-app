@@ -265,7 +265,7 @@ function queryList(){
                 debugger
                 var target = e.target || window.event.target;
                 var id = $(target).parents("tr").children().eq(1).html();
-                var activity_state = $(target).parents("tr").children().eq(8).html();
+                var activity_state = $(target).parents("tr").children().eq(5).html();
                 var param = {}; param.id = id;
                 if(activity_state == '已上架'){
                     layer.msg("上架Banner不可删除！",{time:2000});
@@ -328,7 +328,7 @@ function queryList(){
                                     $("#priority").attr("disabled", true);
 
                                     $("#prompt ").css("display"," none");
-                                    $("#pictureFormat").css("display"," block");
+                                    $("#pictureFormat").css("display"," none");
                                     $("#file").css("display"," none");
 
                                 },
@@ -365,6 +365,7 @@ function queryList(){
                                     $("#priority").removeAttr("disabled");
                                     debugger
                                     var data = data.data;
+                                  /*  $("#preview").attr("src",'');*/
                                     $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
                                     $('#activity_titled').val(data.activity_title);
                                     $('#activity_url').val(data.activity_url);
@@ -378,6 +379,7 @@ function queryList(){
 
                                     $('#priority').val(data.priority);
                                     $("#prompt ").css("display"," block");
+                                    $("#pictureFormat").css("display"," block");
                                     $("#file").css("display"," block");
                                    /* var b = data.activity_time.substr(0,10);
                                     if(b.length>6){

@@ -129,7 +129,7 @@ public class ActivityServiceImpl implements ActivityService {
         List imageList = new ArrayList();
         String fileFormat= fileName.substring(fileName.indexOf(".") + 1);
 
-        if ("png".equals(fileFormat) || "jpg".equals(fileFormat) || "jpeg".equals(fileFormat) || "gif".equals(fileFormat)){
+        if ("png".equals(fileFormat) || "jpg".equals(fileFormat) || "jpeg".equals(fileFormat) || "gif".equals(fileFormat) || "".equals(fileFormat)){
             BufferedImage sourceImg= ImageIO.read(new File(imgPath+fileName));
             Integer imgWidth= sourceImg.getWidth();//750px
             Integer imgHeight=sourceImg.getHeight();//380px
