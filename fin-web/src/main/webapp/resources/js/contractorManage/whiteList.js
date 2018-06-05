@@ -426,11 +426,13 @@ function updateWhite(sign,id) {
                         layer.msg("身份证号码格式不正确",{time:2000});
                         return;
                     }
-                    if (telPhone) {
-                        if(!mobileReg.test(telPhone)){
-                            layer.msg("手机号码格式不正确",{time:2000});
-                            return;
-                        }
+                    if(!telPhone) {
+                        layer.msg("手机号码不能为空",{time:2000});
+                        return;
+                    }
+                    if(!mobileReg.test(telPhone)){
+                        layer.msg("手机号码格式不正确",{time:2000});
+                        return;
                     }
 
                     if(!contractorId) {
@@ -579,11 +581,13 @@ function updateWhite(sign,id) {
                     layer.msg("身份证号码格式不正确",{time:2000});
                     return;
                 }
-                if (telPhone) {
-                    if(!mobileReg.test(telPhone)){
-                        layer.msg("手机号码格式不正确",{time:2000});
-                        return;
-                    }
+                if(!telPhone) {
+                    layer.msg("手机号码不能为空",{time:2000});
+                    return;
+                }
+                if(!mobileReg.test(telPhone)){
+                    layer.msg("手机号码格式不正确",{time:2000});
+                    return;
                 }
                 if(!contractorId) {
                     layer.msg("请选择总包商",{time:2000});

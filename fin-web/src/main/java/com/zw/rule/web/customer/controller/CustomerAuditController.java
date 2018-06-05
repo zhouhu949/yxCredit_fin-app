@@ -141,6 +141,9 @@ public class CustomerAuditController {
                 if(StringUtils.isNotBlank(whitelist.getLocalMonthlyMinWage())) {
                     int localMonthlyMinWage = Integer.valueOf(whitelist.getLocalMonthlyMinWage());//最低工资标准
                     amountAdvice =  (new Double(((latesPay - localMonthlyMinWage * periods)))).intValue();
+                    if(amountAdvice < 0) {
+                        amountAdvice = 0;
+                    }
                 }
             }
         }
