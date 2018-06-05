@@ -122,7 +122,6 @@
              */
             loadTongDunData: function () {
                 $.getJSON(preLoanObject.urls.loadTongDunUrl, function (data) {
-                    console.log(data);
                     if (!data || data.code !== 0) {
                         return;
                     }
