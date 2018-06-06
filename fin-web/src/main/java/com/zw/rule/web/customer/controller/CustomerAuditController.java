@@ -137,16 +137,20 @@ public class CustomerAuditController {
                 WhiteList whitelist = (WhiteList)whiteList.get(0);
                 int periods = Integer.valueOf(order.get("periods").toString());//期数
                 int latesPay = Integer.valueOf(whitelist.getLatestPay());//应发工资
+                amountAdvice = latesPay;
                 if(StringUtils.isNotBlank(whitelist.getLocalMonthlyMinWage())) {
                     int localMonthlyMinWage = Integer.valueOf(whitelist.getLocalMonthlyMinWage());//最低工资标准
-                    amountAdvice =  (new Double(((latesPay - localMonthlyMinWage * periods) * 0.8))).intValue();
+                    amountAdvice =  (new Double(((latesPay - localMonthlyMinWage * periods)))).intValue();
+                    if(amountAdvice < 0) {
+                        amountAdvice = 0;
+                    }
                 }
             }
         }
 
         order.put("amountAdvice",amountAdvice);
         List linkmanList = customerService.getCustomerLinkMan(customerId);
-        //TODO 需要获取建议额度［应发工资－最低日工资标准＊期数（日）］＊80%
+        //TODO 需要获取建议额度［应发工资－最低日工资标准＊期数（日）］
         modelAndView.addObject("order",order);
         modelAndView.addObject("customer",customer);
         modelAndView.addObject("linkmanList",linkmanList);

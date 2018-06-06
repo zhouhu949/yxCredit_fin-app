@@ -185,7 +185,7 @@
         // for(var i=1;i<=newRow;i++){
         //     ul.append("<li class='ant-pagination-item ant-pagination-item-1 ant-pagination-item-active' data-reactid ='395' onclick='operator"+recordType+"Page("+i+")'>"+i+"</li>");//动态生成
         // }
-        ul.append("<span  class='nextPage' data-reactid ='395' onclick='operator"+recordType+"NextPage()'>下一步</span>");//动态生成
+        ul.append("<span  class='nextPage' data-reactid ='395' onclick='operator"+recordType+"NextPage()'>下一页</span>");//动态生成
 
     }
 
