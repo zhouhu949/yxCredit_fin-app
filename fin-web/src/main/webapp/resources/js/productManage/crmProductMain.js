@@ -568,7 +568,7 @@ function updataProStatus(Id,flag,me,status){
 //产品详情的查看修改或者新增
 function showFormView(id,parentId,flag,add,me,type){
      console.log("flag:"+flag+"~~"+"add:"+add);
-    //debugger
+    debugger
     // var a = $('#product_type').val();
     // if(type=='undefined'){
     //     type = $('#product_type').val();
@@ -713,7 +713,7 @@ function showFormView(id,parentId,flag,add,me,type){
 
                     }else{//编辑"../"+dataList.imgUrl
                         $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly");
-                        $("#cpName").val(productType.pro_name).attr("readOnly",false).css("border","1px solid #ccc");
+                        $("#cpName").val(productType.pro_name).attr("readOnly",true).css("border","1px solid #ccc");
                          $("#periods").val(dataList.periods).attr("readOnly",false).css("border","1px solid #ccc");
                         // $("#contractRate").val(dataList.contractRate).attr("readOnly",false).css("border","1px solid #ccc");
                         // $("#multipleRate").val(dataList.multipleRate).attr("readOnly",false).css("border","1px solid #ccc");
@@ -789,8 +789,8 @@ function showFormView(id,parentId,flag,add,me,type){
                     // $("#contractViolateRemark").css("border","1px solid #ccc");
                     // $("#bailRemark").css("border","1px solid #ccc");
                      //产品序列 产品名称
-                     $("#cpNumber").val($("#cpNumber1").val()).attr("readOnly","readOnly");
-                     $("#cpName").val(productType.pro_name);
+                     $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly");
+                     $("#cpName").val(productType.pro_name).attr("readOnly",true);
                      $("#localImag img").attr("src","");
                      $("#localImag input").val("");
                     // //清空选择方式 自定义天数输入框
