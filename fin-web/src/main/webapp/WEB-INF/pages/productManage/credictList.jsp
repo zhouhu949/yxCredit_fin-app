@@ -576,8 +576,8 @@
                                 <select id="product_term_unit" style='height: 28px;line-height:14px; width: 163px;' name="product_term_unit">
                                     <option style="text-align: center;" value="">请选择</option>
                                     <option style="text-align: center;" value="日">日</option>
-                                    <option style="text-align: center;" value="月">月</option>
-                                    <option style="text-align: center;" value="年">年</option>
+                                    <%--<option style="text-align: center;" value="月">月</option>--%>
+                                    <%--<option style="text-align: center;" value="年">年</option>--%>
                                 </select>
                             </td>
                             <td class="tdNameWidth">产品期限</td>
