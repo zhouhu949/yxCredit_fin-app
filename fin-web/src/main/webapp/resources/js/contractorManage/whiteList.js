@@ -647,6 +647,7 @@ function updateWhite(sign,id) {
                         return;
                     }
                 }*/
+                uploadFile();
                 var contractor={
                     realName: realName,
                     card:card,
