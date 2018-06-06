@@ -574,13 +574,14 @@ function getPeriods(crmProductId,productPeriods) {
             $("#productPeriods").empty();
             var selObj = $("#productPeriods");
             for (var i=0;i<resData.length;i++){
-                var product_term_min = resData[i].productTermMin;
-                var product_term_max = resData[i].productTermMax;
+                //var product_term_min = resData[i].productTermMin;
+                //var product_term_max = resData[i].productTermMax;
+                var  periods =  resData[i].periods;
                 var product_term_unit = resData[i].productTermUnit;
 
                 //debugger
                 //var text=resData[i].periods;
-                var text = product_term_min+" 至 "+product_term_max+" "+product_term_unit;
+                var text = periods+product_term_unit;
                 //var text=resData[i].periods;
                 selObj.append("<option  value='"+resData[i].id+"'>"+text+"</option>");
             }
@@ -616,13 +617,14 @@ function getPeriodsSelect() {
         $("#productPeriods").append("<option value=''>请选择</option>");
         for (var i=0;i<resData.length;i++){
             var value=resData[i].id;
-            var product_term_min = resData[i].product_term_min;
-            var product_term_max = resData[i].product_term_max;
+            //var product_term_min = resData[i].product_term_min;
+            //var product_term_max = resData[i].product_term_max;
+            var  periods =  resData[i].periods;
             var product_term_unit = resData[i].product_term_unit;
 
              //debugger
             //var text=resData[i].periods;
-            var text = product_term_min+" 至 "+product_term_max+product_term_unit;
+            var text = periods+product_term_unit;
             $("#productPeriods").append("<option name='"+text+"' value='"+value+"'>"+text+"</option>");
         }
     },"application/json",null,null,null,false);

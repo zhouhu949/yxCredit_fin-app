@@ -144,7 +144,7 @@ function renderPrd(id,flag,type){
 
                     Allhtml+="</div><div class='lcprdetail'><table><tbody><tr><td width='100'></td>";
                     Allhtml+="<td width='180' align='right'></td></tr>";//
-                    Allhtml+="<tr><td>期限</td> <td align='right'>"+result[i].productTermMin+" 至  "+result[i].productTermMax+" "+result[i].productTermUnit+"</td></tr>";///
+                    Allhtml+="<tr><td>期限</td> <td align='right'>"+result[i].periods+"  "+result[i].productTermUnit+"</td></tr>";///
                     Allhtml+="<tr><td>还款方式</td><td align='right'>一次性还本付息</td></tr>";////
                     Allhtml+="<tr><td></td><td align='right'></td></tr>";////
                     if(result[i].status=="0"){
@@ -588,7 +588,7 @@ function showFormView(id,parentId,flag,add,me,type){
      $("#file").val("");*/
     $("#cpNumber").val("").attr("readOnly",false);
     $("#cpName").val("").attr("readOnly",false);
-    // $("#periods").val("").attr("readOnly",false);
+    $("#periods").val("").attr("readOnly",false);
     // $("#contractRate").val("").attr("readOnly",false);
     // $("#multipleRate").val("").attr("readOnly",false);
     //var payment=dataList.payment;
@@ -597,9 +597,9 @@ function showFormView(id,parentId,flag,add,me,type){
     //产品期限单位
     $("#product_term_unit").val("").attr("disabled",false);
     //产品期限起始日期
-    $("#product_term_min").val("").attr("readOnly",false);
-    //产品期限结束日期
-    $("#product_term_max").val("").attr("readOnly",false);
+    // $("#product_term_min").val("").attr("readOnly",false);
+    // //产品期限结束日期
+    // $("#product_term_max").val("").attr("readOnly",false);
     //申请额度最小值
     $("#apply_quota_min").val("").attr("readOnly",false);
     //申请额度最大值
@@ -647,7 +647,7 @@ function showFormView(id,parentId,flag,add,me,type){
                     if(flag==0){//查看
                         $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly").css("border","none");
                         $("#cpName").val(productType.pro_name).attr("readOnly","readOnly").css("border","none");
-                        //$("#periods").val(dataList.periods).attr("readOnly","readOnly").css("border","none");
+                        $("#periods").val(dataList.periods).attr("readOnly","readOnly").css("border","none");
                        // $("#contractRate").val(dataList.contractRate).attr("readOnly","readOnly").css("border","none");
                         //$("#multipleRate").val(dataList.multipleRate).attr("readOnly","readOnly").css("border","none");
                         var payment=dataList.payment;
@@ -656,9 +656,9 @@ function showFormView(id,parentId,flag,add,me,type){
                         var productTermUnit = dataList.productTermUnit;
                         $("#product_term_unit").attr("value",productTermUnit).attr("disabled",true).css("border","none");
                         //产品期限起始日期
-                        $("#product_term_min").val(dataList.productTermMin).attr("readOnly","readOnly").css("border","none");
+                        //$("#product_term_min").val(dataList.productTermMin).attr("readOnly","readOnly").css("border","none");
                         //产品期限结束日期
-                        $("#product_term_max").val(dataList.productTermMax).attr("readOnly","readOnly").css("border","none");
+                        //$("#product_term_max").val(dataList.productTermMax).attr("readOnly","readOnly").css("border","none");
                         //申请额度最小值
                         $("#apply_quota_min").val(dataList.applyQuotaMin).attr("readOnly","readOnly").css("border","none");
                         //申请额度最大值
@@ -714,7 +714,7 @@ function showFormView(id,parentId,flag,add,me,type){
                     }else{//编辑"../"+dataList.imgUrl
                         $("#cpNumber").val(productType.pro_number).attr("readOnly","readOnly");
                         $("#cpName").val(productType.pro_name).attr("readOnly",false).css("border","1px solid #ccc");
-                        // $("#periods").val(dataList.periods).attr("readOnly",false).css("border","1px solid #ccc");
+                         $("#periods").val(dataList.periods).attr("readOnly",false).css("border","1px solid #ccc");
                         // $("#contractRate").val(dataList.contractRate).attr("readOnly",false).css("border","1px solid #ccc");
                         // $("#multipleRate").val(dataList.multipleRate).attr("readOnly",false).css("border","1px solid #ccc");
                         var payment=dataList.payment;
@@ -723,9 +723,9 @@ function showFormView(id,parentId,flag,add,me,type){
                         var productTermUnit = dataList.productTermUnit;
                         $("#product_term_unit").attr("value",productTermUnit).attr("disabled",false).css("border","1px solid #ccc");
                         //产品期限起始日期
-                        $("#product_term_min").val(dataList.productTermMin).attr("readOnly",false).css("border","1px solid #ccc");
+                       // $("#product_term_min").val(dataList.productTermMin).attr("readOnly",false).css("border","1px solid #ccc");
                         //产品期限结束日期
-                        $("#product_term_max").val(dataList.productTermMax).attr("readOnly",false).css("border","1px solid #ccc");
+                       // $("#product_term_max").val(dataList.productTermMax).attr("readOnly",false).css("border","1px solid #ccc");
                         //申请额度最小值
                         $("#apply_quota_min").val(dataList.applyQuotaMin).attr("readOnly",false).css("border","1px solid #ccc");
                         //申请额度最大值
@@ -835,6 +835,17 @@ function showFormView(id,parentId,flag,add,me,type){
             //         return;
             //     }
             // }
+            if($("#periods").val() === ""){
+                layer.msg("请输入产品期限！",{time:2000});
+                return;
+            }else if($("#periods").val()!=""){
+                var reg=/^[0-9]*$/;
+                var valTest=reg.test($("#periods").val());
+                if(!valTest){
+                    layer.msg("产品期限只能输入数字！",{time:2000});
+                    return;
+                }
+            }
             // if($("#contractRate").val()!=""){
             //     var reg=/^[0-9]+(.[0-9]{0,4})?$/;
             //     var valTest=reg.test($("#contractRate").val());
@@ -861,9 +872,9 @@ function showFormView(id,parentId,flag,add,me,type){
                 return;
             }else if($("#apply_quota_min").val()!=""){
                 var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#product_term_min").val());
+                var valTest=reg.test($("#apply_quota_min").val());
                 if(!valTest){
-                    layer.msg("只能输入数字！",{time:2000});
+                    layer.msg("最小申请额度只能输入数字！",{time:2000});
                     return;
                 }
             }
@@ -876,9 +887,9 @@ function showFormView(id,parentId,flag,add,me,type){
                 return;
             }else if($("#apply_quota_max").val()!=""){
                 var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#product_term_max").val());
+                var valTest=reg.test($("#apply_quota_max").val());
                 if(!valTest){
-                    layer.msg("只能输入数字！",{time:2000});
+                    layer.msg("最大申请额度只能输入数字！",{time:2000});
                     return;
                 }
                 if(parseInt($("#apply_quota_max").val()) < parseInt($("#apply_quota_min").val())){
@@ -890,37 +901,37 @@ function showFormView(id,parentId,flag,add,me,type){
              * @create 韩梅生
              * 申请期限最小天数
              */
-            if($("#product_term_min").val() === ""){
-                layer.msg("请输入申请期限最小天数！",{time:2000});
-                return;
-            }else if($("#product_term_min").val()!=""){
-                var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#product_term_min").val());
-                if(!valTest){
-                    layer.msg("只能输入数字！",{time:2000});
-                    return;
-                }
-
-            }
+            // if($("#product_term_min").val() === ""){
+            //     layer.msg("请输入申请期限最小天数！",{time:2000});
+            //     return;
+            // }else if($("#product_term_min").val()!=""){
+            //     var reg=/^[0-9]*$/;
+            //     var valTest=reg.test($("#product_term_min").val());
+            //     if(!valTest){
+            //         layer.msg("只能输入数字！",{time:2000});
+            //         return;
+            //     }
+            //
+            // }
             /**
              * @create 韩梅生
              * 申请期限最大天数
              */
-            if($("#product_term_max").val() === ""){
-                layer.msg("请输入申请期限最大天数！",{time:2000});
-                return;
-            }else if($("#product_term_max").val()!=""){
-                var reg=/^[0-9]*$/;
-                var valTest=reg.test($("#product_term_max").val());
-                if(!valTest){
-                    layer.msg("只能输入数字！",{time:2000});
-                    return;
-                }
-                if(parseInt($("#product_term_max").val()) < parseInt($("#product_term_max").val())){
-                    layer.msg("最大申请期限不能小于最小申请期限！",{time:2000});
-                    return;
-                }
-            }
+            // if($("#product_term_max").val() === ""){
+            //     layer.msg("请输入申请期限最大天数！",{time:2000});
+            //     return;
+            // }else if($("#product_term_max").val()!=""){
+            //     var reg=/^[0-9]*$/;
+            //     var valTest=reg.test($("#product_term_max").val());
+            //     if(!valTest){
+            //         layer.msg("只能输入数字！",{time:2000});
+            //         return;
+            //     }
+            //     if(parseInt($("#product_term_max").val()) < parseInt($("#product_term_max").val())){
+            //         layer.msg("最大申请期限不能小于最小申请期限！",{time:2000});
+            //         return;
+            //     }
+            // }
             /**
              * @create 韩梅生
              * 还款时限
