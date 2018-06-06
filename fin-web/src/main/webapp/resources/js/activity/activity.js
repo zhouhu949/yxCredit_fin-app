@@ -177,7 +177,6 @@ function queryList(){
                         $('#activity_url').val('');
                         $('#activity_stated').val('');
                         $('#activity_content').val('');
-                        $("#preview").attr("src",'');
                         $("#prompt ").css("display"," block");
                         $("#file").css("display"," block");
 
@@ -243,7 +242,8 @@ function queryList(){
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
                                         layer.closeAll();
-                                        g_userManage.tableUser.ajax.reload();
+                                        location.reload();
+                                        //g_userManage.tableUser.ajax.reload();
                                     })
                                 }
                             },"application/json"
@@ -365,7 +365,6 @@ function queryList(){
                                     $("#priority").removeAttr("disabled");
                                     debugger
                                     var data = data.data;
-                                  /*  $("#preview").attr("src",'');*/
                                     $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
                                     $('#activity_titled').val(data.activity_title);
                                     $('#activity_url').val(data.activity_url);
@@ -470,7 +469,8 @@ function queryList(){
                                 if(data.code==0){
                                     layer.msg(data.msg,{time:2000},function(){
                                         layer.closeAll();
-                                        g_userManage.tableUser.ajax.reload();
+                                        location.reload();
+                                        //g_userManage.tableUser.ajax.reload();
                                     })
                                 }
                             },"application/json"
@@ -487,6 +487,7 @@ function queryList(){
                         if(data.code==0){
                             layer.msg(data.msg,{time:2000},function(){
                                 layer.closeAll();
+
                                 g_userManage.tableUser.ajax.reload();
                             })
                         }
