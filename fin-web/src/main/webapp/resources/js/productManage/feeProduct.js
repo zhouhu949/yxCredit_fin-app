@@ -26,7 +26,7 @@ $(function (){
             return
         }
         var yuelilv=(nianlilv/12).toFixed(2);
-        var rililv=(nianlilv/365).toFixed(2);
+        var rililv=(nianlilv/365).toFixed(4);
         $("#yuelixi").val(yuelilv);
         $("#li_xi").val(rililv);
     });
