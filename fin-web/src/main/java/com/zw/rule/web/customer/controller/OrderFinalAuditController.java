@@ -242,7 +242,7 @@ public class OrderFinalAuditController {
 
 
 
-    @PostMapping("auditOrder")
+   /* @PostMapping("auditOrder")
     @ResponseBody
     public Response auditOrder(@RequestBody Map map) throws Exception {
         Response response = new Response();
@@ -276,7 +276,7 @@ public class OrderFinalAuditController {
             }
         }
         return response;
-    }
+    }*/
 
     @PostMapping("getMessage")
     @ResponseBody

@@ -100,24 +100,26 @@ function clickNextButton(){
         content : $('#preQuotaDialog'),
         btn : [ '提交', '取消' ],
         yes:function(index, layero){
-            var reguser = /^(([0-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
-            var user = $("#predictPrice").val();
+            var numReg = /[1-9]+[0-9]*/;
+            var predictPrice = $("#predictPrice").val();
             var applayMoney = $("#applayMoney").text();
-            if (reguser.test(user) == false) {
-                if (user!='0'){
-                    layer.alert("审批额度格式有误！", {icon: 2, title: '操作提示'});
-                    return
-                }
+            if (!numReg.test(predictPrice)) {
+                layer.alert("审批金额格式有误！", {icon: 2, title: '操作提示'});
+                return
             }
-            if(parseFloat(applayMoney) < parseFloat(user)) {
+            if(Number(applayMoney) < Number(predictPrice)) {
                 layer.alert("审批金额不能超过申请金额！", {icon: 2, title: '操作提示'});
                 return
             }
-            var predictPrice=parseFloat(user);
-            var orderId = $("#orderId").val();
-            var approveSuggestion = $("#approveSuggestion").val();
-            var customerId = $("#newCustomerId").val();
-            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId,loanAmount:predictPrice}) , function (result) {
+
+            var paramMap = {};
+            paramMap.loanAmount = predictPrice;
+            paramMap.applayMoney = applayMoney;
+            paramMap.periods = $("#periods").text();
+            paramMap.id = $("#orderId").val();
+            paramMap.approveSuggestion = $("#approveSuggestion").val();
+            paramMap.customerId = $("#customerId").val();
+            Comm.ajaxPost('customerAudit/approvedSP',JSON.stringify(paramMap) , function (result) {
                 layer.msg(result.msg,{time:2000},function(){
                     // layer.closeAll();
                     var index = parent.layer.getFrameIndex(window.name);
@@ -139,14 +141,19 @@ function reasonClick(){
         content : $('#approvalRefused'),
         btn : [ '提交', '取消' ],
         yes:function(index, layero){
-            var orderId = $("#orderId").val();
             var approveSuggestion = $("#remark").val();
-            if(! approveSuggestion){
+            if(!approveSuggestion){
                 layer.msg("拒绝原因不能为空");
                 return;
             }
-            var customerId = $("#customerId").val();
-            Comm.ajaxPost('customerAudit/approvalRefusedSP',JSON.stringify({id:orderId,approveSuggestion:approveSuggestion,customerId:customerId}) , function (result) {
+            var paramMap = {};
+            paramMap.applayMoney = $("#applayMoney").text();
+            paramMap.periods = $("#periods").text();
+            paramMap.id = $("#orderId").val();
+            paramMap.customerId = $("#customerId").val();
+            paramMap.approveSuggestion = approveSuggestion;
+
+            Comm.ajaxPost('customerAudit/approvalRefusedSP',JSON.stringify(paramMap) , function (result) {
                 layer.msg(result.msg,{time:2000},function(){
                     // layer.closeAll();
                     var index = parent.layer.getFrameIndex(window.name);

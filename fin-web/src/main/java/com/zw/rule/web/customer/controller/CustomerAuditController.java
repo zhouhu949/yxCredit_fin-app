@@ -24,6 +24,7 @@ import com.zw.rule.ruleResult.po.RuleResult;
 import com.zw.rule.ruleResult.service.RuleResultService;
 import com.zw.rule.service.DictService;
 import com.zw.rule.util.CommonUtil;
+import com.zw.rule.util.Constants;
 import com.zw.rule.util.NonceUtil;
 import com.zw.rule.util.flow.service.FlowComService;
 import com.zw.rule.web.aop.annotaion.WebLogger;
@@ -40,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.logging.Logger;
 
 /******************************************************
  *Copyrights @ 2017，zhiwang  Co., Ltd.
@@ -184,7 +186,7 @@ public class CustomerAuditController {
         return new Response(pageInfo);
     }
 
-    @PostMapping("approved")
+    /*@PostMapping("approved")
     @ResponseBody
     @WebLogger("总部审核通过")
     public Response approved(@RequestBody String str) throws Exception{
@@ -215,7 +217,7 @@ public class CustomerAuditController {
             HttpClientUtil.getInstance().sendHttpGet(url);
         }catch (Exception e){}
         return response;
-    }
+    }*/
 
     @PostMapping("backOrder")
     @ResponseBody
@@ -235,61 +237,16 @@ public class CustomerAuditController {
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
         map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
-        map.put("orderState","3");//待签约
+        map.put("orderState",Constants.ORDER_AUDIT_PASS_STATE);//待签约
         map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
         map.put("contractAmount",map.get("loanAmount"));//合同金额
-        orderService.updateOrder(map);
         map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
         map.put("approType","pass");
-        orderService.addApproveRecord(map);
-        Map<String,Object> logsMap=new HashedMap();
-        logsMap.put("orderId",map.get("id"));
-        logsMap.put("handlerId",user.getUserId());
-        logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","2");
-        logsMap.put("tache","风控审核");
-        logsMap.put("changeValue","风控审核通过");
-        orderService.addOrderLogs(logsMap);
-        Response response = new Response();
-        response.setMsg("审核通过");
-        /*//调app接口推送
-        try {
-            PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-            String url =prop.get("appHGUrlSP")+"/orderMessage/orderPushMessage?state=3&orderId="+map.get("id");
-            HttpClientUtil.getInstance().sendHttpGet(url);
-        }catch (Exception e){}*/
-        return response;
-    }
-    @PostMapping("approvalRefused")
-    @ResponseBody
-    @WebLogger("总部审核拒绝")
-    public Response approvalRefused(@RequestBody String str)throws Exception{
-        User user = (User) UserContextUtil.getAttribute("currentUser");
-        Map map = JSONObject.parseObject(str);
-        map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
-        map.put("state","6");
-        orderService.updateOrderState(map);
-        map.put("result","0");
-        map.put("handlerId",user.getUserId());
-        map.put("handlerName",user.getTrueName());
-        map.put("type","1");
-        map.put("nodeId","5");//5是总部审核
-        orderService.addApproveRecord(map);
-        /*Map<String,Object> logsMap=new HashedMap();
-        logsMap.put("orderId",map.get("id"));
-        logsMap.put("handlerId",user.getUserId());
-        logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","6");
-        logsMap.put("tache","总部审核");
-        logsMap.put("changeValue","总部审核拒绝");
-        orderService.addOrderLogs(logsMap);*/
-        Response response = new Response();
-        response.setMsg("审核拒绝");
-        return response;
+        return orderService.updateOrder(map);
     }
 
     @PostMapping("approvalRefusedSP")
@@ -298,9 +255,7 @@ public class CustomerAuditController {
     public Response approvalRefusedSP(@RequestBody String str)throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
-        map.put("orderState","8");//申请失败
-        orderService.updateOrder(map);
-
+        map.put("orderState",Constants.ORDER_AUDIT_FAILURE_STATE);//申请失败
         map.put("result","0");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
@@ -308,18 +263,7 @@ public class CustomerAuditController {
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
         map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
-        orderService.addApproveRecord(map);
-        Map<String,Object> logsMap=new HashedMap();
-        logsMap.put("orderId",map.get("id"));
-        logsMap.put("handlerId",user.getUserId());
-        logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","8");
-        logsMap.put("tache","风控审核");
-        logsMap.put("changeValue","风控审核拒绝");
-        orderService.addOrderLogs(logsMap);
-        Response response = new Response();
-        response.setMsg("审核拒绝");
-        return response;
+        return orderService.updateOrder(map);
     }
     @GetMapping("listPagePast")
     public String list1(){
@@ -360,7 +304,7 @@ public class CustomerAuditController {
         return response;
     }
 
-    @PostMapping("audit")
+   /* @PostMapping("audit")
     @ResponseBody
     @WebLogger("审核客户")
     public Response audit(@RequestBody Map map){
@@ -373,7 +317,7 @@ public class CustomerAuditController {
             response.setMsg("审核失败！");
         }
         return response;
-    }
+    }*/
 
     @PostMapping("addInvestigation")
     @ResponseBody

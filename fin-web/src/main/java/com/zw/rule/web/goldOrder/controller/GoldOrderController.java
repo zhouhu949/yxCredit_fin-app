@@ -232,58 +232,6 @@ public class GoldOrderController {
         return response;
     }
 
-    @PostMapping("approved")
-    @ResponseBody
-    @WebLogger("总部审核通过")
-    public Response approved(@RequestBody String str) throws Exception{
-        User user = (User) UserContextUtil.getAttribute("currentUser");
-        Map map = JSONObject.parseObject(str);
-        map.put("state","5");
-        orderService.updateOrderState(map);
-        map.put("result","1");
-        map.put("handlerId",user.getUserId());
-        map.put("handlerName",user.getTrueName());
-        map.put("type","1");
-        map.put("nodeId","5");//5是总部审核
-        orderService.addApproveRecord(map);
-        //String taskNodeId = flowComService.getTaskNodeId(map.get("id").toString());
-        //flowComService.CommitTask((String)map.get("id"),user.getUserId(),4,taskNodeId,"",null);
-        Response response = new Response();
-        response.setMsg("审核通过");
-        //调app接口推送
-        try {
-            PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-            String url =prop.get("appHGUrl")+"/orderMessage/orderPushMessage?state=5&orderId="+map.get("id");
-            HttpClientUtil.getInstance().sendHttpGet(url);
-        }catch (Exception e){}
-        return response;
-    }
-
-    @PostMapping("approvalRefused")
-    @ResponseBody
-    @WebLogger("总部审核拒绝")
-    public Response approvalRefused(@RequestBody String str)throws Exception{
-        User user = (User) UserContextUtil.getAttribute("currentUser");
-        Map map = JSONObject.parseObject(str);
-        map.put("state","6");
-        orderService.updateOrderState(map);
-        //orderService.orderMsgDealWith((String) map.get("id"),"0",(String) map.get("userId"),"");
-        map.put("result","0");
-        map.put("handlerId",user.getUserId());
-        map.put("handlerName",user.getTrueName());
-        map.put("type","1");
-        map.put("nodeId","5");//5是总部审核
-        orderService.addApproveRecord(map);
-//        String taskNodeId = flowComService.getTaskNodeId(map.get("id").toString());
-//        flowComService.CommitTask((String)map.get("id"),user.getUserId(),3,taskNodeId,"",null);
-        Response response = new Response();
-        response.setMsg("审核拒绝");
-        PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-        String url =prop.get("appHGUrl")+"/orderMessage/orderPushMessage?state=6&orderId="+map.get("id");
-        HttpClientUtil.getInstance().sendHttpGet(url);
-        return response;
-    }
-
     @PostMapping("automation")
     @ResponseBody
     @WebLogger("转自动化审核")

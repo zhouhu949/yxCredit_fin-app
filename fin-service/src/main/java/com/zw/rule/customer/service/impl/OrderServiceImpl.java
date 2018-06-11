@@ -3,12 +3,15 @@ package com.zw.rule.customer.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zw.UploadFile;
-import com.zw.base.util.DateUtils;
-import com.zw.base.util.TraceLoggerUtil;
+import com.zw.base.util.*;
+import com.zw.constants.CommonConstants;
 import com.zw.jiguang.JiGuangUtils;
 import com.zw.rule.SendMessage.service.SendMessageFactory;
+import com.zw.rule.api.sms.service.ISmsApiService;
+import com.zw.rule.api.sortmsg.MsgRequest;
 import com.zw.rule.approveRecord.po.OrderOperationRecord;
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
+import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.*;
 import com.zw.rule.customer.service.OrderService;
 import com.zw.rule.mapper.approveRecord.ProcessApproveRecordMapper;
@@ -23,6 +26,8 @@ import com.zw.rule.po.SysDepartment;
 import com.zw.rule.po.User;
 import com.zw.rule.service.AppDictService;
 import com.zw.rule.task.po.ProcessTaskNode;
+import com.zw.rule.util.Constants;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +36,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /******************************************************
@@ -54,6 +58,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
     @Resource
     private TaskMsgMapper taskMsgMapper;
+    @Resource
+    private CustomerMapper customerMapper;
     @Resource
     private ProcessApproveRecordMapper processApproveRecordMapper;
     @Resource
@@ -84,6 +90,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private ServicePackageOrderMapper servicePackageOrderMapper;
+
+    @Autowired
+    private ISmsApiService smsApiService;
 
     @Override
     public Order selectById(String id) {
@@ -146,9 +155,19 @@ public class OrderServiceImpl implements OrderService {
 //        taskMsgMapper.updateTaskState(processTask);
     }
 
+    @Transactional
     @Override
-    public void updateOrder(Map map) {
-        orderMapper.updateOrderStatus(map);
+    public Response updateOrder(Map map) {
+        Response response = orderPushAndSend(map);
+        try {
+            if(!CommonConstants.FAIL.equals(response.getCode())) {
+                orderMapper.updateOrderStatus(map);
+                addApproveRecord(map);
+            }
+        }catch (Exception e){
+            return Response.error();
+        }
+        return response;
     }
 
     @Override
@@ -156,9 +175,83 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.getLoanCustomerList(map);
     }
 
-    @Transactional
-    @Override
-    public Boolean addApproveRecord(Map map) {
+
+    /**
+     * 订单推送/短信
+     * 订单状态【1.待申请、2.审核中、3.待签约、4.待放款、5.待还款、6.已结清、7.已取消、8.审批拒绝，9：已放弃】
+     */
+    private Response orderPushAndSend(Map map){
+        //根据客户id获取订单手机号
+        try {
+            Customer customer = customerMapper.selectByPrimaryKey(map.get("customerId").toString());
+            if(null != customer) {
+                String orderState = map.get("orderState").toString();
+                AppMessage message = new AppMessage();
+                message.setOrderId(map.get("id").toString());
+                String currentDate = DateUtils.getNowDate();
+                String uuid = GeneratePrimaryKeyUtils.getUUIDKey();
+                message.setId(uuid);
+                message.setAlterTime(currentDate);
+                message.setCreatTime(currentDate);
+                message.setUserId(customer.getUserId());
+
+                message.setState(Constants.MESSAGE_UNREAD_STATE);//未读
+                message.setPushState(Constants.MESSAGE_PUSH_FAILURE_STATE);
+                message.setOrderState(orderState);
+                message.setMsgType("1");
+                message.setUpdateState("1");
+                String registration_id="1111";
+                String messageTitle = "";
+                String messageContent = "";
+                switch (orderState){
+                    case Constants.ORDER_AUDIT_PASS_STATE://审核通过
+                        messageContent = dictService.getDictInfo("消息内容","SPTG");
+                        messageTitle = "审批通过";
+                        break;
+                    case  Constants.ORDER_AUDIT_FAILURE_STATE://审核拒绝
+                        messageContent = dictService.getDictInfo("消息内容","SPJJ");
+                        messageTitle = "审批拒绝";
+                        break;
+                    case  Constants.ORDER_AUDIT_LOAN_STATE://放款通过
+                        messageContent = dictService.getDictInfo("消息内容","FKCG");
+                        messageTitle = "放款成功";
+                        break;
+                }
+                messageContent = TemplateUtils.getContent(messageContent, map);
+                //激光推送
+                if(JiGuangUtils.alias(messageTitle,messageContent,registration_id)){
+                    message.setPushState(Constants.MESSAGE_PUSH_SUCCESS_STATE);
+                }
+                MsgRequest msgRequest = new MsgRequest();
+                msgRequest.setContent(messageContent);
+                msgRequest.setPhone(customer.getTel());
+                //发送手机短信
+                String result = smsApiService.sendSms(msgRequest);
+                if(StringUtils.isBlank(result)){
+                    return Response.error();
+                }
+                Response response = JSONObject.parseObject(result, Response.class);
+                if(Constants.SMS_FAILURE_STATE.equals(response.getRes_code())) {
+                    return Response.error(CommonConstants.FAIL,response.getRes_msg());
+                }
+                message.setTitle(messageTitle);
+                message.setContent(messageContent);
+                messageMapper.insert(message);
+            } else {
+                return Response.error(CommonConstants.FAIL,"客户不存在");
+            }
+        } catch (Exception e) {
+            return Response.error();
+        }
+        return Response.ok("操作成功",null);
+    }
+
+    /**
+     * 更新审核操作日志
+     * @param map
+     * @return
+     */
+    private Boolean addApproveRecord(Map map) {
         OrderOperationRecord orderOperationRecord = new OrderOperationRecord();
         String uuid = UUID.randomUUID().toString();
         orderOperationRecord.setId(uuid);
@@ -175,6 +268,9 @@ public class OrderServiceImpl implements OrderService {
         orderOperationRecord.setOrderId(map.get("id").toString());//订单id
         orderOperationRecord.setStatus(1);//1有效，0无效
         int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
+        if(0 > num) {
+            return false;
+        }
         return true;
     }
     @Override
@@ -612,25 +708,7 @@ public class OrderServiceImpl implements OrderService {
         Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
         Map contractorMap = orderMapper.getContractorList(orderId);
         if(null != serviceFeeMap && null != contractorMap) {
-           // String serviceFeeStr = serviceFeeMap.get("serviceFee").toString();
             BigDecimal dateRate = new BigDecimal(serviceFeeMap.get("dateRate").toString());//日利率
-          //  BigDecimal serviceFeeRate;
-           /* String serviceFeeArray [] = serviceFeeStr.split(",");
-            if(null != serviceFeeArray && serviceFeeArray.length > 0) {
-                for (int i = 0; i< serviceFeeArray.length; i++){
-                    if(serviceFeeArray[i].equals(contractorMap.get("contractorName").toString())) {
-                       // serviceFeeRate = new BigDecimal(serviceFeeArray[i+1]).divide(new BigDecimal(100));
-                        String periods = contractorMap.get("periods").toString();//期限（日）
-                        //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
-                        *//*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*//*
-                        //还款金额//应还金额＝放款金额＋日利息＊合同金额＊借款期限（日）
-                        String repayMoney = (((dateRate.divide(new BigDecimal(100))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
-                        orderMap.put("repayMoney",repayMoney);//还款金额
-                        Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
-                        orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
-                    }
-                }
-            }*/
             String periods = contractorMap.get("periods").toString();//期限（日）
             //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
             /*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*/
@@ -701,9 +779,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public String orderMsgDealWith(String order_id,String order_state,String user_id,String channel) throws  Exception{
-        AppUser userInfo = userMapper.selectByPrimaryKey(user_id);
+        /*AppUser userInfo = userMapper.selectByPrimaryKey(user_id);
         String registration_id = userInfo.getRegistrationId();
-        String sql;
         String id = UUID.randomUUID().toString();
         String cont;
         String push;
@@ -798,7 +875,7 @@ public class OrderServiceImpl implements OrderService {
                 messageMapper.updateState(map);
                 messageMapper.insert(message);
                 break;
-        }
+        }*/
         return null;
     }
     //获取订单权限
@@ -937,4 +1014,20 @@ public class OrderServiceImpl implements OrderService {
     public List findWindControlAuditList(Map map) {
         return orderMapper.findWindControlAuditList(map);
     }
+
+    // 组织参数
+    private Map<String, String> organizeData(Map map,String mobile, String messageType) {
+        Map<String, String> mewMap = new HashMap<String, String>();
+        if (messageType.equals(Constants.ORDER_AUDIT_PASS_STATE) || messageType.equals(Constants.ORDER_AUDIT_LOAN_STATE)) {//订单审核通过或订单放款成功
+            map.put("applayMoney", map.get("applayMoney").toString());//申请金额
+            map.put("PERIODS", map.get("periods").toString());//期限
+            map.put("loanAmount", map.get("loanAmount").toString());//批复额度
+        } else if (messageType.equals(Constants.ORDER_AUDIT_FAILURE_STATE)) {//订单审核失败
+            map.put("applayMoney", map.get("applayMoney").toString());//申请金额
+            map.put("PERIODS$", map.get("periods").toString());//期限
+            /*map.put("#service_phone#", "17621035925");*///联系电话
+        }
+        return mewMap;
+    }
+
 }

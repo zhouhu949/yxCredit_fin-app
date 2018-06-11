@@ -1,8 +1,10 @@
 package com.zw.rule.core;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.zw.constants.CommonConstants;
 import com.zw.rule.mybatis.page.Page;
+import org.apache.commons.lang.StringUtils;
 
 public class Response implements ResponseCode {
 
@@ -12,18 +14,22 @@ public class Response implements ResponseCode {
 
     private Object result;//用于兼容老的服务字段
 
+    private String res_code;//短信接口响应
+
+    private String res_msg;//短信接口响应
+
     private Page page;
 
     //默认为0表示响应正常
-    private int code = CommonConstants.SUCCESS;
 
+    private int code = CommonConstants.SUCCESS;
     private String msg;
     /**
      * 扩展异常方法===============================================================
      * create by 陈清玉
      */
     public static Response error() {
-        return error(CommonConstants.FAIL, "未知异常，请联系管理员");
+        return error(CommonConstants.FAIL, "系统异常，请联系系统管理员！");
     }
 
     public static Response error(String msg) {
@@ -113,5 +119,21 @@ public class Response implements ResponseCode {
 
     public void setResult(Object result) {
         this.result = result;
+    }
+
+    public String getRes_code() {
+        return res_code;
+    }
+
+    public void setRes_code(String res_code) {
+        this.res_code = res_code;
+    }
+
+    public String getRes_msg() {
+        return res_msg;
+    }
+
+    public void setRes_msg(String res_msg) {
+        this.res_msg = res_msg;
     }
 }

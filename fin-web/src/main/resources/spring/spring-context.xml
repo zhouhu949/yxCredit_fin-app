@@ -28,6 +28,23 @@
         <property name="requestType" value="${asset.type}"/>
     </bean>
 
+    <!-- 手机短信配置BEAN create by luochaofang-->
+    <bean id="msgSettings" class="com.zw.rule.api.sortmsg.MsgSettings">
+        <property name="type" value="${sms.type}"/>
+        <property name="channelUniqId" value="${sms.channelUniqId}"/>
+        <property name="requestType" value="${sms.requestType}"/>
+        <property name="requestUrl" value="${sms.url}"/>
+        <property name="timeOut" value="${sms.timeOut}"/>
+    </bean>
+
+    <!-- 碧友信加密BEAN create by luochaofang-->
+    <bean id="byxSettings" class="com.zw.rule.api.common.BYXSettings">
+        <property name="appKey" value="${byx.appKey}"/>
+        <property name="appSecrect" value="${byx.appSecrect}"/>
+        <property name="desKey" value="${byx.desKey}"/>
+        <property name="vi" value="${byx.iv}"/>
+    </bean>
+
     <import resource="spring-mybatis.xml"/>
 
     <import resource="spring-shiro.xml"/>

@@ -1,6 +1,7 @@
 package com.zw.rule.customer.service;
 
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
+import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.CustomerMatching;
 import com.zw.rule.customer.po.Order;
 import com.zw.rule.mybatis.ParamFilter;
@@ -34,8 +35,6 @@ public interface OrderService {
     //获取满足放款信息的数据
     List getLoanCustomerList(Map map);
 
-    //通过拒绝后审批意见
-    Boolean addApproveRecord(Map map);
     //添加logs
     Boolean addOrderLogs(Map map);
     //更新订单状态
@@ -70,7 +69,7 @@ public interface OrderService {
     void updateOrderState(Map map);
 
     //跟新订单状态
-    void updateOrder(Map map);
+    Response updateOrder(Map map);
 
     /**
      * 订单信息
