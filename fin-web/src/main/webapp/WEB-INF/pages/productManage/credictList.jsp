@@ -573,18 +573,22 @@
                         <tr>
                             <td class="tdNameWidth">产品期限单位</td>
                             <td class="tdContentWidth" style="text-align: center;">
-                                <select id="product_term_unit" style='height: 28px;line-height:14px; width: 163px;' name="product_term_unit" onchange="productTermType(this.options[this.options.selectedIndex].value)">
+                                <select id="product_term_unit" style='height: 28px;line-height:14px; width: 163px;' name="product_term_unit">
                                     <option style="text-align: center;" value="">请选择</option>
                                     <option style="text-align: center;" value="日">日</option>
-                                    <option style="text-align: center;" value="月">月</option>
-                                    <option style="text-align: center;" value="年">年</option>
+                                    <%--<option style="text-align: center;" value="月">月</option>--%>
+                                    <%--<option style="text-align: center;" value="年">年</option>--%>
                                 </select>
                             </td>
                             <td class="tdNameWidth">产品期限</td>
+                            <%--<td class="tdContentWidth">--%>
+                                <%--<input type="text" class="inpText info-inpW11" name="product_term_min" id="product_term_min" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left;width:38%;">--%>
+                                <%--<span style="float: left;display: inline-block;width:7%;margin-left:3%;text-align:center;height:28px;line-height: 28px"> --</span>--%>
+                                <%--<input type="text" class="inpText info-inpW11" name="product_term_max" id="product_term_max" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left;width:38%;">--%>
+                            <%--</td>--%>
                             <td class="tdContentWidth">
-                                <input type="text" class="inpText info-inpW11" name="product_term_min" id="product_term_min" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left;width:38%;">
-                                <span style="float: left;display: inline-block;width:7%;margin-left:3%;text-align:center;height:28px;line-height: 28px"> --</span>
-                                <input type="text" class="inpText info-inpW11" name="product_term_max" id="product_term_max" datatype="/^[0-9]*$/" errormsg="只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left;width:38%;">
+                            <input type="text" style ='text-align: center' class="inpText info-inpW1" name="periods" id="periods" maxlength="20" datatype="/^[0-9]*$/" nullmsg="请输入产品期限！" style="border:none;background-color: #fff!important;text-align: right;float:left;width:73%;">
+                                <%--<input type="text"  class="inpText info-inpW11" name="periods" id="periods" datatype="/^[0-9]*$/" errormsg="哈哈只能输入数字！" style="border:none;background-color: #fff!important;text-align: center;float:left;width:73%;">--%>
                             </td>
                             <td class="tdNameWidth">申请额度</td>
                             <td class="tdContentWidth">

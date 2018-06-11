@@ -274,7 +274,7 @@
     multiple_rate, overdue_protect_day, payment,
     periods, crm_product_id, staging_services_rate,
     status, BEFORE_SERVICE_FEE_RATE, duetime_type,
-    max_day,diy_type,diy_days,product_term_unit,product_term_min,product_term_max,
+    max_day,diy_type,diy_days,product_term_unit,
     apply_quota_min,apply_quota_max,service_charge,repayment,repayment_days)
     values (#{id},#{type}, #{actualLowerLimit}, #{actualUpperLimit},
     #{bailPayMode}, #{bailRate}, #{bailRemark},
@@ -283,7 +283,7 @@
     #{multipleRate}, #{overdueProtectDay}, #{payment},
     #{periods}, #{productId}, #{stagingServicesRate},
     #{status}, #{beforeServiceFeeRate}, #{duetimeType},
-    #{maxDay},#{diyType},#{diyDays},#{productTermUnit},#{productTermMin},#{productTermMax},
+    #{maxDay},#{diyType},#{diyDays},#{productTermUnit},
     #{applyQuotaMin},#{applyQuotaMax},#{serviceCharge},#{repayment},#{repaymentDays})
   </insert>
 
@@ -363,12 +363,7 @@
       <if test="productTermUnit != null" >
         product_term_unit = #{productTermUnit},
       </if>
-      <if test="productTermMin != null" >
-        product_term_min = #{productTermMin},
-      </if>
-      <if test="productTermMax != null" >
-        product_term_max = #{productTermMax},
-      </if>
+
       <if test="applyQuotaMin != null" >
         apply_quota_min = #{applyQuotaMin},
       </if>
