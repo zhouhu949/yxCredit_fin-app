@@ -4,6 +4,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.zw.base.util.DigestUtil;
 import com.zw.base.util.RegexUtil;
+import com.zw.rule.contractor.po.Contractor;
+import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.customer.AppUserMapper;
 import com.zw.rule.mapper.system.UserDao;
 import com.zw.rule.mapper.system.UserRoleDao;
@@ -32,6 +34,10 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private AppUserMapper appUserMapper;
+
+    @Resource
+    private ContractorMapper contractorMapper;
+
     @Override
     public List getList(ParamFilter param) {
         return userDao.findMap("getList", param.getParam(), param.getPage());
@@ -117,6 +123,9 @@ public class UserServiceImpl implements UserService {
         checkArgument((userIds != null && userIds.size() > 0), "用户编号不能为空");
         userDao.delete("deleteByUserId", userIds);
         userRoleDao.delete("deleteByUserId", userIds);
+        //Contractor contractor = new Contractor();
+
+        //contractorMapper.updateByPrimaryKeySelective();
     }
 
     @Override

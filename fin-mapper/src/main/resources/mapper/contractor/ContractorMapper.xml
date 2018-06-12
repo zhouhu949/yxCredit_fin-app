@@ -139,7 +139,7 @@
             LEFT JOIN zw_sys_user_role usro ON role.role_id = usro.role_id
             WHERE
                 role.role_name = '总包商'
-        )
+        ) and sysuser.status = 1
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >

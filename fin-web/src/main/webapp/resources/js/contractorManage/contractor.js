@@ -452,12 +452,9 @@ function asignRole(contractorId, userIdStr) {
             Comm.ajaxPost('contractorManage/bindingUser',JSON.stringify(param), function(data){
                 layer.closeAll();
                 layer.msg(data.msg,{time:2000},function () {
-                    g_contractorManage.tableUser.ajax.reload(function(){
-                        $("#userCheckBox").attr("checked",false);
-                    });
+                    g_contractorManage.tableUser.ajax.reload();
                 });
             },"application/json")
-            location.reload();
         }});
 }
 

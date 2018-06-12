@@ -88,10 +88,9 @@ public class ContractorController {
     @ResponseBody
     @PostMapping("findContractorByRoleId")
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
-        String roleName = (String) UserContextUtil.getAttribute("roleName");
-       // String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor> contractorList = contractorService.selectContractorList();
-        if("总包商".equals(roleName)) {
+        if(roleNames.contains("总包商")) {
             List<Contractor> newContractorList = new ArrayList<Contractor>();
             User  user = (User) UserContextUtil.getAttribute("currentUser");
             for(Contractor oldContractor : contractorList) {
