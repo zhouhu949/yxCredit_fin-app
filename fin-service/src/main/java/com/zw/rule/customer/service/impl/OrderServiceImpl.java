@@ -161,8 +161,22 @@ public class OrderServiceImpl implements OrderService {
         Response response = orderPushAndSend(map);
         try {
             if(!CommonConstants.FAIL.equals(response.getCode())) {
-                orderMapper.updateOrderStatus(map);
-                addApproveRecord(map);
+                if("finalMoney".equals(map.get("proveType").toString())) {
+                    Map<String, Object> orderMap = orderStateFinal(map);
+                    orderMapper.updateOrderStatus(orderMap);
+                    confirmationFinal(map);
+                    //更新客户信息
+                    Customer customer = new Customer();
+                    String contractAmount = map.get("contractAmount").toString();//订单合同金额
+                    String surplusContractAmount = map.get("surplusContractAmount").toString();//客户剩余合同金额
+                    String customerId = map.get("customerId").toString();
+                    customer.setId(customerId);
+                    customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
+                    customerMapper.updateByPrimaryKeySelective(customer);
+                } else {
+                    orderMapper.updateOrderStatus(map);
+                    addApproveRecord(map);
+                }
             }
         }catch (Exception e){
             return Response.error();
@@ -173,6 +187,54 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List getLoanCustomerList(Map map) {
         return orderMapper.getLoanCustomerList(map);
+    }
+
+    private Map<String, Object> orderStateFinal(Map map){
+        Map<String, Object> orderMap = new HashMap<String, Object>();
+        String orderId = map.get("id").toString();
+        orderMap.put("id", orderId);
+        orderMap.put("alterTime",map.get("alterTime").toString());
+        orderMap.put("orderState",map.get("orderState"));
+        String contractAmountStr = map.get("contractAmount").toString();//合同金额
+        BigDecimal contractAmount = new BigDecimal(contractAmountStr);
+        Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
+        Map contractorMap = orderMapper.getContractorList(orderId);
+        if(null != serviceFeeMap && null != contractorMap) {
+            BigDecimal dateRate = new BigDecimal(serviceFeeMap.get("dateRate").toString());//日利率
+            String periods = contractorMap.get("periods").toString();//期限（日）
+            //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
+            /*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*/
+            //还款金额//应还金额＝放款金额＋日利息＊合同金额＊借款期限（日）
+            String repayMoney = (((dateRate.divide(new BigDecimal(100))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            orderMap.put("repayMoney",repayMoney);//还款金额
+            Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
+            orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
+
+        }
+        return orderMap;
+    }
+
+    /**
+     * 放款操作日志
+     * @param map
+     * @return
+     * @throws Exception
+     */
+    private Boolean confirmationFinal(Map map) {
+        OrderOperationRecord orderOperationRecord = new OrderOperationRecord();
+        String uuid = GeneratePrimaryKeyUtils.getUUIDKey();
+        orderOperationRecord.setId(uuid);
+        orderOperationRecord.setOperationTime(map.get("alterTime").toString());
+        orderOperationRecord.setDescription("已放款");
+        orderOperationRecord.setOperationNode(Integer.parseInt(Constants.ORDER_AUDIT_LOAN_STATE));//放款审核
+        orderOperationRecord.setOperationResult(7);//放款
+        orderOperationRecord.setEmpId(map.get("handlerId").toString());
+        orderOperationRecord.setEmpName(map.get("handlerName").toString());
+        orderOperationRecord.setOrderId(map.get("id").toString());//订单id
+        orderOperationRecord.setAmount(new BigDecimal(map.get("contractAmount").toString()));
+        orderOperationRecord.setStatus(1);//1有效，0无效
+        int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
+        return true;
     }
 
 
@@ -259,7 +321,7 @@ public class OrderServiceImpl implements OrderService {
         orderOperationRecord.setOperationTime(map.get("examineTime").toString());
         orderOperationRecord.setOperationNode(3);//人工审核
         orderOperationRecord.setOperationResult(3);//拒绝
-        if(map.get("approType").toString().equals("pass")) {
+        if(map.get("proveType").toString().equals("pass")) {
             orderOperationRecord.setOperationResult(2);//通过
             orderOperationRecord.setAmount(new BigDecimal(map.get("loanAmount").toString()));//审批额度
         }
@@ -698,29 +760,6 @@ public class OrderServiceImpl implements OrderService {
             }
         }
     }
-    public void updateOrderState(Map map){
-        Map<String, Object> orderMap = new HashMap<String, Object>();
-        String orderId = map.get("id").toString();
-        orderMap.put("id", orderId);
-        orderMap.put("orderState",map.get("orderState"));
-        String contractAmountStr = map.get("contractAmount").toString();//合同金额
-        BigDecimal contractAmount = new BigDecimal(contractAmountStr);
-        Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
-        Map contractorMap = orderMapper.getContractorList(orderId);
-        if(null != serviceFeeMap && null != contractorMap) {
-            BigDecimal dateRate = new BigDecimal(serviceFeeMap.get("dateRate").toString());//日利率
-            String periods = contractorMap.get("periods").toString();//期限（日）
-            //还款金额//应还金额＝放款金额＋（日利息＋居间服务费率）＊合同金额＊借款期限（日）
-            /*String repayMoney = (((serviceFeeRate.add(dateRate.divide(new BigDecimal(100)))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();*/
-            //还款金额//应还金额＝放款金额＋日利息＊合同金额＊借款期限（日）
-            String repayMoney = (((dateRate.divide(new BigDecimal(100))).multiply(contractAmount).multiply(new BigDecimal(periods))).add(contractAmount)).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
-            orderMap.put("repayMoney",repayMoney);//还款金额
-            Date repayDate = DateUtils.getDateAfter(new Date(),Integer.parseInt(periods));
-            orderMap.put("repayDate", DateUtils.formatDate(repayDate,DateUtils.STYLE_2));
-
-        }
-        orderMapper.updateOrderStatus(orderMap);
-    }
 
     public Map<String, Object> backOrder(String orderId, User user){
         Map<String, Object> resMap = new HashMap<String, Object>();
@@ -779,103 +818,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public String orderMsgDealWith(String order_id,String order_state,String user_id,String channel) throws  Exception{
-        /*AppUser userInfo = userMapper.selectByPrimaryKey(user_id);
-        String registration_id = userInfo.getRegistrationId();
-        String id = UUID.randomUUID().toString();
-        String cont;
-        String push;
-        String title;
-        String date = DateUtils.getDateString(new Date());
-        List list ;
-        AppMessage message = new AppMessage();
-        message.setId(id);
-        message.setAlterTime(date);
-        message.setCreatTime(date);
-        message.setUserId(user_id);
-        message.setOrderId(order_id);
-        message.setState("0");
-        Map map = new HashMap();
-        switch (order_state){
-            case  "1":
-                cont = dictService.getDictInfo("消息内容","SPTG");
-                title = "审批通过";
-                push = "1";
-                if( JiGuangUtils.alias(title,cont,registration_id)){
-                    push = "0";
-                }
-                message.setTitle(title);
-                message.setContent(cont);
-                message.setPushState(push);
-                message.setOrderState("3");
-                message.setMsgType("1");
-                message.setUpdateState("1");
-                messageMapper.insert(message);
-                break;
-            case  "0":
-                list = new ArrayList();
-                cont = dictService.getDictInfo("消息内容","SPJJ");
-                title = "审批拒绝";
-                push = "1";
-                if( JiGuangUtils.alias(title,cont,registration_id)){
-                    push = "0";
-                }
-                message.setTitle(title);
-                message.setContent(cont);
-                message.setPushState(push);
-                message.setOrderState("4");
-                message.setMsgType("1");
-                message.setUpdateState("1");
-                map.put("updateState","0");
-                map.put("orderId",order_id);
-                messageMapper.updateState(map);
-                AppUser user = new AppUser();
-                user.setId(user_id);
-                user.setOrderRefusedTime(date);
-                userMapper.updateByPrimaryKeySelective(user);
-                messageMapper.insert(message);
-                break;
-            case  "2":
-                list = new ArrayList();
-                cont = dictService.getDictInfo("消息内容","KHCG");
-                title = "确认合同";
-                push = "1";
-                if( JiGuangUtils.alias(title,cont,registration_id)){
-                    push = "0";
-                }
-                message.setTitle(title);
-                message.setContent(cont);
-                message.setPushState(push);
-                message.setOrderState("7");
-                message.setMsgType("1");
-                message.setUpdateState("1");
-                map.put("updateState","0");
-                map.put("orderId",order_id);
-                messageMapper.updateState(map);
-                messageMapper.insert(message);
-                break;
-            case  "3":
-                list = new ArrayList();
-                cont = dictService.getDictInfo("消息内容","FKCG");
-                if("2".equals(channel)){
-                    cont = dictService.getDictInfo("消息内容","JXFK");
-                }
-                title = "放款成功";
-                push = "1";
-                if( JiGuangUtils.alias(title,cont,registration_id)){
-                    push = "0";
-                }
-                message.setTitle(title);
-                message.setContent(cont);
-                message.setPushState(push);
-                message.setOrderState("9");
-                message.setMsgType("1");
-                message.setUpdateState("1");
-                map.put("updateState","0");
-                map.put("orderId",order_id);
-                messageMapper.updateState(map);
-                messageMapper.insert(message);
-                break;
-        }*/
         return null;
     }
     //获取订单权限
@@ -1014,20 +956,4 @@ public class OrderServiceImpl implements OrderService {
     public List findWindControlAuditList(Map map) {
         return orderMapper.findWindControlAuditList(map);
     }
-
-    // 组织参数
-    private Map<String, String> organizeData(Map map,String mobile, String messageType) {
-        Map<String, String> mewMap = new HashMap<String, String>();
-        if (messageType.equals(Constants.ORDER_AUDIT_PASS_STATE) || messageType.equals(Constants.ORDER_AUDIT_LOAN_STATE)) {//订单审核通过或订单放款成功
-            map.put("applayMoney", map.get("applayMoney").toString());//申请金额
-            map.put("PERIODS", map.get("periods").toString());//期限
-            map.put("loanAmount", map.get("loanAmount").toString());//批复额度
-        } else if (messageType.equals(Constants.ORDER_AUDIT_FAILURE_STATE)) {//订单审核失败
-            map.put("applayMoney", map.get("applayMoney").toString());//申请金额
-            map.put("PERIODS$", map.get("periods").toString());//期限
-            /*map.put("#service_phone#", "17621035925");*///联系电话
-        }
-        return mewMap;
-    }
-
 }

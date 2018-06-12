@@ -66,9 +66,6 @@ public interface OrderService {
     List<Order> getStandardList(ParamFilter queryFilter) ;
 
     //跟新订单状态
-    void updateOrderState(Map map);
-
-    //跟新订单状态
     Response updateOrder(Map map);
 
     /**

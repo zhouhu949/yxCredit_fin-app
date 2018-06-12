@@ -109,8 +109,6 @@ public interface IFinalOrderAuditService {
     //商品贷给商户放款(线下放款)
     String confirmationMerchantXianXia(Map map)throws Exception;
 
-    Boolean confirmationFinal(Map map)throws Exception;
-
     //商品贷给商户放款
     String confirmationMerchant(Map map)throws Exception;
 

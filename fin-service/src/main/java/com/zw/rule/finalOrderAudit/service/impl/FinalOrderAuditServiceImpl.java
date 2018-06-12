@@ -720,35 +720,6 @@ public class FinalOrderAuditServiceImpl implements IFinalOrderAuditService {
         return returnMsg;
     }
 
-
-    @Override
-    @Transactional
-    public Boolean confirmationFinal(Map map) throws Exception {
-        OrderOperationRecord orderOperationRecord = new OrderOperationRecord();
-        String uuid = UUID.randomUUID().toString();
-        orderOperationRecord.setId(uuid);
-        orderOperationRecord.setOperationTime(DateUtils.getDateString(new Date()));
-        orderOperationRecord.setDescription("已放款");
-        orderOperationRecord.setOperationNode(5);//放款审核
-        orderOperationRecord.setOperationResult(7);//放款
-        orderOperationRecord.setEmpId(map.get("handlerId").toString());
-        orderOperationRecord.setEmpName(map.get("handlerName").toString());
-        orderOperationRecord.setOrderId(map.get("id").toString());//订单id
-        orderOperationRecord.setAmount(new BigDecimal(map.get("contractAmount").toString()));
-        orderOperationRecord.setStatus(1);//1有效，0无效
-        int num = processApproveRecordMapper.insertOrderOperRecord(orderOperationRecord);
-        if (num > 0)
-        {
-            Order order = orderMapper.selectByPrimaryKey(map.get("id").toString());
-            AppUser user = new AppUser();
-            user.setId(order.getUserId());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-            user.setOrderRefusedTime(sdf.format(new Date()));
-            userMapper.updateByPrimaryKeySelective(user);
-        }
-        return true;
-    }
-
     //商品贷给商户放款(线下放款)
     @Transactional
     public String confirmationMerchantXianXia(Map map) throws Exception {

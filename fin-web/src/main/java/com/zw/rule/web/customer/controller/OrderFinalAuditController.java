@@ -1,25 +1,21 @@
 package com.zw.rule.web.customer.controller;
 
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zw.base.util.DateUtils;
-import com.zw.base.util.HttpClientUtil;
-import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.core.Response;
 import com.zw.rule.customer.po.Customer;
-import com.zw.rule.customer.po.Order;
 import com.zw.rule.customer.service.CustomerService;
 import com.zw.rule.customer.service.OrderService;
 import com.zw.rule.finalOrderAudit.service.IFinalOrderAuditService;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.po.User;
+import com.zw.rule.util.Constants;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.PropertiesUtil;
 import com.zw.rule.web.util.UserContextUtil;
 import org.apache.commons.collections.map.HashedMap;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +25,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
@@ -127,39 +122,17 @@ public class OrderFinalAuditController {
     @PostMapping("confirmationMerchant")
     @ResponseBody
     @WebLogger("确认放款")
-    public Response confirmationMerchant(@RequestBody Map param) throws Exception {
-        String orderId = param.get("orderId").toString();
-        String customerId = param.get("customerId").toString();
-        String contractAmount = param.get("contractAmount").toString();//订单合同金额
-        String surplusContractAmount = param.get("surplusContractAmount").toString();//客户剩余合同金额
+    public Response confirmationMerchant(@RequestBody Map param) {
         User user = (User) UserContextUtil.getAttribute("currentUser");
-        Map<String,Object> map= new HashedMap();
-        map.put("id",orderId);
-        map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
-        map.put("orderState","5");//待还款
-        map.put("contractAmount",contractAmount);
-        orderService.updateOrderState(map);
-        Customer customer = new Customer();
-        customer.setId(customerId);
-        customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
-        customerService.updateCustomer(customer);
-        map.put("result","1");
-        map.put("handlerId",user.getUserId());
-        map.put("handlerName",user.getTrueName());
-        map.put("type","1");
-        map.put("nodeId","5");//5是风控审核
-        finalOrderAuditService.confirmationFinal(map);
-        Map<String,Object> logsMap=new HashedMap();
-        logsMap.put("orderId",map.get("id"));
-        logsMap.put("handlerId",user.getUserId());
-        logsMap.put("handlerName",user.getTrueName());
-        logsMap.put("state","2");
-        logsMap.put("tache","放款审核");
-        logsMap.put("changeValue","放款审核通过");
-        orderService.addOrderLogs(logsMap);
-        Response response = new Response();
-        response.setMsg("放款审核通过");
-        return  response;
+        param.put("result","1");
+        param.put("handlerId",user.getUserId());
+        param.put("handlerName",user.getTrueName());
+        param.put("type","1");
+        param.put("nodeId",Constants.ORDER_AUDIT_LOAN_STATE);//5是风控审核
+        param.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
+        param.put("orderState", Constants.ORDER_AUDIT_LOAN_STATE);//待还款
+        param.put("proveType","finalMoney");
+        return orderService.updateOrder(param);
     }
 
     @PostMapping("costDebit")
@@ -238,45 +211,6 @@ public class OrderFinalAuditController {
         map.put("responseMsg",responseMsg);
         finalOrderAuditService.bindCardPayCallback(map);
     }
-
-
-
-
-   /* @PostMapping("auditOrder")
-    @ResponseBody
-    public Response auditOrder(@RequestBody Map map) throws Exception {
-        Response response = new Response();
-        //终审修改数据
-        orderService.orderFinalAudit(map);
-        //修改订单的状态
-        if((Boolean) map.get("flag")){
-            int num = finalOrderAuditService.auditOrder((String)map.get("orderId"),(String)map.get("end_credit"),(String)map.get("state"));
-            if(num>0){
-                Map approveParam = new HashMap();
-                //获取订单用户的设备号
-                approveParam.put("orderId",map.get("orderId"));
-                approveParam.put("customerId",map.get("customerId"));
-                approveParam.put("type","1");//1客户id，2商户id
-                approveParam.put("state","6");
-                approveParam.put("result",map.get("state"));
-                approveParam.put("approveSuggestion",map.get("message"));
-                approveParam.put("handlerId",String.valueOf(UserContextUtil.getAttribute("userId")));
-                approveParam.put("handlerName",String.valueOf(UserContextUtil.getAttribute("nickName")));
-                //添加订单的终审记录
-                orderService.addApproveRecord(approveParam);
-                PropertiesUtil prop = new PropertiesUtil("properties/host.properties");
-                String url = "";
-                if(((String)map.get("state")).equals("1")){
-                    url =prop.get("url")+"/sendmessage?state=6&tache=1&order_id="+map.get("orderId")+"&message=终审审核通过&money="+map.get("end_credit");
-                }else if(((String)map.get("state")).equals("0")){
-                    url =prop.get("url")+"/sendmessage?state=6&tache=0&order_id="+map.get("orderId")+"&message=终审审核拒绝&money="+map.get("end_credit");
-                }
-                HttpClientUtil.getInstance().sendHttpGet(url);
-                response.setMsg("审批通过！");
-            }
-        }
-        return response;
-    }*/
 
     @PostMapping("getMessage")
     @ResponseBody

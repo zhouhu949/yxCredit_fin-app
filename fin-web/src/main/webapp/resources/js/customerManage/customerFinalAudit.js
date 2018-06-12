@@ -264,7 +264,7 @@ function  confirmationLoan(orderId, customerId, contractAmount, surplusContractA
     layer.confirm('确认放款?', function(index) {
         layer.close(index);
         var param={};
-        param.orderId = orderId;
+        param.id = orderId;
         param.surplusContractAmount = surplusContractAmount;
         param.contractAmount = contractAmount;
         param.customerId = customerId;

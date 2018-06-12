@@ -102,7 +102,7 @@ public class SuretyCheckController {
      * @param str
      * @return
      * @throws Exception
-     */
+     *//*
     @PostMapping("approved")
     @ResponseBody
     @WebLogger("总部审核通过")
@@ -140,7 +140,7 @@ public class SuretyCheckController {
             HttpClientUtil.getInstance().sendHttpGet(url);
         }catch (Exception e){}
         return response;
-    }
+    }*/
 
 
 

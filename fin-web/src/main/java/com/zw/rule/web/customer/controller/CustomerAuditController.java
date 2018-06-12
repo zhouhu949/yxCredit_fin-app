@@ -236,16 +236,17 @@ public class CustomerAuditController {
     public Response approvedSP(@RequestBody String str) throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
-        map.put("alterTime", DateUtils.formatDate(DateUtils.STYLE_10));
+        String currentTime = DateUtils.formatDate(DateUtils.STYLE_10);
+        map.put("alterTime", currentTime);
         map.put("orderState",Constants.ORDER_AUDIT_PASS_STATE);//待签约
-        map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
+        map.put("examineTime", currentTime);//审批时间
         map.put("contractAmount",map.get("loanAmount"));//合同金额
         map.put("result","1");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
-        map.put("approType","pass");
+        map.put("proveType","pass");
         return orderService.updateOrder(map);
     }
 
@@ -255,14 +256,16 @@ public class CustomerAuditController {
     public Response approvalRefusedSP(@RequestBody String str)throws Exception{
         User user = (User) UserContextUtil.getAttribute("currentUser");
         Map map = JSONObject.parseObject(str);
+        String currentTime = DateUtils.formatDate(DateUtils.STYLE_10);
+        map.put("alterTime", currentTime);
         map.put("orderState",Constants.ORDER_AUDIT_FAILURE_STATE);//申请失败
         map.put("result","0");
         map.put("handlerId",user.getUserId());
         map.put("handlerName",user.getTrueName());
-        map.put("approType","refuse");
+        map.put("proveType","refuse");
         map.put("type","1");
         map.put("nodeId","5");//5是风控审核
-        map.put("examineTime", DateUtils.getDateString(new Date()));//审批时间
+        map.put("examineTime", currentTime);//审批时间
         return orderService.updateOrder(map);
     }
     @GetMapping("listPagePast")
