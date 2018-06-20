@@ -118,9 +118,13 @@
          </mvc:interceptor>
      </mvc:interceptors>-->
 
-    <!-- 对springMVC中进行上传下载功能实现 -->
-<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-          p:defaultEncoding="UTF-8"/>-->
+    <!-- 对springMVC中进行上传下载功能实现 modify by 陈清玉-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- 指定所上传文件的总大小不能超过10MB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10485760" />
+    </bean>
 
     <!-- 对js引用的设置 -->
     <mvc:resources location="/resources/" mapping="/resources/**" cache-period="31556926"/>
