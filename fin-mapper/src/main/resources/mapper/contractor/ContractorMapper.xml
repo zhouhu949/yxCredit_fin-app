@@ -274,4 +274,11 @@
         </foreach>
     </insert>
 
+  <select id="findByName" resultType="com.zw.rule.contractor.po.Contractor">
+      select id  from  byx_contractor  where  contractor_name = #{contractorName}
+  </select>
+
+  <select id="findALLCards" resultType="java.lang.String">
+      select card  from  byx_white_list
+  </select>
 </mapper>

@@ -15,12 +15,16 @@ import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.UserContextUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +42,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Controller
 @RequestMapping("contractorManage")
 public class ContractorController {
+
+    private static final Logger  LOGGER = LoggerFactory.getLogger(ContractorController.class);
 
     @Value("${byx.img.host}")
     private String imgUrl;
@@ -291,5 +297,27 @@ public class ContractorController {
             }
         }
         return null;
+    }
+
+    /**
+     * 白名单数据导入 create by 陈淸玉
+     * @param file 导入excel
+     * @return
+     */
+    @RequestMapping("/importWhiteList")
+    @ResponseBody
+    public Response importWhiteList(@RequestParam("filename") MultipartFile file){
+        WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService);
+        try {
+            List<String> errors = whiteListImportBusiness.importData();
+            if(CollectionUtils.isEmpty(errors)){
+                return Response.ok(errors);
+            }else{
+                return Response.error(errors,"导入失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.error();
+        }
     }
 }
