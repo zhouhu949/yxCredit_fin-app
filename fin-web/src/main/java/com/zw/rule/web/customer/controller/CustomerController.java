@@ -467,13 +467,15 @@ public class CustomerController {
         //获取客户绑定银行卡信息
         Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
 
-
+        //证件材料
+        List imgList = customerService.getCustomerImage(customerId);
 
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
         map.put("bankCard",bankCard);
         map.put("apiResultList",apiResultList);
         map.put("order",order);
+        map.put("imgList",imgList);
         return new Response(map);
 
 
@@ -508,12 +510,15 @@ public class CustomerController {
         //获取放款信息
         Map loanRecord = orderOperationRecordService.getLoanRecordByOrderId(orderId);
 
+        //证件材料
+        List imgList = customerService.getCustomerImage(customerId);
+
         map.put("apiResultList",apiResultList);
         map.put("linkmanList",linkmanList);
         map.put("orderOperationRecord",orderOperationRecord);
         map.put("loanRecord",loanRecord);
         map.put("order",order);
-
+        map.put("imgList",imgList);
         return new Response(map);
 
     }
