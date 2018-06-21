@@ -378,7 +378,6 @@ function importWhiteList(){
         btn : [ '导入', '取消' ],
         yes : function(index, layero) {
             var file = document.getElementById("importWhiteList").files[0];
-            console.log(file);
             if(!file){
                 layer.msg("点击选择文件，选择需要导入的excel文件");
                 return false;
