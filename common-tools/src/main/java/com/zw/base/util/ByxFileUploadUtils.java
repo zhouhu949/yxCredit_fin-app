@@ -4,20 +4,18 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-
-import static org.apache.http.entity.ContentType.DEFAULT_BINARY;
 
 public class ByxFileUploadUtils {
     public static final String ENCODING="UTF-8";
@@ -48,4 +46,20 @@ public class ByxFileUploadUtils {
         }
         return result;
     }
+
+    public static boolean deleteFile(String path){
+        HttpDelete httpRequest = new HttpDelete(path);
+        HttpClient httpClient = HttpClients.createDefault();
+        try {
+            HttpResponse httpResponse = httpClient.execute(httpRequest);
+            if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                return true;
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+
 }

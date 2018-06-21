@@ -130,7 +130,7 @@ public class ActivityController {
      */
     @PostMapping("del")
     @ResponseBody
-    @WebLogger("删除活动")
+    @WebLogger("删除banner")
     public Response delActivity(@RequestBody Map param) {
         Response response = new Response();
         String id = param.get("id").toString();

@@ -1,9 +1,6 @@
 package com.zw.rule.activity.service.impl;
 
-import com.zw.UploadFile;
 import com.zw.base.util.ByxFileUploadUtils;
-import com.zw.base.util.GeneratePrimaryKeyUtils;
-import com.zw.base.util.StringUtils;
 import com.zw.rule.activity.Activity;
 import com.zw.rule.activity.service.ActivityService;
 import com.zw.rule.mapper.activity.ActivityMapper;
@@ -16,10 +13,7 @@ import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +78,10 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public int delActivity(String id){
+        Activity activity = activityMapper.lookActivity(id);
+        String bannerUrl = activity.getActivity_img_url();
+        String path = imgUrl.substring(0, imgUrl.lastIndexOf("/")) + bannerUrl.substring(bannerUrl.lastIndexOf("/"));
+        ByxFileUploadUtils.deleteFile(path);
         return activityMapper.delActivity(id);
     }
 
