@@ -252,6 +252,29 @@
 
                     </div>
 
+                    <%--影像资料--%>
+                    <div class="paperBlockfree" style="position: relative;margin-top:20px;">
+                        <div class="block_hd" style="float:left;" style="float:left;" onclick="shrink(this)">
+                            <s class="ico icon-file-text-alt"></s><span class="bl_tit">影像资料</span>
+                        </div>
+                        <table class="tb_info" style="font-size:12px;">
+                            <tbody>
+                            <tr>
+                                <td class="tdTitle align" id="showNewImg1" style="text-align: left" colspan="3">
+                                    <ul style="text-align: left;">
+                                        <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="zcardSrcBase64" onclick="imgShow(this)"></div><p>身份证正面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
+                                        <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="fcardSrcBase64" onclick="imgShow(this)"></div><p>身份证反面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
+                                    </ul></td>
+                            </tr>
+                            <tr>
+                                <td class="tdTitle align" id="showNewImg2" style="text-align: left" colspan="3"><ul style="text-align: left;">
+                                    <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="face_src" onclick="imgShow(this)"></div><p>人脸识别照片</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
+                                </ul></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                     <%--风控审核信息--%>
                     <div class="paperBlockfree">
                         <div class="block_hd" style="float:left;">

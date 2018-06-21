@@ -235,6 +235,7 @@ function setImagePreview1() {
 
 var payProof;
 function uploadFile() {
+    var flag = true;
     payProof = "";
     if('' != $("#preview").attr("src")) {
         $("#whiteListImgForm").ajaxSubmit({
@@ -243,16 +244,18 @@ function uploadFile() {
             async: false,
             dataType : "JSON",
             success:function(data){
-                if (data != null) {
-                    //上传成功
-                    payProof = data.data;
+                if (null != data && data.code === 1) {
+                    flag = false;
                 } else {
-                    layer.msg(data.message,{time:2000});
-                    return;
+                    //上传成功
+                    if(null != data && data.code !== 1) {
+                        payProof = data.data;
+                    }
                 }
             }
         });
     }
+    return flag;
 }
 
 //当前用户下总包商下拉框
@@ -392,7 +395,7 @@ function updateWhite(sign,id) {
             $("#endTime").val(whiteList.contractEndDate);
             $("#latestPayday").val(whiteList.latestPayday);
             $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
-            $("#preview").attr("src",_ctx +"/contractorManage/byx/imgUrl?licenceAttachment="+ whiteList.payProof);
+            $("#preview").attr("src",_ctx + whiteList.payProof);
             layer.open({
                 type : 1,
                 title : '修改白名单',
@@ -482,24 +485,11 @@ function updateWhite(sign,id) {
                     if(endTime){
                         endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
                     }
-
-                   /* if(beginTime){
-                        beginTime = beginTime.replace(/[^0-9]/ig,"");//字符串去除非数字
+                    //上传资料
+                    if(! uploadFile()) {
+                        layer.msg("图片上传失败",{time:2000});
+                        return;
                     }
-                    if(endTime){
-                        endTime = endTime.replace(/[^0-9]/ig,"");//字符串去除非数字
-                    }
-                    if("1" === contractStatus ) {
-                        if(!beginTime){
-                            layer.msg("请选择合同开始时间",{time:2000});
-                            return;
-                        }
-                        if(!endTime){
-                            layer.msg("请选择合同结束时间",{time:2000});
-                            return;
-                        }
-                    }*/
-                    uploadFile();
                     var user={
                         id : id,
                         realName:realName,

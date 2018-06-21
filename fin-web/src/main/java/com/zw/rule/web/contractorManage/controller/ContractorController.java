@@ -2,6 +2,7 @@ package com.zw.rule.web.contractorManage.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zw.base.util.ByxFileUploadUtils;
 import com.zw.rule.contractor.po.Contractor;
 import com.zw.rule.contractor.po.UserVo;
 import com.zw.rule.contractor.po.WhiteList;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @RequestMapping("contractorManage")
 public class ContractorController {
 
-    @Value("${byx.img.path}")
+    @Value("${byx.img.host}")
     private String imgUrl;
 
     @Autowired
@@ -62,7 +65,15 @@ public class ContractorController {
     public Response contractorList(@RequestBody ParamFilter queryFilter){
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
+        //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
+
+        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        List<Long> listId = null;
+        if(!"超级管理员".equals(roleName) && !"总包商".equals(roleName)) {
+
+        }
+
         Map<String, Object> Param = queryFilter.getParam();
         Param.put("userId", user.getUserId());
         queryFilter.setParam(Param);
@@ -85,23 +96,27 @@ public class ContractorController {
         return new Response(userVoList);
     }
 
+    /**
+     * 根据当前登录用户获取总包商下拉框
+     * @param id
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @PostMapping("findContractorByRoleId")
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor> contractorList = contractorService.selectContractorList();
-        if(roleNames.contains("总包商")) {
+        if(!roleNames.equals("超级管理员")) {
             List<Contractor> newContractorList = new ArrayList<Contractor>();
             User  user = (User) UserContextUtil.getAttribute("currentUser");
             for(Contractor oldContractor : contractorList) {
-               String userStr = oldContractor.getUserId();
-               for(String userId : userStr.split(",")){
-                   if(StringUtils.isNotBlank(userId)) {
-                       if(user.getUserId() == Long.parseLong(userId)) {
-                           newContractorList.add(oldContractor);
-                       }
-                   }
-               }
+               String userId = oldContractor.getUserId();
+                if(StringUtils.isNotBlank(userId)) {
+                    if(user.getUserId() == Long.parseLong(userId)) {
+                        newContractorList.add(oldContractor);
+                    }
+                }
             }
             return new Response(newContractorList);
         }
@@ -123,12 +138,13 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         Map<String, Object> Param = queryFilter.getParam();
-        String userStr = "";
+        List<Long> listId = null;
         if(!"超级管理员".equals(roleName)) {
+            listId = new ArrayList<Long>();
             User user=(User) UserContextUtil.getAttribute("currentUser");
-            userStr = ","+user.getUserId()+",";
+            listId.add(user.getUserId());
         }
-        Param.put("userId", userStr);
+        Param.put("idList", listId);
         queryFilter.setParam(Param);
         List list = contractorService.findWhiteList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
@@ -142,12 +158,13 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         Map<String, Object> Param = queryFilter.getParam();
-        String userStr = "";
+        List<Long> listId = null;
         if(!"超级管理员".equals(roleName)) {
+            listId = new ArrayList<Long>();
             User user=(User) UserContextUtil.getAttribute("currentUser");
-            userStr = ","+user.getUserId()+",";
+            listId.add(user.getUserId());
         }
-        Param.put("userId", userStr);
+        Param.put("idList", listId);
         queryFilter.setParam(Param);
         List list = contractorService.findContractorOrderList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
@@ -192,10 +209,10 @@ public class ContractorController {
         Contractor contractor = new Contractor();
         contractor.setId(map.get("id").toString());
         contractor.setUserId(map.get("userStr").toString());
-        if(!StringUtil.isBlank(map.get("userStr").toString())) {
-            contractor.setUserId(","+map.get("userStr").toString()+",");
+        if(StringUtil.isBlank(map.get("userStr").toString())) {
+            contractor.setUserId(map.get("userStr").toString());
         }
-        int num = contractorService.updateContractor(contractor);
+        int num = contractorService.bindContractorUser(contractor);
         Response response = new Response();
         if (num > 0){
             response.setMsg("操作成功");
@@ -263,39 +280,16 @@ public class ContractorController {
     @PostMapping("uploadFile")
     @ResponseBody
     public Response uploadFile(HttpServletRequest request) throws Exception{
-        Response response = new Response();
-        List list = contractorService.uploadContractorImage(request);
-        if(!list.isEmpty()){
-            response.setMsg("上传成功！");
-            response.setData(list.get(0));
-        }else{
-            response.setCode(1);
-            response.setMsg("上传失败！");
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mFile = multipartRequest.getFile("file");
+        if(null != mFile) {
+            String imgURL = ByxFileUploadUtils.uploadFile(imgUrl, mFile.getInputStream(), mFile.getOriginalFilename());
+            if(StringUtils.isBlank(imgURL)) {
+                return Response.error("上传失败");
+            } else {
+                return Response.ok("上传成功" , imgURL);
+            }
         }
-        return response;
-    }
-
-    @RequestMapping("/byx/imgUrl")
-    public void getUploadUrl(@RequestParam String licenceAttachment, HttpServletResponse response) throws IOException {
-        try{
-            String  imgPath = imgUrl + licenceAttachment;
-            FileInputStream hFile = new FileInputStream(imgPath);
-            int i=hFile.available(); //得到文件大小
-            byte data[]=new byte[i];
-            hFile.read(data); //读数据
-            hFile.close();
-            response.setContentType("image/*"); //设置返回的文件类型
-            OutputStream toClient=response.getOutputStream(); //得到向客户端输出二进制数据的对象
-            toClient.write(data); //输出数据
-            toClient.close();
-        }
-        catch(IOException e) //错误处理
-        {
-            e.printStackTrace();
-            PrintWriter toClient = response.getWriter(); //得到向客户端输出文本的对象
-            response.setContentType("text/html;charset=gb2312");
-            toClient.write("无法打开!");
-            toClient.close();
-        }
+        return null;
     }
 }

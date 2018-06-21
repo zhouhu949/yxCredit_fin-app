@@ -7,6 +7,7 @@ import com.zw.rule.mybatis.ParamFilter;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -20,6 +21,9 @@ public interface ContractorMapper{
     Contractor selectByPrimaryKey(String id);
 
     List<UserVo> findUserByMenuUrl();
+
+    //获取所有已经绑定总包商的用户
+    List<Map> findContractorUserList(List<Long> idList);
 
     List<Contractor> selectContractorList(@Param("state") String state);
 
@@ -36,6 +40,18 @@ public interface ContractorMapper{
      * @return
      */
     int updateByPrimaryKeySelective(Contractor contractor);
+
+    /**
+     * 删除总包商用户
+     * @param contractorId
+     */
+    void deleteContUser(String contractorId);
+
+    /**
+     * 批量插入总包商用户信息
+     * @param listMap
+     */
+    int insertBatchContUser(List<Map> listMap);
 
     List<ContractorOrder> findContractorOrderList(ParamFilter paramFilter);
 

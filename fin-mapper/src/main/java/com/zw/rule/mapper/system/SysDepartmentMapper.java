@@ -28,6 +28,15 @@ public interface SysDepartmentMapper {
     public List<SysDepartment> findDeptByPid(Map params) throws Exception;
 
     /**
+     * 查询部门
+     * @return
+     * @throws Exception
+     */
+    List<SysDepartment> findDeptList();
+
+
+
+    /**
      * 添加部门保存
      * @param department
      * @return

@@ -5,6 +5,7 @@ import com.zw.rule.contractor.po.ContractorOrder;
 import com.zw.rule.contractor.po.UserVo;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.mybatis.ParamFilter;
+import com.zw.rule.po.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,11 +30,25 @@ public interface ContractorService {
     List<Contractor> selectContractorList() throws Exception;
 
     /**
+     * 根据用户id获取用户数据权限
+     * @param userId
+     * @return
+     */
+    List<Long> findUserPermissByUserId(String userId);
+
+    /**
      * 分页获取总包商白名单信息
      * @param paramFilter
      * @return
      */
     List findWhiteList(ParamFilter paramFilter) throws Exception;
+
+    /**
+     * 绑定总包商用户
+     * @param contractor
+     * @return
+     */
+    int bindContractorUser(Contractor contractor);
 
     /**
      * 更新白名单

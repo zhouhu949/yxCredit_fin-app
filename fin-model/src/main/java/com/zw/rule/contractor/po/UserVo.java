@@ -19,6 +19,8 @@ public class UserVo extends BaseEntity {
 
 	private int status;
 
+	private boolean isBindUser ;//是否绑定总包商
+
 	public String getTel() {
 		return tel;
 	}
@@ -57,6 +59,14 @@ public class UserVo extends BaseEntity {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public boolean getIsBindUser() {
+		return isBindUser;
+	}
+
+	public void setIsBindUser(boolean isBindUser) {
+		this.isBindUser = isBindUser;
 	}
 
 	@Override

@@ -459,4 +459,13 @@
     <!--<update id="updateCompanyIsNotRegisterState" parameterType="java.util.Map" >-->
         <!--update zw_sys_department set isNotRegister = '1' where id=#{companyId}-->
     <!--</update>-->
+    <select id="findDeptList" resultMap="departmentMap" >
+        SELECT
+        *
+        FROM
+        zw_sys_department
+        <where>
+            and dept_status = 1
+        </where>
+    </select>
 </mapper>

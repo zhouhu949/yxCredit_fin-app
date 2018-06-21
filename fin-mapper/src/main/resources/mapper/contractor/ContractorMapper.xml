@@ -69,12 +69,17 @@
       bwl.real_name AS realName
       FROM
       byx_white_list bwl
-      LEFT JOIN byx_contractor bc ON bc.id = bwl.contractor_id
-      <where>
-          <if test="param.userId != null and param.userId != ''">
-              and bc.user_id like '%${param.userId}%'
-          </if>
-      </where>
+      inner JOIN
+      (select bc.id as id,bc.contractor_name as contractor_name from byx_contractor bc
+      <if test="param.idList != null">
+          inner join byx_contractor_user byxcu on bc.id= byxcu.contractor_id
+          where byxcu.sys_user_id in
+          <foreach collection="param.idList" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+      </if>
+      )
+      bc ON bc.id = bwl.contractor_id
       ) byxwhite
       INNER JOIN (
       SELECT
@@ -115,6 +120,22 @@
     </where>
     /*order by CREAT_TIME desc*/
   </select>
+
+    <select id="findContractorUserList" resultType="java.util.Map" parameterType="java.util.List">
+        SELECT byxcu.id,byxcu.contractor_id AS contractorId,byxcu.sys_user_id AS userId,contractor.contractor_name AS contractorName
+        FROM byx_contractor_user byxcu
+        LEFT JOIN byx_contractor contractor ON byxcu.contractor_id = contractor.id
+        <where>
+            contractor.state = 1
+            <if test="idList != null" >
+                and byxcu.sys_user_id in
+                <foreach collection="idList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        /*order by CREAT_TIME desc*/
+    </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -239,4 +260,18 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+    <delete id="deleteContUser" parameterType="java.lang.String">
+        delete from byx_contractor_user
+        where contractor_id = #{contractorId}
+    </delete>
+
+    <insert id="insertBatchContUser" parameterType="java.util.List">
+        insert into byx_contractor_user (id,contractor_id,sys_user_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=VARCHAR},#{item.contractorId,jdbcType=VARCHAR}, #{item.userId,jdbcType=TINYINT})
+        </foreach>
+    </insert>
+
 </mapper>

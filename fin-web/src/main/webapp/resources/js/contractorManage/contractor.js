@@ -165,24 +165,27 @@ $(function (){
 
 var licenceAttachment;
 function uploadFile() {
-    licenceAttachment = "";
-    if('' != $("#preview").attr("src")) {
+    var flag = true;
+    licenceAttachment = $("#preview").attr("src");
+    if('' !== $("#preview").attr("src")) {
         $("#contractorImgForm").ajaxSubmit({
             url : "uploadFile",
             type : "POST",
             async: false,
             dataType : "JSON",
             success:function(data){
-                if (data != null) {
-                    //上传成功
-                    licenceAttachment = data.data;
+                if (null != data && data.code === 1) {
+                    flag = false;
                 } else {
-                    layer.msg(data.message,{time:2000});
-                    return;
+                    //上传成功
+                    if(null != data && data.code !== 1) {
+                        licenceAttachment = data.data;
+                    }
                 }
             }
         });
     }
+    return flag;
 }
 
 
@@ -235,7 +238,7 @@ function updateContractor(sign,id) {
     $("#linkman").val('');
     $("#linkmanPhone").val('');
     $("#credit").val('');
-    if(sign==0){
+    if(sign===0){
         $('#organ').html("");
         Comm.ajaxPost('contractorManage/contractorDetail',id,function(data){
             layer.closeAll();
@@ -244,8 +247,7 @@ function updateContractor(sign,id) {
             $("#linkman").val(contractor.linkman);
             $("#linkmanPhone").val(contractor.linkmanPhone);
             $("#credit").val(contractor.credit);
-            $("#preview").attr("src",_ctx +"/contractorManage/byx/imgUrl?licenceAttachment="+ contractor.licenceAttachment);
-          //  $("#organ").attr('disabled',true);
+            $("#preview").attr("src",_ctx + contractor.licenceAttachment);
             if(contractor.state==1){
                 $("#qiyong").attr('selected','selected');
             }else{
@@ -289,7 +291,11 @@ function updateContractor(sign,id) {
                         layer.msg("授信额度不合法",{time:2000});
                         return;
                     }
-                    uploadFile();//上传资料
+                    //上传资料
+                    if(! uploadFile()) {
+                        layer.msg("图片上传失败",{time:2000});
+                        return;
+                    }
                     var user={
                         id : id,
                         contractorName:contractorName,
@@ -359,7 +365,11 @@ function updateContractor(sign,id) {
                     layer.msg("授信额度不合法",{time:2000});
                     return;
                 }
-                uploadFile();//上传资料
+                //上传资料
+                if(!uploadFile()) {
+                    layer.msg("图片上传失败",{time:2000});
+                    return;
+                }
                 var contractor={
                     contractorName:contractorName,
                     linkmanPhone:linkmanPhone,
@@ -412,15 +422,7 @@ function asignRole(contractorId, userIdStr) {
         var html="";
         $.each(data.data,function(index,result){
             html+="<tr>";
-            var isCheck = false;
-            if(userIdStr) {
-                var userStr = userIdStr.split(",");
-                for(var i in userIdStr.split(",")){
-                    if(userStr[i] && userStr[i] === result.userId) {
-                        isCheck = true;
-                    }
-                }
-            }
+            var isCheck = result.isBindUser;
             if(isCheck) {
                 html+="<td><input name=\"userCheckBox\" id=\"userCheckBox\" type=\"checkbox\" class=\"ace\" checked= 'checked' value=\""+result.userId+"\" onclick='checkSelect(\"userCheckBox\", \"allSelectCheckBox\", \"allSelectId\")'>";
             } else {

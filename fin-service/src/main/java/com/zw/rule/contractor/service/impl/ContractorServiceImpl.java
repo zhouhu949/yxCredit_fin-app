@@ -10,11 +10,16 @@ import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.mapper.contractor.ContractorMapper;
 import com.zw.rule.mapper.contractor.WhiteListMapper;
+import com.zw.rule.mapper.system.SysDepartmentMapper;
+import com.zw.rule.mapper.system.UserDao;
 import com.zw.rule.mybatis.ParamFilter;
+import com.zw.rule.po.SysDepartment;
+import com.zw.rule.po.User;
 import com.zw.rule.util.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +37,13 @@ public class ContractorServiceImpl implements ContractorService {
     private ContractorMapper contractorMapper;
 
     @Resource
+    private SysDepartmentMapper sysDepartmentMapper;
+
+    @Resource
     private WhiteListMapper whiteListMapper;
+
+    @Resource
+    private UserDao userDao;
 
     @Value("${byx.img.path}")
     private String imgPath;
@@ -42,31 +53,68 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<UserVo> findUserByMenuUrl(String contractorId) {
-        List<Contractor> contractorList = contractorMapper.selectContractorList(null);
+        List<Map> contractorList = contractorMapper.findContractorUserList(null);
         List<UserVo> userVolist = contractorMapper.findUserByMenuUrl();
-        if(null == contractorList || contractorList.size() == 0) {
+        if(CollectionUtils.isEmpty(contractorList)) {
             return userVolist;
         }
         List<UserVo> newUserVolist = new ArrayList<>();
-        StringBuffer stringBuffer = new StringBuffer();
-        for(Contractor contractor : contractorList) {
-            if(StringUtils.isNotBlank(contractor.getUserId()) && !contractor.getId().equals(contractorId)) {
-                stringBuffer.append(contractor.getUserId());
+        StringBuilder stringBuffer = new StringBuilder();
+        for(Map map : contractorList) {
+            if(StringUtils.isNotBlank(map.get("userId").toString()) && !map.get("contractorId").toString().equals(contractorId)) {
+                stringBuffer.append(map.get("userId").toString());
             }
         }
         if(null != userVolist && userVolist.size() > 0) {
             for(UserVo userVo : userVolist) {
-                if(StringUtils.isNotBlank(userVo.getUserId()) && !stringBuffer.toString().contains(userVo.getUserId())) {
-                    newUserVolist.add(userVo);
+                if(StringUtils.isNotBlank(userVo.getUserId())) {
+                    for(Map map : contractorList) {
+                        if(userVo.getUserId().equals(map.get("userId").toString()) && contractorId.equals(map.get("contractorId").toString())) {
+                            userVo.setIsBindUser(true);
+                        }
+                    }
+                    if(!stringBuffer.toString().contains(userVo.getUserId())) {
+
+                        newUserVolist.add(userVo);
+                    }
                 }
             }
         }
         return newUserVolist;
     }
 
+    /**
+     * 总包商下拉框
+     * @return
+     * @throws Exception
+     */
     @Override
-    public List<Contractor> selectContractorList() throws Exception {
-        return contractorMapper.selectContractorList(Constants.ENABLE_STATE);
+    public List<Contractor> selectContractorList(){
+        List<Map> mapList = contractorMapper.findContractorUserList(null);
+        List<Contractor> list = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(mapList)) {
+            for(Map map : mapList) {
+                Contractor contractor = new Contractor();
+                contractor.setId(map.get("contractorId").toString());
+                contractor.setUserId(map.get("userId").toString());
+                contractor.setContractorName(map.get("contractorName").toString());
+                list.add(contractor);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Long> findUserPermissByUserId(String userId) {
+        User user = userDao.findUnique("getByUserId", userId);
+        Long departmentId = user.getOrgId();
+        List<SysDepartment> departmentsList = sysDepartmentMapper.findDeptList();
+
+
+
+        //根据部门idList查询用户集合
+
+        return null;
     }
 
     @Override
@@ -104,6 +152,24 @@ public class ContractorServiceImpl implements ContractorService {
             whiteListMapper.updateStateByContractorId(contractor.getId());
         }
         return contractorMapper.updateByPrimaryKeySelective(contractor);
+    }
+
+    @Override
+    public int bindContractorUser(Contractor contractor) {
+        //删除总包商用户
+        contractorMapper.deleteContUser(contractor.getId());
+        List<Map> listMap = new ArrayList<>();
+        if(StringUtils.isNotBlank(contractor.getUserId())) {
+            for(String userId : contractor.getUserId().split(",")) {
+                String key = GeneratePrimaryKeyUtils.getUUIDKey();
+                Map map = new HashMap();
+                map.put("userId",Long.parseLong(userId));
+                map.put("contractorId",contractor.getId());
+                map.put("id",key);
+                listMap.add(map);
+            }
+        }
+        return contractorMapper.insertBatchContUser(listMap);
     }
 
     /**
