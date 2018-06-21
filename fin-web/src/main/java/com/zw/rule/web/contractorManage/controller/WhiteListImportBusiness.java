@@ -1,9 +1,6 @@
 package com.zw.rule.web.contractorManage.controller;
 
-import com.zw.base.util.DateUtils;
-import com.zw.base.util.GeneratePrimaryKeyUtils;
-import com.zw.base.util.RegexUtil;
-import com.zw.base.util.StringUtils;
+import com.zw.base.util.*;
 import com.zw.enums.WhiteContractStatusEnum;
 import com.zw.enums.WhiteJobEnum;
 import com.zw.enums.WhitePayTypeEnum;
@@ -28,7 +25,8 @@ import java.util.*;
  */
 public class WhiteListImportBusiness {
 
-  private  final String SUF = "xlsx";
+  private  final String SUF_XLSX = "xlsx";
+  private  final String SUF_XLS = "xls";
     /**
      * 模板头
      */
@@ -37,6 +35,9 @@ public class WhiteListImportBusiness {
      * 是否有异常
      */
     private boolean isError = false;
+    //异常总数
+    List<String> errors;
+
     /**
      * 异常信息
      */
@@ -55,45 +56,76 @@ public class WhiteListImportBusiness {
      * Excel文件Workbook
      */
     private Workbook workBook;
+    /**
+     * Excel文件sheet
+     */
+    private Sheet sheet;
 
     public WhiteListImportBusiness(MultipartFile file,ContractorService contractorService){
         this.file = file;
         this.contractorService = contractorService;
     }
 
+    /**
+     * 数据导入入口
+     * @return 异常信息 如何没有异常 则是empty List
+     * @throws Exception 解析异常
+     */
     public List<String>  importData() throws Exception {
         if (file == null) {
             return null;
         }
-        initWorkBook();
-       return returnErrorExcel();
+        //初始化
+        init();
+       return !isError ? returnErrors() : this.errors;
     }
 
     /**
      * 初始化赋值workBook
      * @throws IOException 文件读取异常
      */
-    private void initWorkBook() throws IOException {
+    private void init() throws IOException {
         //查询出全部白名单身份证号
         cardList = contractorService.findALLCards();
-
+        errors = new ArrayList<>();
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-        if(SUF.equalsIgnoreCase(suffix)) {
+        if(SUF_XLSX.equalsIgnoreCase(suffix)) {
             this.workBook  = new XSSFWorkbook(file.getInputStream());
-        } else {
+        } else if (SUF_XLS.equalsIgnoreCase(suffix)) {
             this.workBook  = new HSSFWorkbook(file.getInputStream());
+        }else{
+            errors.add("非Excel文件，请重新选择");
+            isError = true;
         }
+        //如果文件是excel
+        if(!isError){
+            checkTemplate();
+        }
+    }
+
+    /**
+     * 验证模板是否正确
+     */
+    private void checkTemplate(){
+        this.sheet = this.workBook.getSheetAt(0);
+        Row row = this.sheet.getRow(0);
+        for (int j = 0; j < headList.length; j++) {
+            String stringCellValue = row.getCell(j).getStringCellValue();
+            if (stringCellValue == null || !headList[j].equals(stringCellValue.trim())){
+                isError = true;
+                errors.add("模版错误，请重新下载模版");
+                break;
+            }
+        }
+
     }
 
     /**
      * 返回出错的信息
      * @return  List<String> 出错的信息集合
       */
-    private List<String> returnErrorExcel() throws Exception {
-        //异常总数
-        List<String> errors = new ArrayList<>();
-        Sheet sheet = this.workBook.getSheetAt(0);
+    private List<String> returnErrors() throws Exception {
         int rowSize = sheet.getLastRowNum();
         for (int i = 1; i <= rowSize; i++) {
             errorMsg = "第" + i + "行：" ;
@@ -125,7 +157,6 @@ public class WhiteListImportBusiness {
      * @param row 行
      * @param index 索引
      * @return 返回是否有异常 true 有 false 没有
-     * @throws Exception 操作异常
      */
     private boolean checkValue(Row row,int index){
         String value = getStringCellValue(row.getCell(index));
