@@ -14,6 +14,7 @@ $().ready(function(){
             //var customer = data.customer;//客户信息
             var apiResultList= data.apiResultList;//风控审核信息
             var orderAndbank= data.order;//订单信息和银行卡信息
+            var imageList = data.imgList;//上传资料
         }
 
         //订单信息和银行卡信息
@@ -25,12 +26,55 @@ $().ready(function(){
             $("#rate").text(orderAndbank.rate);//利率
             $("#applayMoney").text(orderAndbank.applayMoney);//申请金额
             $("#periods").text(orderAndbank.periods);//申请期限
+
             $("#applayTime").text(formatTime(orderAndbank.applayTime));//申请时间
             $("#bankName").text(orderAndbank.bankName);//开户行
             $("#bankSubbranch").text(orderAndbank.bankSubbranch);//支行
             $("#cardNumber").text(orderAndbank.cardNumber);//银行卡号
 
 
+        }
+
+        if(imageList){
+            var  showImg="";
+            if(imageList.length > 0) {
+                if(imageList.length < 5){
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg1\" style=\"text-align: left\" colspan=\"3\">\n" +
+                        "<ul style=\"text-align: left;\">";
+                    for (var i=0; i<imageList.length; i++){
+                        var image=imageList[i];
+                        showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow"></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                }
+                if(imageList.length > 4){
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg1\" style=\"text-align: left\" colspan=\"3\">\n" +
+                        "<ul style=\"text-align: left;\">";
+                    for (var i=0; i < 4; i++){
+                        var image=imageList[i];
+                        showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow"></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg2\" style=\"text-align: left\" colspan=\"3\"><ul style=\"text-align: left;\">";
+                    for (var i= 4; i<imageList.length; i++){
+                        var image=imageList[i];
+                            showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow" ></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                }
+
+            }
+            $("#yxtup").html(showImg);
+            PostbirdImgGlass.init({
+                domSelector:".imgbox img",
+                animation:true
+            });
         }
 
         //风控信息审核列表

@@ -11,6 +11,7 @@
     <script src="${ctx}/resources/assets/js/jquery.form.min.js${version}"></script>
     <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
     <script src="${ctx}/resources/js/customerManage/headquartersReview.js${version}"></script>
+    <script src="${ctx}/resources/js/postbird-img-glass.js"></script>
     <title>客户审核</title>
     <style>
         .laydate_body .laydate_y {margin-right: 0;}
@@ -258,19 +259,7 @@
                             <s class="ico icon-file-text-alt"></s><span class="bl_tit">影像资料</span>
                         </div>
                         <table class="tb_info" style="font-size:12px;">
-                            <tbody>
-                            <tr>
-                                <td class="tdTitle align" id="showNewImg1" style="text-align: left" colspan="3">
-                                    <ul style="text-align: left;">
-                                        <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="zcardSrcBase64" onclick="imgShow(this)"></div><p>身份证正面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
-                                        <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="fcardSrcBase64" onclick="imgShow(this)"></div><p>身份证反面</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
-                                    </ul></td>
-                            </tr>
-                            <tr>
-                                <td class="tdTitle align" id="showNewImg2" style="text-align: left" colspan="3"><ul style="text-align: left;">
-                                    <li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto"><img style="width: 100%;" src="" class="imgShow" id="face_src" onclick="imgShow(this)"></div><p>人脸识别照片</p><p class="hideTime" style="margin:1em;">'+time+'</p></li>
-                                </ul></td>
-                            </tr>
+                            <tbody id="yxtup">
                             </tbody>
                         </table>
                     </div>
