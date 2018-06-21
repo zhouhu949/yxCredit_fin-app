@@ -73,11 +73,11 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Long> listId = null;
-        if("总包商".equals(roleName)) {
+        if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
-        } else if(!"超级管理员".equals(roleName)){
+        } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
         Map<String, Object> Param = queryFilter.getParam();
@@ -110,8 +110,7 @@ public class ContractorController {
      */
     @ResponseBody
     @PostMapping("findContractorByRoleId")
-    public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
-        //String roleName = (String) UserContextUtil.getAttribute("roleName");
+    public Response findUserByMenuUrl(@RequestBody String id){
         User  user = (User) UserContextUtil.getAttribute("currentUser");
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor>  newContractorList = contractorService.findContractorByAuth(roleNames,user.getUserId());
@@ -131,13 +130,13 @@ public class ContractorController {
     public Response whiteList(@RequestBody ParamFilter queryFilter) throws Exception{
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
-        if("总包商".equals(roleName)) {
+        if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
-        } else if(!"超级管理员".equals(roleName)){
+        } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
         Param.put("idList", listId);
@@ -152,13 +151,13 @@ public class ContractorController {
     public Response contractorOrderList(@RequestBody ParamFilter queryFilter) throws Exception{
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
-        if("总包商".equals(roleName)) {
+        if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
-        } else if(!"超级管理员".equals(roleName)){
+        } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
         Param.put("idList", listId);

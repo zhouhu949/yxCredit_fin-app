@@ -288,7 +288,7 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public List<Contractor> findContractorByAuth( String roleNames,Long currentUserId) {
         List<Contractor> contractorList = selectContractorList();
-        List<Contractor> newContractorList = new ArrayList<Contractor>();
+        List<Contractor> newContractorList = new ArrayList<>();
         if (roleNames.contains("超级管理员")) {
             newContractorList = contractorList;
         }else if ("总包商".equals(roleNames)) {

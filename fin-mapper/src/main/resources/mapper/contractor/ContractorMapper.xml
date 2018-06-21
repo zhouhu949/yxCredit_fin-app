@@ -140,6 +140,7 @@
                 </foreach>
             </if>
         </where>
+        group by byxcu.id
         /*order by CREAT_TIME desc*/
     </select>
 
