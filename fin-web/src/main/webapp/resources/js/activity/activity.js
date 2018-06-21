@@ -121,7 +121,7 @@ function queryList(){
             var btnUp=$('<a href="##" id="btnUp" class="operate" style="color:#007eff">上架 </a><input type="hidden" id="up" value="'+data.id+'"/>');
             var btnDown=$('<a href="##" id="btnDown" class="operate" style="color:#007eff">下架 </a><input type="hidden" id="down" value="'+data.id+'"/>');
             var bannerImg=$('<img id="bannerImge" style="display: block;width: 90px;height: 40px;margin: 0 auto" src="">');
-            bannerImg.attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
+            bannerImg.attr("src",data.activity_img_url);
             if(data.activity_state==1){
                 $('td', row).eq(6).append(btnUpdate).append(btnDel).append(btnDown).append(btnLook);
                 $('td', row).eq(2).html("");
@@ -301,21 +301,9 @@ function queryList(){
                                     $('#activity_img_addr').val(data.activity_img_addr);
                                     $('#platformType').val(data.platform_type);
                                     $('#priority').val(data.priority);
-                                  /*  var b = data.activity_time.substr(0,10);
-                                    if(b.length>6){
-                                        $('#beginTimed').val(b);
-                                    }else {
-                                        $('#beginTimed').val('');
-                                    }
-                                    var a = data.activity_time.substr(11,21);
-                                    if(a.length>6){
-                                        $('#endTimed').val(a);
-                                    }else {
-                                        $('#endTimed').val('');
-                                    }*/
 
                                     //alert("图片地址："+data.activity_img_url);
-                                    $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
+                                    $("#preview").attr("src",data.activity_img_url);
                                     $('#platformType').attr("disabled",true);
                                     $('#activity_titled').attr("disabled",true);
                                     $('#activity_url').attr("disabled",true);
@@ -365,7 +353,7 @@ function queryList(){
                                     $("#priority").removeAttr("disabled");
                                     debugger
                                     var data = data.data;
-                                    $("#preview").attr("src",_ctx +"/activity/byx/imgUrl?bannerImg="+data.activity_img_url);
+                                    $("#preview").attr("src",data.activity_img_url);
                                     $('#activity_titled').val(data.activity_title);
                                     $('#activity_url').val(data.activity_url);
                                     $('#activity_img_addr').val(data.activity_img_addr);
