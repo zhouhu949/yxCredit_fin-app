@@ -35,8 +35,10 @@ public class WhiteListImportBusiness {
      * 是否有异常
      */
     private boolean isError = false;
-    //异常总数
-    List<String> errors;
+    /**
+     * 异常总数
+     */
+    private List<String> errors;
 
     /**
      * 异常信息
