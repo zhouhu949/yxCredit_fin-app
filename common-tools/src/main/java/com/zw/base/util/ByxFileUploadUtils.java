@@ -58,7 +58,7 @@ public class ByxFileUploadUtils {
         }catch (IOException e){
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 
