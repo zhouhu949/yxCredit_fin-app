@@ -1,5 +1,6 @@
 package com.zw.rule.activity.service.impl;
 
+import com.zw.baoFu.string.StringUtil;
 import com.zw.base.util.ByxFileUploadUtils;
 import com.zw.rule.activity.Activity;
 import com.zw.rule.activity.service.ActivityService;
@@ -80,8 +81,10 @@ public class ActivityServiceImpl implements ActivityService {
     public int delActivity(String id){
         Activity activity = activityMapper.lookActivity(id);
         String bannerUrl = activity.getActivity_img_url();
-        String path = imgUrl.substring(0, imgUrl.lastIndexOf("/")) + bannerUrl.substring(bannerUrl.lastIndexOf("/"));
-        ByxFileUploadUtils.deleteFile(path);
+        if(!("".equals(bannerUrl) || bannerUrl == null )){
+            String path = imgUrl.substring(0, imgUrl.lastIndexOf("/")) + bannerUrl.substring(bannerUrl.lastIndexOf("/"));
+            ByxFileUploadUtils.deleteFile(path);
+        }
         return activityMapper.delActivity(id);
     }
 
