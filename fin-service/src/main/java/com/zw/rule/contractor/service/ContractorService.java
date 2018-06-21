@@ -34,7 +34,7 @@ public interface ContractorService {
      * @param userId
      * @return
      */
-    List<Long> findUserPermissByUserId(String userId);
+    List<Long> findUserPermissByUserId(long userId);
 
     /**
      * 分页获取总包商白名单信息

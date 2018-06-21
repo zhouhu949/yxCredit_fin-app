@@ -73,15 +73,15 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
-
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         List<Long> listId = null;
-        if(!"超级管理员".equals(roleName) && !"总包商".equals(roleName)) {
-
+        if("总包商".equals(roleName)) {
+            listId.add(user.getUserId());
+        } else if(!"超级管理员".equals(roleName)){
+            listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
-
         Map<String, Object> Param = queryFilter.getParam();
-        Param.put("userId", user.getUserId());
+        Param.put("idList", listId);
         queryFilter.setParam(Param);
         List list = contractorService.findContractorList(queryFilter);
         PageInfo pageInfo = new PageInfo(list);
@@ -113,11 +113,13 @@ public class ContractorController {
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Contractor> contractorList = contractorService.selectContractorList();
-        if(!roleNames.equals("超级管理员")) {
+        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        User  user = (User) UserContextUtil.getAttribute("currentUser");
+        List<Long> listId = null;
+        if("总包商".equals(roleName)) {
             List<Contractor> newContractorList = new ArrayList<Contractor>();
-            User  user = (User) UserContextUtil.getAttribute("currentUser");
             for(Contractor oldContractor : contractorList) {
-               String userId = oldContractor.getUserId();
+                String userId = oldContractor.getUserId();
                 if(StringUtils.isNotBlank(userId)) {
                     if(user.getUserId() == Long.parseLong(userId)) {
                         newContractorList.add(oldContractor);
@@ -125,7 +127,11 @@ public class ContractorController {
                 }
             }
             return new Response(newContractorList);
+        } else if(!"超级管理员".equals(roleName)){
+            listId = contractorService.findUserPermissByUserId(user.getUserId());
+
         }
+
         return new Response(contractorList);
     }
 
@@ -144,11 +150,12 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         Map<String, Object> Param = queryFilter.getParam();
+        User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
-        if(!"超级管理员".equals(roleName)) {
-            listId = new ArrayList<Long>();
-            User user=(User) UserContextUtil.getAttribute("currentUser");
+        if("总包商".equals(roleName)) {
             listId.add(user.getUserId());
+        } else if(!"超级管理员".equals(roleName)){
+            listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
         Param.put("idList", listId);
         queryFilter.setParam(Param);
@@ -164,11 +171,12 @@ public class ContractorController {
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         Map<String, Object> Param = queryFilter.getParam();
+        User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
-        if(!"超级管理员".equals(roleName)) {
-            listId = new ArrayList<Long>();
-            User user=(User) UserContextUtil.getAttribute("currentUser");
+        if("总包商".equals(roleName)) {
             listId.add(user.getUserId());
+        } else if(!"超级管理员".equals(roleName)){
+            listId = contractorService.findUserPermissByUserId(user.getUserId());
         }
         Param.put("idList", listId);
         queryFilter.setParam(Param);

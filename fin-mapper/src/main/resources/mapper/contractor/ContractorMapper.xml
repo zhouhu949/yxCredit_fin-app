@@ -22,13 +22,18 @@
 
   <select id="findContractorList" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select
-    <include refid="Base_Column_List" />
-    from byx_contractor
-    <where>
-     <if test="param.contractorName != null and param.contractorName != ''">
-        and contractor_name like '%${param.contractorName}%'
+      byxcontr.*
+    from byx_contractor byxcontr
+      <if test="param.idList != null">
+          inner join byx_contractor_user byxcontruser on byxcontruser.contractor_id = byxcontr.id where byxcontruser.sys_user_id in
+          <foreach collection="param.idList" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
       </if>
-    </where>
+     <if test="param.contractorName != null and param.contractorName != ''">
+         and byxcontr.contractor_name like '%${param.contractorName}%'
+      </if>
+
     order by admission_date desc
   </select>
 
@@ -96,8 +101,8 @@
       ) userwhite ON magorder.user_id = userwhite.id
 
     <where>
-          <if test="param.realName != null and param.realName != ''">
-          and userwhite.realName like '%${param.realName}%'
+      <if test="param.realName != null and param.realName != ''">
+        and userwhite.realName like '%${param.realName}%'
       </if>
       <if test="param.contractorName != null and param.contractorName != ''">
         and userwhite.contractorName like '%${param.contractorName}%'
@@ -129,6 +134,21 @@
             contractor.state = 1
             <if test="idList != null" >
                 and byxcu.sys_user_id in
+                <foreach collection="idList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        /*order by CREAT_TIME desc*/
+    </select>
+
+    <select id="findUserListByPid" resultType="java.lang.Long" parameterType="java.util.List">
+        SELECT sysuser.user_id as userId
+        FROM zw_sys_user sysuser
+        <where>
+            sysuser.status = 1
+            <if test="idList != null" >
+                and sysuser.org_id in
                 <foreach collection="idList" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>

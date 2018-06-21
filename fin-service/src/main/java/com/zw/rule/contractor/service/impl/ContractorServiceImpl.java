@@ -100,21 +100,54 @@ public class ContractorServiceImpl implements ContractorService {
                 contractor.setContractorName(map.get("contractorName").toString());
                 list.add(contractor);
             }
+
         }
         return list;
     }
 
     @Override
-    public List<Long> findUserPermissByUserId(String userId) {
+    public List<Long> findUserPermissByUserId(long userId) {
         User user = userDao.findUnique("getByUserId", userId);
         Long departmentId = user.getOrgId();
         List<SysDepartment> departmentsList = sysDepartmentMapper.findDeptList();
-
-
-
-        //根据部门idList查询用户集合
-
+        List<Long> newDepIdList = new ArrayList<>();
+        newDepIdList = getChild(departmentId, departmentsList, newDepIdList);
+        if(newDepIdList.size() > 0) {
+            //根据部门idList查询用户集合
+            List<Long> idList = contractorMapper.findUserListByPid(newDepIdList);
+            return idList;
+        }
         return null;
+    }
+
+
+    /**
+     * 递归查找子菜单
+     *
+     * @param id
+     *            当前菜单id
+     * @param rootMenu
+     *            要查找的列表
+     * @return
+     */
+    private List<Long> getChild(Long id, List<SysDepartment> rootMenu, List<Long> newDepartment) {
+        // 子菜单
+        List<SysDepartment> childList = new ArrayList<>();
+        for (SysDepartment menu : rootMenu) {
+            // 遍历所有节点，将父菜单id与传过来的id比较
+            if (menu.getPid() == id.longValue()) {
+                childList.add(menu);
+                newDepartment.add(menu.getId());
+            }
+        }
+        if (childList.size() > 0) {
+            // 把子菜单的子菜单再循环一遍
+            for (SysDepartment menu : childList) {
+                // 递归
+                getChild(menu.getId(), rootMenu, newDepartment);
+            }
+        }
+        return newDepartment;
     }
 
     @Override
