@@ -442,7 +442,7 @@ function updateWhite(sign,id) {
             $("#endTime").val(whiteList.contractEndDate);
             $("#latestPayday").val(whiteList.latestPayday);
             $("#localMonthlyMinWage").val(whiteList.localMonthlyMinWage);
-            $("#preview").attr("src",_ctx + whiteList.payProof);
+            $("#preview").attr("src",whiteList.payProof);
             layer.open({
                 type : 1,
                 title : '修改白名单',

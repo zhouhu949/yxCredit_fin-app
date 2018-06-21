@@ -64,6 +64,7 @@
         and whitelist.contractor_id = #{param.contractorId,jdbcType=VARCHAR}
       </if>
     </where>
+    group by whitelist.id
     /*order by CREAT_TIME desc*/
   </select>
 

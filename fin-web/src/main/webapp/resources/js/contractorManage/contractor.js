@@ -247,7 +247,7 @@ function updateContractor(sign,id) {
             $("#linkman").val(contractor.linkman);
             $("#linkmanPhone").val(contractor.linkmanPhone);
             $("#credit").val(contractor.credit);
-            $("#preview").attr("src",_ctx + contractor.licenceAttachment);
+            $("#preview").attr("src",contractor.licenceAttachment);
             if(contractor.state==1){
                 $("#qiyong").attr('selected','selected');
             }else{

@@ -65,11 +65,11 @@ public class User extends BaseEntity {
 		return orgId;
 	}
 
-	public void setOrgId(long orgId) {
-		this.orgId = orgId;
-	}
 	public long getUserId() {
 		return userId;
+	}
+	public void setOrgId(long orgId) {
+		this.orgId = orgId;
 	}
 
 	public void setUserId(long userId) {

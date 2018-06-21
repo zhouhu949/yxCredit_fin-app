@@ -115,9 +115,8 @@ public class ContractorController {
         List<Contractor> contractorList = contractorService.selectContractorList();
         String roleName = (String) UserContextUtil.getAttribute("roleName");
         User  user = (User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = null;
+        List<Contractor> newContractorList = new ArrayList<Contractor>();
         if("总包商".equals(roleName)) {
-            List<Contractor> newContractorList = new ArrayList<Contractor>();
             for(Contractor oldContractor : contractorList) {
                 String userId = oldContractor.getUserId();
                 if(StringUtils.isNotBlank(userId)) {
@@ -126,13 +125,20 @@ public class ContractorController {
                     }
                 }
             }
-            return new Response(newContractorList);
         } else if(!"超级管理员".equals(roleName)){
-            listId = contractorService.findUserPermissByUserId(user.getUserId());
-
+            List<Long>  listId = contractorService.findUserPermissByUserId(user.getUserId());
+            for(Contractor oldContractor : contractorList) {
+                String userId = oldContractor.getUserId();
+                if(StringUtils.isNotBlank(userId)) {
+                    for(Long userIds : listId) {
+                        if(userIds.longValue() == Long.parseLong(userId)) {
+                            newContractorList.add(oldContractor);
+                        }
+                    }
+                }
+            }
         }
-
-        return new Response(contractorList);
+        return new Response(newContractorList);
     }
 
     @ResponseBody

@@ -33,7 +33,7 @@
      <if test="param.contractorName != null and param.contractorName != ''">
          and byxcontr.contractor_name like '%${param.contractorName}%'
       </if>
-
+      group by byxcontr.id
     order by admission_date desc
   </select>
 
@@ -111,6 +111,7 @@
         and userWhite.tel like '%${param.tel}%'
       </if>
     </where>
+      group by magorder.id
       order by magorder.applay_time desc
   </select>
 
