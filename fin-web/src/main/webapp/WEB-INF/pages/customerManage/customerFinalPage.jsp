@@ -11,6 +11,7 @@
     <script src="${ctx}/resources/assets/js/jquery.form.min.js${version}"></script>
     <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
     <script src="${ctx}/resources/js/customerManage/customerFinalPage.js${version}"></script>
+    <script src="${ctx}/resources/js/postbird-img-glass.js"></script>
     <title>客户审核</title>
     <style>
         .laydate_body .laydate_y {margin-right: 0;}
@@ -210,6 +211,18 @@
 
                             </table>
 
+                        </div>
+
+
+                        <%--影像资料--%>
+                        <div class="paperBlockfree" style="position: relative;margin-top:20px;">
+                            <div class="block_hd" style="float:left;" style="float:left;" onclick="shrink(this)">
+                                <s class="ico icon-file-text-alt"></s><span class="bl_tit">影像资料</span>
+                            </div>
+                            <table class="tb_info" style="font-size:12px;">
+                                <tbody id="yxtup">
+                                </tbody>
+                            </table>
                         </div>
 
                         <%--风控审核信息--%>

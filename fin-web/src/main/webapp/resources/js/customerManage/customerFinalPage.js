@@ -52,6 +52,7 @@ $().ready(function(){
             var apiResultList= data.apiResultList;//风控审核信息
             var orderOperationRecord= data.orderOperationRecord;//订单操作记录审核信息
             var loanRecord= data.loanRecord;//订单操作记录放款信息
+            var imageList = data.imgList;//上传资料
 
         }
 
@@ -133,6 +134,48 @@ $().ready(function(){
             }
             $("#relation").html('');//直系
             $("#relation").append(html);//直系
+        }
+
+
+        if(imageList){
+            var  showImg="";
+            if(imageList.length > 0) {
+                if(imageList.length < 5){
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg1\" style=\"text-align: left\" colspan=\"3\">\n" +
+                        "<ul style=\"text-align: left;\">";
+                    for (var i=0; i<imageList.length; i++){
+                        var image=imageList[i];
+                        showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow"></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                }
+                if(imageList.length > 4){
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg1\" style=\"text-align: left\" colspan=\"3\">\n" +
+                        "<ul style=\"text-align: left;\">";
+                    for (var i=0; i < 4; i++){
+                        var image=imageList[i];
+                        showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow"></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                    showImg +=" <tr>";
+                    showImg +="<td class=\"tdTitle align\" id=\"showNewImg2\" style=\"text-align: left\" colspan=\"3\"><ul style=\"text-align: left;\">";
+                    for (var i= 4; i<imageList.length; i++){
+                        var image=imageList[i];
+                        showImg+='<li><div style="width:120px;height:160px;border:1px solid #ddd;padding:.2em;margin:.2em auto" class="imgbox"><img style="width: 100%;" src="'+image.imgUrl+'" class="imgShow" ></div><p class="hideTime" style="margin:1em;"></p></li>';
+                    }
+                    showImg +="</ul></td>";
+                    showImg +="</tr>";
+                }
+            }
+            $("#yxtup").html(showImg);
+            PostbirdImgGlass.init({
+                domSelector:".imgbox img",
+                animation:true
+            });
         }
 
         //数据写入隐藏域

@@ -1,22 +1,19 @@
 package com.zw.rule.activity.service.impl;
 
-import com.zw.UploadFile;
-import com.zw.base.util.GeneratePrimaryKeyUtils;
-import com.zw.base.util.StringUtils;
+import com.zw.base.util.ByxFileUploadUtils;
 import com.zw.rule.activity.Activity;
 import com.zw.rule.activity.service.ActivityService;
 import com.zw.rule.mapper.activity.ActivityMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +22,9 @@ import java.util.Map;
  */
 @Service
 public class ActivityServiceImpl implements ActivityService {
+
+    @Value("${byx.img.host}")
+    private String imgUrl;
 
     @Value("${byx.img.path}")
     private String imgPath;
@@ -78,6 +78,10 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public int delActivity(String id){
+        Activity activity = activityMapper.lookActivity(id);
+        String bannerUrl = activity.getActivity_img_url();
+        String path = imgUrl.substring(0, imgUrl.lastIndexOf("/")) + bannerUrl.substring(bannerUrl.lastIndexOf("/"));
+        ByxFileUploadUtils.deleteFile(path);
         return activityMapper.delActivity(id);
     }
 
@@ -112,37 +116,30 @@ public class ActivityServiceImpl implements ActivityService {
      */
     @Override
     public List uploadaBannerImage(HttpServletRequest request) throws Exception {
-        String fileName="";
-        String id = GeneratePrimaryKeyUtils.getUUIDKey();//新的文件名
-        //获取根目录
-        //String root = request.getSession().getServletContext().getRealPath("/");
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        String currentDateStr = format.format(new Date());
-        String newFilePath = imgPath + File.separator + bannerImg + currentDateStr;//文件保存路径url
-        Map<String, Object> allMap = UploadFile.getFile(request, newFilePath, id);
-        List<Map<String, Object>> list = (List<Map<String, Object>>) allMap.get("fileList");
-        //当前台有文件时，给图片名称变量赋值
-        if (!list.isEmpty()) {
-            Map<String, Object> fileMap = list.get(0);
-            fileName = bannerImg + currentDateStr+"/"+ fileMap.get("Name").toString();
-        }
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mfile = multipartRequest.getFile("file");
+        String fileName = mfile.getOriginalFilename();
         List imageList = new ArrayList();
         String fileFormat= fileName.substring(fileName.indexOf(".") + 1);
-
         if ("png".equals(fileFormat) || "jpg".equals(fileFormat) || "jpeg".equals(fileFormat) || "gif".equals(fileFormat) || "".equals(fileFormat)){
-            BufferedImage sourceImg= ImageIO.read(new File(imgPath+fileName));
+            BufferedImage sourceImg= ImageIO.read(mfile.getInputStream());
             Integer imgWidth= sourceImg.getWidth();//750px
             Integer imgHeight=sourceImg.getHeight();//380px
-            if (imgWidth==750 && imgHeight ==380){
-                imageList.add(fileName);
-            }else {
+            if (!(imgWidth==750 && imgHeight ==380)){
                 //图片大小不符合要求
                 imageList.add("-1");
+                return imageList;
             }
         }else {
             //图片格式不符合要求
             imageList.add("-2");
+            return imageList;
         }
+        if(!mfile.isEmpty()){
+            String imgURL = ByxFileUploadUtils.uploadFile(imgUrl, mfile.getInputStream(),fileName);
+            imageList.add(imgURL);
+        }
+
 
         return imageList;
     }
