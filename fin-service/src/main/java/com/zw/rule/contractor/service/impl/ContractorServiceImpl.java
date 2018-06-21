@@ -290,7 +290,7 @@ public class ContractorServiceImpl implements ContractorService {
         List<Contractor> contractorList = selectContractorList();
         List<Contractor> newContractorList = new ArrayList<>();
         if (roleNames.contains("超级管理员")) {
-            newContractorList = contractorList;
+            newContractorList = contractorMapper.findContractor();
         }else if ("总包商".equals(roleNames)) {
             for (Contractor oldContractor : contractorList) {
                 String userId = oldContractor.getUserId();

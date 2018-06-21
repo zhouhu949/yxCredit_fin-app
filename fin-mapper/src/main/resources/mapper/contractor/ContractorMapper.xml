@@ -296,9 +296,16 @@
         </foreach>
     </insert>
 
-  <select id="findByName" resultType="com.zw.rule.contractor.po.Contractor">
-      select id  from  byx_contractor  where  contractor_name = #{contractorName}
+  <select id="findContractor" resultType="com.zw.rule.contractor.po.Contractor">
+      select
+      id,contractor_name as contractorName
+      from byx_contractor
+      where state =1
   </select>
+
+    <select id="findByName" resultType="com.zw.rule.contractor.po.Contractor">
+      select id  from  byx_contractor  where  contractor_name = #{contractorName}
+    </select>
 
   <select id="findALLCards" resultType="java.lang.String">
       select card  from  byx_white_list
