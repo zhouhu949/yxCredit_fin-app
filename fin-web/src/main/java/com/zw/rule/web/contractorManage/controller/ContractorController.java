@@ -111,33 +111,10 @@ public class ContractorController {
     @ResponseBody
     @PostMapping("findContractorByRoleId")
     public Response findUserByMenuUrl(@RequestBody String id) throws Exception{
-        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
-        List<Contractor> contractorList = contractorService.selectContractorList();
-        String roleName = (String) UserContextUtil.getAttribute("roleName");
+        //String roleName = (String) UserContextUtil.getAttribute("roleName");
         User  user = (User) UserContextUtil.getAttribute("currentUser");
-        List<Contractor> newContractorList = new ArrayList<Contractor>();
-        if("总包商".equals(roleName)) {
-            for(Contractor oldContractor : contractorList) {
-                String userId = oldContractor.getUserId();
-                if(StringUtils.isNotBlank(userId)) {
-                    if(user.getUserId() == Long.parseLong(userId)) {
-                        newContractorList.add(oldContractor);
-                    }
-                }
-            }
-        } else if(!"超级管理员".equals(roleName)){
-            List<Long>  listId = contractorService.findUserPermissByUserId(user.getUserId());
-            for(Contractor oldContractor : contractorList) {
-                String userId = oldContractor.getUserId();
-                if(StringUtils.isNotBlank(userId)) {
-                    for(Long userIds : listId) {
-                        if(userIds.longValue() == Long.parseLong(userId)) {
-                            newContractorList.add(oldContractor);
-                        }
-                    }
-                }
-            }
-        }
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+        List<Contractor>  newContractorList = contractorService.findContractorByAuth(roleNames,user.getUserId());
         return new Response(newContractorList);
     }
 
@@ -321,6 +298,9 @@ public class ContractorController {
     @RequestMapping("/importWhiteList")
     @ResponseBody
     public Response importWhiteList(@RequestParam("filename") MultipartFile file){
+        if (file == null) {
+            return Response.error("导入附件为空");
+        }
         WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService);
         try {
             List<String> errors = whiteListImportBusiness.importData();

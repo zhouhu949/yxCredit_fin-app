@@ -284,4 +284,36 @@ public class ContractorServiceImpl implements ContractorService {
     public List<String> findALLCards() {
         return contractorMapper.findALLCards();
     }
+
+    @Override
+    public List<Contractor> findContractorByAuth( String roleNames,Long currentUserId) {
+        List<Contractor> contractorList = selectContractorList();
+        List<Contractor> newContractorList = new ArrayList<Contractor>();
+        if (roleNames.contains("超级管理员")) {
+            newContractorList = contractorList;
+        }else if ("总包商".equals(roleNames)) {
+            for (Contractor oldContractor : contractorList) {
+                String userId = oldContractor.getUserId();
+                if (StringUtils.isNotBlank(userId)) {
+                    if (currentUserId == Long.parseLong(userId)) {
+                        newContractorList.add(oldContractor);
+                        break;
+                    }
+                }
+            }
+        }else {
+            List<Long> listId = findUserPermissByUserId(currentUserId);
+            for (Contractor oldContractor : contractorList) {
+                String userId = oldContractor.getUserId();
+                if (StringUtils.isNotBlank(userId)) {
+                    for (Long userIds : listId) {
+                        if (userIds == Long.parseLong(userId)) {
+                            newContractorList.add(oldContractor);
+                        }
+                    }
+                }
+            }
+        }
+            return newContractorList;
+    }
 }

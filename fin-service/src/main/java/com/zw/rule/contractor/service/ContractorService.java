@@ -115,4 +115,12 @@ public interface ContractorService {
      * @return 身份证号列表
      */
     List<String> findALLCards();
+
+    /**
+     * 根据登录用户权限查询总包商信息 create by 陈淸玉
+     * @param currentUserId  登录人ID
+     * @param roleNames 权限
+     * @return 对应的总包商列表
+     */
+    List<Contractor> findContractorByAuth(String roleNames,Long currentUserId);
 }
