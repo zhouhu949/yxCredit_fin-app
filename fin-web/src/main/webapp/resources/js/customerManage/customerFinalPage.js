@@ -136,7 +136,7 @@ $().ready(function(){
             $("#relation").append(html);//直系
         }
 
-
+        /*审核图片吗*/
         if(imageList){
             var  showImg="";
             if(imageList.length > 0) {
