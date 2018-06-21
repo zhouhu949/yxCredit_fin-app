@@ -366,6 +366,54 @@ function setImagePreview1() {
     return true;
 }
 
+/**
+ * 白名单数据导入 create by  陈淸玉
+ */
+function importWhiteList(){
+    layer.open({
+        type : 1,
+        title : '导入白名单',
+        area : [ '350px', '100px' ],
+        content : $('#importBox'),
+        btn : [ '导入', '取消' ],
+        yes : function(index, layero) {
+            var file = document.getElementById("importWhiteList").files[0];
+            console.log(file);
+            if(!file){
+                layer.msg("点击选择文件，选择需要导入的excel文件");
+                return false;
+            }
+            var fileTail= file.name.substr(file.name.indexOf(".")+1);
+            if(fileTail !== 'xls' &&  fileTail!== 'xlsx') {
+                layer.msg("非Excel文件，请重新选择");
+                closeLayer();
+                return false;
+            }
+            var fd = new FormData();
+            fd.append( "filename", file);
+            Comm.ajaxUpload('contractorManage/importWhiteList',fd,function(data) {
+                layer.close(index);
+                if(data){
+                    if(data.code === 1){
+                        var importFailedPop = $('#import_failed_pop .failedBody');
+                        $('#import_failed_pop').modal({backdrop: 'static', keyboard: false});
+                        importFailedPop.empty();
+                        var errorMsg = "";
+                        for(var i = 0 ; i< data.data.length; i++){
+                            errorMsg += '<p>'+ data.data[i] +'</p>'
+                        }
+                        importFailedPop.html(errorMsg);
+                    }else{
+                        layer.msg("导入成功",function () {
+                            g_whiteListManage.tableUser.ajax.reload();
+                        });
+                    }
+                }
+            },false,false);
+        }
+    });
+}
+
 //添加、编辑白名单信息
 function updateWhite(sign,id) {
     $("#realName").val("");

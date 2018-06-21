@@ -49,6 +49,8 @@
                     </li>
                     <button id="btn_search"  type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset"  type="button" class="btn btn-primary queryBtn">查询重置</button>
+                    <a class="btn addBtn" href="${pageContext.request.contextPath}/templates/importWhiteList.xlsx">白名单导入模板下载</a>
+                    <button class="btn addBtn" type="button"  onclick="importWhiteList()" >白名单导入</button>
                     <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateWhite(1)" id="Add_user_btn">添加白名单</button>
                 </ul>
                 <div id="Add_user_style" style="display: none">
@@ -223,5 +225,34 @@
         </div>
     </div>
 </div>
+<%--导入文件弹出框--%>
+<div id="importBox" style="display: none">
+    <div style="padding: 15px;font-size: 14px;">
+        <%--<div>--%>
+             <%--<a class="template" href="${pageContext.request.contextPath}/templates/importWhiteList.xlsx">模版下载</a>--%>
+        <%--</div>--%>
+        <div>
+            <input class="import_file" type="file" id="importWhiteList" style="width:318px;" placeholder="请选择文件">
+        </div>
+    </div>
+</div>
+
+<!-- 白名单导入失败框 -->
+<div class="modal fade" id="import_failed_pop" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">导入失败消息</h4>
+            </div>
+            <div class="modal-body failedBody" >
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

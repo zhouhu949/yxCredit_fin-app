@@ -6,6 +6,8 @@ import com.zw.constants.CommonConstants;
 import com.zw.rule.mybatis.page.Page;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Date;
+
 public class Response implements ResponseCode {
 
     private Object data;
@@ -33,13 +35,18 @@ public class Response implements ResponseCode {
     }
 
     public static Response error(String msg) {
-        return error(CommonConstants.FAIL, msg);
+        return error(CommonConstants.FAIL, msg,null);
     }
 
-    public static Response error(Integer code, String msg) {
+    public static Response error(Object data ,String msg) {
+        return error(CommonConstants.FAIL, msg,data);
+    }
+
+    public static Response error(Integer code, String msg,Object data) {
         Response r = new Response();
         r.setCode(code);
         r.setMsg(msg);
+        r.setData(data);
         return r;
     }
 

@@ -241,4 +241,14 @@ public class ContractorServiceImpl implements ContractorService {
     public ContractorOrder getContractorOrder(long id){
         return contractorMapper.getContractorOrder(id);
     }
+
+    @Override
+    public Contractor findByName(String contractorName) {
+        return contractorMapper.findByName(contractorName);
+    }
+
+    @Override
+    public List<String> findALLCards() {
+        return contractorMapper.findALLCards();
+    }
 }

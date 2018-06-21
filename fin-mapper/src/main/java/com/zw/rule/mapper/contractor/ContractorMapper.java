@@ -56,4 +56,17 @@ public interface ContractorMapper{
     List<ContractorOrder> findContractorOrderList(ParamFilter paramFilter);
 
     ContractorOrder getContractorOrder(@Param("id") Long value);
+
+    /**
+     * 按contractor_name 查询总包商 create by 陈淸玉
+     * @param contractorName 总包商名称
+     * @return 总包商信息
+     */
+    Contractor findByName(@Param("contractorName") String contractorName);
+
+    /**
+     * 查询所有的身份证号码 create by 陈淸玉
+     * @return 身份证号列表
+     */
+    List<String> findALLCards();
 }
