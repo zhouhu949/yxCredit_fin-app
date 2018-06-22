@@ -64,7 +64,7 @@ public interface ContractorMapper{
      * 批量插入总包商用户信息
      * @param list
      */
-    int insertBatchContUser(List<Map> list);
+    int insertBatchContUser(@Param("list") List<Map> list);
 
     List<ContractorOrder> findContractorOrderList(ParamFilter paramFilter);
 

@@ -204,21 +204,22 @@ public class ContractorController {
     @ResponseBody
     @PostMapping("bindingUser")
     @WebLogger("绑定用户")
-    public Response bindingUser(@RequestBody Map map) throws Exception {
+    public Response bindingUser(@RequestBody Map map) {
         Contractor contractor = new Contractor();
         contractor.setId(map.get("id").toString());
         contractor.setUserId(map.get("userStr").toString());
         if(StringUtil.isBlank(map.get("userStr").toString())) {
             contractor.setUserId(map.get("userStr").toString());
         }
-        int num = contractorService.bindContractorUser(contractor);
         Response response = new Response();
-        if (num > 0){
-            response.setMsg("操作成功");
+        try {
+            contractorService.bindContractorUser(contractor);
+        } catch (Exception e) {
+            response.setMsg("操作失败");
+            response.setCode(1);
             return response;
         }
-        response.setMsg("操作失败");
-        response.setCode(1);
+        response.setMsg("操作成功");
         return response;
     }
 

@@ -48,7 +48,7 @@ public interface ContractorService {
      * @param contractor
      * @return
      */
-    int bindContractorUser(Contractor contractor);
+    void bindContractorUser(Contractor contractor) throws Exception;
 
     /**
      * 更新白名单

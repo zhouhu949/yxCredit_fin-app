@@ -188,13 +188,13 @@ public class ContractorServiceImpl implements ContractorService {
     }
 
     @Override
-    public int bindContractorUser(Contractor contractor) {
+    public void bindContractorUser(Contractor contractor) {
         //删除总包商用户
         Contractor newContractor = new Contractor();
         newContractor.setId(contractor.getId());
         contractorMapper.deleteContUser(newContractor);
-        List<Map> listMap = new ArrayList<>();
         if(StringUtils.isNotBlank(contractor.getUserId())) {
+            List<Map> listMap = new ArrayList<>();
             for(String userId : contractor.getUserId().split(",")) {
                 String key = GeneratePrimaryKeyUtils.getUUIDKey();
                 Map map = new HashMap();
@@ -203,8 +203,8 @@ public class ContractorServiceImpl implements ContractorService {
                 map.put("id",key);
                 listMap.add(map);
             }
+            contractorMapper.insertBatchContUser(listMap);
         }
-        return contractorMapper.insertBatchContUser(listMap);
     }
 
     /**
