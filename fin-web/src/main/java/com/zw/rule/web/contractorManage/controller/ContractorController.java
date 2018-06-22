@@ -74,7 +74,7 @@ public class ContractorController {
         //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
-        List<Long> listId = null;
+        List<Long> listId = new ArrayList<>();
         if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
