@@ -123,9 +123,7 @@ public class UserServiceImpl implements UserService {
         checkArgument((userIds != null && userIds.size() > 0), "用户编号不能为空");
         userDao.delete("deleteByUserId", userIds);
         userRoleDao.delete("deleteByUserId", userIds);
-        //Contractor contractor = new Contractor();
-
-        //contractorMapper.updateByPrimaryKeySelective();
+        contractorMapper.deleteBatchContUser(userIds);
     }
 
     @Override

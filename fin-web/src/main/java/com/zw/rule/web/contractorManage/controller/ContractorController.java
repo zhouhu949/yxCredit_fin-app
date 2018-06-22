@@ -76,6 +76,7 @@ public class ContractorController {
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
@@ -135,6 +136,7 @@ public class ContractorController {
         User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
@@ -156,6 +158,7 @@ public class ContractorController {
         User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
@@ -300,7 +303,10 @@ public class ContractorController {
         if (file == null) {
             return Response.error("导入附件为空");
         }
-        WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService);
+        User  user = (User) UserContextUtil.getAttribute("currentUser");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+        List<Contractor>  newContractorList = contractorService.findContractorByAuth(roleNames,user.getUserId());
+        WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService,newContractorList);
         try {
             List<String> errors = whiteListImportBusiness.importData();
             if(CollectionUtils.isEmpty(errors)){

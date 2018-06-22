@@ -190,7 +190,9 @@ public class ContractorServiceImpl implements ContractorService {
     @Override
     public int bindContractorUser(Contractor contractor) {
         //删除总包商用户
-        contractorMapper.deleteContUser(contractor.getId());
+        Contractor newContractor = new Contractor();
+        newContractor.setId(contractor.getId());
+        contractorMapper.deleteContUser(newContractor);
         List<Map> listMap = new ArrayList<>();
         if(StringUtils.isNotBlank(contractor.getUserId())) {
             for(String userId : contractor.getUserId().split(",")) {

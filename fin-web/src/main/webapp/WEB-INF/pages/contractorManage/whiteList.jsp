@@ -90,8 +90,8 @@
                                 <label class="label_name">合同状态</label>
                                 <label>
                                     <select name="contract_status" size="1" id="contractStatus">
-                                        <option value=1 id="you">有</option>
                                         <option value=0 id="wu">无</option>
+                                        <option value=1 id="you">有</option>
                                     </select>
                                 </label>
 
