@@ -272,6 +272,7 @@ public class OrderServiceImpl implements OrderService {
                         break;
                     case  Constants.ORDER_AUDIT_FAILURE_STATE://审核拒绝
                         messageContent = dictService.getDictInfo("消息内容","SPJJ");
+                        messageContent = messageContent + map.get("approveSuggestion").toString();
                         messageTitle = "审批拒绝";
                         break;
                     case  Constants.ORDER_AUDIT_LOAN_STATE://放款通过
@@ -284,7 +285,7 @@ public class OrderServiceImpl implements OrderService {
                 if(JiGuangUtils.alias(messageTitle,messageContent,registration_id)){
                     message.setPushState(Constants.MESSAGE_PUSH_SUCCESS_STATE);
                 }
-               /* MsgRequest msgRequest = new MsgRequest();
+               MsgRequest msgRequest = new MsgRequest();
                 msgRequest.setContent(messageContent);
                 msgRequest.setPhone(customer.getTel());
                 //发送手机短信
@@ -295,7 +296,7 @@ public class OrderServiceImpl implements OrderService {
                 Response response = JSONObject.parseObject(result, Response.class);
                 if(Constants.SMS_FAILURE_STATE.equals(response.getRes_code())) {
                     return Response.error(CommonConstants.FAIL,response.getRes_msg());
-                }*/
+                }
                 message.setTitle(messageTitle);
                 message.setContent(messageContent);
                 messageMapper.insert(message);
