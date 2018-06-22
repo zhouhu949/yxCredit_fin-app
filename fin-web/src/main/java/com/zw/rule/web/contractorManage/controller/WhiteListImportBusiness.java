@@ -230,7 +230,9 @@ public class WhiteListImportBusiness {
                 }
                 white.setCard(value);
                 //防止重复
-                cardList.add(value);
+                if(!isError){
+                    white.setLatestPay(value);
+                }
                 break;
             //手机号
             case 3:
@@ -288,7 +290,6 @@ public class WhiteListImportBusiness {
                     errorMsg += headList[index] + "必须为数字";
                     isError  = true;
                 }
-                white.setLatestPay(value);
                 break;
             //工资发放形式
             case 11:
