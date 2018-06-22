@@ -426,7 +426,7 @@ function updateWhite(sign,id) {
     $("#endTime").val('');
     $("#preview").attr("src",'');
     loadContractorType();
-    if(sign==0){
+    if(sign===0){
         Comm.ajaxPost('contractorManage/whiteListDetail',id,function(data){
             layer.closeAll();
             var whiteList = data.data;
@@ -436,6 +436,7 @@ function updateWhite(sign,id) {
             $("#jobType").val(whiteList.jobType);
             $("#latestPay").val(whiteList.latestPay);
             $("#contractorId option[value=" + whiteList.contractorId + "]").attr("selected","selected");
+            $("#contractStatus option[value=" + whiteList.contractStatus + "]").attr("selected","selected");
             $("#job option[value=" + whiteList.job + "]").attr("selected","selected");
             $("#payType option[value=" + whiteList.payType + "]").attr("selected","selected");
             $("#beginTime").val(whiteList.contractStartDate);
