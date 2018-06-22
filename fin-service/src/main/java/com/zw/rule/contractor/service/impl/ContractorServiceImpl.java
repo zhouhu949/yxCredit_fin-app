@@ -246,12 +246,12 @@ public class ContractorServiceImpl implements ContractorService {
     }
 
     @Override
-    public int updateWhiteList(WhiteList whiteList) throws Exception {
+    public int updateWhiteList(WhiteList whiteList) {
        return whiteListMapper.updateByPrimaryKeySelective(whiteList);
     }
 
     @Override
-    public int addWhiteList(WhiteList whiteList) throws Exception {
+    public int addWhiteList(WhiteList whiteList) {
         String uuid = GeneratePrimaryKeyUtils.getUUIDKey();
         whiteList.setId(uuid);
         return  whiteListMapper.insertSelective(whiteList);

@@ -69,18 +69,12 @@ public class ContractorController {
     @PostMapping("contractorListPage")
     @ResponseBody
     public Response contractorList(@RequestBody ParamFilter queryFilter){
-        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
-        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
-        List<Long> listId = null;
-        if("总包商".equals(roleNames)) {
-            listId = new ArrayList<>();
-            listId.add(user.getUserId());
-        } else if(!roleNames.contains("超级管理员")){
-            listId = contractorService.findUserPermissByUserId(user.getUserId());
-        }
+        List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
+        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         Map<String, Object> Param = queryFilter.getParam();
         Param.put("idList", listId);
         queryFilter.setParam(Param);
@@ -129,18 +123,12 @@ public class ContractorController {
     @PostMapping("whiteListPage")
     @ResponseBody
     public Response whiteList(@RequestBody ParamFilter queryFilter) throws Exception{
-        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
-        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = null;
-        if("总包商".equals(roleNames)) {
-            listId = new ArrayList<>();
-            listId.add(user.getUserId());
-        } else if(!roleNames.contains("超级管理员")){
-            listId = contractorService.findUserPermissByUserId(user.getUserId());
-        }
+        List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
+        PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         Param.put("idList", listId);
         queryFilter.setParam(Param);
         List list = contractorService.findWhiteList(queryFilter);
@@ -151,18 +139,14 @@ public class ContractorController {
     @PostMapping("contractorOrderListPage")
     @ResponseBody
     public Response contractorOrderList(@RequestBody ParamFilter queryFilter) throws Exception{
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+        User user=(User) UserContextUtil.getAttribute("currentUser");
+        //获取用户list
+        List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        //分页获取列表
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
-        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
-        User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = null;
-        if("总包商".equals(roleNames)) {
-            listId = new ArrayList<>();
-            listId.add(user.getUserId());
-        } else if(!roleNames.contains("超级管理员")){
-            listId = contractorService.findUserPermissByUserId(user.getUserId());
-        }
         Param.put("idList", listId);
         queryFilter.setParam(Param);
         List list = contractorService.findContractorOrderList(queryFilter);
@@ -170,19 +154,35 @@ public class ContractorController {
         return new Response(pageInfo);
     }
 
+    /**
+     * 根据登录用户获取总包商模块权限
+     * @param roleNames
+     * @param userId
+     * @return
+     */
+    private List<Long> findAuthUserByUserId(String roleNames, long userId) {
+        List<Long> listId = new ArrayList<>();
+        if("总包商".equals(roleNames)) {
+            listId.add(userId);
+            return listId;
+        } else if(!roleNames.contains("超级管理员")){
+            listId = contractorService.findUserPermissByUserId(userId);
+            if(null != listId && listId.size() > 0) {
+                return contractorService.findUserPermissByUserId(userId);
+            }
+        }
+        return null;
+    }
+
     @ResponseBody
     @PostMapping("updateContractor")
     @WebLogger("编辑总包商")
     public Response updateContractor(@RequestBody Contractor contractor) throws Exception {
         int num = contractorService.updateContractor(contractor);
-        Response response = new Response();
         if (num > 0){
-            response.setMsg("修改成功");
-            return response;
+            return Response.ok("操作成功",null);
         }
-        response.setMsg("修改失败");
-        response.setCode(1);
-        return response;
+        return Response.error("操作失败");
     }
 
     @ResponseBody
@@ -191,14 +191,10 @@ public class ContractorController {
     public Response addContractor(@RequestBody Contractor contractor) throws Exception{
         checkNotNull(contractor, "总包商信息不能为空");
         int num = contractorService.addContractor(contractor);
-        Response response = new Response();
         if (num > 0){
-            response.setMsg("添加成功");
-            return response;
+            return Response.ok("操作成功",null);
         }
-        response.setMsg("添加失败");
-        response.setCode(1);
-        return response;
+        return Response.error("操作失败");
     }
 
     @ResponseBody
@@ -208,19 +204,12 @@ public class ContractorController {
         Contractor contractor = new Contractor();
         contractor.setId(map.get("id").toString());
         contractor.setUserId(map.get("userStr").toString());
-        if(StringUtil.isBlank(map.get("userStr").toString())) {
-            contractor.setUserId(map.get("userStr").toString());
-        }
-        Response response = new Response();
         try {
             contractorService.bindContractorUser(contractor);
         } catch (Exception e) {
-            response.setMsg("操作失败");
-            response.setCode(1);
-            return response;
+            return Response.error("操作失败");
         }
-        response.setMsg("操作成功");
-        return response;
+        return Response.ok("操作成功",null);
     }
 
     @ResponseBody
@@ -228,23 +217,17 @@ public class ContractorController {
     @WebLogger("添加白名单")
     public Response addContractor(@RequestBody WhiteList whiteList) throws Exception{
         checkNotNull(whiteList, "白名单不能为空");
-        Response response = new Response();
         Map map = new HashMap(1);
         map.put("card",whiteList.getCard());
         List<String> idList = contractorService.vaildateOnly(map);
         if(null != idList && idList.size() > 0){
-            response.setMsg("身份证号已存在");
-            response.setCode(1);
-            return response;
+            return  Response.error("身份证号已存在");
         }
        int num = contractorService.addWhiteList(whiteList);
         if (num > 0){
-            response.setMsg("添加成功");
-            return response;
+            return Response.ok("添加成功",null);
         }
-        response.setMsg("添加失败");
-        response.setCode(1);
-        return response;
+        return Response.error("添加失败");
     }
 
 
@@ -257,18 +240,13 @@ public class ContractorController {
         map.put("card",whiteList.getCard());
         List<String> idList = contractorService.vaildateOnly(map);
         if(null != idList && idList.size() > 0 && !idList.get(0).equals(whiteList.getId())){
-            response.setMsg("身份证号已存在");
-            response.setCode(1);
-            return response;
+            return  Response.error("身份证号已存在");
         }
         int num = contractorService.updateWhiteList(whiteList);
         if (num > 0){
-            response.setMsg("修改成功");
-            return response;
+            return Response.ok("添加成功",null);
         }
-        response.setMsg("修改失败");
-        response.setCode(1);
-        return response;
+        return Response.error("添加失败");
     }
 
     /**

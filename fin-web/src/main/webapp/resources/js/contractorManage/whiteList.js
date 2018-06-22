@@ -490,26 +490,32 @@ function updateWhite(sign,id) {
                         layer.msg("请选择总包商",{time:2000});
                         return;
                     }
-                    /*if(!latestPayday){
-                        layer.msg("发薪日不能为空",{time:2000});
-                        return;
-                    }
-                    if(!numReg1.test(latestPayday)) {
-                        layer.msg("发薪日只能为数字",{time:2000});
-                        return;
+                    if(latestPayday){
+                        if(!numReg1.test(latestPayday)) {
+                            layer.msg("发薪日不合法",{time:2000});
+                            return;
+                        }
+
+                        if(!latestPaydayReg.test(latestPayday)) {
+                            layer.msg("发薪日只能在0-31之间",{time:2000});
+                            return;
+                        }
                     }
 
-                    if(!latestPaydayReg.test(latestPayday)) {
-                        layer.msg("发薪日只能在0-31之间",{time:2000});
-                        return;
-                    }*/
                     if(!latestPay){
                         layer.msg("发薪日应发工资不能为空",{time:2000});
                         return;
                     }
                     if(!numReg1.test(latestPay)){
-                        layer.msg("发薪日应发工资只能为数字",{time:2000});
+                        layer.msg("发薪日应发工资不合法",{time:2000});
                         return;
+                    }
+
+                    if(localMonthlyMinWage){
+                        if(!numReg1.test(localMonthlyMinWage)){
+                            layer.msg("日最低工资不合法",{time:2000});
+                            return;
+                        }
                     }
                    /* if(!jobType){
                         layer.msg("工种不能为空",{time:2000});
@@ -631,18 +637,17 @@ function updateWhite(sign,id) {
                     layer.msg("请选择总包商",{time:2000});
                     return;
                 }
-                /*if(!latestPayday){
-                    layer.msg("发薪日不能为空",{time:2000});
-                    return;
+                if(latestPayday){
+                    if(!numReg1.test(latestPayday)) {
+                        layer.msg("发薪日不合法",{time:2000});
+                        return;
+                    }
+                    if(!latestPaydayReg.test(latestPayday)) {
+                        layer.msg("发薪日只能在0-31之间",{time:2000});
+                        return;
+                    }
                 }
-                if(!numReg1.test(latestPayday)) {
-                    layer.msg("发薪日只能为数字",{time:2000});
-                    return;
-                }
-                if(!latestPaydayReg.test(latestPayday)) {
-                    layer.msg("发薪日只能在0-31之间",{time:2000});
-                    return;
-                }*/
+
                 if(!latestPay){
                     layer.msg("发薪日应发工资不能为空",{time:2000});
                     return;
@@ -650,6 +655,13 @@ function updateWhite(sign,id) {
                 if(!numReg1.test(latestPay)){
                     layer.msg("发薪日应发工资只能为数字",{time:2000});
                     return;
+                }
+
+                if(localMonthlyMinWage){
+                    if(!numReg1.test(localMonthlyMinWage)){
+                        layer.msg("日最低工资不合法",{time:2000});
+                        return;
+                    }
                 }
                /* if(!jobType){
                     layer.msg("工种不能为空",{time:2000});
