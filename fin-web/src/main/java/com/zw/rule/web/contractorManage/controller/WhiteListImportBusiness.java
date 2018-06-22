@@ -7,6 +7,7 @@ import com.zw.enums.WhitePayTypeEnum;
 import com.zw.rule.contractor.po.Contractor;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
+import com.zw.rule.ruleResult.po.RuleResult;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -129,6 +130,20 @@ public class WhiteListImportBusiness {
     }
 
     /**
+     * 判断是否是空行
+     * @param row excel row
+     * @return true  空行 false 不是空行
+     */
+    private boolean isRowEmpty(Row row) {
+        for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+            Cell cell = row.getCell(c);
+            if (cell != null && cell.getCellTypeEnum() != CellType.BLANK){
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
      * 返回出错的信息
      * @return  List<String> 出错的信息集合
       */
@@ -137,6 +152,9 @@ public class WhiteListImportBusiness {
         for (int i = 1; i <= rowSize; i++) {
             errorMsg = "第" + i + "行：" ;
             Row row = sheet.getRow(i);
+            if(isRowEmpty(row)){
+                return errors;
+            }
             isError = false;
             white = new WhiteList();
             white.setId(GeneratePrimaryKeyUtils.getUUIDKey());
@@ -211,6 +229,8 @@ public class WhiteListImportBusiness {
                     }
                 }
                 white.setCard(value);
+                //防止重复
+                cardList.add(value);
                 break;
             //手机号
             case 3:
@@ -218,7 +238,7 @@ public class WhiteListImportBusiness {
                     errorMsg += headList[index] + "不能为空";
                     isError  = true;
                 }else if(!RegexUtil.isnNewMobile(value)){
-                    errorMsg += headList[index] + "手机号格式不正确";
+                    errorMsg += headList[index] + "格式不正确";
                     isError  = true;
                 }
                 white.setTelphone(value);
