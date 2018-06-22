@@ -22,14 +22,6 @@ public class WhiteList extends BaseEntity {
 
     private String contractStartDate;
 
-    public String getWhiteStatus() {
-        return whiteStatus;
-    }
-
-    public void setWhiteStatus(String whiteStatus) {
-        this.whiteStatus = whiteStatus;
-    }
-
     private String contractEndDate;
 
     private String job;
@@ -45,6 +37,14 @@ public class WhiteList extends BaseEntity {
     private String payProof;
 
     private String localMonthlyMinWage;
+
+    public String getWhiteStatus() {
+        return whiteStatus;
+    }
+
+    public void setWhiteStatus(String whiteStatus) {
+        this.whiteStatus = whiteStatus;
+    }
 
     public String getContractorName() {
         return contractorName;
