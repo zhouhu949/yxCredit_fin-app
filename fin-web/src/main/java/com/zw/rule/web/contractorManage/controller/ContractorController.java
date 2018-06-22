@@ -133,7 +133,7 @@ public class ContractorController {
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = null;
+        List<Long> listId = new ArrayList<>();
         if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
@@ -154,7 +154,7 @@ public class ContractorController {
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = null;
+        List<Long> listId = new ArrayList<>();
         if("总包商".equals(roleNames)) {
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
