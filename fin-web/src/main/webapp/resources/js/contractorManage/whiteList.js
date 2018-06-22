@@ -370,6 +370,7 @@ function setImagePreview1() {
  * 白名单数据导入 create by  陈淸玉
  */
 function importWhiteList(){
+    $("#importWhiteList").val("");
     layer.open({
         type : 1,
         title : '导入白名单',

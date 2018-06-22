@@ -170,6 +170,8 @@ public class WhiteListImportBusiness {
             if(!isError) {
                 //保存数据
                 contractorService.addWhiteList(white);
+                //身份证去重
+                this.cardList.add(white.getCard());
             }
         }
         return errors;
@@ -219,7 +221,7 @@ public class WhiteListImportBusiness {
                     errorMsg += headList[index] + "不能为空";
                     isError  = true;
                 }else if(!RegexUtil.isIdentityCard(value)){
-                    errorMsg += headList[index] + "必须15位数字或18位数字";
+                    errorMsg += headList[index] + "格式不正确";
                     isError  = true;
                 }else {
                     //如果用户导入的身份证在我们的库里面存在证明是重复数据
@@ -229,10 +231,6 @@ public class WhiteListImportBusiness {
                     }
                 }
                 white.setCard(value);
-                //防止重复
-                if(!isError){
-                    white.setLatestPay(value);
-                }
                 break;
             //手机号
             case 3:
