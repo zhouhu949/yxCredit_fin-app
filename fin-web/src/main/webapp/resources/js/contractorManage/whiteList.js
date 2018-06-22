@@ -469,6 +469,11 @@ function updateWhite(sign,id) {
                     var beginTime = $("#beginTime").val();
                     var endTime = $("#endTime").val();
 
+                    if(!contractorId) {
+                        layer.msg("请选择总包商",{time:2000});
+                        return;
+                    }
+
                     if (!realName) {
                         layer.msg("姓名不能为空",{time:2000});
                         return;
@@ -483,11 +488,6 @@ function updateWhite(sign,id) {
                     }
                     if(!mobileReg.test(telPhone)){
                         layer.msg("手机号码格式不正确",{time:2000});
-                        return;
-                    }
-
-                    if(!contractorId) {
-                        layer.msg("请选择总包商",{time:2000});
                         return;
                     }
                     if(latestPayday){
@@ -613,6 +613,10 @@ function updateWhite(sign,id) {
                 var beginTime = $("#beginTime").val();
                 var endTime = $("#endTime").val();
 
+                if(!contractorId) {
+                    layer.msg("请选择总包商",{time:2000});
+                    return;
+                }
                 if (!realName) {
                     layer.msg("姓名不能为空",{time:2000});
                     return;
@@ -633,10 +637,7 @@ function updateWhite(sign,id) {
                     layer.msg("手机号码格式不正确",{time:2000});
                     return;
                 }
-                if(!contractorId) {
-                    layer.msg("请选择总包商",{time:2000});
-                    return;
-                }
+
                 if(latestPayday){
                     if(!numReg1.test(latestPayday)) {
                         layer.msg("发薪日不合法",{time:2000});

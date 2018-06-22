@@ -73,6 +73,11 @@ public class ContractorController {
         User user=(User) UserContextUtil.getAttribute("currentUser");
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        if(null != listId && listId.size() == 0) {
+            List list = new ArrayList();
+            PageInfo pageInfo = new PageInfo(list);
+            return new Response(pageInfo);
+        }
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         Map<String, Object> Param = queryFilter.getParam();
@@ -127,6 +132,11 @@ public class ContractorController {
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
         List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        if(null != listId && listId.size() == 0) {
+            List list = new ArrayList();
+            PageInfo pageInfo = new PageInfo(list);
+            return new Response(pageInfo);
+        }
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
         Param.put("idList", listId);
@@ -143,6 +153,11 @@ public class ContractorController {
         User user=(User) UserContextUtil.getAttribute("currentUser");
         //获取用户list
         List<Long> listId = findAuthUserByUserId(roleNames, user.getUserId());
+        if(null != listId && listId.size() == 0) {
+            List list = new ArrayList();
+            PageInfo pageInfo = new PageInfo(list);
+            return new Response(pageInfo);
+        }
         //分页获取列表
         int pageNo = PageConvert.convert(queryFilter.getPage().getFirstIndex(),queryFilter.getPage().getPageSize());
         PageHelper.startPage(pageNo, queryFilter.getPage().getPageSize());
@@ -166,10 +181,7 @@ public class ContractorController {
             listId.add(userId);
             return listId;
         } else if(!roleNames.contains("超级管理员")){
-            listId = contractorService.findUserPermissByUserId(userId);
-            if(null != listId && listId.size() > 0) {
-                return contractorService.findUserPermissByUserId(userId);
-            }
+            return contractorService.findUserPermissByUserId(userId);
         }
         return null;
     }

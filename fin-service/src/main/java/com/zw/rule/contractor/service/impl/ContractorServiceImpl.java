@@ -107,6 +107,7 @@ public class ContractorServiceImpl implements ContractorService {
 
     @Override
     public List<Long> findUserPermissByUserId(long userId) {
+        List<Long> idList = new ArrayList<>();
         User user = userDao.findUnique("getByUserId", userId);
         Long departmentId = user.getOrgId();
         List<SysDepartment> departmentsList = sysDepartmentMapper.findDeptList();
@@ -114,10 +115,9 @@ public class ContractorServiceImpl implements ContractorService {
         newDepIdList = getChild(departmentId, departmentsList, newDepIdList);
         if(newDepIdList.size() > 0) {
             //根据部门idList查询用户集合
-            List<Long> idList = contractorMapper.findUserListByPid(newDepIdList);
-            return idList;
+            idList = contractorMapper.findUserListByPid(newDepIdList);
         }
-        return null;
+        return idList;
     }
 
 
