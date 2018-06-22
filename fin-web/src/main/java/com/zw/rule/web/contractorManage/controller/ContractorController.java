@@ -74,8 +74,9 @@ public class ContractorController {
         //此处需要根据用户id获取总包商列表
         User user=(User) UserContextUtil.getAttribute("currentUser");
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
-        List<Long> listId = new ArrayList<>();
+        List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
@@ -133,8 +134,9 @@ public class ContractorController {
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = new ArrayList<>();
+        List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
@@ -154,8 +156,9 @@ public class ContractorController {
         String roleNames = (String) UserContextUtil.getAttribute("roleNames");
         Map<String, Object> Param = queryFilter.getParam();
         User user=(User) UserContextUtil.getAttribute("currentUser");
-        List<Long> listId = new ArrayList<>();
+        List<Long> listId = null;
         if("总包商".equals(roleNames)) {
+            listId = new ArrayList<>();
             listId.add(user.getUserId());
         } else if(!roleNames.contains("超级管理员")){
             listId = contractorService.findUserPermissByUserId(user.getUserId());
