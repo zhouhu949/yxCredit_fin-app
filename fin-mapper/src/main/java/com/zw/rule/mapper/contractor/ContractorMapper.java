@@ -50,15 +50,21 @@ public interface ContractorMapper{
 
     /**
      * 删除总包商用户
-     * @param contractorId
+     * @param contractor
      */
-    void deleteContUser(String contractorId);
+    void deleteContUser(Contractor contractor);
+
+    /**
+     * 批量删除总包商用户
+     * @param idList
+     */
+    void deleteBatchContUser(@Param("idList") List<Long> idList);
 
     /**
      * 批量插入总包商用户信息
-     * @param listMap
+     * @param list
      */
-    int insertBatchContUser(List<Map> listMap);
+    int insertBatchContUser(List<Map> list);
 
     List<ContractorOrder> findContractorOrderList(ParamFilter paramFilter);
 

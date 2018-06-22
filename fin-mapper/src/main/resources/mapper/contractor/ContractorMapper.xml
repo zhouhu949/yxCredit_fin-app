@@ -185,11 +185,6 @@
         ) and sysuser.status = 1
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from byx_contractor
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-
   <insert id="insertSelective" parameterType="com.zw.rule.contractor.po.Contractor" >
     insert into byx_contractor
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -283,9 +278,28 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-    <delete id="deleteContUser" parameterType="java.lang.String">
+    <delete id="deleteContUser" parameterType="com.zw.rule.contractor.po.Contractor">
         delete from byx_contractor_user
-        where contractor_id = #{contractorId}
+        <where>
+            <if test="userId != null and userId != '' ">
+                sys_user_id = #{userId}
+            </if>
+            <if test="id != null and id != '' ">
+                and contractor_id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteBatchContUser" parameterType="java.util.List">
+        delete from byx_contractor_user
+        <where>
+            <if test="idList != null" >
+                sys_user_id in
+                <foreach collection="idList" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </delete>
 
     <insert id="insertBatchContUser" parameterType="java.util.List">
