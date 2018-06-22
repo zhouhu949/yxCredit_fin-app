@@ -303,7 +303,10 @@ public class ContractorController {
         if (file == null) {
             return Response.error("导入附件为空");
         }
-        WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService);
+        User  user = (User) UserContextUtil.getAttribute("currentUser");
+        String roleNames = (String) UserContextUtil.getAttribute("roleNames");
+        List<Contractor>  newContractorList = contractorService.findContractorByAuth(roleNames,user.getUserId());
+        WhiteListImportBusiness whiteListImportBusiness = new WhiteListImportBusiness(file,this.contractorService,newContractorList);
         try {
             List<String> errors = whiteListImportBusiness.importData();
             if(CollectionUtils.isEmpty(errors)){

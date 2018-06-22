@@ -86,6 +86,7 @@ $(function (){
         "ajax" : function(data, callback, settings) {
             var queryFilter = g_whiteListManage.getQueryCondition(data);
             Comm.ajaxPost('contractorManage/whiteListPage',JSON.stringify(queryFilter),function(result){
+                console.log(result)
                 var returnData = {};
                 var resData = result.data.list;
                 var resPage = result.data;
@@ -428,6 +429,7 @@ function updateWhite(sign,id) {
     loadContractorType();
     if(sign===0){
         Comm.ajaxPost('contractorManage/whiteListDetail',id,function(data){
+            console.log(data)
             layer.closeAll();
             var whiteList = data.data;
             $("#realName").val(whiteList.realName);

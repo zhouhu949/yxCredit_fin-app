@@ -48,6 +48,10 @@ public class WhiteListImportBusiness {
      * 数据库存在的身份证列表
      */
     private List<String> cardList;
+    /**
+     * 总包商列表
+     */
+    private List<Contractor> contractorList;
 
     private ContractorService contractorService;
     /**
@@ -63,9 +67,10 @@ public class WhiteListImportBusiness {
      */
     private Sheet sheet;
 
-    public WhiteListImportBusiness(MultipartFile file,ContractorService contractorService){
+    public WhiteListImportBusiness(MultipartFile file,ContractorService contractorService,List<Contractor> contractorList){
         this.file = file;
         this.contractorService = contractorService;
+        this.contractorList = contractorList;
     }
 
     /**
@@ -169,15 +174,18 @@ public class WhiteListImportBusiness {
                     errorMsg +=  headList[index] + "不能为空";
                     isError  = true;
                 }else{
-                    Contractor contractor = contractorService.findByName(value);
-                    if(contractor == null){
-                        errorMsg += headList[index] + "为：《"+ value + "》在系统里面不存在，请先完善数据在进行添加";
-                        isError  = true;
-                    }else{
-                        white.setContractorId(contractor.getId());
+                    if(!CollectionUtils.isEmpty(contractorList)){
+                        for (Contractor contractor : this.contractorList) {
+                            //如果匹配上总包商就赋值
+                            if (value.equals(contractor.getContractorName())) {
+                                white.setContractorId(contractor.getId());
+                                return false;
+                            }
+                        }
                     }
+                    errorMsg += headList[index] + "为：《"+ value + "》在系统里面不存在，请先完善数据在进行添加";
+                    isError  = true;
                 }
-
                 break;
             //姓名
             case 1:
