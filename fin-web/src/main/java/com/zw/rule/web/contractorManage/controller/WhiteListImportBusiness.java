@@ -369,7 +369,7 @@ public class WhiteListImportBusiness {
     }
 
     /**
-     * 清空对象
+     * 清空对象(clear to let GC do its work)
      */
     public  void  clearAll(){
         /*
