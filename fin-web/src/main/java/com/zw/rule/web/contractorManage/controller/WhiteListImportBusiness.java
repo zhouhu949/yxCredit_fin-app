@@ -238,10 +238,7 @@ public class WhiteListImportBusiness {
                 break;
             //手机号
             case 3:
-                if(StringUtils.isBlank(value)){
-                    errorMsg += headList[index] + "不能为空";
-                    isError  = true;
-                }else if(!RegexUtil.isnNewMobile(value)){
+            if(StringUtils.isNotBlank(value) && !RegexUtil.isnNewMobile(value)){
                     errorMsg += headList[index] + "格式不正确";
                     isError  = true;
                 }
