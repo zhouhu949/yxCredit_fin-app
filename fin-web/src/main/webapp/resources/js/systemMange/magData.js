@@ -79,7 +79,7 @@ var showDeptZtree = function () {
         title: "部门",
         type: 1,
         maxWidth: 'auto',
-        area: ['450px', '600px'],
+        area: ['450px', '500px'],
         skin: 'layer_normal',
         shift: 5,
         offset: '150px',
