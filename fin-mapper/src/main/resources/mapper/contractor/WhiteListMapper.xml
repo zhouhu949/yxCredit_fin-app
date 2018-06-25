@@ -65,7 +65,7 @@
       </if>
     </where>
     group by whitelist.id
-    /*order by CREAT_TIME desc*/
+    order by whitelist.create_time desc
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

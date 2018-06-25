@@ -1638,6 +1638,7 @@
         CUSTOMER_NAME AS customerName,
         magorder.CARD AS card,
         magorder.TEL AS tel,
+        magorder.applay_money AS applayMoney,
         product_name_name AS productName,
         loan_amount AS loanAmount,
         magcu.surplus_contract_amount AS surplusContractAmount,

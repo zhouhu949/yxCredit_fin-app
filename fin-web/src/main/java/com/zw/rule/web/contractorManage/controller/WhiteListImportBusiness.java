@@ -1,6 +1,9 @@
 package com.zw.rule.web.contractorManage.controller;
 
-import com.zw.base.util.*;
+import com.zw.base.util.DateUtils;
+import com.zw.base.util.GeneratePrimaryKeyUtils;
+import com.zw.base.util.RegexUtil;
+import com.zw.base.util.StringUtils;
 import com.zw.enums.WhiteContractStatusEnum;
 import com.zw.enums.WhiteJobEnum;
 import com.zw.enums.WhitePayTypeEnum;
@@ -17,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 白名单导入
  * @author 陈清玉 create by 2018-06-19
+ * @since 1.0.0
  */
 public class WhiteListImportBusiness {
 
@@ -129,6 +134,20 @@ public class WhiteListImportBusiness {
     }
 
     /**
+     * 判断是否是空行
+     * @param row excel row
+     * @return true  空行 false 不是空行
+     */
+    private boolean isRowEmpty(Row row) {
+        for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+            Cell cell = row.getCell(c);
+            if (cell != null && cell.getCellTypeEnum() != CellType.BLANK){
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
      * 返回出错的信息
      * @return  List<String> 出错的信息集合
       */
@@ -137,6 +156,9 @@ public class WhiteListImportBusiness {
         for (int i = 1; i <= rowSize; i++) {
             errorMsg = "第" + i + "行：" ;
             Row row = sheet.getRow(i);
+            if(isRowEmpty(row)){
+                return errors;
+            }
             isError = false;
             white = new WhiteList();
             white.setId(GeneratePrimaryKeyUtils.getUUIDKey());
@@ -152,6 +174,8 @@ public class WhiteListImportBusiness {
             if(!isError) {
                 //保存数据
                 contractorService.addWhiteList(white);
+                //身份证去重
+                this.cardList.add(white.getCard());
             }
         }
         return errors;
@@ -201,7 +225,7 @@ public class WhiteListImportBusiness {
                     errorMsg += headList[index] + "不能为空";
                     isError  = true;
                 }else if(!RegexUtil.isIdentityCard(value)){
-                    errorMsg += headList[index] + "必须15位数字或18位数字";
+                    errorMsg += headList[index] + "格式不正确";
                     isError  = true;
                 }else {
                     //如果用户导入的身份证在我们的库里面存在证明是重复数据
@@ -214,11 +238,8 @@ public class WhiteListImportBusiness {
                 break;
             //手机号
             case 3:
-                if(StringUtils.isBlank(value)){
-                    errorMsg += headList[index] + "不能为空";
-                    isError  = true;
-                }else if(!RegexUtil.isnNewMobile(value)){
-                    errorMsg += headList[index] + "手机号格式不正确";
+            if(StringUtils.isNotBlank(value) && !RegexUtil.isnNewMobile(value)){
+                    errorMsg += headList[index] + "格式不正确";
                     isError  = true;
                 }
                 white.setTelphone(value);
@@ -343,6 +364,36 @@ public class WhiteListImportBusiness {
             result = result.trim();
         }
         return result;
+    }
+
+    /**
+     * 清空对象(clear to let GC do its work)
+     */
+    public  void  clearAll(){
+        /*
+          数据库存在的身份证列表
+         */
+        if( this.cardList != null) {
+            this.cardList.clear();
+        }
+        /*
+          总包商列表
+         */
+        if( this.contractorList != null) {
+            this.contractorList.clear();
+        }
+        /*
+          Excel文件sheet
+         */
+        this.sheet = null;
+        /*
+          Excel文件Workbook
+         */
+        this.workBook = null;
+        /*
+          导入的Excel文件
+         */
+        this.file = null;
     }
 
 }

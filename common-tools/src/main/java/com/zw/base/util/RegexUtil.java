@@ -62,7 +62,7 @@ public class RegexUtil {
 	 * @return 是 true 不是 false
 	 */
 	public static boolean isIdentityCard(String checkStr) {
-		return validByRegex( "^\\d{15}|\\d{18}$", checkStr );
+		return validByRegex( "^\\d{15}$|^\\d{17}[0-9Xx]$", checkStr );
 	}
 	/**
 	 * 简单的手机号判断13位数字就可以

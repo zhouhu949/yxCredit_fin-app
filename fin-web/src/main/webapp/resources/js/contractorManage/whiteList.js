@@ -370,6 +370,7 @@ function setImagePreview1() {
  * 白名单数据导入 create by  陈淸玉
  */
 function importWhiteList(){
+    $("#importWhiteList").val("");
     layer.open({
         type : 1,
         title : '导入白名单',
@@ -482,13 +483,11 @@ function updateWhite(sign,id) {
                         layer.msg("身份证号码格式不正确",{time:2000});
                         return;
                     }
-                    if(!telPhone) {
-                        layer.msg("手机号码不能为空",{time:2000});
-                        return;
-                    }
-                    if(!mobileReg.test(telPhone)){
-                        layer.msg("手机号码格式不正确",{time:2000});
-                        return;
+                    if(telPhone) {
+                        if(!mobileReg.test(telPhone)){
+                            layer.msg("手机号码格式不正确",{time:2000});
+                            return;
+                        }
                     }
                     if(latestPayday){
                         if(!numReg1.test(latestPayday)) {
@@ -629,15 +628,12 @@ function updateWhite(sign,id) {
                     layer.msg("身份证号码格式不正确",{time:2000});
                     return;
                 }
-                if(!telPhone) {
-                    layer.msg("手机号码不能为空",{time:2000});
-                    return;
+                if(telPhone) {
+                    if(!mobileReg.test(telPhone)){
+                        layer.msg("手机号码格式不正确",{time:2000});
+                        return;
+                    }
                 }
-                if(!mobileReg.test(telPhone)){
-                    layer.msg("手机号码格式不正确",{time:2000});
-                    return;
-                }
-
                 if(latestPayday){
                     if(!numReg1.test(latestPayday)) {
                         layer.msg("发薪日不合法",{time:2000});
