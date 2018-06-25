@@ -1,13 +1,15 @@
 package com.zw.rule.web.contractorManage.controller;
 
-import com.zw.base.util.*;
+import com.zw.base.util.DateUtils;
+import com.zw.base.util.GeneratePrimaryKeyUtils;
+import com.zw.base.util.RegexUtil;
+import com.zw.base.util.StringUtils;
 import com.zw.enums.WhiteContractStatusEnum;
 import com.zw.enums.WhiteJobEnum;
 import com.zw.enums.WhitePayTypeEnum;
 import com.zw.rule.contractor.po.Contractor;
 import com.zw.rule.contractor.po.WhiteList;
 import com.zw.rule.contractor.service.ContractorService;
-import com.zw.rule.ruleResult.po.RuleResult;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -18,7 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 白名单导入
@@ -288,6 +291,7 @@ public class WhiteListImportBusiness {
                     errorMsg += headList[index] + "必须为数字";
                     isError  = true;
                 }
+                white.setLatestPay(value);
                 break;
             //工资发放形式
             case 11:
@@ -362,6 +366,36 @@ public class WhiteListImportBusiness {
             result = result.trim();
         }
         return result;
+    }
+
+    /**
+     * 清空对象
+     */
+    public  void  clearAll(){
+        /*
+          数据库存在的身份证列表
+         */
+        if( this.cardList != null) {
+            this.cardList.clear();
+        }
+        /*
+          总包商列表
+         */
+        if( this.contractorList != null) {
+            this.contractorList.clear();
+        }
+        /*
+          Excel文件sheet
+         */
+        this.sheet = null;
+        /*
+          Excel文件Workbook
+         */
+        this.workBook = null;
+        /*
+          导入的Excel文件
+         */
+        this.file = null;
     }
 
 }
