@@ -10,7 +10,6 @@ import com.zw.rule.contractor.service.ContractorService;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.po.User;
-import com.zw.rule.util.StringUtil;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
 import com.zw.rule.web.util.UserContextUtil;
@@ -24,14 +23,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -308,6 +301,9 @@ public class ContractorController {
         } catch (Exception e) {
             e.printStackTrace();
             return Response.error();
+        }finally {
+            //释放资源
+            whiteListImportBusiness.clearAll();
         }
     }
 }
