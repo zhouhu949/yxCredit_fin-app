@@ -30,7 +30,7 @@
             <div class="Manager_style add_user_info search_style">
                 <ul class="search_content clearfix">
                     <li>
-                        <label class="label_name">总包商名</label>
+                        <label class="label_name">总包商</label>
                         <label>
                             <select name="proSeriesName" style="height: 30px;" id="searchContractor">
                                 <option value="">请选择</option>
@@ -49,9 +49,6 @@
                     </li>
                     <button id="btn_search"  type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset"  type="button" class="btn btn-primary queryBtn">查询重置</button>
-                    <a class="btn addBtn" href="${pageContext.request.contextPath}/templates/importWhiteList.xlsx">白名单导入模板下载</a>
-                    <button class="btn addBtn" type="button"  onclick="importWhiteList()" >白名单导入</button>
-                    <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateWhite(1)" id="Add_user_btn">添加白名单</button>
                 </ul>
                 <div id="Add_user_style" style="display: none">
                     <div class="addCommon clearfix">
@@ -80,7 +77,7 @@
                                 </label>
                             </li>
                             <li>
-                                <label class="label_name">手机号 <i style="color: #F60;">*</i></label>
+                                <label class="label_name">手机号</label>
                                 <label for="telphone">
                                     <input name="tel_phone"  type="number" id="telphone" maxlength="11"/>
 
@@ -200,6 +197,13 @@
             </div>
         </div>
         <div class="Manager_style">
+            <ul class="search_content clearfix">
+                <a class="btn addBtn" href="${pageContext.request.contextPath}/templates/importWhiteList.xlsx">白名单导入模板下载</a>
+                <button class="btn addBtn" type="button"  onclick="importWhiteList()" >白名单导入</button>
+                <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateWhite(1)" id="Add_user_btn">添加白名单</button>
+            </ul>
+
+
             <div class="User_list">
                 <table style="cursor:pointer;" id="White_list" cellpadding="0" cellspacing="0" class="table table-striped table-bordered table-hover">
                     <thead>

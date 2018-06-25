@@ -785,7 +785,6 @@ function showMerchantOrders(merchantId,fanQIZhaState,checkState){
                     "initComplete" : function(settings,json) {
                         //搜索
                         $("#btn_search_order").click(function() {
-                            alert();
                             g_orderManageShow.fuzzySearch = true;
                             g_orderManageShow.tableUser.ajax.reload();
                         });

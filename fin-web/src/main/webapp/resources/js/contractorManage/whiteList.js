@@ -483,13 +483,11 @@ function updateWhite(sign,id) {
                         layer.msg("身份证号码格式不正确",{time:2000});
                         return;
                     }
-                    if(!telPhone) {
-                        layer.msg("手机号码不能为空",{time:2000});
-                        return;
-                    }
-                    if(!mobileReg.test(telPhone)){
-                        layer.msg("手机号码格式不正确",{time:2000});
-                        return;
+                    if(telPhone) {
+                        if(!mobileReg.test(telPhone)){
+                            layer.msg("手机号码格式不正确",{time:2000});
+                            return;
+                        }
                     }
                     if(latestPayday){
                         if(!numReg1.test(latestPayday)) {
@@ -630,15 +628,12 @@ function updateWhite(sign,id) {
                     layer.msg("身份证号码格式不正确",{time:2000});
                     return;
                 }
-                if(!telPhone) {
-                    layer.msg("手机号码不能为空",{time:2000});
-                    return;
+                if(telPhone) {
+                    if(!mobileReg.test(telPhone)){
+                        layer.msg("手机号码格式不正确",{time:2000});
+                        return;
+                    }
                 }
-                if(!mobileReg.test(telPhone)){
-                    layer.msg("手机号码格式不正确",{time:2000});
-                    return;
-                }
-
                 if(latestPayday){
                     if(!numReg1.test(latestPayday)) {
                         layer.msg("发薪日不合法",{time:2000});

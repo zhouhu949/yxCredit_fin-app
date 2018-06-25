@@ -34,7 +34,6 @@ var g_userManage = {
     }
 };
 $(function (){
-    alert();
     var table;
         table = [
             {"data": null ,"searchable":false,"orderable" : false},//序号

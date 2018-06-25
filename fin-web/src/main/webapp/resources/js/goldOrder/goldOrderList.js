@@ -216,7 +216,6 @@ $(function (){
 //打开查看页面
 function orderDetail(orderId,customerId){
     var url = "/goldCustomerAudit/examineDetails?orderId="+orderId+"&customerId="+customerId;
-    alert();
     layer.open({
         type : 2,
         title : '审核订单及客户资料',
