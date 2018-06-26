@@ -263,7 +263,7 @@ function  orderDebit(orderId) {
 function  confirmationLoan(orderId, customerId, contractAmount, surplusContractAmount, applayMoney, periods) {
     layer.open({
         type : 1,
-        title : '确认放款方式',
+        title : '还款信息',
         maxmin : true,
         shadeClose : false,
         area : [ '350px', '180px'  ],

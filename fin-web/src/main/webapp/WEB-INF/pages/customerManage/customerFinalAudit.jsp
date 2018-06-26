@@ -213,16 +213,16 @@
 <%--选择放款方式弹出窗--%>
 <div class="Manager_style" id="checkConfirmationLoanStyle" style="display: none">
     <div class="paddingBox" >
-        <table class="nobor" style="margin-top: 10px;">
+        <table class="nobor" style="margin: 23px 58px;">
             <tbody>
             <tr style="height: 50px;">
                 <td>还款用户:</td>
-                <td colspan="5" style="text-align: left;"> <input type="text" id="payBackUser"  /></td>
+                <td colspan="5" style="text-align: left;"> <input type="text" id="payBackUser" style="width: 170px;"/></td>
             </tr>
             <tr style="height: 5px"></tr>
             <tr>
                 <td>还款卡号:</td>
-                <td colspan="8" style="text-align: left;"> <input type="text" id="payBackCard"  /></td>
+                <td colspan="8" style="text-align: left;"> <input type="text" id="payBackCard"  style="width: 170px;"/></td>
             </tr>
             </tbody></table>
     </div>
