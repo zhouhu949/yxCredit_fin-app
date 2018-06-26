@@ -129,9 +129,9 @@ function renderPrd(id,flag,type){
                 addhtml+="<p>新增产品期数</p></a>";
                 addhtml+="</li>";
                 for ( var i = 0; i < result.length; i++) {
-                    if(result[i].status=="0"){
+                    if(result[i].status=="0" || result[i].status=="2"){
                         Allhtml+="<li class='nofb'>";
-                    }else if(result[i].status=="2"||result[i].status=="1"){
+                    }else if(result[i].status=="1"){
                         Allhtml+="<li class='fbon'>";
                     }
                     Allhtml+="<div class='lcprxh'>产品序号："+productType.pro_number+"</div>";
@@ -157,11 +157,15 @@ function renderPrd(id,flag,type){
                         Allhtml+="<tr><td>停用/启用</td> <td align='right'>";
                         if(result[i].status=="2"){
                             Allhtml+="<div class='switchs' onclick='switchs(this)'></div><input type='hidden' value='"+productType.id+"'/></td></tr>";
+                            Allhtml+="</tbody></table></div><div class='lcprbtn'>";
+                            Allhtml+="<a href='javascript:void(0);' class='fl fulleditbtn detailEdit' onclick=\"showFormView(\'"+result[i].id+"\',\'"+productType.id+"\',2,1,this,\'"+type+"\')\">全局编辑</a><input type='hidden' value='"+productType.id+"'/>";
                         }else{
                             Allhtml+="<div class='switchs switchOn' onclick='switchs(this)'></div><input type='hidden' value='"+productType.id+"'/></td></tr>";
+                            Allhtml+="</tbody></table></div><div class='lcprbtn'>";
                         }
-                        Allhtml+="</tbody></table></div><div class='lcprbtn'>";
-                        Allhtml+="<a href='javascript:void(0);' class='view detailView' onclick=\"showFormView(\'"+result[i].id+"\',\'"+productType.id+"\',0,'',this,\'"+type+"\')\">查看</a>"
+
+                        Allhtml+="<a href='javascript:void(0);' class='fr' onclick=\"showFormView(\'"+result[i].id+"\',\'"+productType.id+"\',0,'',this,\'"+type+"\')\">查看</a>"
+                        //Allhtml+="<a href='javascript:void(0);' class='view detailView' onclick=\"showFormView(\'"+result[i].id+"\',\'"+productType.id+"\',0,'',this,\'"+type+"\')\">查看</a>"
                     }
                     Allhtml+="</div></li>";
                 }
@@ -936,7 +940,7 @@ function showFormView(id,parentId,flag,add,me,type){
              * @create 韩梅生
              * 还款时限
              */
-            if($("repayment").val() === "0"){
+            if($("#repayment").val() === "0"){
                 if($("#repayment_days").val() === ""){
                     layer.msg("请输入还款时限！",{time:2000});
                     return;
