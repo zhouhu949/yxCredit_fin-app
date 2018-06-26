@@ -1237,6 +1237,12 @@
             <if test="repayDate != null and repayDate != ''">
                 repay_date=#{repayDate},
             </if>
+            <if test="payBackUser != null and payBackUser != ''">
+                pay_back_user=#{payBackUser},
+            </if>
+            <if test="payBackCard != null and payBackCard != ''">
+                pay_back_card=#{payBackCard},
+            </if>
         </set>
         where id = #{id}
     </update>

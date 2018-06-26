@@ -162,6 +162,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             if(!CommonConstants.FAIL.equals(response.getCode())) {
                 if("finalMoney".equals(map.get("proveType").toString())) {
+                    //放款审核
                     Map<String, Object> orderMap = orderStateFinal(map);
                     orderMapper.updateOrderStatus(orderMap);
                     confirmationFinal(map);
@@ -174,6 +175,7 @@ public class OrderServiceImpl implements OrderService {
                     customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
                     customerMapper.updateByPrimaryKeySelective(customer);
                 } else {
+                    //风控审核
                     orderMapper.updateOrderStatus(map);
                     addApproveRecord(map);
                 }
@@ -195,6 +197,8 @@ public class OrderServiceImpl implements OrderService {
         orderMap.put("id", orderId);
         orderMap.put("alterTime",map.get("alterTime").toString());
         orderMap.put("orderState",map.get("orderState"));
+        orderMap.put("payBackUser",map.get("payBackUser").toString());
+        orderMap.put("payBackCard",map.get("payBackCard").toString());
         String contractAmountStr = map.get("contractAmount").toString();//合同金额
         BigDecimal contractAmount = new BigDecimal(contractAmountStr);
         Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);

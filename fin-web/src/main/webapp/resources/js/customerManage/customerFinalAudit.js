@@ -261,21 +261,49 @@ function  orderDebit(orderId) {
 }
 
 function  confirmationLoan(orderId, customerId, contractAmount, surplusContractAmount, applayMoney, periods) {
-    layer.confirm('确认放款?', function(index) {
-        layer.close(index);
-        var param={};
-        param.id = orderId;
-        param.surplusContractAmount = surplusContractAmount;
-        param.contractAmount = contractAmount;
-        param.customerId = customerId;
-        param.periods = periods;
-        param.applayMoney = applayMoney;
-        Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
-            layer.msg(data.msg,{time:2000},function(){
-                layer.closeAll();
-                g_userManage.tableOrder.ajax.reload();
-            })
-        },"application/json");
+    layer.open({
+        type : 1,
+        title : '确认放款方式',
+        maxmin : true,
+        shadeClose : false,
+        area : [ '350px', '180px'  ],
+        content : $('#checkConfirmationLoanStyle'),
+        btn : [ '确认', '取消' ],
+        yes:function(index,layero){
+            var pattern = /^([1-9]{1})(\d{15}|\d{16}|\d{17}|\d{18})$/;
+            var payBackUser = $("#payBackUser").val()//还款用户
+            var payBackCard = $("#payBackCard").val()//还款卡号
+            if(!payBackUser){
+                layer.msg("还款用户不能为空",{time:2000});
+                return;
+            }
+            if(!payBackCard){
+                layer.msg("还款卡号不能为空",{time:2000});
+                return;
+            }
+            if(!pattern.test(payBackCard)){
+                layer.msg("还款卡号不合法",{time:2000});
+                return;
+            }
+            layer.confirm('确认放款?', function(index) {
+                layer.close(index);
+                var param={};
+                param.id = orderId;
+                param.surplusContractAmount = surplusContractAmount;
+                param.contractAmount = contractAmount;
+                param.customerId = customerId;
+                param.periods = periods;
+                param.applayMoney = applayMoney;
+                param.payBackUser = payBackUser;
+                param.payBackCard = payBackCard;
+                Comm.ajaxPost('finalAudit/confirmationMerchant',JSON.stringify(param),function(data){
+                    layer.msg(data.msg,{time:2000},function(){
+                        layer.closeAll();
+                        g_userManage.tableOrder.ajax.reload();
+                    })
+                },"application/json");
+            });
+        }
     });
 
 }

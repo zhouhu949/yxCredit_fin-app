@@ -12,7 +12,7 @@
     <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
     <script src="${ctx}/resources/js/customerManage/customerFinalAudit.js${version}"></script>
     <script src="${ctx}/resources/js/customerManage/reasonable.js${version}"></script>
-    <title>放款审核</title>
+    <title>风控放款审核</title>
     <style>
         .laydate_body .laydate_y {margin-right: 0;}
         .line-cut{float: left;position: relative;top: 6px;left: -5px;}
@@ -212,14 +212,19 @@
 
 <%--选择放款方式弹出窗--%>
 <div class="Manager_style" id="checkConfirmationLoanStyle" style="display: none">
-    <div class="order_list" style="margin-top: 52px;">
-        <label>
-            <select id="fangkuanStyle" size="1" id="type" style="width:163px;margin-left: 10px;height: 28px" >
-                <option value="">请选择</option>
-                <option value="xianxia">线下放款</option>
-                <option value="xianshang">线上放款</option>
-            </select>
-        </label>
+    <div class="paddingBox" >
+        <table class="nobor" style="margin-top: 10px;">
+            <tbody>
+            <tr style="height: 50px;">
+                <td>还款用户:</td>
+                <td colspan="5" style="text-align: left;"> <input type="text" id="payBackUser"  /></td>
+            </tr>
+            <tr style="height: 5px"></tr>
+            <tr>
+                <td>还款卡号:</td>
+                <td colspan="8" style="text-align: left;"> <input type="text" id="payBackCard"  /></td>
+            </tr>
+            </tbody></table>
     </div>
 </div>
 

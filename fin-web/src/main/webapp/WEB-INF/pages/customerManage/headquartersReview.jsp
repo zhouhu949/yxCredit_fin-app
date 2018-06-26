@@ -294,25 +294,6 @@
     <div id="preQuotaDialog" style="display: none" class="layui-layer-wrap">
         <form class="calculateQuotaDialogForm" action="">
             <div class="paddingBox" >
-                <%--<table class="nobor">
-                    <tbody>
-                        <tr>
-                            <td>建议额度：</td>
-                            <td>
-                                <span id="preQuotaDialog_contractRate">${order.amountAdvice}</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>审批额度:</td>
-                            <td colspan="5" style="text-align: left;"> <input type="number" id="predictPrice"  />元</td>
-                        </tr>
-                        <tr style="height: 5px"></tr>
-                        <tr>
-                            <td>审核备注:</td>
-                            <td colspan="5" style="text-align: left;"><textarea id="approveSuggestion" style="width:380px"></textarea></td>
-                        </tr>
-                    </tbody></table>--%>
-
                 <table class="nobor" style="margin-top: 10px;">
                     <tbody>
                     <tr style="height: 50px;">
