@@ -261,6 +261,8 @@ function  orderDebit(orderId) {
 }
 
 function  confirmationLoan(orderId, customerId, contractAmount, surplusContractAmount, applayMoney, periods) {
+    $("#payBackUser").val("")//还款用户
+    $("#payBackCard").val("")//还款卡号
     layer.open({
         type : 1,
         title : '还款信息',
