@@ -50,7 +50,7 @@
                     <button id="btn_search"  type="button" class="btn btn-primary queryBtn">查询</button>
                     <button id="btn_search_reset"  type="button" class="btn btn-primary queryBtn">查询重置</button>
                     <a class="btn addBtn" href="${pageContext.request.contextPath}/templates/importWhiteList.xlsx">导入模板下载</a>
-                    <button class="btn addBtn" type="button"  onclick="importWhiteList()" >白名单导入</button>
+                    <button class="btn addBtn" type="button"  onclick="importWhiteList()" >导入</button>
                     <button class="btn btn-primary addBtn" type="button" id="addBtn" onclick="updateWhite(1)" id="Add_user_btn">添加白名单</button>
                 </ul>
                 <div id="Add_user_style" style="display: none">
