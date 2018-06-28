@@ -269,8 +269,12 @@ public class OrderServiceImpl implements OrderService {
                 String registration_id="1111";
                 String messageTitle = "";
                 String messageContent = "";
+                map.put("applayMoney", new BigDecimal(map.get("applayMoney").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                //BigDecimal contractAmount = new BigDecimal(contractAmountStr);
+                //map.get("applyMoney");
                 switch (orderState){
                     case Constants.ORDER_AUDIT_PASS_STATE://审核通过
+                        map.put("loanAmount", new BigDecimal(map.get("loanAmount").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
                         messageContent = dictService.getDictInfo("消息内容","SPTG");
                         messageTitle = "审批通过";
                         break;
