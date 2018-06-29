@@ -83,7 +83,7 @@ $().ready(function(){
         for(var i=0;i<apiResultList.length;i++){
             html=html+ '<tr>'+
                 '<td width="10%" >规则名称：</td>'+
-                '<td width="23%">'+apiResultList[i].sourceChildName+'</td>'+
+                '<td width="23%">'+apiResultList[i].sourceChildName+ '</td>'+
                 '<td width="10%" >审核结果：</td>'+
                 '<td width="23%">'+apiResultList[i].message+'</td>'+
                 '<td width="10%" >报告浏览：</td>'+
