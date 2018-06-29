@@ -263,10 +263,6 @@
                                 </table>
                             </div>
 
-                        <%--</c:if>--%>
-
-                       <%-- <c:if test="${order.orderState==5}">--%>
-
                             <%--放款审核信息--%>
                             <div class="paperBlockfree" id="Loan" style="display: none">
                                 <div class="block_hd" style="float:left;">
@@ -287,12 +283,14 @@
                                         <td class="align" width="10%">放款状态:</td>
                                         <td id="loanState" width="23%" colspan="2"></td>
                                     </tr>
+                                    <tr>
+                                        <td class="align" width="10%">还款用户:</td>
+                                        <td id="payBackUser" width="23%" colspan="2"></td>
+                                        <td class="align" width="10%">还款账号:</td>
+                                        <td id="payBackCard" width="23%" colspan="2"></td>
+                                    </tr>
                                 </table>
                             </div>
-                        <%--</c:if>--%>
-
-
-
                 </div>
             </div>
         </div>

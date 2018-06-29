@@ -58,6 +58,8 @@ $().ready(function(){
 
         if(order){
             $("#applayTime").text(formatTime(order.applayTime));//审核时间
+            $("#payBackUser").html(order.payBackUser);//还款用户
+            $("#payBackCard").html(order.payBackCard);//还款账号
         }
 
 
@@ -112,8 +114,6 @@ $().ready(function(){
             $("#loanAmount").html(loanRecord.amount);//放款金额
             $("#loanTime").text(formatTime(loanRecord.operationTime));//放款时间
             $("#loanState").html(loanState);//放款状态
-
-
         }
         if("undefined" != typeof(linkmanList)){
             //联系人信息
@@ -189,7 +189,7 @@ $().ready(function(){
             for(var i=0;i<apiResultList.length;i++){
                 html=html+ '<tr>'+
                     '<td width="10%" >规则名称：</td>'+
-                    '<td width="23%">'+apiResultList[i].sourceName+'</td>'+
+                    '<td width="23%">'+apiResultList[i].sourceChildName+'</td>'+
                     '<td width="10%" >审核结果：</td>'+
                     '<td width="23%">'+apiResultList[i].message+'</td>'+
                     '<td width="10%" >报告浏览：</td>'+

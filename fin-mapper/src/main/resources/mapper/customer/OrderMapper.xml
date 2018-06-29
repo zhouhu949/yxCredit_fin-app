@@ -1632,7 +1632,7 @@
             </if>
 
         </where>
-        order by magOrder.CREAT_TIME desc
+        order by magOrder.applay_time desc
     </select>
 
     <!--获取放款审核订单列表-->
@@ -1682,7 +1682,7 @@
       SELECT o.ID AS orderId  , o.CUSTOMER_ID as customerId, o.order_no AS orderNo , o.product_name_name AS productName  ,
       o.applay_money AS applayMoney , o.PERIODS AS  periods , o.applay_time AS applayTime ,
       o.rate AS rate , o.Order_state as orderState, bc.bank_name AS bankName , bc.bank_subbranch AS bankSubbranch ,
-      bc.card_number AS cardNumber
+      bc.card_number AS cardNumber,o.pay_back_user AS payBackUser,o.pay_back_card AS payBackCard
       FROM mag_order o  LEFT JOIN sys_bank_card bc ON o.CUSTOMER_ID=bc.cust_id
       WHERE o.ID=#{orderId}
     </select>
