@@ -29,6 +29,8 @@ public class ByxFileUploadUtils {
         HttpClient httpClient = HttpClients.createDefault();
         try {
             HttpPost httpRequest = new HttpPost(path);
+            String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.87 Safari/537.36";
+            httpRequest.setHeader("User-Agent",userAgent);
             if(entity!=null){
                 httpRequest.setEntity(entity);
             }
