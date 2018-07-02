@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Preconditions;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
-import com.zw.rule.mybatis.page.Page;
 import com.zw.rule.po.Dict;
 import com.zw.rule.service.DictService;
 import com.zw.rule.web.aop.annotaion.WebLogger;
@@ -18,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.google.common.base.Preconditions.checkArgument;
 
 
 @Controller
@@ -75,22 +73,9 @@ public class DictController {
     }
     @ResponseBody
     @PostMapping("edit")
-    @WebLogger("修改字典")
-    public Response edit(@RequestBody Map map) {
-        Response response = new Response();
-        String code = (String)map.get("code");
-        List listCode = dictService.findByDictId(map);
-        for(int i=0;i<listCode.size();i++){
-            String resultCode = (String)listCode.get(i);
-            if(code.equals(resultCode)){
-                response.setMsg("字典名称已存在");
-                response.setCode(1);
-                return response;
-            }
-        }
-        dictService.update(map);
-        response.setMsg("修改成功");
-        return response;
+    public Response edit(@RequestBody Dict dict) {
+        dictService.update(dict);
+        return Response.ok("修改成功！",null);
     }
     @ResponseBody
     @GetMapping("detail")
@@ -134,6 +119,23 @@ public class DictController {
         Response response = new Response();
         response.setData(list);
         return response;
+    }
+    /**
+     * 风控期限配置列表
+     */
+    @GetMapping("windControlPeriodList")
+    public String windControlPeriodList(){
+        return  "systemMange/windControlPeriodList";
+    }
+
+    /**
+     * 风控期限配置列表
+     */
+    @ResponseBody
+    @GetMapping("findWindControlPeriodList")
+    public Response findWindControlPeriodList(){
+        List<Dict> list = dictService.getDetailListByCode("wcp");
+        return Response.ok(list);
     }
 
 }
