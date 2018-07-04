@@ -18,7 +18,7 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <th>产品名称</th>
+                            <th>风控数据源</th>
                             <th>授权期限（天）</th>
                             <th>详情</th>
                             <th>创建时间</th>
@@ -39,7 +39,7 @@
         <div class="addCommon">
             <ul class="clearfix">
                 <li>
-                    <label class="label_name">产品名称</label>
+                    <label class="label_name">风控数据源</label>
                     <label>
                         <input name="dictName"  type="text" value="" readonly/>
                     </label>
