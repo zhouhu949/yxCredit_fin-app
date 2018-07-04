@@ -108,7 +108,11 @@ var dictManage = {
             dictManage.data.row.value = value;
             dictManage.data.row.remark = remark;
             if(value === ''){
-                layer.msg("产品期限不可为空！",{time:2000});return
+                layer.msg("授权期限不可为空！",{time:2000});return
+
+            }
+            if(isNaN(value)){
+                layer.msg("授权期限只能输入数字！",{time:2000});return
             }
             Comm.ajaxPost(dictManage.urls.editUrl,JSON.stringify(dictManage.data.row),
                 function(data){

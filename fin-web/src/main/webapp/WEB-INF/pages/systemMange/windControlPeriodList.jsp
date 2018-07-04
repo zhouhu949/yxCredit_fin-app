@@ -45,7 +45,7 @@
                     </label>
                 </li>
                 <li>
-                    <label class="label_name">产品期限(天)</label>
+                    <label class="label_name">授权期限(天)</label>
                     <label>
                         <input name="dictValue"  type="text" value="" />
                     </label>
