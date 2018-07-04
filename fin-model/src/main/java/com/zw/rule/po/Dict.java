@@ -8,11 +8,13 @@ public class Dict extends BaseEntity {
 	private Long id;
 	
 	private String parentId;
-	
-	private String type;  // 字典分类，  字典值
+
+	private String type;
 	
 	private String code;
-	
+
+	private String value;
+
 	private String name;
 	
 	private int seq;
@@ -57,6 +59,14 @@ public class Dict extends BaseEntity {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public String getName() {

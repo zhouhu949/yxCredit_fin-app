@@ -45,18 +45,11 @@ public class DictServiceImpl implements DictService {
 
     /**
      * 跟新字典
-     * @param map
+     * @param dict
      */
     @Override
-    public void update(Map map) {
-        Dict dict = new Dict();
-        dict.setCode((String) map.get("code"));
-        dict.setName((String) map.get("name"));
-        dict.setIsCatagory((String) map.get("isCatagory"));
-        dict.setParentId((String)map.get("parentId"));
-        dict.setRemark((String)map.get("remark"));
-        dict.setId(Long.valueOf((String)map.get("id")));
-        dictDao.update(dict);
+    public void update(Dict dict) {
+        dictDao.update("updateById",dict);
     }
 
     /**

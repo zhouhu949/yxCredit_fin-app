@@ -13,7 +13,7 @@ public interface DictService{
 
 	List<Dict> getList(ParamFilter queryFilter);
 
-	void update(Map map);
+	void update(Dict dict);
 
 	List<JSTree> getTree();
 

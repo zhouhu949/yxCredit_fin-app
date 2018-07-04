@@ -28,6 +28,8 @@ import com.zw.rule.service.AppDictService;
 import com.zw.rule.task.po.ProcessTaskNode;
 import com.zw.rule.util.Constants;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +56,8 @@ import java.util.*;
  ********************************************************/
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
     @Resource
     private OrderMapper orderMapper;
     @Resource
@@ -158,30 +162,31 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public Response updateOrder(Map map) {
-        Response response = orderPushAndSend(map);
         try {
-            if(!CommonConstants.FAIL.equals(response.getCode())) {
-                if("finalMoney".equals(map.get("proveType").toString())) {
-                    Map<String, Object> orderMap = orderStateFinal(map);
-                    orderMapper.updateOrderStatus(orderMap);
-                    confirmationFinal(map);
-                    //更新客户信息
-                    Customer customer = new Customer();
-                    String contractAmount = map.get("contractAmount").toString();//订单合同金额
-                    String surplusContractAmount = map.get("surplusContractAmount").toString();//客户剩余合同金额
-                    String customerId = map.get("customerId").toString();
-                    customer.setId(customerId);
-                    customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
-                    customerMapper.updateByPrimaryKeySelective(customer);
-                } else {
-                    orderMapper.updateOrderStatus(map);
-                    addApproveRecord(map);
-                }
+            if("finalMoney".equals(map.get("proveType").toString())) {
+                //放款审核
+                Map<String, Object> orderMap = orderStateFinal(map);
+                orderMapper.updateOrderStatus(orderMap);
+                confirmationFinal(map);
+                //更新客户信息
+                Customer customer = new Customer();
+                String contractAmount = map.get("contractAmount").toString();//订单合同金额
+                String surplusContractAmount = map.get("surplusContractAmount").toString();//客户剩余合同金额
+                String customerId = map.get("customerId").toString();
+                customer.setId(customerId);
+                customer.setSurplusContractAmount(new BigDecimal(surplusContractAmount).subtract(new BigDecimal(contractAmount)));
+                customerMapper.updateByPrimaryKeySelective(customer);
+            } else {
+                //风控审核
+                orderMapper.updateOrderStatus(map);
+                addApproveRecord(map);
             }
         }catch (Exception e){
+            LOGGER.info("数据库异常{}" , e.getMessage());
             return Response.error();
         }
-        return response;
+        orderPushAndSend(map);
+        return Response.ok("操作成功",null);
     }
 
     @Override
@@ -190,11 +195,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Map<String, Object> orderStateFinal(Map map){
-        Map<String, Object> orderMap = new HashMap<String, Object>();
+        Map<String, Object> orderMap = new HashMap<>();
         String orderId = map.get("id").toString();
         orderMap.put("id", orderId);
         orderMap.put("alterTime",map.get("alterTime").toString());
         orderMap.put("orderState",map.get("orderState"));
+        orderMap.put("payBackUser",map.get("payBackUser").toString());
+        orderMap.put("payBackCard",map.get("payBackCard").toString());
         String contractAmountStr = map.get("contractAmount").toString();//合同金额
         BigDecimal contractAmount = new BigDecimal(contractAmountStr);
         Map serviceFeeMap = orderMapper.getServiceFeeList(orderId);
@@ -265,8 +272,12 @@ public class OrderServiceImpl implements OrderService {
                 String registration_id="1111";
                 String messageTitle = "";
                 String messageContent = "";
+                map.put("applayMoney", new BigDecimal(map.get("applayMoney").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+                //BigDecimal contractAmount = new BigDecimal(contractAmountStr);
+                //map.get("applyMoney");
                 switch (orderState){
                     case Constants.ORDER_AUDIT_PASS_STATE://审核通过
+                        map.put("loanAmount", new BigDecimal(map.get("loanAmount").toString()).setScale(2, BigDecimal.ROUND_HALF_UP).toString());
                         messageContent = dictService.getDictInfo("消息内容","SPTG");
                         messageTitle = "审批通过";
                         break;
@@ -304,7 +315,9 @@ public class OrderServiceImpl implements OrderService {
                 return Response.error(CommonConstants.FAIL,"客户不存在");
             }
         } catch (Exception e) {
+
             return Response.error();
+
         }
         return Response.ok("操作成功",null);
     }

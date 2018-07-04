@@ -7,6 +7,7 @@
         <result column="parent_id" property="parentId"/>
         <result column="type" property="type"/>
         <result column="code" property="code"/>
+        <result column="value" property="value"/>
         <result column="name" property="name"/>
         <result column="seq" property="seq"/>
         <result column="is_catagory" property="isCatagory"/>
@@ -115,4 +116,37 @@
         SELECT * from mag_dict_detail  WHERE dict_id = (SELECT md.id from mag_dict md WHERE md.name = #{dictName})
     </select>
 
+    <update id="updateById" parameterType="com.zw.rule.po.Dict" >
+       update zw_sys_dict
+        <set>
+            <if test="parentId != null" >
+                parent_id=#{parentId},
+            </if>
+            <if test="type != null" >
+                type=#{type},
+            </if>
+            <if test="code != null" >
+                code=#{code},
+            </if>
+            <if test="name != null" >
+                name=#{name},
+            </if>
+            <if test="seq != null" >
+                seq=#{seq},
+            </if>
+            <if test="isCatagory != null" >
+                is_catagory=#{isCatagory},
+            </if>
+            <if test="updateTime != null" >
+                update_time=#{updateTime},
+            </if>
+            <if test="remark != null" >
+                remark=#{remark},
+            </if>
+            <if test="value != null" >
+                value=#{value},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
