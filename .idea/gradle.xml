@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/common-tools" />
+            <option value="$PROJECT_DIR$/dao-base" />
+            <option value="$PROJECT_DIR$/fin-mapper" />
+            <option value="$PROJECT_DIR$/fin-model" />
+            <option value="$PROJECT_DIR$/fin-service" />
+            <option value="$PROJECT_DIR$/fin-util" />
+            <option value="$PROJECT_DIR$/fin-web" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
