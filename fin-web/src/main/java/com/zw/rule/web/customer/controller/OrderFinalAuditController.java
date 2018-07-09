@@ -249,6 +249,11 @@ public class OrderFinalAuditController {
     public ModelAndView details(String orderId, String customerId) throws  Exception{
         ModelAndView modelAndView = new ModelAndView("customerManage/customerFinalPage");
         Map order = orderService.getOrderAndBank(orderId);
+        String bankSubbranch = order.get("bankSubbranch").toString();
+        if (bankSubbranch.equals("null")){
+            order.put("bankSubbranch","");
+        }
+
         Map customer = customerService.getCustomerById(customerId);
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 

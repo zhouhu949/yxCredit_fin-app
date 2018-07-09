@@ -394,7 +394,7 @@
 
 </select>
 
-	<select id ="getCustBankCardInfo" parameterType="java.lang.String" resultType="Map">
+	<select id ="getCustBankCardInfo" parameterType="java.lang.String" resultType="java.util.Map">
 	SELECT mac.id,mac.merchant_id,mac.USER_ID,mac.CUSTOMER_ID,mac.customer_type,
 	mac.tel,mac.channel,mac.CREAT_TIME,mac.	ALTER_TIME,mac.	state,mac.APEX1,mac.APEX2,
 	mac.APEX3,mac.BAK,mac.count_name,mac.user_name,mac.card_num,mac.card_type,mac.count_type,mac.gold_account,
@@ -411,6 +411,7 @@
 	SELECT  bc.id AS bankCardId , bc.bank_name AS bankName , bc.bank_subbranch AS bankSubbranch ,
 	bc.card_number AS cardNumber , bc.prov_name AS provName , bc.city_name AS cityName ,
 	bc.create_time AS registrationTime , cu.is_identity AS isIdentity
-	FROM sys_bank_card bc INNER JOIN mag_customer cu  ON bc.cust_id=cu.ID  WHERE cust_id= #{id,jdbcType=VARCHAR}
+	FROM sys_bank_card bc INNER JOIN mag_customer cu  ON bc.cust_id=cu.ID
+	WHERE cust_id= #{id,jdbcType=VARCHAR} AND bc.is_authcard=1
 	</select>
 </mapper>
