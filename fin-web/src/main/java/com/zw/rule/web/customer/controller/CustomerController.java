@@ -455,7 +455,7 @@ public class CustomerController {
         //获取订单信息
         Map order = orderService.getOrderAndBank(orderId);
         String bankSubbranch = order.get("bankSubbranch").toString();
-        if (bankSubbranch.equals(null)){
+        if (bankSubbranch.equals("null")){
             order.put("bankSubbranch","");
         }
         //根据客户ID获取客户信息
