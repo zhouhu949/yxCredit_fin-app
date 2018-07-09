@@ -1683,7 +1683,7 @@
       o.applay_money AS applayMoney , o.PERIODS AS  periods , o.applay_time AS applayTime ,
       o.rate AS rate , o.Order_state as orderState, bc.bank_name AS bankName , bc.bank_subbranch AS bankSubbranch ,
       bc.card_number AS cardNumber,o.pay_back_user AS payBackUser,o.pay_back_card AS payBackCard
-      FROM mag_order o  LEFT JOIN sys_bank_card bc ON o.CUSTOMER_ID=bc.cust_id
+      FROM mag_order o  LEFT JOIN sys_bank_card bc ON o.bankId=bc.id 
       WHERE o.ID=#{orderId}
     </select>
 
