@@ -468,14 +468,14 @@ public class CustomerController {
         List linkmanList = customerService.getCustomerLinkMan(customerId);
 
         //获取客户绑定银行卡信息
-        Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
+        //Map bankCard = loanClientService.getCustBankCardInfoByCustId(customerId);
 
         //证件材料
         List imgList = customerService.getCustomerImage(customerId);
 
         map.put("customer",customer);
         map.put("linkmanList",linkmanList);
-        map.put("bankCard",bankCard);
+        //map.put("bankCard",bankCard);
         map.put("apiResultList",apiResultList);
         map.put("order",order);
         map.put("imgList",imgList);
