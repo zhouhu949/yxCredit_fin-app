@@ -182,20 +182,43 @@
                                 <td class="align">申请时间:</td>
                                 <td id="applayTime"></td>
                             </tr>
-                            <tr>
-                                <td class="align">开户银行:</td>
-                                <td id="bankName">${order.bankName}</td>
-                                <td class="align">开户支行:</td>
-                                <td id="bankSubbranch">${order.bankSubbranch}</td>
-                                <td class="align">银行卡号:</td>
-                                <td id="cardNumber">${order.cardNumber}</td>
-                            </tr>
 
                             </tbody>
                         </table>
 
 
                     </div>
+
+                        <div class="paperBlockfree" id="pictureLoad">
+                            <div class="block_hd" style="float:left;" onclick="shrink(this)">
+                                <s class="ico icon-file-text-alt"></s><span class="bl_tit">放款银行卡信息</span>
+                            </div>
+                            <table class="tb_info " style="font-size:12px;">
+                                <tbody>
+
+                                <tr>
+                                    <td class="align">放款卡类型:</td>
+                                    <td id="bankType">${order.bankType eq '0' ? '个人' : '企业'}</td>
+                                    <td class="align">放款卡户名:</td>
+                                    <td id="custName">${order.custName}</td>
+                                    <td class="align">放款卡证件号:</td>
+                                    <td id="loanCard">${order.card}</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="align">开户银行:</td>
+                                    <td id="bankName">${order.bankName}</td>
+                                    <td class="align">开户支行:</td>
+                                    <td id="bankSubbranch">${order.bankSubbranch}</td>
+                                    <td class="align">银行卡号:</td>
+                                    <td id="cardNumber">${order.cardNumber}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
                     <%--申请人信息--%>
                     <div class="paperBlockfree" style="margin-top:20px">
                         <div class="block_hd" style="float:left;" onclick="shrink(this)">
