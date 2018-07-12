@@ -20,7 +20,7 @@
     <context:property-placeholder
             ignore-unresolvable="true"
             file-encoding="UTF-8"
-            location="classpath*:/properties/*.properties"/>
+            location="classpath*:/properties/*_${project.env}.properties"/>
 
     <!--资产同步配置 create by 仙海峰-->
     <bean id="assetSettings" class="com.zw.rule.api.asset.AssetSettings">

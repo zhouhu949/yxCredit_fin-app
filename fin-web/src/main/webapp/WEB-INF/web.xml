@@ -11,6 +11,10 @@
             classpath*:spring/spring-context.xml,
         </param-value>
     </context-param>
+    <context-param>
+        <param-name>project.env</param-name>
+        <param-value>sit</param-value>
+    </context-param>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
