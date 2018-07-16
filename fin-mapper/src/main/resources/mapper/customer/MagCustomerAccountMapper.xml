@@ -412,6 +412,6 @@
 	bc.card_number AS cardNumber , bc.prov_name AS provName , bc.city_name AS cityName ,
 	bc.create_time AS registrationTime , cu.is_identity AS isIdentity
 	FROM sys_bank_card bc INNER JOIN mag_customer cu  ON bc.cust_id=cu.ID
-	WHERE cust_id= #{id,jdbcType=VARCHAR} AND bc.is_authcard=1
+	WHERE cust_id= #{id,jdbcType=VARCHAR} AND bc.is_authcard='1'
 	</select>
 </mapper>
