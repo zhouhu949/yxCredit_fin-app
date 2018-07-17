@@ -80,34 +80,39 @@ $().ready(function(){
         //风控信息审核列表
         var html = '';
         $("#apiResult").empty();
-        for(var i=0;i<apiResultList.length;i++){
-            html=html+ '<tr>'+
-                '<td width="10%" >规则名称：</td>'+
-                '<td width="23%">'+apiResultList[i].sourceChildName+'</td>'+
-                '<td width="10%" >审核结果：</td>'+
-                '<td width="23%">'+apiResultList[i].message+'</td>'+
-                '<td width="10%" >报告浏览：</td>'+
-                '<td width="23%"> <a href="./tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank" style="color: #f1a02f">查看报告</a></td>'+
-                '</tr>';
+        if(apiResultList){
+            for(var i=0;i<apiResultList.length;i++){
+                html=html+ '<tr>'+
+                    '<td width="10%" >规则名称：</td>'+
+                    '<td width="23%">'+apiResultList[i].sourceChildName+'</td>'+
+                    '<td width="10%" >审核结果：</td>'+
+                    '<td width="23%">'+apiResultList[i].message+'</td>'+
+                    '<td width="10%" >报告浏览：</td>'+
+                    '<td width="23%"> <a href="./tongDunView?resultId='+apiResultList[i].apiResultId+'&customerId='+ paramMap.customerId +'&sourceCode='+ apiResultList[i].sourceCode +'" target="_blank" style="color: #f1a02f">查看报告</a></td>'+
+                    '</tr>';
 
+            }
         }
+
         $("#apiResult").append(html);
 
         //联系人信息
         var html = '';
         $("#relation").empty();
-        for(var i=0;i<linkmanList.length;i++){
-            var rel = linkmanList[i].mainSign;
-            var yesno = "";
-            html=html+ '<tr>'+
-                '<td width="10%" >关&emsp;&emsp;系：</td>'+
-                '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
-                '<td width="10%" >名&emsp;&emsp;称：</td>'+
-                '<td width="23%">'+linkmanList[i].linkName+'</td>'+
-                '<td width="10%" >联系方式：</td>'+
-                '<td width="23%">'+linkmanList[i].contact+'</td>'+
-                '</tr>';
+        if(linkmanList) {
+            for(var i=0;i<linkmanList.length;i++){
+                var rel = linkmanList[i].mainSign;
+                var yesno = "";
+                html=html+ '<tr>'+
+                    '<td width="10%" >关&emsp;&emsp;系：</td>'+
+                    '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
+                    '<td width="10%" >名&emsp;&emsp;称：</td>'+
+                    '<td width="23%">'+linkmanList[i].linkName+'</td>'+
+                    '<td width="10%" >联系方式：</td>'+
+                    '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                    '</tr>';
 
+            }
         }
         $("#relation").append(html);//直系
     }, "application/json",null,null,null,false);
