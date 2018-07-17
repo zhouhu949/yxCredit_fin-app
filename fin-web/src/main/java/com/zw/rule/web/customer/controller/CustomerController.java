@@ -452,12 +452,6 @@ public class CustomerController {
         String type = param.get("type").toString();
         String orderId = (String) param.get("orderId");
         Map map = new HashMap();
-        //获取订单信息
-        Map order = orderService.getOrderAndBank(orderId);
-        String bankSubbranch = order.get("bankSubbranch").toString();
-        if (bankSubbranch.equals("null")){
-            order.put("bankSubbranch","");
-        }
         //根据客户ID获取客户信息
         Map customer= customerService.getCustomerById(customerId);
 
@@ -477,7 +471,6 @@ public class CustomerController {
         map.put("linkmanList",linkmanList);
         map.put("bankCard",bankCard);
         map.put("apiResultList",apiResultList);
-        map.put("order",order);
         map.put("imgList",imgList);
         return new Response(map);
 
