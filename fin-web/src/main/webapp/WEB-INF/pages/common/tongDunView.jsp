@@ -21,7 +21,7 @@
         <h3>同盾贷前报告</h3>
         <div class="advise checkResult">
             <p>扫描建议: <span>100分，申请用户检测出高危风险，建议拒绝</span></p>
-            <p>共发现 <span>19</span> 条异常信息</p>
+            <p>共发现 <span>0</span> 条异常信息</p>
         </div>
     </div>
     <div class="container">
@@ -246,55 +246,55 @@
                     preLoanObject.template.courtHtml += '<ul class="content detailsContent">' +
                         '<li class="clearfix">' +
                         '<span>被执行人姓名</span>' +
-                        '<input type="text" value="' + courtDetail["name"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["name"]) === "undefined" ? "" : courtDetail["name"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>性别</span>' +
-                        '<input type="text" value="' + courtDetail["gender"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["gender"]) === "undefined" ? "" : courtDetail["gender"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>年龄</span>' +
-                        '<input type="text" value="' + courtDetail["age"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["age"]) === "undefined" ? "" : courtDetail["age"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>身份证号码</span>' +
-                        '<input type="text" value="' + courtDetail["id_number"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["id_number"]) === "undefined" ? "" : courtDetail["id_number"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>执行法院</span>' +
-                        '<input type="text" value="' + courtDetail["court_name"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["court_name"]) === "undefined" ? "" : courtDetail["court_name"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>省份</span>' +
-                        '<input type="text" value="' + courtDetail["province"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["province"]) === "undefined" ? "" : courtDetail["province"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>执行依据文号</span>' +
-                        '<input type="text" value="' + courtDetail["case_number"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["case_number"]) === "undefined" ? "" : courtDetail["case_number"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>立案时间</span>' +
-                        '<input type="text" value="' + courtDetail["filing_time"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["filing_time"]) === "undefined" ? "" : courtDetail["filing_time"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>执行依据文号</span>' +
-                        '<input type="text" value="' + courtDetail["execution_base"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["execution_base"]) === "undefined" ? "" : courtDetail["execution_base"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>做出执行依据单位</span>' +
-                        '<input type="text" value="' + courtDetail["execution_department"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["execution_department"]) === "undefined" ? "" : courtDetail["execution_department"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>生效法律文书确定的义务</span>' +
-                        '<input type="text" value="' + courtDetail["duty"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["duty"]) === "undefined" ? "" : courtDetail["duty"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>被执行人的履行情况</span>' +
-                        '<input type="text" value="' + courtDetail["situation"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["situation"]) === "undefined" ? "" : courtDetail["situation"]) + '"/>' +
                         '</li>' +
                         '<li class="clearfix">' +
                         '<span>失信被执行人行为具体情形</span>' +
-                        '<input type="text" value="' + courtDetail["discredit_detail"] + '"/>' +
+                        '<input type="text" value="' + (typeof(courtDetail["discredit_detail"]) === "undefined" ? "" : courtDetail["discredit_detail"]) + '"/>' +
                         '</li>' +
                         '</ul>';
                     if (courtItem !== 0) {
