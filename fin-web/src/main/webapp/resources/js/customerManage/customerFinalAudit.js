@@ -315,14 +315,17 @@ function getLoan(orderNo,customerId) {
     var param = {};
     param.orderId = orderNo;
     param.customerId = customerId;
+
     Comm.ajaxPost('api/getLoan',JSON.stringify(param), function (data) {
         if(data){
             if (parseInt(data.code) !== 0) {
-                alert(data.msg);
+                layer.alert(data.msg);
+                //location.reload();
             }else {
-                alert(data.msg);
+                layer.alert(data.msg);
+                //location.reload();
             }
-            location.reload();
+            g_userManage.tableOrder.ajax.reload();
         }
     },"application/json")
 }

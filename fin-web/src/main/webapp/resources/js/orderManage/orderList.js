@@ -275,25 +275,20 @@ function apendSelect() {
 
 //资产同步
 function assetSynchronization(orderId,customerId) {
-    if(confirm("您确定同步吗？")){
         var param = {};
         param.orderId = orderId;
         param.customerId = customerId;
         Comm.ajaxPost('asset/syncAssetData',JSON.stringify(param), function (data) {
             if(data){
                 if (parseInt(data.code) !== 0) {
-                    alert(data.msg);
-                    //layer.msg(data.msg);
+                    layer.alert(data.msg);
                 }else {
-                    alert(data.msg);
+                    layer.alert(data.msg);
                 }
-                location.reload();
+                g_userManage.tableOrder.ajax.reload();
+                //location.reload();
             }
         },"application/json")
-    }else{
-        //alert("取消");
-    }
-
 
 
 }
@@ -306,12 +301,11 @@ function refreshAsset(orderNo,customerId) {
         Comm.ajaxPost('asset/getByBusinessId',JSON.stringify(param), function (data) {
             if(data){
                 if (parseInt(data.code) !== 0) {
-                    alert(data.msg);
-                    //layer.msg(data.msg);
+                    layer.alert(data.msg);
                 }else {
-                    alert(data.msg);
+                    layer.alert(data.msg);
                 }
-                location.reload();
+                g_userManage.tableOrder.ajax.reload();
             }
         },"application/json")
     }
