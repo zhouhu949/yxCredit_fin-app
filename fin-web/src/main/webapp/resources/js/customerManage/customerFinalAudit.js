@@ -122,8 +122,7 @@ $(function (){
             "columns": table,
             "createdRow": function ( row, data, index,settings,json ) {
                 var seeBtn=$('<a  class="tabel_btn_style" style="text-decoration: none;color: #307ecc;" onclick="orderSee(\''+data.orderId+'\',\''+data.customerId+'\')"> 查看 </a>');
-                var loanBtn = $('<a class="tabel_btn_style" onclick="confirmationLoan(\''+data.orderId+'\',\''+data.customerId+'\',\''+
-                    data.contractAmount+'\',\''+data.surplusContractAmount+'\',\''+data.applayMoney+'\',\''+data.periods+'\')">确认放款 </a>');
+                var loanBtn = $('<a class="tabel_btn_style" onclick="getLoan(\''+data.orderNo+'\',\''+data.customerId+'\')">刷新 </a>');
                 return $("td", row).eq(10).append(loanBtn).append(seeBtn);
             },
             "initComplete" : function(settings,json) {
@@ -308,6 +307,24 @@ function  confirmationLoan(orderId, customerId, contractAmount, surplusContractA
         }
     });
 
+
+}
+
+//查询还款账号
+function getLoan(orderNo,customerId) {
+    var param = {};
+    param.orderId = orderNo;
+    param.customerId = customerId;
+    Comm.ajaxPost('api/getLoan',JSON.stringify(param), function (data) {
+        if(data){
+            if (parseInt(data.code) !== 0) {
+                alert(data.msg);
+            }else {
+                alert(data.msg);
+            }
+            location.reload();
+        }
+    },"application/json")
 }
 
 

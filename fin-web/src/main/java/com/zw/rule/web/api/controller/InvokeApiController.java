@@ -44,10 +44,10 @@ public class InvokeApiController {
                 JSONObject resultStr = JSONObject.parseObject(result);
                 String resCode = resultStr.get("retCode").toString();
                 if ((Consts.API_SUCCESS).equals(resCode)) {
-                    return Response.ok("查询还款账号！", null);
+                    return Response.ok("查询还款账号成功！", null);
                 }
             }
-            return Response.error("查询还款账号！");
+            return Response.error("查询还款账号失败！");
         } catch (IOException e) {
             e.printStackTrace();
             return Response.error(e.getMessage());
