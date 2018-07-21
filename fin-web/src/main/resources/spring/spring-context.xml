@@ -27,6 +27,11 @@
         <property name="requestUrl" value="${asset.url}"/>
         <property name="requestType" value="${asset.type}"/>
     </bean>
+    <!--资产同步配置 create by 韩梅生-->
+    <bean id="bussinessSettings" class="com.zw.rule.api.asset.BussinessSettings">
+        <property name="requestUrl" value="${bussiness.url}"/>
+        <property name="requestType" value="${bussiness.type}"/>
+    </bean>
 
     <!-- 手机短信配置BEAN create by luochaofang-->
     <bean id="msgSettings" class="com.zw.rule.api.sortmsg.MsgSettings">

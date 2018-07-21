@@ -39,6 +39,32 @@ public class AssetController {
                 JSONObject resultStr = JSONObject.parseObject(assetDataStr);
                 String resCode = resultStr.get("retCode").toString();
                 if ((Consts.API_SUCCESS).equals(resCode)) {
+                    return Response.ok("推送成功！", null);
+                }
+            }
+            return Response.error("推送失败！");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Response.error(e.getMessage());
+        }
+    }
+    /**
+     * 刷新有信贷查询资产是否存在
+     * @author 韩梅生
+     * @param request
+     * @return
+     */
+    @RequestMapping("getByBusinessId")
+    public Response getByBusinessId(@RequestBody AssetRequest request) {
+        if (request == null) {
+            return Response.error("参数异常");
+        }
+        try {
+            String  assetDataStr = assetService.getByBusinessId(request);
+            if (StringUtils.isNotEmpty(assetDataStr)) {
+                JSONObject resultStr = JSONObject.parseObject(assetDataStr);
+                String resCode = resultStr.get("retCode").toString();
+                if ((Consts.API_SUCCESS).equals(resCode)) {
                     return Response.ok("同步成功！", null);
                 }
             }

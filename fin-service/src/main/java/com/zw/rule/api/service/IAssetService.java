@@ -11,8 +11,14 @@ public interface IAssetService {
 
     String BEAN_KEY = "assetServiceImpl";
     /**
-     * 资产数据同步
+     * 资产数据推送
      * @return 结果json字符串
      */
     String syncAssetData(AssetRequest request) throws IOException;
+    /**
+     * 刷新资产状态
+     * @return 结果json字符串
+     */
+    String getByBusinessId(AssetRequest request) throws IOException;
+
 }

@@ -182,6 +182,11 @@
                                 <td class="align">申请时间:</td>
                                 <td id="applayTime"></td>
                             </tr>
+                            <tr>
+                                <td>借款用途:</td>
+                                <td id="loanPurpose" colspan="5">${order.loanPurpose}</td>
+
+                            </tr>
 
                             </tbody>
                         </table>
