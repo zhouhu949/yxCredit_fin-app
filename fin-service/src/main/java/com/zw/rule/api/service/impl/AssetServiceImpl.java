@@ -3,6 +3,7 @@ package com.zw.rule.api.service.impl;
 import com.zw.base.util.HttpUtil;
 import com.zw.rule.api.asset.AssetRequest;
 import com.zw.rule.api.asset.AssetSettings;
+import com.zw.rule.api.asset.BussinessSettings;
 import com.zw.rule.api.service.IAssetService;
 import com.zw.rule.service.UserService;
 import org.apache.http.Header;
@@ -27,6 +28,9 @@ public class AssetServiceImpl implements IAssetService {
     private AssetSettings  assetSettings;
 
     @Autowired
+    private BussinessSettings bussinessSettings;
+
+    @Autowired
     private UserService userService;
 
     @Override
@@ -42,4 +46,23 @@ public class AssetServiceImpl implements IAssetService {
         headerList.add(new BasicHeader("token",token));
         return HttpUtil.doPost(assetSettings.getRequestUrl(),paramMap,headerList);
     }
+
+    @Override
+    public String getByBusinessId(AssetRequest request) throws IOException {
+        return getParam(request,bussinessSettings.getRequestUrl());
+    }
+
+    private String getParam (AssetRequest request,String url) throws IOException{
+        if(request == null){return  null;}
+        //设置请求参数
+        Map<String,Object> paramMap = new HashMap<>(2);
+        paramMap.put("orderNo",request.getOrderNo());
+        paramMap.put("customerId",request.getCustomerId());
+        List<Header> headerList  = new ArrayList<>();
+        //设置token
+        String token = userService.getTokenById(request.getCustomerId());
+        headerList.add(new BasicHeader("token",token));
+        return HttpUtil.doPost(url,paramMap,headerList);
+    }
+
 }

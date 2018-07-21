@@ -136,7 +136,7 @@
     <context:property-placeholder
             ignore-unresolvable="true"
             file-encoding="UTF-8"
-            location="classpath*:/properties/*.properties"/>
+            location="classpath*:/properties/*_${project.env}.properties"/>
 
     <mvc:interceptors>
         <!-- 国际化操作拦截器 如果采用基于（请求/Session/Cookie）则必需配置 -->

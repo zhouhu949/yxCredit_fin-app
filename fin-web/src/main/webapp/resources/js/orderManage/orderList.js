@@ -111,11 +111,15 @@ $(function (){
                     "render": function (data, type, row, meta) {
                         if(data==0){
                             return "未同步";
-                        }else if(data==1){
+                        }else if(data === '1'){
+                            return "推送成功";
+                        }else if(data === '2'){
+                            return "推送失败";
+                        }else if(data === '3'){
                             return "同步成功";
-                        }else if(data==2){
+                        }else if(data === '4'){
                             return "同步失败";
-                        }else {
+                        } else {
                             return "未知状态";
                         }
                     }
@@ -157,10 +161,13 @@ $(function (){
                 var btnDel = $('<a class="tabel_btn_style" onclick="orderDetail(\''+data.orderId+'\',\''+data.customerId+'\')">查看订单</a>');
                 var btnDAuditing = $('<a class="tabel_btn_style" onclick="orderOperationRecord(\''+data.orderId+'\',\''+data.customerId+'\')">审核日志</a>');
                 var btnAsset = $('<a class="tabel_btn_style" onclick="assetSynchronization(\''+data.orderId+'\',\''+data.customerId+'\')">资产同步</a>');
-               if(data.orderState==4){
-                   if(data.assetState==0 || data.assetState==2 ){
+                var btnBusiness = $('<a class="tabel_btn_style" onclick="refreshAsset(\''+data.orderNo+'\',\''+data.customerId+'\')">刷新</a>');
+               if(data.orderState === '4'){
+                   if(data.assetState === '0' || data.assetState === '2' ){
                        $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnAsset)
-                   }else {
+                   }else if(data.assetState === '1'|| data.assetState === '4'){
+                       $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing).append("  ").append(btnBusiness)
+                   } else {
                        $('td', row).eq(12).append(btnDel).append("  ").append(btnDAuditing)
                    }
                }else{
@@ -290,6 +297,26 @@ function assetSynchronization(orderId,customerId) {
 
 
 }
+
+//刷新资产状态
+function refreshAsset(orderNo,customerId) {
+        var param = {};
+        param.orderNo = orderNo;
+        param.customerId = customerId;
+        Comm.ajaxPost('asset/getByBusinessId',JSON.stringify(param), function (data) {
+            if(data){
+                if (parseInt(data.code) !== 0) {
+                    alert(data.msg);
+                    //layer.msg(data.msg);
+                }else {
+                    alert(data.msg);
+                }
+                location.reload();
+            }
+        },"application/json")
+    }
+
+
 
 $(function (){
     var beginTime = {
