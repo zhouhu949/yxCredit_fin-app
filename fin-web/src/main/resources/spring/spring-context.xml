@@ -28,6 +28,12 @@
         <property name="requestType" value="${asset.type}"/>
     </bean>
 
+    <!--查询还款账号 create by 陈淸玉-->
+    <bean id="repaymentSettings" class="com.zw.rule.api.repayment.RepaymentSettings">
+        <property name="requestUrl" value="${repayment.url}"/>
+        <property name="requestType" value="${repayment.type}"/>
+    </bean>
+
     <!-- 手机短信配置BEAN create by luochaofang-->
     <bean id="msgSettings" class="com.zw.rule.api.sortmsg.MsgSettings">
         <property name="type" value="${sms.type}"/>
