@@ -2,6 +2,7 @@ package com.zw.rule.customer.service;
 
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
 import com.zw.rule.core.Response;
+import com.zw.rule.customer.po.BusinessRepayment;
 import com.zw.rule.customer.po.CustomerMatching;
 import com.zw.rule.customer.po.Order;
 import com.zw.rule.mybatis.ParamFilter;
@@ -130,5 +131,12 @@ public interface OrderService {
      * @return
      */
     List findWindControlAuditList(Map map);
+
+    /**
+     * 获取还款计划信息
+     * @param businessRepayment
+     * @return
+     */
+    List<BusinessRepayment> findListRepayMentByOrderNo(BusinessRepayment businessRepayment);
 
 }

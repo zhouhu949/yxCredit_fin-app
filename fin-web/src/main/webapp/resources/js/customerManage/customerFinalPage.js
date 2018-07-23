@@ -53,7 +53,55 @@ $().ready(function(){
             var orderOperationRecord= data.orderOperationRecord;//订单操作记录审核信息
             var loanRecord= data.loanRecord;//订单操作记录放款信息
             var imageList = data.imgList;//上传资料
+            var repayList = data.repayList;//还款计划信息
 
+        }
+
+        if ("undefined" != typeof(repayList) && repayList.length > 0){
+            //还款计划信息列表
+            var html = '';
+            $("#repayList").empty();
+            html +='<thead>'+
+            '<tr>'+
+            '<th>期数</th>'+
+            '<th>还款状态</th>'+
+            '<th>起息日</th>'+
+            '<th>预计还款时间</th>'+
+            '<th>实际还款时间</th>'+
+            '<th>应还金额</th>'+
+            '<th>已还金额</th>'+
+            '<th>应还本金</th>'+
+            '<th>已还本金</th>'+
+            '<th>利息</th>'+
+            '<th>实际还款利息</th>'+
+            '<th>还款类型</th>'+
+            '<th>逾期天数</th>'+
+            '<th>逾期利息</th>'+
+            '<th>更新时间</th>'+
+            '</tr>'+
+            '</thead>'+
+            '<tbody>';
+            for(var i=0;i<repayList.length;i++){
+                html += '<tr>'+
+                    '<td>'+repayList[i].period+'</td>'+
+                    '<td>'+changeState(repayList[i].status)+'</td>'+
+                    '<td>'+formatDate(repayList[i].interestStartTime)+'</td>'+
+                    '<td>'+formatDate(repayList[i].repaymentTime)+'</td>'+
+                    '<td>'+formatDate(repayList[i].repaymentYesTime)+'</td>'+
+                    '<td>'+repayList[i].repaymentAccount+'</td>'+
+                    '<td>'+repayList[i].repaymentYesAccount+'</td>'+
+                    '<td>'+repayList[i].capital+'</td>'+
+                    '<td>'+repayList[i].yesCapital+'</td>'+
+                    '<td>'+repayList[i].interest+'</td>'+
+                    '<td>'+repayList[i].repaymentYesInterest+'</td>'+
+                    '<td>'+changeTypeState(repayList[i].repaymentType)+'</td>'+
+                    '<td>'+repayList[i].lateDays+'</td>'+
+                    '<td>'+repayList[i].lateInterest+'</td>'+
+                    '<td>'+formatDate(repayList[i].updateTime)+'</td>'+
+                    '</tr>';
+            }
+            html +='</tbody>';
+            $("#repayList").append(html);
         }
 
         if(order){
@@ -114,6 +162,26 @@ $().ready(function(){
             $("#loanAmount").html(loanRecord.amount);//放款金额
             $("#loanTime").text(formatTime(loanRecord.operationTime));//放款时间
             $("#loanState").html(loanState);//放款状态
+        }
+        if("undefined" != typeof(linkmanList)){
+            //联系人信息
+            var html = '';
+            $("#relation").empty();
+            for(var i=0;i<linkmanList.length;i++){
+                var rel = linkmanList[i].mainSign;
+                var yesno = "";
+                html=html+ '<tr>'+
+                    '<td width="10%" >关&emsp;&emsp;系：</td>'+
+                    '<td width="23%">'+linkmanList[i].relationshipName+'</td>'+
+                    '<td width="10%" >名&emsp;&emsp;称：</td>'+
+                    '<td width="23%">'+linkmanList[i].linkName+'</td>'+
+                    '<td width="10%" >联系方式：</td>'+
+                    '<td width="23%">'+linkmanList[i].contact+'</td>'+
+                    '</tr>';
+
+            }
+            $("#relation").html('');//直系
+            $("#relation").append(html);//直系
         }
         if("undefined" != typeof(linkmanList)){
             //联系人信息
@@ -199,16 +267,82 @@ $().ready(function(){
             }
             $("#apiResult").append(html);
         }
-
-
-
-
     }, "application/json",null,null,null,false);
 
 
 
 
 });
+
+//还款状态转化
+function changeState(repayState){
+    var repayStateNum=Number(repayState);
+    var repayStateStr;
+    switch (repayStateNum) {
+        case 1://还款中
+            repayStateStr = "还款中";
+            break;
+        case 2://还款处理中
+            repayStateStr ="还款处理中";
+            break;
+        case 3://已还款
+            repayStateStr = "已还款";
+            break;
+        default:
+            repayStateStr = "";
+            break;
+    }
+    return repayStateStr;
+}
+
+
+//还款类型状态转化
+function changeTypeState(repayTypeState){
+    var repayTypeStateNum=Number(repayTypeState);
+    var repayTypeStateStr;
+    switch (repayTypeStateNum) {
+        case 0://未还款
+            repayTypeStateStr = "未还款";
+            break;
+        case 1://正常还款
+            repayTypeStateStr ="正常还款";
+            break;
+        case 2://提前还款
+            repayTypeStateStr = "提前还款";
+            break;
+        case 3://部分提前还款
+            repayTypeStateStr = "部分提前还款";
+            break;
+        case 4://逾期还款
+            repayTypeStateStr = "逾期还款";
+            break;
+        case 5://逾期未还
+            repayTypeStateStr = "逾期未还";
+            break;
+        default:
+            repayTypeStateStr = "";
+            break;
+    }
+    return repayTypeStateStr;
+}
+
+
+function formatDate(time){
+    if(time){
+        var date = new Date(time);
+
+        var year = date.getFullYear(),
+            month = date.getMonth() + 1,//月份是从0开始的
+            day = date.getDate();
+
+        var newTime = year + '-' +
+            month + '-' +
+            day + ' ';
+        return newTime;
+    }
+    return "";
+}
+
 function clickNextButton(){
     layerIndex = layer.open({
         type : 1,

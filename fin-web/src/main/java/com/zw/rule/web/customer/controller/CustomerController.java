@@ -10,10 +10,7 @@ import com.zw.rule.ApiResult.service.ApiResultService;
 import com.zw.rule.SendMessage.service.SendMessageFactory;
 import com.zw.rule.answer.po.Answer;
 import com.zw.rule.core.Response;
-import com.zw.rule.customer.po.Customer;
-import com.zw.rule.customer.po.CustomerDeviceInfo;
-import com.zw.rule.customer.po.Order;
-import com.zw.rule.customer.po.RuleRisk;
+import com.zw.rule.customer.po.*;
 import com.zw.rule.customer.service.CustomerService;
 import com.zw.rule.customer.service.OrderService;
 import com.zw.rule.customer.service.RuleRiskService;
@@ -494,6 +491,13 @@ public class CustomerController {
         Map map = new HashMap();
         //获取订单信息
         Map order = orderService.getOrderAndBank(orderId);
+
+        if(order.containsKey("orderNo") && null != order.get("orderNo")) {
+            BusinessRepayment businessRepayment = new BusinessRepayment();
+            businessRepayment.setOrderNo(order.get("orderNo").toString());
+            List<BusinessRepayment>  businessRepayList = orderService.findListRepayMentByOrderNo(businessRepayment);
+            map.put("repayList",businessRepayList);
+        }
 
         //获取风控审核信息列表
         List apiResultList = apiResultService.getApiResultByOrderId(customerId);

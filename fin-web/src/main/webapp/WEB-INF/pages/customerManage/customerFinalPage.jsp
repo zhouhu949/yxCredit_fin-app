@@ -12,7 +12,7 @@
     <script src="${ctx}/resources/js/lib/laydate/laydate.js${version}"></script>
     <script src="${ctx}/resources/js/customerManage/customerFinalPage.js${version}"></script>
     <script src="${ctx}/resources/js/postbird-img-glass.js"></script>
-    <title>客户审核</title>
+    <title>订单详情</title>
     <style>
         .laydate_body .laydate_y {margin-right: 0;}
         .onlyMe input{margin:0;vertical-align:middle;}
@@ -319,6 +319,17 @@
                                     </tr>
                                 </table>
                             </div>
+
+                        <%--还款计划信息--%>
+                        <div class="paperBlockfree">
+                            <div class="block_hd" style="float:left;">
+                                <s class="ico icon-file-text-alt"></s><span class="bl_tit">还款计划信息</span>
+                            </div>
+                            <table class="tb_info" id="repayList" style="font-size:12px;">
+
+                            </table>
+
+                        </div>
                 </div>
             </div>
         </div>

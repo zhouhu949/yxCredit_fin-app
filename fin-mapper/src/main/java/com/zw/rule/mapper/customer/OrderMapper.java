@@ -1,6 +1,7 @@
 package com.zw.rule.mapper.customer;
 
 import com.zw.rule.approveRecord.po.ProcessApproveRecord;
+import com.zw.rule.customer.po.BusinessRepayment;
 import com.zw.rule.customer.po.Order;
 import com.zw.rule.customer.po.Withdrawals;
 import com.zw.rule.mybatis.ParamFilter;
@@ -145,4 +146,11 @@ public interface OrderMapper {
      * @return
      */
     String getOrderNoById(@Param("id") String id);
+
+    /**
+     * c查询还款计划信息
+     * @param repayment
+     * @return
+     */
+    List<BusinessRepayment> findListRepayMentByOrderNo(@Param("repayment") BusinessRepayment repayment);
 }

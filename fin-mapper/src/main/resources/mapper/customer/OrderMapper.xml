@@ -81,6 +81,39 @@
     <result column="diy_days" property="diyDays" jdbcType="VARCHAR" />
     <result column="offline_order" property="offlineOrder" jdbcType="VARCHAR" />
   </resultMap>
+
+    <resultMap id="BusinessRepaymentMap" type="com.zw.rule.customer.po.BusinessRepayment" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="period" property="period" jdbcType="INTEGER" />
+        <result column="interest_start_time" property="interestStartTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_time" property="repaymentTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_yes_time" property="repaymentYesTime" jdbcType="TIMESTAMP" />
+        <result column="repayment_account" property="repaymentAccount" jdbcType="DECIMAL" />
+        <result column="repayment_yes_account" property="repaymentYesAccount" jdbcType="DECIMAL" />
+        <result column="capital" property="capital" jdbcType="DECIMAL" />
+        <result column="yes_capital" property="yesCapital" jdbcType="DECIMAL" />
+        <result column="interest" property="interest" jdbcType="DECIMAL" />
+        <result column="repayment_yes_interest" property="repaymentYesInterest" jdbcType="DECIMAL" />
+        <result column="is_repayment" property="isRepayment" jdbcType="INTEGER" />
+        <result column="repayment_type" property="repaymentType" jdbcType="INTEGER" />
+        <result column="late_days" property="lateDays" jdbcType="INTEGER" />
+        <result column="late_interest" property="lateInterest" jdbcType="DECIMAL" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <!--<result column="late_rate" property="lateRate" jdbcType="DECIMAL" />
+        <result column="derate_amount" property="derateAmount" jdbcType="DECIMAL" />
+        <result column="periods" property="periods" jdbcType="INTEGER" />
+        <result column="channel_type" property="channelType" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="create_user_id" property="createUserId" jdbcType="VARCHAR" />
+        <result column="update_user_id" property="updateUserId" jdbcType="VARCHAR" />
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+        <result column="rate" property="rate" jdbcType="DECIMAL" />
+        <result column="repayment_id" property="repaymentId" jdbcType="VARCHAR" />-->
+    </resultMap>
+
   <sql id="Base_Column_List" >
     ID, order_no, USER_ID, PERIODS, MERCHANT_ID, MERCHANT_NAME, merchandise_id, merchandise_type,
     merchandise_name, CUSTOMER_ID, CUSTOMER_NAME, sex_name, TEL, CARD_TYPE,
@@ -1691,5 +1724,17 @@
         select order_no from mag_order where id = #{id}
     </select>
 
+    <select id="findListRepayMentByOrderNo" resultMap="BusinessRepaymentMap" parameterType="com.zw.rule.customer.po.BusinessRepayment">
+        select id, order_no, status, period, interest_start_time, repayment_time,
+        repayment_yes_time, repayment_account, repayment_yes_account, capital, yes_capital,
+        interest, repayment_yes_interest, is_repayment, repayment_type, late_days,late_interest,create_time,
+        update_time from business_repayment
+        <where>
+            <if test="repayment.orderNo != null">
+                order_no = #{repayment.orderNo,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by period asc 
+    </select>
 
 </mapper>

@@ -970,4 +970,9 @@ public class OrderServiceImpl implements OrderService {
     public List findWindControlAuditList(Map map) {
         return orderMapper.findWindControlAuditList(map);
     }
+
+    @Override
+    public List<BusinessRepayment> findListRepayMentByOrderNo(BusinessRepayment businessRepayment) {
+        return orderMapper.findListRepayMentByOrderNo(businessRepayment);
+    }
 }
