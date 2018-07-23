@@ -6,9 +6,11 @@ import com.google.common.base.Preconditions;
 import com.zw.rule.core.Response;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.po.Dict;
+import com.zw.rule.po.User;
 import com.zw.rule.service.DictService;
 import com.zw.rule.web.aop.annotaion.WebLogger;
 import com.zw.rule.web.util.PageConvert;
+import com.zw.rule.web.util.UserContextUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,11 +52,13 @@ public class DictController {
     @PostMapping("add")
     @WebLogger("添加字典")
     public Response add(@RequestBody Map map) {
+        User user = (User) UserContextUtil.getAttribute("currentUser");
         Response response = new Response();
-        Map paramMap = new HashMap();
+        Map<String,String> paramMap = new HashMap<>(4);
         paramMap.put("name",(String)map.get("name"));
         paramMap.put("code",(String)map.get("code"));
         paramMap.put("parentId",(String)map.get("parentId"));
+
         List listName = dictService.findByDictName(paramMap);//判断字段名称是否已经存在
         if(listName.size()>0){
             response.setMsg("字典名称已存在");
@@ -67,6 +71,7 @@ public class DictController {
             response.setCode(1);
             return response;
         }
+        map.put("createName",user.getTrueName());
         dictService.add(map);
         response.setMsg("添加成功");
         return response;

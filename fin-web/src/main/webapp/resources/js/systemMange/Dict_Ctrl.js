@@ -237,17 +237,18 @@ function editDict(checkId){
 }
 //删除字典
 function deleteById(e){
-    var target = e.target || window.event.target;
-    var checkId = $(target).parents("tr").children().eq(1).children("input").val();//获取点击的id
-    var param = {};
-    param.id = checkId;
-    Comm.ajaxPost('dict/delete',JSON.stringify(param),
-        function(data){
-            layer.msg(data.msg,{time:2000});
-            g_userManage.tableUser.draw();//刷新数据
-            g_userDetileManage.tableUser.draw();//刷新数据
-        },"application/json"
-    );
+    layer.msg("删除功能不予开放，请通知系统管理员！");
+    // var target = e.target || window.event.target;
+    // var checkId = $(target).parents("tr").children().eq(1).children("input").val();//获取点击的id
+    // var param = {};
+    // param.id = checkId;
+    // Comm.ajaxPost('dict/delete',JSON.stringify(param),
+    //     function(data){
+    //         layer.msg(data.msg,{time:2000});
+    //         g_userManage.tableUser.draw();//刷新数据
+    //         g_userDetileManage.tableUser.draw();//刷新数据
+    //     },"application/json"
+    // );
 }
 //新增大类
 function addDict(){
@@ -269,6 +270,8 @@ function addDict(){
             var param={
                 code:nameCode,
                 name:name,
+                type:"",
+                value:"",
                 isCatagory:"Y",
                 remark:remark,
                 parentId:"0"
@@ -373,6 +376,7 @@ function queryListDetile(menuId){
             },
             {"data":'code',"searchable":false,"orderable" : false},
             {"data":'name',"searchable":false,"orderable" : false},
+            {"data":'value',"searchable":false,"orderable" : false},
             {
                 "data":null,
                 "orderable" : false,
@@ -384,7 +388,7 @@ function queryListDetile(menuId){
                 "data":null,
                 "orderable" : false,
                 "render" : function(data, type, row, meta) {
-                    return json2TimeStamp(data.updateTime);
+                    return json2TimeStamp(data.createTime);
                 }
             },
             {"data":'remark',"searchable":false,"orderable" : false},
@@ -396,7 +400,7 @@ function queryListDetile(menuId){
         "createdRow": function ( row, data, index,settings,json ) {
             var btnAdd = $('<a href="##" style="text-decoration:none;color: #307ecc;" class="" onclick="deleteById(event)">删除&nbsp;</a>');
             var btnEdit = $('<a href="##" class="edit" style="text-decoration:none;color: #307ecc;" onclick="openEditDel(event)">修改</a>');
-            return $("td", row).eq(7).append(btnAdd).append(btnEdit);
+            return $("td", row).eq(8).append(btnAdd).append(btnEdit);
         },
         "initComplete" : function(settings,json) {
         }
@@ -459,11 +463,14 @@ function addDel(e){
             var nameCode=$("#nameCode").val();
             var name=$("#nameDict").val();
             var remark=$("#remarkdel").val();
+            var value = $('input[name="value"]').val();
             var dict={
                 code:nameCode,
                 name:name,
                 isCatagory:"N",
                 remark:remark,
+                value:value,
+                type:"",
                 parentId:selectType
             };
             if(nameCode==''){
@@ -513,6 +520,7 @@ function openEditDel(e){
             }
             $('input[name="name_code"]').val(dict.code);
             $('input[name="name_dict"]').val(dict.name);
+            $('input[name="value"]').val(dict.value);
             $('textarea[name="remark"]').val(dict.remark);
             $("#parentId").val(dict.parentId);
             var parentId = dict.parentId;
@@ -539,19 +547,25 @@ function editDictDel(checkId,parentId){
             var nameCode=$("#nameCode").val();
             var name=$("#nameDict").val();
             var remark=$("#remarkdel").val();
+            var value = $('input[name="value"]').val();
             var dict={
                 id:checkId,
                 code:nameCode,
                 name:name,
                 isCatagory:"N",
                 remark:remark,
-                parentId:selectType
+                parentId:selectType,
+                value:value
             };
+
             if(nameCode==''){
                 layer.msg("字典Code不可为空！",{time:2000});return
             }
             if(name==''){
                 layer.msg("字典名称不可为空！",{time:2000});return
+            }
+            if(value ===''){
+                layer.msg("字典Value不可为空！",{time:2000});return
             }
             Comm.ajaxPost(
                 'dict/edit',JSON.stringify(dict),

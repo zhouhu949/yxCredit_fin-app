@@ -21,8 +21,8 @@
 
     <insert id="insert" parameterType="com.zw.rule.po.Dict">
         insert into zw_sys_dict
-        (parent_id,type,code,name,seq,is_catagory,is_delete,create_by,create_time,update_by,update_time,remark)
-        values(#{parentId}, #{type}, #{code}, #{name}, #{seq},#{isCatagory},#{isDelete},#{createBy},#{createTime},#{updateBy},#{updateTime},#{remark})
+        (parent_id,type,code,name,seq,is_catagory,is_delete,create_by,create_time,update_by,update_time,remark,value)
+        values(#{parentId}, #{type}, #{code}, #{name}, #{seq},#{isCatagory},#{isDelete},#{createBy},#{createTime},#{updateBy},#{updateTime},#{remark},#{value})
     </insert>
     
     <update id="update" parameterType="com.zw.rule.po.Dict">

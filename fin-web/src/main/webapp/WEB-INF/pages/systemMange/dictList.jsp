@@ -89,12 +89,13 @@
                             <input name="selectAll" id="selectdetailAll" type="checkbox"  class="ace" isChecked="false" />
                             <span class="lbl" style="cursor:pointer;"></span>
                         </th>
-                        <th width="10%">字典Code</th>
-                        <th width="15%">字典名称</th>
-                        <th width="20%">创建日期</th>
-                        <th width="20%">最后更新日期</th>
-                        <th width="15%">描述</th>
-                        <th width="20%">操作</th>
+                        <th width="">字典Code</th>
+                        <th width="">字典名称</th>
+                        <th width="">字典value</th>
+                        <th width="">创建日期</th>
+                        <th width="">最后更新日期</th>
+                        <th width="">描述</th>
+                        <th width="">操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -153,15 +154,21 @@
                             <select name="selectType" type="text" class="text_add" id="selectType" placeholder=""></select>
                         </li>
                         <li>
-                            <label class="label_name">字典Code</label>
+                            <label class="label_name">Code</label>
                             <label>
                                 <input name="name_code" type="text" value="" class="text_add" id="nameCode" />
                             </label>
                         </li>
                         <li>
-                            <label class="label_name">字典名称</label>
+                            <label class="label_name">名称</label>
                             <label>
                                 <input name="name_dict" id="nameDict" type="text" value="" class="text_add" />
+                            </label>
+                        </li>
+                        <li>
+                            <label class="label_name">Value</label>
+                            <label>
+                                <input name="value"  type="text" value="" class="text_add" />
                             </label>
                         </li>
                     </ul>

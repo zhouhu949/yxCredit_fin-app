@@ -1,6 +1,7 @@
 package com.zw.rule.service.impl;
 
 import com.google.common.base.Strings;
+import com.zw.base.util.GeneratePrimaryKeyUtils;
 import com.zw.rule.mapper.system.DictDao;
 import com.zw.rule.mybatis.ParamFilter;
 import com.zw.rule.po.Dict;
@@ -30,7 +31,11 @@ public class DictServiceImpl implements DictService {
         dict.setName((String) map.get("name"));
         dict.setIsCatagory((String) map.get("isCatagory"));
         dict.setRemark((String) map.get("remark"));
+        dict.setType(map.get("type").toString());
         dict.setParentId(parentId);
+        dict.setCreateBy(map.get("createName").toString());
+        dict.setUpdateBy("");
+        dict.setValue(map.get("value").toString());
         checkNotNull(dict,"字典信息不能为空");
         checkArgument(!Strings.isNullOrEmpty(dict.getCode()),"字典Code不能为空");
         checkArgument(!Strings.isNullOrEmpty(dict.getName()),"字典名称不能为空");

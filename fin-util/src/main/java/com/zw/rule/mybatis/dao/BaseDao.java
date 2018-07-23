@@ -5,6 +5,7 @@ import com.google.common.base.Strings;
 import com.zw.base.util.BeanUtil;
 import com.zw.rule.base.BaseEntity;
 import com.zw.rule.mybatis.page.Page;
+import com.zw.rule.util.Constants;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public abstract class BaseDao<T extends BaseEntity> implements GenericDao<T> {
         if (entity != null) {
             entity.setCreateTime(new Date());
             entity.setUpdateTime(new Date());
-            entity.setIsDelete(BigInteger.ZERO.intValue());
+            entity.setIsDelete(Integer.valueOf(Constants.ENABLE_STATE));
         }
         return this.sqlSessionTemplate.insert(statements, entity);
     }
