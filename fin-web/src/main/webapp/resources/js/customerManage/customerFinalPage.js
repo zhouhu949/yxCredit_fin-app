@@ -331,16 +331,27 @@ function formatDate(time){
     if(time){
         var date = new Date(time);
 
-        var year = date.getFullYear(),
-            month = date.getMonth() + 1,//月份是从0开始的
-            day = date.getDate();
-
-        var newTime = year + '-' +
-            month + '-' +
-            day + ' ';
-        return newTime;
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1) + "";
+        var day = date.getDate() + "";
+        month = getSupplementString(month, 2);
+        day = getSupplementString(day, 2);
+        return year + "-" + month + "-" + day;
     }
     return "";
+}
+
+/**
+ * 格式化指定长度的字符不足在前补0
+ * @param str : 待处理字符串
+ * @param len ： 指定长度
+ * @returns {String}
+ */
+function getSupplementString(str, len) {
+    while(str.length < len) {
+        str = "0" + str;
+    }
+    return str;
 }
 
 function clickNextButton(){
